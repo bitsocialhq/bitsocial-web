@@ -14,7 +14,7 @@ export default {
         "silver-bright": "#e5e7eb",
       },
       fontFamily: {
-        display: ["Outfit", "sans-serif"],
+        display: ["Exo", "sans-serif"],
         body: ["Inter", "sans-serif"],
       },
       animation: {
