@@ -121,13 +121,16 @@ export default function PlanetGraphic() {
 
     // Scene setup
     const scene = new THREE.Scene()
+    // Adjust FOV and camera position for mobile to show more of the scene
+    const fov = isMobile ? 55 : 45 // Wider FOV on mobile for more visibility
+    const cameraZ = isMobile ? 18 : 14 // Further back on mobile to zoom out
     const camera = new THREE.PerspectiveCamera(
-      45,
+      fov,
       container.clientWidth / container.clientHeight,
       0.1,
       100,
     )
-    camera.position.set(0, 1, 14)
+    camera.position.set(0, 1, cameraZ)
     camera.lookAt(0, -2, 0)
 
     // Renderer
@@ -140,26 +143,26 @@ export default function PlanetGraphic() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     // Lights for metallic reflections
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
     scene.add(ambientLight)
 
     // Key light (main light from top-right)
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.5)
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.0)
     keyLight.position.set(5, 8, 10)
     scene.add(keyLight)
 
     // Fill light (softer, from left)
-    const fillLight = new THREE.DirectionalLight(0x8899aa, 0.8)
+    const fillLight = new THREE.DirectionalLight(0x8899aa, 0.5)
     fillLight.position.set(-8, 2, 5)
     scene.add(fillLight)
 
     // Rim light (from behind for edge highlights)
-    const rimLight = new THREE.DirectionalLight(0xffffff, 0.6)
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.4)
     rimLight.position.set(0, -5, -10)
     scene.add(rimLight)
 
     // Top light for sphere gradient
-    const topLight = new THREE.DirectionalLight(0x4a90d9, 1.0)
+    const topLight = new THREE.DirectionalLight(0x4a90d9, 0.7)
     topLight.position.set(0, 15, 5)
     scene.add(topLight)
 
@@ -171,9 +174,9 @@ export default function PlanetGraphic() {
     // Custom shader for gradient effect (bright blue on top, darker on bottom)
     const sphereMaterial = new THREE.ShaderMaterial({
       uniforms: {
-        topColor: { value: new THREE.Color(0x2563eb) }, // Bright blue
-        bottomColor: { value: new THREE.Color(0x0f3460) }, // Dark blue
-        glowColor: { value: new THREE.Color(0x3b82f6) }, // Edge glow
+        topColor: { value: new THREE.Color(0x1e4fd0) }, // Slightly darker blue
+        bottomColor: { value: new THREE.Color(0x0a2440) }, // Darker blue
+        glowColor: { value: new THREE.Color(0x2d6ae0) }, // Softer edge glow
       },
       vertexShader: `
         varying vec3 vNormal;
@@ -225,10 +228,10 @@ export default function PlanetGraphic() {
 
     // Metallic material for rings (silver/chrome look)
     const ringMaterial = new THREE.MeshStandardMaterial({
-      color: 0xd0d0d0,
+      color: 0xb0b0b0,
       metalness: 0.95,
       roughness: 0.12,
-      envMapIntensity: 1.2,
+      envMapIntensity: 0.9,
     })
 
     // Create an environment map for reflections
@@ -323,7 +326,13 @@ export default function PlanetGraphic() {
       if (!container) return
       const width = container.clientWidth
       const height = container.clientHeight
+      const isMobileNow = width < 768 || (navigator.hardwareConcurrency || 4) < 4
+      const fov = isMobileNow ? 55 : 45
+      const cameraZ = isMobileNow ? 18 : 14
+      
+      camera.fov = fov
       camera.aspect = width / height
+      camera.position.z = cameraZ
       camera.updateProjectionMatrix()
       renderer.setSize(width, height)
     }
@@ -363,8 +372,8 @@ export default function PlanetGraphic() {
           ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 60%",
-            end: "bottom top",
+            start: "top 30%",
+            end: "top 20%",
             scrub: 1,
           },
         },
@@ -377,10 +386,12 @@ export default function PlanetGraphic() {
   return (
     <div
       ref={containerRef}
-      className="w-full h-[60vh] md:h-[80vh] relative pointer-events-none"
+      className="w-screen h-[60vh] md:h-[80vh] relative pointer-events-none left-1/2 -translate-x-1/2 overflow-hidden"
       style={{ marginTop: "-2rem" }}
     >
       <canvas ref={canvasRef} className="w-full h-full" />
+      {/* Bottom fade gradient overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 md:h-40 bg-gradient-to-t from-bg-primary via-bg-primary/80 to-transparent pointer-events-none" />
     </div>
   )
 }
