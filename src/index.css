@@ -27,7 +27,7 @@
   }
 
   .glass-card {
-    @apply bg-bg-secondary/50 backdrop-blur-md border border-silver-dark/30 rounded-lg;
+    @apply bg-bg-secondary backdrop-blur-md border border-silver-dark;
   }
 
   .ring-glow {

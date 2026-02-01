@@ -6,10 +6,10 @@ export default {
     extend: {
       colors: {
         "bg-primary": "#0a0a0a",
-        "bg-secondary": "#111111",
+        "bg-secondary": "#000",
         "blue-core": "#1a4fd0",
         "blue-glow": "#2563eb",
-        "silver-dark": "#6b7280",
+        "silver-dark": "#2f3336",
         "silver-mid": "#9ca3af",
         "silver-bright": "#e5e7eb",
       },
