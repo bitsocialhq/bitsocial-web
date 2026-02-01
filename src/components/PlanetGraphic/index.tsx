@@ -263,21 +263,21 @@ export default function PlanetGraphic() {
     // - Y: down (-) / up (+)  
     // - Z: back (-) / forward (+)
 
-    // Ring 1 Configuration
-    const ring1RotX = Math.PI * 0.52 // Forward/backward tilt
-    const ring1RotY = 0 // Rotation around Y-axis (affects start position)
-    const ring1RotZ = 0.1 // Sideways tilt
-    const ring1PosX = 0 // Horizontal offset
-    const ring1PosY = 0 // Vertical offset (0 = same as sphere center)
-    const ring1PosZ = 0 // Depth offset
+    // Ring 1 Configuration (upper arc - tilted forward over the planet)
+    const ring1RotX = Math.PI * 0.79 // Forward/backward tilt
+    const ring1RotY = -0.3 // Rotation around Y-axis (affects start position)
+    const ring1RotZ = 0.15 // Sideways tilt
+    const ring1PosX = -0.5 // Horizontal offset
+    const ring1PosY = -0.5 // Vertical offset (0 = same as sphere center)
+    const ring1PosZ = 1 // Depth offset
 
-    // Ring 2 Configuration
-    const ring2RotX = 0 // Forward/backward tilt
-    const ring2RotY = 0 // Rotation around Y-axis (affects start position)
-    const ring2RotZ = -0.15 // Sideways tilt
-    const ring2PosX = 0 // Horizontal offset
-    const ring2PosY = 0 // Vertical offset (0 = same as sphere center)
-    const ring2PosZ = 0 // Depth offset
+    // Ring 2 Configuration (diagonal sweep - upper right to lower left)
+    const ring2RotX = Math.PI * 0.77 // Forward/backward tilt (more vertical)
+    const ring2RotY = -0.35 // Rotation around Y-axis (affects start position)
+    const ring2RotZ = -1.1 // Sideways tilt (leaning right)
+    const ring2PosX = 1 // Horizontal offset
+    const ring2PosY = 1 // Vertical offset (0 = same as sphere center)
+    const ring2PosZ = 1 // Depth offset
 
     // ============================================
 
