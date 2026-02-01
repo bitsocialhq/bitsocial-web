@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
 const phases = [
   {
@@ -22,7 +22,8 @@ const phases = [
   {
     phase: "Phase 4",
     title: "Stage 2 Decentralization",
-    description: "Further decentralization of network infrastructure and governance mechanisms.",
+    description:
+      "Further decentralization of network infrastructure and governance mechanisms.",
   },
   {
     phase: "Phase 5",
@@ -30,7 +31,7 @@ const phases = [
     description:
       "Expansion of the ecosystem with third-party apps, tools, and community-driven initiatives.",
   },
-];
+]
 
 export default function Roadmap() {
   return (
@@ -75,7 +76,9 @@ export default function Roadmap() {
                   <h3 className="text-2xl font-display font-bold mb-3 text-silver-bright">
                     {item.title}
                   </h3>
-                  <p className="text-silver-mid leading-relaxed">{item.description}</p>
+                  <p className="text-silver-mid leading-relaxed">
+                    {item.description}
+                  </p>
                 </div>
 
                 {/* Spacer for alternating layout */}
@@ -86,5 +89,5 @@ export default function Roadmap() {
         </div>
       </div>
     </section>
-  );
+  )
 }

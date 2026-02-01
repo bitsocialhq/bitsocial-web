@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
 
 export default function Topbar() {
   return (
@@ -11,12 +11,10 @@ export default function Topbar() {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <img
-            src="/logo.png"
-            alt="Bitsocial"
-            className="h-8 w-8"
-          />
-          <span className="text-xl font-display font-semibold chrome-text">Bitsocial</span>
+          <img src="/logo.png" alt="Bitsocial" className="h-8 w-8" />
+          <span className="text-xl font-display font-semibold chrome-text">
+            Bitsocial
+          </span>
         </Link>
 
         <div className="flex items-center gap-4 md:gap-8">
@@ -46,5 +44,5 @@ export default function Topbar() {
         </div>
       </div>
     </motion.nav>
-  );
+  )
 }

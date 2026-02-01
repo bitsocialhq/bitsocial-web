@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import PlanetGraphic from "./PlanetGraphic"
 
 export default function Hero() {
   return (
@@ -11,8 +12,9 @@ export default function Hero() {
         className="max-w-3xl text-center mb-12 px-4"
       >
         <p className="text-xl md:text-2xl lg:text-3xl text-silver-mid leading-relaxed font-display font-normal">
-          Bitsocial is an open-source peer-to-peer protocol for social apps, with no servers, no
-          global bans, where users and communities are cryptographic property.
+          Bitsocial is an open-source peer-to-peer protocol for social apps,
+          with no servers, no global bans, where users and communities are
+          cryptographic property.
         </p>
       </motion.div>
 
@@ -35,6 +37,16 @@ export default function Hero() {
           Browse Apps
         </Link>
       </motion.div>
+
+      {/* Planet animation with parallax scroll */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7, duration: 0.6 }}
+        className="w-full mt-8"
+      >
+        <PlanetGraphic />
+      </motion.div>
     </section>
-  );
+  )
 }

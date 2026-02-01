@@ -1,8 +1,8 @@
-import Topbar from "../components/Topbar";
-import Hero from "../components/Hero";
-import Features from "../components/Features";
-import Roadmap from "../components/Roadmap";
-import Footer from "../components/Footer";
+import Topbar from "../components/Topbar"
+import Hero from "../components/Hero"
+import Features from "../components/Features"
+import Roadmap from "../components/Roadmap"
+import Footer from "../components/Footer"
 
 export default function Home() {
   return (
@@ -13,5 +13,5 @@ export default function Home() {
       <Roadmap />
       <Footer />
     </div>
-  );
+  )
 }

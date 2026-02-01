@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
 const features = [
   {
@@ -25,7 +25,7 @@ const features = [
       "Users and communities are cryptographic property, giving true ownership and control over digital identity.",
     icon: "🔐",
   },
-];
+]
 
 export default function Features() {
   return (
@@ -55,11 +55,13 @@ export default function Features() {
               <h3 className="text-xl font-display font-semibold mb-3 text-silver-bright group-hover:text-blue-glow transition-colors">
                 {feature.title}
               </h3>
-              <p className="text-silver-mid text-sm leading-relaxed">{feature.description}</p>
+              <p className="text-silver-mid text-sm leading-relaxed">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }

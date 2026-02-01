@@ -1,6 +1,6 @@
-import Topbar from "../components/Topbar";
-import Footer from "../components/Footer";
-import { motion } from "framer-motion";
+import Topbar from "../components/Topbar"
+import Footer from "../components/Footer"
+import { motion } from "framer-motion"
 
 export default function Apps() {
   return (
@@ -41,5 +41,5 @@ export default function Apps() {
       </main>
       <Footer />
     </div>
-  );
+  )
 }
