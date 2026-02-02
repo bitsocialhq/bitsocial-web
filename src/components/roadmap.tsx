@@ -42,7 +42,7 @@ export default function Roadmap() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-display font-bold text-center mb-16 chrome-text"
+          className="text-4xl md:text-5xl font-display font-normal text-center mb-16 text-muted-foreground"
         >
           Roadmap
         </motion.h2>
@@ -70,10 +70,10 @@ export default function Roadmap() {
 
                 {/* Content card */}
                 <div className="flex-1 glass-card p-6 max-w-md">
-                  <div className="text-sm text-blue-glow font-display font-semibold mb-2">
+                  <div className="text-sm text-blue-glow font-display font-normal mb-2">
                     {item.phase}
                   </div>
-                  <h3 className="text-2xl font-display font-bold mb-3 text-foreground">
+                  <h3 className="text-2xl font-display font-semibold mb-3 text-muted-foreground">
                     {item.title}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">

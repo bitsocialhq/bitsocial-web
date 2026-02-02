@@ -36,7 +36,7 @@ export default function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-display font-bold text-center mb-16 chrome-text"
+          className="text-4xl md:text-5xl font-display font-normal text-center mb-16 text-muted-foreground"
         >
           Core Features
         </motion.h2>
@@ -52,7 +52,7 @@ export default function Features() {
               className="glass-card p-6 hover:border-silver-mid/50 transition-all duration-300 group"
             >
               <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-display font-semibold mb-3 text-foreground group-hover:text-blue-glow transition-colors">
+              <h3 className="text-xl font-display font-semibold mb-3 text-muted-foreground group-hover:text-blue-glow transition-colors">
                 {feature.title}
               </h3>
               <p className="text-muted-foreground text-sm leading-relaxed">

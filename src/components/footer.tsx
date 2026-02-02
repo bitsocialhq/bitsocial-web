@@ -6,16 +6,16 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="font-display font-semibold text-lg mb-4 chrome-text">
+            <h3 className="font-display font-semibold text-lg mb-4 text-muted-foreground">
               Bitsocial
             </h3>
             <p className="text-muted-foreground text-sm">
-              Open source P2P network for social apps.
+              Open-source peer-to-peer network for social apps.
             </p>
           </div>
 
           <div>
-            <h4 className="font-display font-semibold mb-4 text-foreground">
+            <h4 className="font-display font-semibold mb-4 text-muted-foreground">
               Quick Links
             </h4>
             <ul className="space-y-2">
@@ -39,7 +39,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold mb-4 text-foreground">
+            <h4 className="font-display font-semibold mb-4 text-muted-foreground">
               Connect
             </h4>
             <ul className="space-y-2">
@@ -48,7 +48,7 @@ export default function Footer() {
                   href="https://github.com/bitsocialhq"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-blue-glow transition-colors text-sm font-display"
+                  className="text-muted-foreground hover:text-blue-glow transition-colors text-sm"
                 >
                   GitHub
                 </a>
