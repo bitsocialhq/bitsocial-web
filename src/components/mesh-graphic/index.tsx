@@ -144,7 +144,7 @@ export default function MeshGraphic() {
       new THREE.BufferAttribute(pointPositions, 3),
     )
 
-    // Custom shader for hollow circle nodes
+    // Custom shader for hollow circle nodes with center dot
     const pointsMaterial = new THREE.ShaderMaterial({
       uniforms: {
         color: { value: meshColor },
@@ -165,15 +165,22 @@ export default function MeshGraphic() {
         void main() {
           vec2 center = gl_PointCoord - vec2(0.5);
           float dist = length(center);
-          // Smooth anti-aliased hollow ring (1px width)
+          float edge = fwidth(dist) * 1.5; // Adaptive AA
+          
+          // Center dot (filled)
+          float dotRadius = 0.12; // Small radius for center dot
+          float dotAlpha = 1.0 - smoothstep(dotRadius - edge, dotRadius, dist);
+          
+          // Hollow ring
           float outerRadius = 0.5;
           float ringWidth = 0.08; // Thin ring
           float innerRadius = outerRadius - ringWidth;
-          float edge = fwidth(dist) * 1.5; // Adaptive AA
-          // Smooth outer and inner edges
           float outerAlpha = 1.0 - smoothstep(outerRadius - edge, outerRadius, dist);
           float innerAlpha = smoothstep(innerRadius - edge, innerRadius, dist);
-          float alpha = outerAlpha * innerAlpha;
+          float ringAlpha = outerAlpha * innerAlpha;
+          
+          // Combine dot and ring
+          float alpha = max(dotAlpha, ringAlpha);
           if (alpha < 0.01) discard;
           gl_FragColor = vec4(color, alpha * alphaMultiplier);
         }
