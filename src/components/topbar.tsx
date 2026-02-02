@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { ModeToggle } from "./mode-toggle"
+import { ThemeToggle } from "./theme-toggle"
 
 export default function Topbar() {
   return (
@@ -42,7 +42,7 @@ export default function Topbar() {
             GitHub
             <span className="absolute bottom-0 left-0 w-0 h-px bg-blue-glow group-hover:w-full transition-all duration-300" />
           </a>
-          <ModeToggle />
+          <ThemeToggle />
         </div>
       </div>
     </motion.nav>

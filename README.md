@@ -88,7 +88,7 @@ src/
 │   ├── features.tsx         # Features grid
 │   ├── roadmap.tsx          # Timeline roadmap
 │   ├── footer.tsx           # Footer
-│   ├── mode-toggle.tsx      # Dark/light theme toggle
+│   ├── theme-toggle.tsx      # Dark/light theme toggle
 │   ├── theme-provider.tsx   # Theme context provider
 │   ├── planet-graphic/      # 3D globe with Three.js
 │   ├── mesh-network/        # Network visualization
