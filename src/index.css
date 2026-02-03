@@ -42,11 +42,11 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 4%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 90%;
-    --card: 0 0% 0%;
+    --card: 0 0% 4%;
     --card-foreground: 0 0% 90%;
-    --popover: 0 0% 4%;
+    --popover: 0 0% 0%;
     --popover-foreground: 0 0% 90%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
