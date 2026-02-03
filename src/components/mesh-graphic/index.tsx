@@ -105,7 +105,7 @@ export default function MeshGraphic() {
     const visibleWidth = visibleHeight * aspectRatio
 
     // Node parameters - smaller and fewer on mobile
-    const nodeCount = isMobile ? 80 : 300
+    const nodeCount = isMobile ? 80 : 200
     const connectionDistance = isMobile ? 6 : 5 // Slightly larger on mobile to maintain connectivity with fewer nodes
     const nodeSize = isMobile ? 0.03 : 0.05
 
