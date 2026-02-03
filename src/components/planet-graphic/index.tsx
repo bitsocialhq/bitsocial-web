@@ -418,8 +418,8 @@ export default function PlanetGraphic() {
           ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 40%",
-            end: "top 10%",
+            start: "top 20%",
+            end: "top -30%",
             scrub: 1,
           },
         },
