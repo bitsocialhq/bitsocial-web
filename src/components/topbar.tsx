@@ -6,15 +6,43 @@ import HamburgerButton from "./hamburger-button"
 import LanguageSelector from "./language-selector"
 import MobileMenu from "./mobile-menu"
 
-function NavLink({ to, href, children, onClick, className: extraClassName }: { to?: string; href?: string; children: React.ReactNode; onClick?: () => void; className?: string }) {
-  const baseClassName = "text-muted-foreground hover:text-foreground transition-colors relative group text-sm md:text-base font-display py-2 block"
-  const className = extraClassName ? `${baseClassName} ${extraClassName}` : baseClassName
+function NavLink({
+  to,
+  href,
+  children,
+  onClick,
+  className: extraClassName,
+  disabled,
+}: {
+  to?: string
+  href?: string
+  children: React.ReactNode
+  onClick?: () => void
+  className?: string
+  disabled?: boolean
+}) {
+  const baseClassName =
+    "text-muted-foreground hover:text-foreground transition-colors relative group text-sm md:text-base font-display py-2 block"
+  const disabledClassName = "opacity-50 cursor-not-allowed"
+  const className = extraClassName
+    ? `${baseClassName} ${disabled ? disabledClassName : ""} ${extraClassName}`
+    : `${baseClassName} ${disabled ? disabledClassName : ""}`
   const content = (
     <>
       {children}
-      <span className="absolute bottom-0 left-0 w-0 h-px bg-blue-glow group-hover:w-full transition-all duration-300" />
+      {!disabled && (
+        <span className="absolute bottom-0 left-0 w-0 h-px bg-blue-glow group-hover:w-full transition-all duration-300" />
+      )}
     </>
   )
+
+  if (disabled) {
+    return (
+      <span className={className} title="Coming soon">
+        {content}
+      </span>
+    )
+  }
 
   if (href) {
     return (
@@ -71,18 +99,17 @@ export default function Topbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4 md:gap-8">
-            <NavLink to="#" onClick={handleNavClick}>
-              About
-            </NavLink>
-            <NavLink to="#" onClick={handleNavClick}>
-              Blog
-            </NavLink>
+            <NavLink disabled>About</NavLink>
+            <NavLink disabled>Blog</NavLink>
             <NavLink to="/docs" onClick={handleNavClick}>
               Docs
             </NavLink>
             <LanguageSelector />
             <ThemeToggle />
-            <NavLink href="https://github.com/bitsocialhq" onClick={handleNavClick}>
+            <NavLink
+              href="https://github.com/bitsocialhq"
+              onClick={handleNavClick}
+            >
               GitHub
             </NavLink>
           </div>
@@ -95,27 +122,35 @@ export default function Topbar() {
             />
           </div>
         </div>
-        
+
         {/* Mobile Menu - positioned absolutely below topbar */}
         <MobileMenu isOpen={isMobileMenuOpen} onHeightChange={setMenuHeight}>
-          <NavLink to="#" onClick={handleNavClick} className="text-base">
+          <NavLink disabled className="text-base">
             About
           </NavLink>
-          <NavLink to="#" onClick={handleNavClick} className="text-base">
+          <NavLink disabled className="text-base">
             Blog
           </NavLink>
           <NavLink to="/docs" onClick={handleNavClick} className="text-base">
             Docs
           </NavLink>
           <div className="flex items-center gap-4 py-2 border-t border-border pt-4 mt-2">
-            <span className="text-sm text-muted-foreground font-display">Language</span>
+            <span className="text-sm text-muted-foreground font-display">
+              Language
+            </span>
             <LanguageSelector />
           </div>
           <div className="flex items-center gap-4 py-2 border-t border-border pt-4">
-            <span className="text-sm text-muted-foreground font-display">Theme</span>
+            <span className="text-sm text-muted-foreground font-display">
+              Theme
+            </span>
             <ThemeToggle />
           </div>
-          <NavLink href="https://github.com/bitsocialhq" onClick={handleNavClick} className="text-base border-t border-border pt-4 mt-2">
+          <NavLink
+            href="https://github.com/bitsocialhq"
+            onClick={handleNavClick}
+            className="text-base border-t border-border pt-4 mt-2"
+          >
             GitHub
           </NavLink>
         </MobileMenu>

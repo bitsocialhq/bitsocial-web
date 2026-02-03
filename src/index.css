@@ -16,69 +16,65 @@
   }
   button,
   [role="button"] {
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-touch-callout: none !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    outline: none !important;
-    outline-width: 0 !important;
-    outline-style: none !important;
-    outline-offset: 0 !important;
-    outline-color: transparent !important;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-appearance: none;
+    appearance: none;
     user-select: none;
     -webkit-user-select: none;
   }
-  button:focus,
+  /* Suppress focus rings for mouse/touch interactions only */
+  button:focus:not(:focus-visible),
   button:active,
-  button:focus-visible,
-  button:focus-within,
-  button:-webkit-any-link:focus,
-  [role="button"]:focus,
+  button:focus-within:not(:focus-visible),
+  button:-webkit-any-link:focus:not(:focus-visible),
+  [role="button"]:focus:not(:focus-visible),
   [role="button"]:active,
-  [role="button"]:focus-visible,
-  [role="button"]:focus-within {
-    outline: none !important;
-    outline-width: 0 !important;
-    outline-style: none !important;
-    outline-offset: 0 !important;
-    outline-color: transparent !important;
-    box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    border-color: inherit !important;
+  [role="button"]:focus-within:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color: inherit;
   }
   button::before,
   button::after,
-  button:focus::before,
-  button:focus::after,
+  button:focus:not(:focus-visible)::before,
+  button:focus:not(:focus-visible)::after,
   [role="button"]::before,
   [role="button"]::after,
-  [role="button"]:focus::before,
-  [role="button"]:focus::after {
-    outline: none !important;
-    box-shadow: none !important;
+  [role="button"]:focus:not(:focus-visible)::before,
+  [role="button"]:focus:not(:focus-visible)::after {
+    outline: none;
+    box-shadow: none;
   }
-  /* Mobile-specific: remove any focus ring on touch */
+  /* Keyboard accessibility: visible focus indicator */
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  /* Mobile-specific: suppress focus rings for touch but preserve for keyboard */
   @media (hover: none) and (pointer: coarse) {
     button,
     [role="button"] {
-      -webkit-tap-highlight-color: transparent !important;
-      outline: none !important;
+      -webkit-tap-highlight-color: transparent;
     }
-    button:focus,
+    button:focus:not(:focus-visible),
     button:active,
-    button:focus-visible,
-    [role="button"]:focus,
-    [role="button"]:active,
-    [role="button"]:focus-visible {
-      outline: none !important;
-      outline-width: 0 !important;
-      outline-style: none !important;
-      outline-color: transparent !important;
-      box-shadow: none !important;
-      -webkit-box-shadow: none !important;
+    [role="button"]:focus:not(:focus-visible),
+    [role="button"]:active {
+      outline: none;
+      box-shadow: none;
+      -webkit-box-shadow: none;
       /* Reset Tailwind ring */
-      --tw-ring-shadow: 0 0 #0000 !important;
-      --tw-ring-offset-shadow: 0 0 #0000 !important;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-ring-offset-shadow: 0 0 #0000;
+    }
+    /* Still show focus-visible on mobile for external keyboard users */
+    button:focus-visible,
+    [role="button"]:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 2px;
     }
   }
   :root {
