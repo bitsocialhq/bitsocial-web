@@ -259,7 +259,7 @@ export default function PlanetGraphic() {
 
     // Ring parameters - closer to the sphere like the logo
     const ringRadius = 8.2 // Closer to sphere (sphere is 7 radius)
-    const tubeWidth = isMobile ? 0.5 : 0.3 // Width of the rectangular cross-section
+    const tubeWidth = initialIsMobile ? 0.5 : 0.3 // Width of the rectangular cross-section
     const tubeHeight = 0.2 // Height (thickness) of the ring
 
     // Metallic material for rings (silver/chrome look) - keep gray, boost shine
