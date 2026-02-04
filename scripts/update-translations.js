@@ -138,6 +138,49 @@ async function writeJson(filePath, data) {
   await fs.writeFile(filePath, json, "utf8")
 }
 
+/**
+ * Get nested value from object using dot notation (e.g., "hero.tagline")
+ */
+function getNestedValue(obj, path) {
+  const parts = path.split(".")
+  let current = obj
+  for (const part of parts) {
+    if (current == null || typeof current !== "object") return undefined
+    current = current[part]
+  }
+  return current
+}
+
+/**
+ * Set nested value in object using dot notation (e.g., "hero.tagline")
+ */
+function setNestedValue(obj, path, value) {
+  const parts = path.split(".")
+  let current = obj
+  for (let i = 0; i < parts.length - 1; i++) {
+    const part = parts[i]
+    if (current[part] == null || typeof current[part] !== "object") {
+      current[part] = {}
+    }
+    current = current[part]
+  }
+  current[parts[parts.length - 1]] = value
+}
+
+/**
+ * Delete nested value from object using dot notation
+ */
+function deleteNestedValue(obj, path) {
+  const parts = path.split(".")
+  let current = obj
+  for (let i = 0; i < parts.length - 1; i++) {
+    const part = parts[i]
+    if (current[part] == null || typeof current[part] !== "object") return
+    current = current[part]
+  }
+  delete current[parts[parts.length - 1]]
+}
+
 async function handleDelete(
   key,
   translationsRoot,
@@ -160,12 +203,11 @@ async function handleDelete(
 
     const json = await loadJson(filePath)
 
-    if (!Object.prototype.hasOwnProperty.call(json, key)) {
+    const prevVal = getNestedValue(json, key)
+    if (typeof prevVal === "undefined") {
       // Key does not exist in this language, skip
       continue
     }
-
-    const prevVal = json[key]
     planned.push({ lang, filePath, prevVal, json })
   }
 
@@ -185,7 +227,7 @@ async function handleDelete(
       `  - deleted: ${prevPreview}${String(prevVal).length > 60 ? "..." : ""}`,
     )
     if (!dryRun) {
-      delete change.json[key]
+      deleteNestedValue(change.json, key)
       await writeJson(filePath, change.json)
     }
   }
@@ -360,7 +402,21 @@ async function handleAudit(translationsRoot, srcDir, dryRun, write, force) {
     process.exit(1)
   }
   const enJson = await loadJson(enPath)
-  const definedKeys = Object.keys(enJson)
+  
+  // Flatten nested keys to dot notation
+  function flattenKeys(obj, prefix = "") {
+    const keys = []
+    for (const [key, value] of Object.entries(obj)) {
+      const fullKey = prefix ? `${prefix}.${key}` : key
+      if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        keys.push(...flattenKeys(value, fullKey))
+      } else {
+        keys.push(fullKey)
+      }
+    }
+    return keys
+  }
+  const definedKeys = flattenKeys(enJson)
 
   // Find unused keys (defined but not used statically)
   const unusedKeys = definedKeys.filter((key) => !usedKeys.has(key))
@@ -372,7 +428,7 @@ async function handleAudit(translationsRoot, srcDir, dryRun, write, force) {
 
   console.log(`Found ${unusedKeys.length} unused translation key(s):\n`)
   for (const key of unusedKeys) {
-    const value = enJson[key]
+    const value = getNestedValue(enJson, key)
     const preview = String(value).substring(0, 50)
     console.log(
       `  - ${key}: "${preview}${String(value).length > 50 ? "..." : ""}"`,
@@ -437,8 +493,9 @@ async function handleAudit(translationsRoot, srcDir, dryRun, write, force) {
     let changed = false
 
     for (const key of unusedKeys) {
-      if (Object.prototype.hasOwnProperty.call(json, key)) {
-        delete json[key]
+      const value = getNestedValue(json, key)
+      if (typeof value !== "undefined") {
+        deleteNestedValue(json, key)
         changed = true
       }
     }
@@ -473,7 +530,7 @@ async function handleUpdate(
     if (!(await fileExists(srcPath)))
       usage(1, `Source file not found for --from ${fromLang}: ${srcPath}`)
     const srcJson = await loadJson(srcPath)
-    sourceValue = srcJson[key]
+    sourceValue = getNestedValue(srcJson, key)
     if (typeof sourceValue === "undefined")
       usage(1, `Key "${key}" not found in source language ${fromLang}`)
   }
@@ -507,7 +564,7 @@ async function handleUpdate(
       continue
     }
 
-    const prevVal = json[key]
+    const prevVal = getNestedValue(json, key)
     if (prevVal === nextVal) continue
 
     planned.push({ lang, filePath, prevVal, nextVal, json })
@@ -533,7 +590,7 @@ async function handleUpdate(
       `  + to  : ${nextPreview}${String(nextVal).length > 60 ? "..." : ""}`,
     )
     if (!dryRun) {
-      change.json[key] = nextVal
+      setNestedValue(change.json, key, nextVal)
       await writeJson(filePath, change.json)
     }
   }
