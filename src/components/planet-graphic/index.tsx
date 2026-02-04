@@ -353,26 +353,65 @@ export default function PlanetGraphic() {
     const ringRotationDelay = 3
     const ringRotationPause = 5
     const ringRotationEase = "sine.inOut"
-    const ring1BaseRotationY = ring1.rotation.y
-    const ring2BaseRotationY = ring2.rotation.y
+    const ringRotationAmount = Math.PI * 2
+    const ring1BaseQuaternion = ring1.quaternion.clone()
+    const ring2BaseQuaternion = ring2.quaternion.clone()
+    const ring1RotationQuaternion = new THREE.Quaternion()
+    const ring2RotationQuaternion = new THREE.Quaternion()
 
-    const ring1RotationTween = gsap.to(ring1.rotation, {
-      y: ring1BaseRotationY + Math.PI * 2,
-      duration: ringRotationDuration,
-      ease: ringRotationEase,
-      delay: ringRotationDelay,
-      repeat: -1,
-      repeatDelay: ringRotationPause,
-    })
+    const getRandomRotationAxis = () => {
+      const axis = new THREE.Vector3(
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+        Math.random() * 2 - 1,
+      )
+      if (axis.lengthSq() < 0.0001) {
+        axis.set(0, 1, 0)
+      }
+      return axis.normalize()
+    }
 
-    const ring2RotationTween = gsap.to(ring2.rotation, {
-      y: ring2BaseRotationY + Math.PI * 2,
-      duration: ringRotationDuration,
-      ease: ringRotationEase,
-      delay: ringRotationDelay,
-      repeat: -1,
-      repeatDelay: ringRotationPause,
-    })
+    const createRingRotationTween = (
+      ring: THREE.Mesh,
+      baseQuaternion: THREE.Quaternion,
+      rotationQuaternion: THREE.Quaternion,
+    ) => {
+      const progress = { value: 0 }
+      let rotationAxis = getRandomRotationAxis()
+      return gsap.to(progress, {
+        value: 1,
+        duration: ringRotationDuration,
+        ease: ringRotationEase,
+        delay: ringRotationDelay,
+        repeat: -1,
+        repeatDelay: ringRotationPause,
+        onStart: () => {
+          rotationAxis = getRandomRotationAxis()
+        },
+        onRepeat: () => {
+          rotationAxis = getRandomRotationAxis()
+          ring.quaternion.copy(baseQuaternion)
+        },
+        onUpdate: () => {
+          rotationQuaternion.setFromAxisAngle(
+            rotationAxis,
+            progress.value * ringRotationAmount,
+          )
+          ring.quaternion.copy(baseQuaternion).premultiply(rotationQuaternion)
+        },
+      })
+    }
+
+    const ring1RotationTween = createRingRotationTween(
+      ring1,
+      ring1BaseQuaternion,
+      ring1RotationQuaternion,
+    )
+    const ring2RotationTween = createRingRotationTween(
+      ring2,
+      ring2BaseQuaternion,
+      ring2RotationQuaternion,
+    )
 
     // Animation
     let animationId: number
