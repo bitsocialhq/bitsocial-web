@@ -1,34 +1,48 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
+import { Trans, useTranslation } from "react-i18next"
 import PlanetGraphic from "./planet-graphic"
 import MeshGraphic from "./mesh-graphic"
 import { triggerFeatureGlow } from "@/lib/utils"
 
-const taglinePhrases = [
-  { text: "Bitsocial is ", hash: null, isLink: false },
-  { text: "an open-source", hash: "open-source", isLink: true },
-  { text: " peer-to-peer network", hash: "peer-to-peer", isLink: true },
-  { text: " for social apps,", hash: "social-apps", isLink: true },
-  { text: " with no servers,", hash: "no-servers", isLink: true },
-  { text: " no global bans,", hash: "no-global-bans", isLink: true },
-  { text: " where users and communities are ", hash: null, isLink: false },
-  {
-    text: " cryptographic property",
-    hash: "cryptographic-property",
-    isLink: true,
-  },
-  { text: ".", hash: null, isLink: false },
-]
-
-function handleTaglineClick(hash: string | null) {
-  if (!hash) return
+function handleTaglineClick(hash: string) {
   // Update URL instantly without triggering browser scroll
   window.history.replaceState(null, "", `#${hash}`)
   // Trigger glow effect (includes smooth scroll)
   triggerFeatureGlow(hash)
 }
 
+// Reusable clickable span for tagline links
+function TaglineLink({
+  hash,
+  children,
+}: {
+  hash: string
+  children?: React.ReactNode
+}) {
+  return (
+    <span
+      onClick={() => handleTaglineClick(hash)}
+      className="cursor-pointer transition-all duration-300 hover:text-blue-glow relative"
+      style={{
+        filter: "drop-shadow(0 0 0 transparent)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.filter =
+          "drop-shadow(0 0 12px rgba(37, 99, 235, 0.8))"
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.filter = "drop-shadow(0 0 0 transparent)"
+      }}
+    >
+      {children}
+    </span>
+  )
+}
+
 export default function Hero() {
+  const { t } = useTranslation()
+
   return (
     <section className="min-h-[100svh] md:min-h-screen flex flex-col items-center justify-start pt-28 md:pt-40 px-6 relative overflow-x-hidden overflow-y-visible">
       <motion.div
@@ -38,31 +52,17 @@ export default function Hero() {
         className="max-w-3xl text-center mb-12 px-4 relative z-10"
       >
         <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground leading-relaxed font-display font-normal">
-          {taglinePhrases.map((phrase, index) => {
-            if (phrase.isLink && phrase.hash) {
-              return (
-                <span
-                  key={index}
-                  onClick={() => handleTaglineClick(phrase.hash)}
-                  className="cursor-pointer transition-all duration-300 hover:text-blue-glow relative"
-                  style={{
-                    filter: "drop-shadow(0 0 0 transparent)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.filter =
-                      "drop-shadow(0 0 12px rgba(37, 99, 235, 0.8))"
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.filter =
-                      "drop-shadow(0 0 0 transparent)"
-                  }}
-                >
-                  {phrase.text}
-                </span>
-              )
-            }
-            return <span key={index}>{phrase.text}</span>
-          })}
+          <Trans
+            i18nKey="hero.tagline"
+            components={{
+              openSource: <TaglineLink hash="open-source" />,
+              p2p: <TaglineLink hash="peer-to-peer" />,
+              socialApps: <TaglineLink hash="social-apps" />,
+              noServers: <TaglineLink hash="no-servers" />,
+              noBans: <TaglineLink hash="no-global-bans" />,
+              crypto: <TaglineLink hash="cryptographic-property" />,
+            }}
+          />
         </p>
       </motion.div>
 
@@ -76,13 +76,13 @@ export default function Hero() {
           to="/docs"
           className="px-8 py-3 border border-border bg-card/50 backdrop-blur-md text-muted-foreground hover:text-foreground font-display font-semibold hover:border-blue-glow ring-glow transition-all duration-300"
         >
-          Read Docs
+          {t("hero.readDocs")}
         </Link>
         <Link
           to="/apps"
           className="px-8 py-3 border border-blue-core bg-blue-core/20 backdrop-blur-md text-muted-foreground hover:text-foreground font-display font-semibold hover:bg-blue-core/30 hover:border-blue-glow ring-glow transition-all duration-300"
         >
-          Browse Apps
+          {t("hero.browseApps")}
         </Link>
       </motion.div>
 
