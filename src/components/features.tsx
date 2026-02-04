@@ -64,11 +64,16 @@ export default function Features() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1)
       if (hash && features.some((f) => f.id === hash)) {
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+        }
         // Small delay to ensure DOM is ready
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           triggerFeatureGlow(hash)
         }, 100)
       }
@@ -81,6 +86,9 @@ export default function Features() {
     window.addEventListener("hashchange", handleHashChange)
 
     return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
       window.removeEventListener("hashchange", handleHashChange)
     }
   }, [])
