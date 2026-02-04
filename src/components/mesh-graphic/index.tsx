@@ -1,10 +1,6 @@
-import { useRef, useEffect, useState, useLayoutEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import * as THREE from "three"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useTheme } from "next-themes"
-
-gsap.registerPlugin(ScrollTrigger)
 
 interface Node {
   position: THREE.Vector3
@@ -119,7 +115,7 @@ export default function MeshGraphic() {
     const uWidth = visibleWidth + 8 // Extend past visible edges
     const uDepth = 8 // Depth variation for parallax
     const bottomY = -10 // Bottom of the U (behind planet)
-    const topY = isMobile ? 14 : 10 // Extended upward for more height
+    const topY = isMobile ? 15 : 10 // Extended upward for more height on mobile
 
     // Distribute nodes uniformly across entire space using grid-like distribution with jitter
     const gridCols = Math.ceil(
@@ -383,41 +379,21 @@ export default function MeshGraphic() {
     }
   }, [isMobile, resolvedTheme, dimensions.width, dimensions.height])
 
-  // GSAP scroll parallax - same as planet graphic
-  useLayoutEffect(() => {
-    if (!containerRef.current) return
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        containerRef.current,
-        {
-          y: 0,
-          opacity: 1,
-        },
-        {
-          y: "30vh",
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 20%",
-            end: "top -30%",
-            scrub: 1,
-          },
-        },
-      )
-    }, containerRef)
-
-    return () => ctx.revert()
-  }, [])
-
   return (
     <div
       ref={containerRef}
-      className="h-[65vh] md:h-[70vh] absolute inset-x-0 pointer-events-none overflow-hidden"
-      style={{ top: "-5vh" }}
+      className="h-[55vh] md:h-[70vh] absolute inset-x-0 pointer-events-none overflow-hidden overscroll-none"
+      style={{ top: isMobile ? "-8vh" : "-5vh" }}
     >
-      <canvas ref={canvasRef} className="w-full h-full" />
+      <canvas ref={canvasRef} className="block w-full h-full touch-pan-y" />
+      {/* Bottom fade gradient overlay - tall and strong to dissolve into next section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-64 md:h-80 pointer-events-none z-10"
+        style={{
+          background:
+            "linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background)) 25%, hsl(var(--background) / 0.9) 40%, hsl(var(--background) / 0.6) 60%, hsl(var(--background) / 0.2) 80%, transparent 100%)",
+        }}
+      />
     </div>
   )
 }

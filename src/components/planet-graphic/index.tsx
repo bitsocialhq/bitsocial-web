@@ -1,10 +1,7 @@
-import { useRef, useLayoutEffect, useState, useEffect } from "react"
+import { useRef, useState, useEffect } from "react"
 import * as THREE from "three"
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useTheme } from "next-themes"
-
-gsap.registerPlugin(ScrollTrigger)
 
 // Create a 3D ring with rectangular cross-section (like the logo)
 function createMetallicRing(
@@ -100,26 +97,21 @@ function createMetallicRing(
 export default function PlanetGraphic() {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false
+    const hardwareConcurrency = navigator.hardwareConcurrency || 4
+    return window.innerWidth < 768 || hardwareConcurrency < 4
+  })
   const { resolvedTheme } = useTheme()
-
-  useEffect(() => {
-    const checkMobile = () => {
-      const width = window.innerWidth
-      const hardwareConcurrency = navigator.hardwareConcurrency || 4
-      setIsMobile(width < 768 || hardwareConcurrency < 4)
-    }
-
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return
 
     const canvas = canvasRef.current
     const container = containerRef.current
+    const resizeDebounceMs = 140
+    const getIsMobile = (width: number) =>
+      width < 768 || (navigator.hardwareConcurrency || 4) < 4
 
     // Check if dark mode
     const isDark =
@@ -130,8 +122,10 @@ export default function PlanetGraphic() {
     // Scene setup
     const scene = new THREE.Scene()
     // Adjust FOV and camera position for mobile to show more of the scene
-    const fov = isMobile ? 55 : 45 // Wider FOV on mobile for more visibility
-    const cameraZ = isMobile ? 18 : 14 // Further back on mobile to zoom out
+    const initialIsMobile = getIsMobile(container.clientWidth)
+    setIsMobile((prev) => (prev === initialIsMobile ? prev : initialIsMobile))
+    const fov = initialIsMobile ? 65 : 45 // Wider FOV on mobile for more visibility
+    const cameraZ = initialIsMobile ? 20 : 17 // Further back on mobile to zoom out
     const camera = new THREE.PerspectiveCamera(
       fov,
       container.clientWidth / container.clientHeight,
@@ -145,7 +139,7 @@ export default function PlanetGraphic() {
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: !isMobile,
+      antialias: !initialIsMobile,
       premultipliedAlpha: false,
     })
     renderer.setSize(container.clientWidth, container.clientHeight)
@@ -265,7 +259,7 @@ export default function PlanetGraphic() {
 
     // Ring parameters - closer to the sphere like the logo
     const ringRadius = 8.2 // Closer to sphere (sphere is 7 radius)
-    const tubeWidth = 0.3 // Width of the rectangular cross-section
+    const tubeWidth = isMobile ? 0.5 : 0.3 // Width of the rectangular cross-section
     const tubeHeight = 0.2 // Height (thickness) of the ring
 
     // Metallic material for rings (silver/chrome look) - keep gray, boost shine
@@ -449,29 +443,45 @@ export default function PlanetGraphic() {
 
     animate()
 
-    // Handle resize
+    // Handle resize (debounced to avoid excessive reflows)
+    let resizeTimeoutId: ReturnType<typeof setTimeout> | null = null
     const handleResize = () => {
       if (!container) return
       const width = container.clientWidth
       const height = container.clientHeight
-      const isMobileNow =
-        width < 768 || (navigator.hardwareConcurrency || 4) < 4
-      const fov = isMobileNow ? 55 : 45
-      const cameraZ = isMobileNow ? 18 : 14
+      if (!width || !height) return
+      const isMobileNow = getIsMobile(width)
+      const nextFov = isMobileNow ? 65 : 45
+      const nextCameraZ = isMobileNow ? 20 : 17
 
-      camera.fov = fov
+      setIsMobile((prev) => (prev === isMobileNow ? prev : isMobileNow))
+      camera.fov = nextFov
       camera.aspect = width / height
-      camera.position.z = cameraZ
+      camera.position.set(0, 1, nextCameraZ)
       camera.updateProjectionMatrix()
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
       renderer.setSize(width, height)
     }
 
-    window.addEventListener("resize", handleResize)
+    const scheduleResize = () => {
+      if (resizeTimeoutId) {
+        clearTimeout(resizeTimeoutId)
+      }
+      resizeTimeoutId = setTimeout(handleResize, resizeDebounceMs)
+    }
+
+    const resizeObserver = new ResizeObserver(scheduleResize)
+    resizeObserver.observe(container)
+    window.addEventListener("resize", scheduleResize, { passive: true })
 
     // Cleanup
     return () => {
       cancelAnimationFrame(animationId)
-      window.removeEventListener("resize", handleResize)
+      if (resizeTimeoutId) {
+        clearTimeout(resizeTimeoutId)
+      }
+      window.removeEventListener("resize", scheduleResize)
+      resizeObserver.disconnect()
 
       ring1RotationTween.kill()
       ring2RotationTween.kill()
@@ -487,45 +497,27 @@ export default function PlanetGraphic() {
 
       renderer.dispose()
     }
-  }, [isMobile, resolvedTheme])
-
-  // GSAP scroll parallax
-  useLayoutEffect(() => {
-    if (!containerRef.current) return
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        containerRef.current,
-        {
-          y: 0,
-          opacity: 1,
-        },
-        {
-          y: "30vh",
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 20%",
-            end: "top -30%",
-            scrub: 1,
-          },
-        },
-      )
-    }, containerRef)
-
-    return () => ctx.revert()
-  }, [])
+  }, [resolvedTheme])
 
   return (
     <div
       ref={containerRef}
-      className="h-[60vh] md:h-[65vh] relative pointer-events-none w-full overflow-hidden"
-      style={{ marginTop: "-2rem" }}
+      className="h-[55vh] md:h-[75vh] relative pointer-events-none w-full overflow-hidden overscroll-none"
+      style={{
+        transform: isMobile
+          ? "translateY(calc(-1rem - 12vh))"
+          : "translateY(calc(-2rem - 4vh))",
+      }}
     >
-      <canvas ref={canvasRef} className="w-full h-full" />
-      {/* Bottom fade gradient overlay */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 md:h-40 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
+      <canvas ref={canvasRef} className="block w-full h-full touch-pan-y" />
+      {/* Bottom fade gradient overlay - tall and strong to dissolve into next section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-48 md:h-80 pointer-events-none z-10"
+        style={{
+          background:
+            "linear-gradient(to top, hsl(var(--background)) 0%, hsl(var(--background)) 25%, hsl(var(--background) / 0.9) 40%, hsl(var(--background) / 0.6) 60%, hsl(var(--background) / 0.2) 80%, transparent 100%)",
+        }}
+      />
     </div>
   )
 }

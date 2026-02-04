@@ -5,7 +5,7 @@ import MeshGraphic from "./mesh-graphic"
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-start pt-28 md:pt-40 px-6 relative overflow-hidden">
+    <section className="min-h-[100svh] md:min-h-screen flex flex-col items-center justify-start pt-28 md:pt-40 px-6 relative overflow-x-hidden overflow-y-visible">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: -20 }}
@@ -23,7 +23,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: -20 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="flex flex-col sm:flex-row gap-4 relative z-10"
+        className="flex flex-col sm:flex-row gap-4 relative z-0"
       >
         <Link
           to="/docs"
@@ -40,7 +40,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Planet and Mesh container - mesh behind planet */}
-      <div className="mt-4 md:mt-6 relative -mx-6 w-[calc(100%+3rem)]">
+      <div className="mt-4 md:mt-6 relative -mx-6 w-[calc(100%+3rem)] pointer-events-none overscroll-none touch-pan-y">
         {/* P2P Mesh Network - behind the planet */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.6 }}
-          className="relative z-10"
+          className="relative z-30 pt-24 -mt-24 pointer-events-none"
         >
           <PlanetGraphic />
         </motion.div>
@@ -64,10 +64,10 @@ export default function Hero() {
 
       {/* Bottom fade gradient - seamless transition to next section */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-48 md:h-64 pointer-events-none z-20"
+        className="absolute bottom-0 left-0 right-0 h-48 md:h-96 pointer-events-none z-40"
         style={{
           background:
-            "linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%)",
+            "linear-gradient(to bottom, transparent 0%, hsl(var(--background) / 0.3) 30%, hsl(var(--background) / 0.7) 60%, hsl(var(--background)) 85%, hsl(var(--background)) 100%)",
         }}
       />
     </section>
