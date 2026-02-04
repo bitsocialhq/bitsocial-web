@@ -3,6 +3,29 @@ import { Link } from "react-router-dom"
 import PlanetGraphic from "./planet-graphic"
 import MeshGraphic from "./mesh-graphic"
 
+const taglinePhrases = [
+  { text: "Bitsocial is ", hash: null, isLink: false },
+  { text: "an open-source", hash: "open-source", isLink: true },
+  { text: " peer-to-peer network", hash: "peer-to-peer", isLink: true },
+  { text: " for social apps,", hash: "social-apps", isLink: true },
+  { text: " with no servers,", hash: "no-servers", isLink: true },
+  { text: " no global bans,", hash: "no-global-bans", isLink: true },
+  { text: " where users and communities are ", hash: null, isLink: false },
+  { text: " cryptographic property", hash: "cryptographic-property", isLink: true },
+  { text: ".", hash: null, isLink: false },
+]
+
+function handleTaglineClick(hash: string | null) {
+  if (!hash) return
+  window.location.hash = hash
+  const element = document.getElementById(hash)
+  if (element) {
+    setTimeout(() => {
+      element.scrollIntoView({ behavior: "smooth", block: "center" })
+    }, 50)
+  }
+}
+
 export default function Hero() {
   return (
     <section className="min-h-[100svh] md:min-h-screen flex flex-col items-center justify-start pt-28 md:pt-40 px-6 relative overflow-x-hidden overflow-y-visible">
@@ -13,9 +36,29 @@ export default function Hero() {
         className="max-w-3xl text-center mb-12 px-4 relative z-10"
       >
         <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground leading-relaxed font-display font-normal">
-          Bitsocial is an open-source peer-to-peer network for social apps, with
-          no servers, no global bans, where users and communities are
-          cryptographic property.
+          {taglinePhrases.map((phrase, index) => {
+            if (phrase.isLink && phrase.hash) {
+              return (
+                <span
+                  key={index}
+                  onClick={() => handleTaglineClick(phrase.hash)}
+                  className="cursor-pointer transition-all duration-300 hover:text-blue-glow relative"
+                  style={{
+                    filter: "drop-shadow(0 0 0 transparent)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.filter = "drop-shadow(0 0 12px rgba(37, 99, 235, 0.8))"
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.filter = "drop-shadow(0 0 0 transparent)"
+                  }}
+                >
+                  {phrase.text}
+                </span>
+              )
+            }
+            return <span key={index}>{phrase.text}</span>
+          })}
         </p>
       </motion.div>
 
