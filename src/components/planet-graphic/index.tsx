@@ -349,6 +349,31 @@ export default function PlanetGraphic() {
     ring2.position.set(ring2PosX, sphereY + ring2PosY, ring2PosZ)
     scene.add(ring2)
 
+    const ringRotationDuration = 5
+    const ringRotationDelay = 3
+    const ringRotationPause = 5
+    const ringRotationEase = "sine.inOut"
+    const ring1BaseRotationY = ring1.rotation.y
+    const ring2BaseRotationY = ring2.rotation.y
+
+    const ring1RotationTween = gsap.to(ring1.rotation, {
+      y: ring1BaseRotationY + Math.PI * 2,
+      duration: ringRotationDuration,
+      ease: ringRotationEase,
+      delay: ringRotationDelay,
+      repeat: -1,
+      repeatDelay: ringRotationPause,
+    })
+
+    const ring2RotationTween = gsap.to(ring2.rotation, {
+      y: ring2BaseRotationY + Math.PI * 2,
+      duration: ringRotationDuration,
+      ease: ringRotationEase,
+      delay: ringRotationDelay,
+      repeat: -1,
+      repeatDelay: ringRotationPause,
+    })
+
     // Animation
     let animationId: number
 
@@ -387,6 +412,8 @@ export default function PlanetGraphic() {
       cancelAnimationFrame(animationId)
       window.removeEventListener("resize", handleResize)
 
+      ring1RotationTween.kill()
+      ring2RotationTween.kill()
       scene.remove(ring1)
       scene.remove(ring2)
       sphereGeometry.dispose()
