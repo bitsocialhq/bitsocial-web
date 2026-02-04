@@ -1,130 +1,62 @@
 # Bitsocial Landing Page
 
-A premium dark-themed landing page for bitsocial.net built with Vite + React + TypeScript, featuring animated metallic effects and glassmorphism design.
-
-## Tech Stack
-
-| Category | Tools |
-|----------|-------|
-| Runtime | Bun |
-| Build | Rolldown-Vite |
-| Framework | React 18, TypeScript |
-| Styling | TailwindCSS, tailwindcss-animate |
-| Animation | Framer Motion, GSAP |
-| 3D Graphics | Three.js |
-| UI Components | Radix UI, Lucide icons |
-| Routing | React Router |
-| Code Quality | Oxlint, Oxfmt, tsgo |
-
-## Features
-
-- 3D animated planet graphic with orbiting rings (Three.js)
-- Interactive mesh network visualization
-- Chrome shimmer text effects
-- Glassmorphism cards with silver borders
-- Dark/light theme toggle
-- Fully responsive design
-- Smooth scroll-triggered animations
-- Three pages: Home, Docs, Apps
+Landing page for [bitsocial.net](https://bitsocial.net).
 
 ## Getting Started
 
-### Prerequisites
-
-- [Bun](https://bun.sh) (latest version)
-
-### Installation
+Requires [Bun](https://bun.sh).
 
 ```bash
-bun install
+bun install          # Install dependencies
+bun run dev          # Start dev server (localhost:5173)
+bun run build        # Production build
+bun run preview      # Preview production build
 ```
 
-### Development
+## Contributing
 
-```bash
-bun run dev
-```
+This repo includes an `AGENTS.md` file with detailed guidance for AI coding agents. When using an AI assistant to make changes, it will automatically follow the project conventions defined there.
 
-The app will be available at `http://localhost:5173`
+### Making Changes
 
-### Build
-
-```bash
-bun run build
-```
-
-### Preview Production Build
-
-```bash
-bun run preview
-```
+1. Run `bun run dev` to start the dev server
+2. Make your changes (or ask your AI agent to)
+3. Test on both desktop and mobile viewports
+4. Run quality checks before committing
 
 ### Code Quality
 
+All checks must pass before committing:
+
 ```bash
-# Lint code
-bun run lint
-
-# Fix linting issues
-bun run lint:fix
-
-# Format code
-bun run format
-
-# Check formatting
-bun run format:check
-
-# Type check
-bun run typecheck
+bun run typecheck    # Type check with tsgo
+bun run lint         # Lint with oxlint
+bun run format:check # Check formatting with oxfmt
 ```
 
-## Project Structure
+To auto-fix issues:
 
-```
-src/
-├── components/
-│   ├── topbar.tsx           # Navigation bar
-│   ├── hero.tsx             # Hero section with CTA
-│   ├── features.tsx         # Features grid
-│   ├── roadmap.tsx          # Timeline roadmap
-│   ├── footer.tsx           # Footer
-│   ├── theme-toggle.tsx      # Dark/light theme toggle
-│   ├── theme-provider.tsx   # Theme context provider
-│   ├── planet-graphic/      # 3D globe with Three.js
-│   ├── mesh-graphic/        # Network visualization
-│   └── ui/                  # Radix-based primitives
-├── pages/
-│   ├── home.tsx             # Home page
-│   ├── docs.tsx             # Documentation page
-│   └── apps.tsx             # Apps showcase page
-├── lib/
-│   └── utils.ts             # cn() and utilities
-├── app.tsx                  # Router + providers
-├── main.tsx                 # Entry point
-└── index.css                # Global styles + Tailwind
+```bash
+bun run lint:fix     # Auto-fix lint issues
+bun run format       # Auto-format code
 ```
 
-## Design System
+### Commits
 
-### Color Palette
+Use [Conventional Commits](https://www.conventionalcommits.org/) format:
 
-- `bg-primary`: #0a0a0a (Deep black background)
-- `bg-secondary`: #111111 (Card backgrounds)
-- `blue-core`: #1a4fd0 (Logo sphere blue)
-- `blue-glow`: #2563eb (Accent blue)
-- `silver-dark`: #6b7280 (Muted silver)
-- `silver-mid`: #9ca3af (Mid silver)
-- `silver-bright`: #e5e7eb (Bright silver/white)
+- `feat:` new features
+- `fix:` bug fixes
+- `perf:` performance improvements
+- `refactor:` code changes that don't add features or fix bugs
+- `docs:` documentation changes
+- `style:` formatting, missing semicolons, etc.
+- `chore:` maintenance tasks
 
-### Typography
+### Pre-PR Checklist
 
-- **Display/Hero**: Outfit (geometric, bold)
-- **Body**: Inter (refined letter-spacing)
-
-## Pages
-
-| Route | Page | Content |
-|-------|------|---------|
-| `/` | Home | Hero with 3D planet, features grid, roadmap timeline |
-| `/docs` | Docs | Documentation (placeholder) |
-| `/apps` | Apps | App showcase grid (placeholder) |
+- [ ] `bun run typecheck` passes
+- [ ] `bun run lint` passes
+- [ ] `bun run format:check` passes
+- [ ] Tested on mobile viewport
+- [ ] Animations run smoothly (60fps)
