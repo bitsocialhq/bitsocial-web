@@ -36,7 +36,7 @@
         "oxfmt": "^0.1.0",
         "oxlint": "^1.0.0",
         "postcss": "^8.4.38",
-        "react-grab": "0.0.98",
+        "react-grab": "0.1.9",
         "react-scan": "0.4.3",
         "rolldown-vite": "^7.3.1",
         "tailwindcss": "^3.4.4",
@@ -449,7 +449,7 @@
 
     "binary-extensions": ["binary-extensions@2.3.0", "", {}, "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw=="],
 
-    "bippy": ["bippy@0.5.28", "", { "dependencies": { "@types/react-reconciler": "^0.28.9" }, "peerDependencies": { "react": ">=17.0.1" } }, "sha512-n3UosYu2KoCQDeAw/zSyjoJksT2viBwGhmEgIdCcGXUQgQsmSJc1Hr7s9eneawAlTI2rbKV4gNFUOaotpLfdgA=="],
+    "bippy": ["bippy@0.5.30", "", { "dependencies": { "@types/react-reconciler": "^0.28.9" }, "peerDependencies": { "react": ">=17.0.1" } }, "sha512-8CFmJAHD3gmTLDOCDHuWhjm1nxHSFZdlGoWtak9r53Uxn36ynOjxBLyxXHh/7h/XiKLyPvfdXa0gXWcD9o9lLQ=="],
 
     "boolbase": ["boolbase@1.0.0", "", {}, "sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww=="],
 
@@ -689,7 +689,7 @@
 
     "react-dom": ["react-dom@18.3.1", "", { "dependencies": { "loose-envify": "^1.1.0", "scheduler": "^0.23.2" }, "peerDependencies": { "react": "^18.3.1" } }, "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw=="],
 
-    "react-grab": ["react-grab@0.0.98", "", { "dependencies": { "bippy": "^0.5.28", "solid-js": "^1.9.10" }, "bin": { "react-grab": "dist/cli.cjs" } }, "sha512-PChqv7DWRpsUw+eBqMFNwzhG0vlMv/RXbAuEGrFD3R53k+tKM6B0zgnN4jgIPvDSYEUmni3ApN1IerHOWCIuRQ=="],
+    "react-grab": ["react-grab@0.1.9", "", { "dependencies": { "bippy": "^0.5.30", "solid-js": "^1.9.10" }, "peerDependencies": { "react": ">=17.0.0" }, "optionalPeers": ["react"] }, "sha512-PSgOjjrPJiyMroZqjicBX78CjaDv9yo3Xcz4NYhBxR91KPY4zrN+4kwc5q4aJGKZG8K8rBpOiv2XDmdgywUHCw=="],
 
     "react-i18next": ["react-i18next@16.5.4", "", { "dependencies": { "@babel/runtime": "^7.28.4", "html-parse-stringify": "^3.0.1", "use-sync-external-store": "^1.6.0" }, "peerDependencies": { "i18next": ">= 25.6.2", "react": ">= 16.8.0", "typescript": "^5" }, "optionalPeers": ["typescript"] }, "sha512-6yj+dcfMncEC21QPhOTsW8mOSO+pzFmT6uvU7XXdvM/Cp38zJkmTeMeKmTrmCMD5ToT79FmiE/mRWiYWcJYW4g=="],
 
