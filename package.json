@@ -14,7 +14,8 @@
     "format": "bunx oxfmt .",
     "format:check": "bunx oxfmt --check .",
     "typecheck": "bunx tsgo --noEmit --project tsconfig.json",
-    "preview": "bunx rolldown-vite preview"
+    "preview": "bunx rolldown-vite preview",
+    "commit": "cz"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -45,6 +46,10 @@
     "@typescript/native-preview": "^7.0.0-dev",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "4",
+    "lint-staged": "^16.2.7",
     "oxfmt": "^0.1.0",
     "oxlint": "^1.0.0",
     "postcss": "^8.4.38",
@@ -53,5 +58,23 @@
     "rolldown-vite": "^7.3.1",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.3"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && cz --hook || true",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "bunx oxlint --fix --react-plugin",
+      "bunx oxfmt"
+    ],
+    "*.{json,css}": "bunx oxfmt"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

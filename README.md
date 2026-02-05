@@ -1,3 +1,6 @@
+[![License](https://img.shields.io/badge/license-GPL--2.0--only-red.svg)](https://github.com/bitsocialhq/5chan/blob/master/LICENSE)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 # Bitsocial Official Website
 
 This repository contains the official Bitsocial web frontend.
@@ -75,7 +78,27 @@ bun run lint:fix
 bun run format
 ```
 
+### Translations
+We welcome translation improvements via PRs.
+
+If you are improving an existing translation in your native language:
+1.	Open `public/translations/{lang}/default.json` for your language.
+2.	Edit only the string values for the keys you want to improve.
+3.	Do not add, remove, or rename keys.
+4.	Open a PR with just that language file updated.
+
+If you need to add or remove keys across languages, use `scripts/update-translations.js`:
+
+```bash
+node scripts/update-translations.js --key my_new_key --map translations-temp.json --include-en --dry
+node scripts/update-translations.js --key my_new_key --map translations-temp.json --include-en --write
+node scripts/update-translations.js --key obsolete_key --delete --write
+node scripts/update-translations.js --audit --dry
+```
+
 ### Commits
+This repo supports Commitizen for guided Conventional Commits.
+Use `bun run commit` (or `bunx cz`) for the interactive prompt. `git commit` will also trigger Commitizen via Husky.
 
 Use the [Conventional Commits](https://www.conventionalcommits.org/) format:
 
