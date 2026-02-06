@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/license-GPL--2.0--only-red.svg)](https://github.com/bitsocialhq/5chan/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-AGPL--3.0--only-red.svg)](https://github.com/bitsocialhq/5chan/blob/master/LICENSE)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 # Bitsocial Official Website
@@ -117,6 +117,41 @@ Use the [Conventional Commits](https://www.conventionalcommits.org/) format:
 -	`bun run format:check` passes
 -	Tested on mobile viewport
 -	Animations are smooth and respect `prefers-reduced-motion`
+
+---
+
+## Roadmap for this repository
+
+### Frontpage
+
+- [x] **Init and front page hero**: Initial site design and repo init, hero with performant three.js animations giving life to the token + animated p2p mesh, both degrading gracefully on low-end devices and respect prefers-reduced-motion. Tagline translated in all languages.
+- [ ] **Core features section**: Explaining the tagline word for word, with hash links, expanded "learn more" sections for each with details (maybe load a docs page in each) - all translated
+- [ ] **Master plan section**: Possibly with "learn more" expandable sections, should explain the full vision from the current short term goals, to the pipe dream features (flagship everything-app, L2, federated RPCs, etc) - all translated, probably should also have hash links for each, or maybe just one hash link for the masterplan as a whole
+- [ ] **Footer and topbar finished**: With other links, also with light/dark mode, language selection
+
+### Apps Page (`/apps`)
+
+- [ ] **Initial design**: Similar to nostrapps.com for each client, with categories. Categories should probably exist even if empty, with a short description for each, for example we're sure challenges will be listed here so we should explain the category and have it anyway even if empty (visitors could also be inspired by it, and work on an app/service for the category), or indexers, rpc services, as well as subcategories for clients (profile-based, community-based, imageboard, blog, crowdfunding, etc.) - everything translated especially category and subcategory descriptions
+- [ ] **List integration**: Each list should be in bitsocialhq/lists, there should be a button per category/subcategory to open a pr to the list, telling the user "submit your own!" or something
+- [ ] **Listing requirements**: Probably some info on listing requirements, e.g. must be compatible with future BSO pubsub voting maybe? not sure
+
+### Docs Page (`/docs`)
+
+- [ ] **Choose best docs client**: Needs to be fully optimized for scraping by LLMs. mintlify might be worth it, e.g. https://www.mintlify.com/blog/agent-analytics but need to research more, alternatively gitbook maybe. or of course docusaurus
+- [ ] **Write documentation**: Doesn't need to be perfect (low priority) but at least should cover the essentials, we can expand later
+- [ ] **Translate documentation**: Translate docs to all supported languages
+
+### Status Page (`/status`)
+
+- [ ] **Init status page**: Init as plebbit.online but rebranded fully
+- [ ] **Categories and filters**: Dividing by client default list, all lists in one, all communities found by x indexer
+- [ ] **ENS query list**: Could add a list of all communities found by ENS query with alert saying it could show any address
+
+### Other
+
+- [ ] **LLM scraping support**: Add `/llms.txt`, `/llms-full.txt`, `/llms-small.txt` - guide: https://www.mintlify.com/blog/real-llms-txt-examples - example: https://effect.website/docs#docs-for-llms - also submit to https://directory.llmstxt.cloud/
+
+---
 
 ## License
 
