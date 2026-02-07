@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false)
@@ -18,31 +18,87 @@ export function useIsMobile() {
   return isMobile
 }
 
-export function usePerformanceMode() {
-  const [performanceMode, setPerformanceMode] =
-    useState<"high" | "medium" | "low">("high")
+type NetworkInformation = {
+  saveData?: boolean
+  effectiveType?: string
+  addEventListener?: (type: "change", listener: () => void) => void
+  removeEventListener?: (type: "change", listener: () => void) => void
+}
+
+export type GraphicsMode = "full" | "fallback"
+
+export function useGraphicsMode() {
+  const [graphicsMode, setGraphicsMode] = useState<GraphicsMode>("fallback")
+  const lastModeRef = useRef<GraphicsMode>("fallback")
 
   useEffect(() => {
     if (typeof window === "undefined") return
 
-    const checkPerformance = () => {
-      const isMobile = window.innerWidth < 768
-      const hardwareConcurrency = navigator.hardwareConcurrency || 4
-      const isLowEnd = hardwareConcurrency < 4 || isMobile
-
-      if (isLowEnd) {
-        setPerformanceMode("low")
-      } else if (hardwareConcurrency < 8) {
-        setPerformanceMode("medium")
-      } else {
-        setPerformanceMode("high")
+    const getConnection = () => {
+      const nav = navigator as Navigator & {
+        connection?: NetworkInformation
+        mozConnection?: NetworkInformation
+        webkitConnection?: NetworkInformation
       }
+      return nav.connection ?? nav.mozConnection ?? nav.webkitConnection
     }
 
-    checkPerformance()
-    window.addEventListener("resize", checkPerformance)
-    return () => window.removeEventListener("resize", checkPerformance)
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    )
+
+    const computeGraphicsMode = () => {
+      const { deviceMemory } = navigator as Navigator & {
+        deviceMemory?: number
+      }
+      const hardwareConcurrency = navigator.hardwareConcurrency ?? 8
+      const memoryBudget = deviceMemory ?? 8
+      const connection = getConnection()
+      const saveData = Boolean(connection?.saveData)
+      const effectiveType = connection?.effectiveType ?? ""
+      const isSlowConnection =
+        effectiveType === "slow-2g" || effectiveType === "2g"
+      const isLowEnd =
+        reducedMotionQuery.matches ||
+        memoryBudget <= 4 ||
+        hardwareConcurrency <= 4 ||
+        saveData ||
+        isSlowConnection
+
+      return isLowEnd ? "fallback" : "full"
+    }
+
+    const updateMode = () => {
+      const nextMode = computeGraphicsMode()
+      if (lastModeRef.current === nextMode) return
+      lastModeRef.current = nextMode
+      setGraphicsMode(nextMode)
+    }
+
+    updateMode()
+
+    const handleReducedMotionChange = () => updateMode()
+    if (reducedMotionQuery.addEventListener) {
+      reducedMotionQuery.addEventListener("change", handleReducedMotionChange)
+    } else {
+      reducedMotionQuery.addListener(handleReducedMotionChange)
+    }
+
+    const connection = getConnection()
+    connection?.addEventListener?.("change", updateMode)
+
+    return () => {
+      if (reducedMotionQuery.removeEventListener) {
+        reducedMotionQuery.removeEventListener(
+          "change",
+          handleReducedMotionChange,
+        )
+      } else {
+        reducedMotionQuery.removeListener(handleReducedMotionChange)
+      }
+      connection?.removeEventListener?.("change", updateMode)
+    }
   }, [])
 
-  return performanceMode
+  return graphicsMode
 }
