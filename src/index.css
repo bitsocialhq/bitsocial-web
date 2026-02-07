@@ -180,4 +180,12 @@
       box-shadow: 0 0 30px rgba(37, 99, 235, 0);
     }
   }
+
+  [data-reduced-motion="true"] .chrome-text {
+    animation: none;
+  }
+
+  [data-reduced-motion="true"] .highlight-glow {
+    animation: none;
+  }
 }

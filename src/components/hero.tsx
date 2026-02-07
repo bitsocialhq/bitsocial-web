@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { Trans, useTranslation } from "react-i18next"
 import { useTheme } from "next-themes"
-import { useGraphicsMode } from "./planet-graphic/hooks"
+import { useGraphicsMode } from "@/lib/graphics-mode"
 import { triggerFeatureGlow } from "@/lib/utils"
 
 const PlanetGraphic = lazy(() => import("./planet-graphic"))
