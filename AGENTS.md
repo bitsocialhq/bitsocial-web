@@ -1,36 +1,5 @@
 # Bitsocial Landing Page
 
-## Project Snapshot
-
-Single-package React landing page for bitsocial.net. Premium dark theme with glassmorphism and chrome shimmer effects. Uses Bun runtime, Vite bundler, TailwindCSS styling, and Framer Motion animations.
-
-## Setup Commands
-
-```bash
-bun install          # Install dependencies
-bun run dev          # Start dev server (localhost:5173)
-bun run build        # Type check + production build
-bun run preview      # Preview production build
-```
-
-## Code Quality Commands
-
-```bash
-bun run typecheck    # Type check with tsgo
-bun run lint         # Lint with oxlint
-bun run lint:fix     # Auto-fix lint issues
-bun run format       # Format with oxfmt
-bun run format:check # Check formatting
-```
-
-## Universal Conventions
-
-- **Components**: Function components with `export default`
-- **Styling**: TailwindCSS utilities; avoid inline styles
-- **Imports**: Use `@/` alias for `src/` paths (e.g., `@/lib/utils`)
-- **Animations**: Framer Motion `motion` components
-- **Class merging**: Use `cn()` from `@/lib/utils` for conditional classes
-
 ## Project Structure
 
 ```
@@ -42,72 +11,6 @@ src/
 └── index.css      # Global styles + Tailwind
 ```
 
-## Component Patterns
-
-### DO: Follow These Examples
-
-- **Animated section**: `src/components/hero.tsx` - motion variants, responsive sizing
-- **Card grid with stagger**: `src/components/features.tsx` - whileInView, viewport once
-- **Page composition**: `src/pages/home.tsx` - Topbar + sections + Footer
-- **Class utilities**: `src/lib/utils.ts` - cn() for clsx + tailwind-merge
-
-### DON'T
-
-- Class components (use function components)
-- CSS modules or styled-components (use Tailwind)
-- Direct DOM manipulation (use React state/refs)
-- Hardcoded colors (use design tokens from `tailwind.config.ts`)
-
-## Design System
-
-### Colors (from `tailwind.config.ts`)
-
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `bg-primary` | #0a0a0a | Page background |
-| `bg-secondary` | #111111 | Card backgrounds |
-| `blue-core` | #1a4fd0 | Logo sphere blue |
-| `blue-glow` | #2563eb | Accent/hover states |
-| `silver-dark` | #6b7280 | Muted text, borders |
-| `silver-mid` | #9ca3af | Body text |
-| `silver-bright` | #e5e7eb | Headings, emphasis |
-
-### CSS Utilities (from `src/index.css`)
-
-| Class | Effect |
-|-------|--------|
-| `.chrome-text` | Animated silver shimmer gradient |
-| `.glass-card` | Glassmorphism: blur + border + semi-transparent |
-| `.ring-glow` | Blue glow on hover |
-
-### Typography
-
-- **Headings**: `font-display` (Outfit)
-- **Body**: `font-body` (Inter)
-
-## JIT Index
-
-### Quick Find Commands
-
-```bash
-# Find component by name
-rg -n "export default function" src/components/
-
-# Find page routes
-rg -n "Route path=" src/app.tsx
-
-# Find Tailwind custom classes
-rg -n "@apply" src/index.css
-
-# Find motion animations
-rg -n "motion\." src/components/
-
-# Find design tokens
-rg -n "colors:" tailwind.config.ts
-```
-
-### Key Files
-
 | Purpose | File |
 |---------|------|
 | App routing | `src/app.tsx` |
@@ -116,86 +19,71 @@ rg -n "colors:" tailwind.config.ts
 | Class utility | `src/lib/utils.ts` |
 | Entry point | `src/main.tsx` |
 
-## Adding New Components
+## Commands
 
-1. Create file in `src/components/component-name.tsx` (use kebab-case)
-2. Use function component with `export default`
-3. Import motion from `framer-motion` for animations
-4. Use design tokens, not hardcoded colors
-5. Add viewport-triggered animations with `whileInView`
-
-Example structure:
-
-```tsx
-import { motion } from "framer-motion";
-
-export default function ComponentName() {
-  return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      className="py-24 px-6"
-    >
-      {/* Content */}
-    </motion.section>
-  );
-}
+```bash
+bun install          # Install dependencies
+bun run dev          # Start dev server (localhost:5173)
+bun run build        # Type check + production build
+bun run typecheck    # Type check with tsgo
+bun run lint         # Lint with oxlint
+bun run lint:fix     # Auto-fix lint issues
+bun run format       # Format with oxfmt
+bun run format:check # Check formatting
 ```
 
-## Adding New Pages
+## Where This Project Is Weird
 
-1. Create file in `src/pages/page-name.tsx` (use kebab-case)
-2. Add route in `src/app.tsx`
-3. Include `<Topbar />` and `<Footer />` for consistency
-4. Reference `src/pages/home.tsx` for page structure
+- **Bun, not npm or yarn.** Always `bun install`, `bun run`, etc.
+- **`tsgo` (native TS), not `tsc`.** The typecheck command uses tsgo.
+- **`oxlint` + `oxfmt`, not eslint + prettier.** Linting and formatting are Oxidation Compiler tools.
+- **`@/` path alias.** Use `@/` for all imports from `src/`, never relative `../` paths.
+- **Fonts loaded in `index.html`**, not imported in JS. Outfit (headings) and Inter (body).
+- **Commitizen + Husky.** `git commit` triggers an interactive Commitizen prompt that will hang the agent. Use `git commit --no-verify -m "message"` instead, or `bun run commit` / `bunx cz` for interactive mode.
+- **Animations must respect `prefers-reduced-motion`.** Don't add animations without a reduced-motion fallback.
+- **35 language files.** Don't hand-edit translation files across languages. Use `scripts/update-translations.js` to add/remove/audit keys (see the translations skill). Only edit individual language files for translation corrections.
 
-## Common Gotchas
+## Out of Scope
 
-- **Path alias**: Use `@/` not `../` for imports from src
-- **Fonts**: Outfit and Inter are loaded via Google Fonts in `index.html`
-- **Build**: Uses `rolldown-vite` not standard Vite CLI
-- **Type checker**: Uses `tsgo` (native TS) not `tsc`
+This repo is the public-facing website only. Don't build or scaffold:
+- Wallet integration
+- Authentication / login flows
+- Governance or voting UIs
+- Token economics dashboards
+- Backend services or indexers
+
+This is intentional -- these live elsewhere in the ecosystem.
 
 ## Pre-PR Checks
+
+All three must pass before committing:
 
 ```bash
 bun run typecheck && bun run lint && bun run format:check
 ```
 
-All three must pass before committing.
+## Hooks (Auto-Run)
 
-## Definition of Done
+| Hook | Trigger | What it does |
+|------|---------|--------------|
+| `afterFileEdit` | After any file edit | Auto-formats JS/TS files with oxfmt |
+| `stop` | When agent finishes | Runs build + lint + typecheck + audit |
 
-- [ ] Type check passes (`bun run typecheck`)
-- [ ] Lint passes (`bun run lint`)
-- [ ] Format check passes (`bun run format:check`)
-- [ ] Responsive design tested (mobile + desktop)
-- [ ] Animations smooth (60fps)
+Don't manually format files -- the hook handles it.
 
-## Workflow
+## Workflow Preferences
 
-### GitHub Commits
+### Commits
 
-When proposing or implementing code changes, always suggest a commit message. Format:
-
-- **Title**: Use [Conventional Commits](https://www.conventionalcommits.org/) style. Use `perf` for performance optimizations (not `fix`). Keep it short. **MUST be wrapped in backticks.**
-- **Description**: Optional. 2-3 informal sentences describing the solution (not the problem). Concise, technical, no bullet points. Use backticks for code references.
-
-Example output:
+Conventional Commits style. Title **must be wrapped in backticks**. Use `perf` for performance optimizations (not `fix`). Optional 2-3 sentence description (informal, no bullet points).
 
 > **Commit title:** `feat: add glassmorphism card component`
 >
 > Created reusable `glass-card` component with blur backdrop and subtle border. Uses design tokens from `tailwind.config.ts`.
 
-### GitHub Issues
+### Issues
 
-When proposing or implementing code changes, always suggest a GitHub issue to track the problem. Format:
-
-- **Title**: As short as possible. **MUST be wrapped in backticks.**
-- **Description**: 2-3 informal sentences describing the problem (not the solution). Write as if the issue hasn't been fixed yet. Use backticks for code references.
-
-Example output:
+Title as short as possible, **wrapped in backticks**. Description: 2-3 sentences about the problem (not the solution), written as if unfixed.
 
 > **GitHub issue:**
 > - **Title:** `Hero animation jank on mobile Safari`
@@ -203,167 +91,27 @@ Example output:
 
 ### Troubleshooting
 
-When stuck on a bug or issue, search the web for solutions. Developer communities often have recent fixes or workarounds that aren't in training data.
+When stuck on a bug, search the web. Developer communities often have fixes that aren't in training data.
 
-## Recommended Skills
+## Browser Testing
 
-Skills are more efficient than docs—they inject targeted guidance without bloating the context window.
-
-### Frontend Design
-
-For building distinctive, production-grade UI that avoids generic AI aesthetics. Essential for a premium landing page.
+Use `agent-browser` CLI, not Playwright MCP, Chrome DevTools MCP, Puppeteer, or Cursor's built-in browser. It uses 85-93% fewer tokens.
 
 ```bash
-npx skills add https://github.com/vercel-labs/agent-skills --skill frontend-design
+agent-browser open http://localhost:5173
+agent-browser snapshot -i
+agent-browser click @e5
 ```
 
-### Vercel React Best Practices
+Install if missing: `bun add -g agent-browser && agent-browser install`
 
-For React performance guidance. Provides 57 prioritized rules across 8 categories. Useful even for simple landing pages to ensure smooth animations and fast load times.
+## Contributor Setup
 
-```bash
-npx skills add https://github.com/vercel-labs/agent-skills --skill vercel-react-best-practices
-```
-
-### SEO Fundamentals
-
-For understanding Core Web Vitals, E-E-A-T, and how search engines evaluate pages. Important for a public-facing landing page.
+AI agent configs (skills, hooks, agents, commands) live in `.cursor/` (gitignored). Contributors using other AI tools should copy to their tool's config directory:
 
 ```bash
-npx skills add https://github.com/vercel-labs/agent-skills --skill seo-fundamentals
-```
-
-### Find Skills
-
-Discover and install skills from the open agent skills ecosystem.
-
-```bash
-npx skills add https://github.com/vercel-labs/skills --skill find-skills
-```
-
-### Agent Browser
-
-For browser automation and web interaction. Essential for testing, UI verification, form filling, screenshots, and any web-based tasks. Provides 85–93% token reduction vs alternatives.
-
-```bash
-npx skills add vercel-labs/agent-browser
-```
-
-**Installation for contributors:** Copy `.cursor/skills/agent-browser/` to your tool's skills directory (e.g., `.claude/skills/agent-browser/` for Claude Code).
-
-## Browser / Web Interaction Rules (Token Efficiency Priority)
-
-**CRITICAL:** If you need to interact with ANY webpage (including localhost dev servers, external sites for verification, UI testing, screenshots, form filling, navigation, or data extraction):
-
-- **ABSOLUTELY use Vercel's agent-browser CLI** instead of Cursor's built-in browser, Playwright MCP, Chrome DevTools MCP, Puppeteer, or any other browser tool.
-- **Reasons:** agent-browser uses compact interactive snapshots + element refs (`@e1`, `@e2`, etc.) → typically 85–93% fewer tokens per action vs alternatives, faster execution, higher reliability in agent loops.
-- **Command pattern example:**
-  ```bash
-  agent-browser open http://localhost:5173
-  agent-browser snapshot -i
-  agent-browser click @e5    # or fill, type, screenshot, etc.
-  ```
-- **Install once globally if not present:** `bun add -g agent-browser && agent-browser install`
-- **Never fall back to other browser tools** unless agent-browser explicitly fails after 2–3 retries (and explain why in your reasoning).
-- **This applies doubly to localhost/dev previews** where repeated snapshots would otherwise explode context.
-
-Always prefer agent-browser even for simple checks — the token savings compound quickly in iterative agent runs.
-
-## Boundaries
-
-- Never commit secrets or API keys
-- Use Bun, not npm or yarn
-- Keep components focused—split large components
-- Add comments for complex/unclear code (skip for obvious code)
-- Test on mobile viewport (this is a responsive landing page)
-- Use design tokens from `tailwind.config.ts`, not hardcoded colors
-
----
-
-## AI Agent Configuration (Contributors)
-
-This project includes recommended AI agent configurations (skills, hooks, agents, commands) stored in `.cursor/` (gitignored). Contributors using AI coding tools should copy these to their tool's config directory.
-
-### Tool-Specific Directories
-
-| Tool | Config Directory |
-|------|------------------|
-| Cursor | `.cursor/` |
-| Claude Code | `.claude/` |
-| Codex CLI | `.codex/` |
-
-Copy the contents from `.cursor/` to your tool's directory, or symlink if your tool supports it.
-
-### Available Hooks
-
-Scripts triggered automatically by agent actions (copy `hooks/` folder and `hooks.json`):
-
-| Hook | Trigger | Script | Purpose |
-|------|---------|--------|---------|
-| `afterFileEdit` | After any file edit | `hooks/format.sh` | Auto-format JS/TS files with oxfmt |
-| `stop` | When agent finishes | `hooks/verify.sh` | Run build + lint + typecheck + audit |
-
-### Available Agents
-
-Custom agent definitions (copy `agents/` folder):
-
-| Agent | Description |
-|-------|-------------|
-| `code-quality` | Runs format/verify hooks, analyzes output, auto-fixes issues |
-| `plan-implementer` | Executes markdown plans in parallel with sub-agents (max 4) |
-| `react-patterns-enforcer` | Enforces React best practices, prevents useState/useEffect anti-patterns |
-
-### Available Commands
-
-Slash commands (copy `commands/` folder):
-
-| Command | Purpose |
-|---------|---------|
-| `/commit` | Create Conventional Commits with proper formatting |
-| `/deslop` | Remove AI-generated code slop (extra comments, defensive checks, `any` casts) |
-
-### Available Skills
-
-Reusable skill definitions (copy `skills/` folder):
-
-| Skill | Trigger | Purpose |
-|-------|---------|---------|
-| `commit-format` | Writing commits | Conventional Commits format with backtick-wrapped titles |
-| `issue-format` | Creating issues | GitHub issue title/description formatting |
-| `context7` | Looking up docs | Fetch current library documentation via Context7 API |
-| `frontend-design` | Building UI | Create distinctive, production-grade interfaces (avoid AI slop aesthetics) |
-| `find-skills` | "How do I...?" | Discover installable skills from marketplace |
-| `programmatic-seo` | SEO at scale | Template-driven page generation for SEO |
-| `seo-audit` | SEO review | Technical SEO analysis and diagnostics |
-| `seo-fundamentals` | SEO questions | Core SEO principles (E-E-A-T, Core Web Vitals) |
-| `vercel-react-best-practices` | React perf | 57 Vercel Engineering rules for React/Next.js optimization |
-| `agent-browser` | Browser automation | Web interaction, testing, form filling, screenshots (85–93% token reduction vs alternatives) |
-
-### Vercel React Best Practices Rules
-
-The `vercel-react-best-practices` skill includes 57+ performance rules in `skills/vercel-react-best-practices/rules/`:
-
-| Category | Priority | Rules |
-|----------|----------|-------|
-| Async/Waterfalls | CRITICAL | `async-*` - parallel fetching, suspense boundaries |
-| Bundle Size | CRITICAL | `bundle-*` - dynamic imports, barrel files, preload |
-| Server-Side | HIGH | `server-*` - caching, serialization, parallel fetch |
-| Client Data | MEDIUM-HIGH | `client-*` - SWR dedup, event listeners |
-| Re-renders | MEDIUM | `rerender-*` - derived state, memo, transitions |
-| Rendering | MEDIUM | `rendering-*` - content-visibility, hydration |
-| JS Performance | LOW-MEDIUM | `js-*` - loops, caching, Set/Map lookups |
-| Advanced | LOW | `advanced-*` - refs, init-once patterns |
-
-### Setup for New Contributors
-
-```bash
-# Example: Copy configs for Claude Code
+# Example: Claude Code
 cp -r .cursor/skills .claude/skills
 cp -r .cursor/hooks .claude/hooks
 cp .cursor/hooks.json .claude/hooks.json
-
-# Or symlink (if tool supports)
-ln -s ../.cursor/skills .claude/skills
 ```
-
-Verify your tool recognizes the configs by checking if skills appear in your agent's available tools.
