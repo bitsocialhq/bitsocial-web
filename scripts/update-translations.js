@@ -402,13 +402,17 @@ async function handleAudit(translationsRoot, srcDir, dryRun, write, force) {
     process.exit(1)
   }
   const enJson = await loadJson(enPath)
-  
+
   // Flatten nested keys to dot notation
   function flattenKeys(obj, prefix = "") {
     const keys = []
     for (const [key, value] of Object.entries(obj)) {
       const fullKey = prefix ? `${prefix}.${key}` : key
-      if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+      if (
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value)
+      ) {
         keys.push(...flattenKeys(value, fullKey))
       } else {
         keys.push(fullKey)
