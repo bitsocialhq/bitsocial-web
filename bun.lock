@@ -40,7 +40,7 @@
         "oxfmt": "^0.1.0",
         "oxlint": "^1.0.0",
         "postcss": "^8.4.38",
-        "react-doctor": "0.0.17",
+        "react-doctor": "0.0.28",
         "react-grab": "0.1.9",
         "react-scan": "0.4.3",
         "tailwindcss": "^3.4.4",
@@ -1084,7 +1084,7 @@
 
     "react": ["react@18.3.1", "", { "dependencies": { "loose-envify": "^1.1.0" } }, "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ=="],
 
-    "react-doctor": ["react-doctor@0.0.17", "", { "dependencies": { "commander": "^14.0.3", "eslint-plugin-react-hooks": "^7.0.1", "knip": "^5.83.1", "ora": "^9.3.0", "oxlint": "^1.47.0", "picocolors": "^1.1.1", "prompts": "^2.4.2" }, "bin": { "react-doctor": "dist/cli.js" } }, "sha512-W4MGb3rAM9PGz0Gn1FYcoSxW6LFjy56PyBAznsEP9Iwubz5zaOzD3COoF/i/0sjfZAufgSUqH5qMJoWaOdWJzQ=="],
+    "react-doctor": ["react-doctor@0.0.28", "", { "dependencies": { "commander": "^14.0.3", "eslint-plugin-react-hooks": "^7.0.1", "knip": "^5.83.1", "ora": "^9.3.0", "oxlint": "^1.47.0", "picocolors": "^1.1.1", "prompts": "^2.4.2", "typescript": ">=5.0.4 <7" }, "bin": { "react-doctor": "dist/cli.js" } }, "sha512-YlouaJcxha25UG6lCZYg5ua2CT9ksYV8YEwwicXQiL238MFmgDHDyfRO6fRJxUntP7EuqT0kBpY1C/EXvknjMQ=="],
 
     "react-dom": ["react-dom@18.3.1", "", { "dependencies": { "loose-envify": "^1.1.0", "scheduler": "^0.23.2" }, "peerDependencies": { "react": "^18.3.1" } }, "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw=="],
 
