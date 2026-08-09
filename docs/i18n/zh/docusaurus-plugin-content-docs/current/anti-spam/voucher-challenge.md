@@ -1,34 +1,45 @@
 ---
-title: Voucher Challenge
-description: 反垃圾邮件挑战，限制社区所有者分发的独特优惠券代码背后的发布。
+title: 兑换码挑战
+description: 由社区所有者分发唯一兑换码、以此把关内容发布的反垃圾挑战。
 sidebar_position: 3
 ---
 
-# Voucher Challenge
+# 兑换码挑战
 
-优惠券挑战是一种反垃圾邮件机制，可通过独特的优惠券代码来控制内容发布。它将信任转移给社区所有者，而不是依赖自动检测，社区所有者手动将代码分发给他们信任的人。
+兑换码挑战用社区所有者分发的唯一兑换码来把关内容发布。它不依赖自动化评分，而是把信任转移到人工邀请流程上：由所有者掌控的渠道，把兑换码发给认识的人。
 
-**源代码：** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **源代码与最新 README：** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **npm 包：** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
 
-## 它是如何运作的
+## 安装
 
-1. 社区所有者生成一个或多个唯一的优惠券代码。
-2. 所有者通过他们选择的渠道（直接消息、电子邮件、面对面等）将这些代码分发给受信任的作者。
-3. 当作者尝试发布时，挑战系统会提示他们输入优惠券代码。
-4. 该代码经过验证 - 如果它是真实的并且尚未使用，则该出版物被接受。
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
-每个优惠券代码在兑换后都与特定作者绑定，防止其他人重复使用。
+## 工作原理
 
-## 何时使用它
+1. 社区所有者生成一个或多个唯一的兑换码。
+2. 所有者通过自己选择的渠道（私信、邮件、线下等）把这些兑换码交给受信任的作者。
+3. 当作者尝试发布内容时，挑战系统会提示他们输入兑换码。
+4. 系统校验该兑换码——如果它真实且尚未被使用，这次发布就会被接受。
 
-优惠券挑战最适合：
+每个兑换码一经兑换就会与特定作者绑定，防止被他人重复使用。
 
-- **仅限邀请的社区**，其中成员资格受到有意限制。
-- **策划的空间**，业主亲自审查每个参与者。
-- **高信任环境**，不需要或不需要自动垃圾邮件评分。
+## 当前软件包参考
 
-由于它需要手动代码分发，因此它无法扩展到大型开放社区。对于这些情况，请考虑 [Spam Blocker](./spam-blocker.md) 或 [EVM Contract Call Challenge](./evm-contract-call.md)。
+本页刻意只做概览，而不是照搬一份配置指南。软件包的 README 才是当前挑战名称、Bitsocial CLI 示例、pkc-js 注册方式、支持选项和兑换行为的权威来源：
 
-## 一体化
+- [兑换码挑战 README](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-优惠券挑战可插入 Bitsocial 生态系统中其他反垃圾邮件包所使用的相同挑战界面。社区所有者通过其社区设置启用它，当作者尝试发帖时，会自动向他们提出挑战。
+为线上社区做配置时，请优先参考上游 README，因为兑换码相关选项和安装流程是随该包一起做版本管理的，而不是随本网站。
+
+## 什么时候用它
+
+兑换码挑战最适合：
+
+- **仅限邀请的社区**，成员资格被有意收紧。
+- **精选空间**，由所有者亲自审核每一位参与者。
+- **高信任环境**，自动化的垃圾内容评分没有必要，甚至并不受欢迎。
+
+由于需要人工分发兑换码，它无法扩展到大型开放社区。那类场景可以考虑 [Spam Blocker](./spam-blocker.md) 或 [EVM 合约调用挑战](./evm-contract-call.md)。

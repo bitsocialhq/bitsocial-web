@@ -1,34 +1,37 @@
-# התקנת Agent Hooks
+# הגדרת hooks לסוכנים
 
-אם עוזר קידוד הבינה המלאכותית שלך תומך בווים של מחזור חיים, הגדר אותם עבור ריפו זה.
+אם עוזר הקידוד שלך תומך ב-hooks של מחזור חיים, הגדר אותם עבור המאגר הזה.
 
-## הוקס מומלצים
+## Hooks מומלצים
 
-| הוק             | פקודה                                      | מטרה                                                                                                                                                  |
-| --------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | פורמט אוטומטי של קבצים לאחר עריכות בינה מלאכותית                                                                                                      |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | הפעל את `corepack yarn install` כאשר `package.json` משתנה                                                                                             |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | גזום מסמכים מיושנים ומחק ענפי משימות זמניות משולבות                                                                                                   |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | בדיקות בנייה, מוך, בדיקת סוג ופורמט של שער קשיח; שמור על מידע על `yarn npm audit` והפעל את `yarn knip` בנפרד כביקורת מייעצת כאשר התלות/ייבוא ​​משתנים |
+| Hook            | פקודה                                         | מטרה                                                                                                                                                                        |
+| --------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | פורמוט אוטומטי של קבצים אחרי עריכות של הסוכן                                                                                                                                |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | הרצת `corepack yarn install` כאשר `package.json` משתנה                                                                                                                      |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | כאשר דיף מוסיף פרימיטיבים של `useEffect`/memo ב-`about/src/`, מזכיר לסוכן לשקול מחדש בעזרת ה-skills לביקורת React                                                           |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | גיזום רפרנסים מיושנים ומחיקת ענפי משימה זמניים שכבר שולבו                                                                                                                   |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | סריקה חוזרת של הדיף הנוכחי לאיתור אפקטים/memo חדשים של React ב-`about/src/` לפני שער האימות הסופי                                                                           |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | שער קשיח לאימות בנייה ממוקד, lint, בדיקת טיפוסים ובדיקות פורמוט; השאר את `yarn npm audit` כמידע בלבד והרץ את `yarn knip` בנפרד כביקורת מייעצת כאשר תלויות או ייבואים משתנים |
 
 ## למה
 
-- עיצוב עקבי
-- Lockfile נשאר מסונכרן
-- בעיות מבנה/מוך/סוג נתפסו מוקדם
-- נראות אבטחה באמצעות `yarn npm audit`
-- ניתן לבדוק סחיפה של תלות/ייבוא עם `yarn knip` מבלי להפוך אותו להוק עצירה גלובלי רועש
-- מימוש אחד של הוק משותף עבור Codex ו-Cursor
-- ענפי משימות זמניים נשארים מיושרים עם זרימת העבודה של עץ העבודה של ה-repo
+- פורמוט אחיד
+- ה-lockfile נשאר מסונכרן
+- תוספות חדשות של `useEffect`/memo באתר about מקבלות מבט שני מפורש לפני שהסוכן מסיים
+- בעיות בנייה, lint וטיפוסים הרלוונטיות לסביבת העבודה נתפסות מוקדם, בלי לכפות את בניית התיעוד הרב-לוקאלית המלאה על כל משימה
+- נראות אבטחתית באמצעות `yarn npm audit`
+- אפשר לבדוק סחף בתלויות ובייבואים עם `yarn knip` בלי להפוך אותו ל-hook עצירה גלובלי ורועש
+- מימוש hook משותף אחד עבור Codex וגם Cursor
+- ענפי משימה זמניים נשארים מיושרים עם זרימת ה-worktree של המאגר
 
-## סקריפטים של Hook לדוגמה
+## דוגמאות לסקריפטים של hooks
 
-### פורמט הוק
+### Hook לפורמוט
 
 ```bash
 #!/bin/bash
-# פורמט אוטומטי של קובצי JS/TS לאחר עריכות בינה מלאכותית
-# Hook מקבל JSON דרך stdin עם file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### אמת את הוק
+### Hook לאימות
 
 ```bash
 #!/bin/bash
-# הפעל build, lint, typecheck, בדיקת פורמט וביקורת אבטחה כאשר הסוכן מסיים
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-כברירת מחדל, `scripts/agent-hooks/verify.sh` יוצא ללא אפס כאשר בדיקה נדרשת נכשלת. הגדר את `AGENT_VERIFY_MODE=advisory` רק כאשר אתה צריך בכוונה אות מעץ שבור מבלי לחסום את הקרס. השאר את `yarn knip` מחוץ לשער הקשה, אלא אם כן ה-repo מחליט במפורש להיכשל בנושאי ייבוא/תלות מייעצים.
+כברירת מחדל, `scripts/agent-hooks/verify.sh` יוצא בקוד שונה מאפס כאשר בדיקה נדרשת נכשלת. הגדר `AGENT_VERIFY_MODE=advisory` רק כשאתה זקוק בכוונה לאות מתוך עץ שבור בלי לחסום את ה-hook. השאר את `yarn knip` מחוץ לשער הקשיח, אלא אם המאגר מחליט במפורש להיכשל על בעיות ייבוא ותלויות מייעצות.
 
-### וו התקנת חוט
+hooks של מחזור חיים אינם מחליפים אימות ידני בדפדפן. עבור שינויים בממשק או שינויים חזותיים, הרץ עדיין בדיקות `playwright-cli` ב-`chrome`, ב-`firefox` וב-`webkit`, ובנוסף זרימה בתצוגת נייד בכל מנוע כאשר הרספונסיביות או התנהגות המגע השתנו.
+
+### Hook להתקנת Yarn
 
 ```bash
 #!/bin/bash
-# הפעל את התקנת חוט corepack כאשר package.json משתנה
-# Hook מקבל JSON דרך stdin עם file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-הגדר את חיווט הוו בהתאם למסמכי כלי הסוכן שלך (`hooks.json`, שווה ערך וכו').
+הגדר את חיווט ה-hooks בהתאם לתיעוד של כלי הסוכן שלך (`hooks.json`, מקבילה וכו').
 
-ב-repo זה, `.codex/hooks/*.sh` ו-`.cursor/hooks/*.sh` צריכות להישאר כעטיפות דקיקות המאצילות להטמעות המשותפות תחת `scripts/agent-hooks/`.
+במאגר הזה, `.codex/hooks/*.sh` ו-`.cursor/hooks/*.sh` צריכים להישאר עטיפות דקות שמאצילות למימושים המשותפים תחת `scripts/agent-hooks/`.

@@ -1,52 +1,70 @@
 ---
 title: Decentralizzare tutti i social media
-description: La fase 5 del piano generale Bitsocial e lo stato finale a cui mira.
+description: La fase 5 del piano generale, incentrata sul finanziamento e sulla costruzione della coda lunga dei client sociali Bitsocial.
 ---
 
 # Decentralizzare tutti i social media
 
-Questo è lo stato finale descritto dal piano generale di Bitsocial: non un'app, ma un ecosistema di app Bitsocial in grado di rivaleggiare con tutte le principali categorie di social media.
+Lo stato finale non è un'unica app. È un mercato di client, nodi, servizi e comunità capace di
+sostituire la proprietà della piattaforma con la competizione tra client sullo stesso protocollo.
 
-## Il modello
+La fase 5 è il momento in cui Bitsocial va oltre le prime categorie prioritarie e inizia a
+finanziare quanti più formati sociali possibile.
 
-Nello stato maturo proposto della rete:
+## Che cosa resta da costruire
 
-- più fornitori pubblici di RPC competono per ospitare i nodi del profilo
-- gli utenti possono ancora ospitarsi autonomamente
-- gli algoritmi di feed diventano servizi opzionali anziché piattaforma obbligatoria legge
-- la monetizzazione non dipende dalla volontà delle banche di mantenere in vita la piattaforma
-- le app competono sulla qualità del prodotto, sulla scoperta e sul design dell'interfaccia
+Le prime fasi si concentrano sulle categorie con il maggiore effetto leva: imageboard, forum, RPC
+pubblico, Bitsocial Chain, nodi profilo, l'alternativa a Twitter/X della fase 3 e l'economia di
+servizi che ruota attorno a tutto questo.
 
-## Come sarebbe il successo
+Poi la rete dovrebbe espandersi nella coda lunga:
 
-Le app Bitsocial dovrebbero essere in grado di sfidare le piattaforme in tutti i formati, non solo in una nicchia:
+- client per il blogging
+- app di crowdfunding
+- video per creator e una credibile
+  [alternativa a YouTube](https://github.com/bitsocialnet/wetube)
+- comunità di creator
+- esperimenti con contenuti in formato breve
+- app sociali locali o dedicate a una lingua specifica
+- client di nicchia troppo piccoli per le prime quattro fasi
+- strumenti che rendono più semplice gestire le comunità esistenti
 
-- testo e tavole di discussione
-- imageboard
-- forum
-- comunità di creatori
-- video in formato breve e prodotti multimediali più ampi
+Alcune di queste app possono essere open source. Alcune possono essere client centralizzati. Alcune
+possono nascere da Bitsocial Forge, e molte dovrebbero nascere da sviluppatori indipendenti.
 
-L'obiettivo non è imporre a tutti un'interfaccia universale. Si tratta di fornire a molte app l'accesso alle stesse comunità, identità e reti sottostanti.
+## Finanziare molti sviluppatori
 
-## Perché il livello RPC è importante in questo caso
+L'obiettivo è rendere finanziabili i nuovi client sociali prima che abbiano già una diffusione
+paragonabile a quella di una piattaforma.
 
-Comunità e profili sempre attivi diventano molto più pratici una volta che esistono mercati RPC pubblici. Senza questo livello, il self-hosting rimane un attrito troppo elevato per molti utenti, soprattutto sui dispositivi mobili.
+Questo può includere investimenti diretti, sovvenzioni, finanziamenti dalla comunità, ricavi
+provenienti da servizi Bitsocial di successo oppure programmi di sovvenzione decentralizzati, in cui
+è la comunità Bitsocial più ampia a contribuire a decidere quali sviluppatori sostenere.
 
-## Perché il livello di rete è importante qui
+La parte importante è il pluralismo. La rete dovrebbe finanziare molti tentativi, invece di aspettare
+che un'unica app ufficiale copra ogni categoria.
 
-Se la monetizzazione dei contenuti può essere interrotta dalla normale pressione bancaria o della piattaforma, l'ecosistema rimane fragile. Bitsocial Chain viene proposto come il livello economico che rende più credibile la concorrenza a lungo termine.
+## Che aspetto ha il successo
 
-## La scommessa principale
-
-La grande scommessa è che i social media possano essere suddivisi in elementi sostituibili livelli:
+Bitsocial ha successo quando i social media possono essere scomposti in livelli sostituibili:
 
 - protocollo
 - comunità
 - identità
 - hosting
-- discovery
+- scoperta dei contenuti
+- moderazione
 - monetizzazione
 - app
 
-Una volta che questi livelli sono sostituibili, nessuna singola azienda deve possedere l'intero grafico sociale affinché il prodotto funzioni.
+Una volta che questi livelli sono sostituibili, nessuna singola azienda deve possedere l'intero grafo
+sociale perché il prodotto funzioni.
+
+## La scommessa di fondo
+
+Un ecosistema Bitsocial maturo dovrebbe contenere RPC pubblici, nodi self-hosted, mercati di
+algoritmi per i feed, host multimediali, servizi di scoperta, client open source, client commerciali
+ed esperimenti finanziati dalla comunità.
+
+I social media trovano finalmente il loro equilibrio: una rete sociale completamente decentralizzata
+e peer-to-peer che non appartiene a nessuno; Bitsocial.

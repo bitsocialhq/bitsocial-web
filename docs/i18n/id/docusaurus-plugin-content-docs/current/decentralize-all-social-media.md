@@ -1,52 +1,68 @@
 ---
 title: Desentralisasi Semua Media Sosial
-description: Fase 5 dari rencana induk Bitsocial dan kondisi akhir yang dituju.
+description: Fase 5 dari rencana induk, berfokus pada pendanaan dan pembangunan long tail klien sosial Bitsocial.
 ---
 
 # Desentralisasi Semua Media Sosial
 
-Ini adalah keadaan akhir yang dijelaskan oleh rencana induk Bitsocial: bukan hanya satu aplikasi, namun ekosistem aplikasi Bitsocial yang dapat menyaingi setiap kategori utama media sosial.
+Kondisi akhirnya bukan satu aplikasi, melainkan pasar berisi klien, node, layanan, dan komunitas yang
+mampu menggantikan kepemilikan platform dengan persaingan di atas sebuah protokol.
 
-## Modelnya
+Fase 5 adalah saat Bitsocial melangkah melampaui kategori prioritas awal dan mulai mendanai sebanyak
+mungkin format sosial.
 
-Dalam keadaan jaringan matang yang diusulkan:
+## Apa yang masih perlu dibangun
 
-- beberapa penyedia RPC publik bersaing untuk menghosting node profil
-- pengguna masih dapat melakukan self-host
-- algoritma feed menjadi layanan opsional dan bukan hukum platform wajib
-- monetisasi tidak bergantung pada kesediaan bank untuk menjaga platform tetap hidup
-- aplikasi bersaing dalam kualitas produk, penemuan, dan desain antarmuka
+Fase-fase awal berfokus pada kategori dengan daya ungkit terbesar: imageboard, forum, RPC publik,
+Bitsocial Chain, node profil, alternatif Twitter/X pada Fase 3, dan ekonomi layanan di sekitarnya.
 
-## Seperti apa kesuksesan itu nantinya
+Setelah itu, jaringan harus meluas ke long tail:
 
-Aplikasi Bitsocial harus mampu menantang platform di berbagai format, tidak hanya di satu niche:
+- klien untuk blog
+- aplikasi urun dana
+- video kreator dan [alternatif YouTube](https://github.com/bitsocialnet/wetube) yang kredibel
+- komunitas kreator
+- eksperimen media format pendek
+- aplikasi sosial lokal atau khusus satu bahasa
+- klien niche yang terlalu kecil untuk empat fase pertama
+- alat yang membuat komunitas yang sudah ada lebih mudah dikelola
 
-- teks dan diskusi
-- papan gambar
-- forum
-- komunitas pencipta
-- video pendek dan produk media yang lebih luas
+Sebagian aplikasi ini bisa bersifat open source. Sebagian bisa berupa klien terpusat. Sebagian bisa
+dibangun oleh Bitsocial Forge, dan banyak di antaranya sebaiknya dibangun oleh pengembang independen.
 
-Tujuannya bukan untuk memaksakan satu antarmuka universal pada setiap orang. Hal ini untuk memberikan banyak aplikasi akses ke komunitas, identitas, dan jaringan dasar yang sama.
+## Mendanai banyak pengembang
 
-## Mengapa lapisan RPC penting di sini
+Tujuannya adalah membuat klien sosial baru layak didanai sebelum mereka punya traksi sebesar platform
+besar.
 
-Komunitas dan profil yang selalu aktif menjadi lebih praktis setelah pasar RPC publik ada. Tanpa lapisan itu, hosting mandiri masih terlalu sulit bagi banyak pengguna, terutama di perangkat seluler.
+Bentuknya bisa berupa investasi langsung, hibah, pendanaan komunitas, pendapatan dari layanan
+Bitsocial yang sukses, atau program hibah terdesentralisasi tempat komunitas Bitsocial yang lebih luas
+ikut menentukan pengembang mana yang layak mendapat dukungan.
 
-## Mengapa lapisan jaringan penting di sini
+Yang terpenting adalah pluralisme. Jaringan sebaiknya mendanai banyak percobaan, bukan menunggu satu
+aplikasi resmi yang menutup semua kategori.
 
-Jika monetisasi konten dapat dihentikan oleh tekanan perbankan atau platform, maka ekosistem akan tetap rapuh. Bitsocial Chain diusulkan sebagai lapisan ekonomi yang membuat persaingan jangka panjang lebih kredibel.
+## Seperti apa keberhasilannya
 
-## Taruhan inti
-
-Taruhan besarnya adalah media sosial dapat dipecah menjadi beberapa lapisan yang dapat diganti:
+Bitsocial berhasil ketika media sosial dapat dipecah menjadi lapisan-lapisan yang bisa diganti:
 
 - protokol
 - komunitas
 - identitas
-- menjadi tuan rumah
-- penemuan
+- hosting
+- penemuan konten
+- moderasi
 - monetisasi
 - aplikasi
 
-Setelah lapisan-lapisan tersebut dapat diganti, tidak ada satu perusahaan pun yang harus memiliki seluruh grafik sosial agar produknya dapat berfungsi.
+Setelah lapisan-lapisan itu bisa diganti, tidak ada satu perusahaan pun yang harus memiliki seluruh
+grafik sosial agar produknya bekerja.
+
+## Taruhan intinya
+
+Ekosistem Bitsocial yang matang semestinya berisi RPC publik, node yang dihosting sendiri, pasar
+algoritma feed, penyedia hosting media, layanan penemuan konten, klien open source, klien komersial,
+dan eksperimen yang didanai komunitas.
+
+Media sosial akhirnya menemukan titik keseimbangannya: jaringan sosial peer-to-peer yang sepenuhnya
+terdesentralisasi dan tidak dimiliki siapa pun; Bitsocial.

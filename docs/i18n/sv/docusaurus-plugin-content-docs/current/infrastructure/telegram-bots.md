@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Flödebots som övervakar Bitsocial-gemenskapslistor och vidarebefordrar inlägg till Telegram-kanaler.
-sidebar_position: 3
+title: Telegram-bottar
+description: Flödesbottar som bevakar Bitsocials community-listor och vidarebefordrar inlägg till Telegram-kanaler.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Telegram-bottar
 
-Bitsocial Telegram-botarna övervakar klientgemenskapslistor på Bitsocial-nätverket och vidarebefordrar automatiskt nya inlägg till Telegram-kanaler. Varje vidarebefordrat meddelande innehåller inline-knappar som länkar tillbaka till det ursprungliga inlägget på 5chan och Seedit.
+Bitsocials Telegram-bottar bevakar klienternas community-listor på Bitsocial-nätverket och vidarebefordrar automatiskt nya inlägg till Telegram-kanaler. Varje vidarebefordrat meddelande innehåller inbyggda knappar som länkar tillbaka till originalinlägget på 5chan och Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
-## Tillgängliga bots
+## Tillgängliga bottar
 
-| Bot              | Status   | Beskrivning                                                                  |
-| ---------------- | -------- | ---------------------------------------------------------------------------- |
-| **5chan-flöde**  | Aktiv    | Övervakar alla 5chan-kataloger och vidarebefordrar nya inlägg till Telegram. |
-| **Seedit-flöde** | Planerad | Kommer att tillhandahålla samma funktionalitet för Seedit-gemenskaper.       |
+| Bott            | Status   | Beskrivning                                                        |
+| --------------- | -------- | ------------------------------------------------------------------ |
+| **5chan Feed**  | Aktiv    | Bevakar alla 5chan-kataloger och skickar nya inlägg till Telegram. |
+| **Seedit Feed** | Planerad | Kommer att erbjuda samma funktion för Seedit-communities.          |
 
-## Inställning
+## Installation
 
 ### Förutsättningar
 
 - Node.js
-- Garn
-- En Telegram bot-token (skapa en via [BotFather](https://t.me/BotFather))
+- Yarn
+- En bottoken för Telegram (skapa en via [BotFather](https://t.me/BotFather))
 
-### Installation
+### Installera
 
-Klona förvaret och installera beroenden:
+Klona förvaret och installera beroendena:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -43,19 +43,19 @@ Skapa en `.env`-fil i projektroten med din bottoken:
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Spring
+### Körning
 
-Starta boten efter att ha konfigurerat din miljö:
+Starta botten när miljön är konfigurerad:
 
 ```bash
 yarn start
 ```
 
-## Postformat
+## Inläggsformat
 
-När boten vidarebefordrar ett inlägg till Telegram innehåller det två inline-knappar:
+När botten vidarebefordrar ett inlägg till Telegram följer två inbyggda knappar med:
 
-- **Visa på 5chan** -- Öppnar inlägget i 5chans webbklient.
-- **Visa på Seedit** -- Öppnar inlägget i Seedit webbklient.
+- **Visa på 5chan** -- Öppnar inlägget i webbklienten för 5chan.
+- **Visa på Seedit** -- Öppnar inlägget i webbklienten för Seedit.
 
-Detta låter Telegram-prenumeranter hoppa direkt till hela diskussionstråden på vilken klient de föredrar.
+Det låter Telegram-prenumeranter hoppa direkt till hela diskussionstråden i den klient de föredrar.

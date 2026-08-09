@@ -1,34 +1,37 @@
-# Configuración de enlaces de agentes
+# Configuración de hooks para agentes
 
-Si su asistente de codificación de IA admite enlaces de ciclo de vida, configúrelos para este repositorio.
+Si su asistente de programación con IA admite hooks de ciclo de vida, configúrelos para este repositorio.
 
-## Ganchos recomendados
+## Hooks recomendados
 
-| Gancho          | Comando                                    | Propósito                                                                                                                                                                                                                              |
-| --------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Formatear archivos automáticamente después de las ediciones de IA                                                                                                                                                                      |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Ejecute `corepack yarn install` cuando cambie `package.json`                                                                                                                                                                           |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Eliminar referencias obsoletas y eliminar ramas de tareas temporales integradas                                                                                                                                                        |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Comprobaciones de formato, pelusa, tipografía y compilación de puerta dura; mantenga `yarn npm audit` informativo y ejecute `yarn knip` por separado como una auditoría de asesoramiento cuando cambien las dependencias/importaciones |
+| Hook            | Comando                                       | Propósito                                                                                                                                                                                                                                                                      |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Formatear los archivos automáticamente después de que la IA los edite                                                                                                                                                                                                          |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Ejecutar `corepack yarn install` cuando cambie `package.json`                                                                                                                                                                                                                  |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Cuando un diff añade primitivas `useEffect`/memo en `about/src/`, recordar al agente que las reconsidere con las skills de revisión de React                                                                                                                                   |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Podar las referencias obsoletas y borrar las ramas de tarea temporales ya integradas                                                                                                                                                                                           |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Volver a revisar el diff actual en busca de nuevos efectos o memos de React en `about/src/` antes de la verificación final                                                                                                                                                     |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Exigir como control bloqueante la verificación de compilación dirigida, el lint, la comprobación de tipos y el formato; dejar `yarn npm audit` como información y ejecutar `yarn knip` aparte, como auditoría orientativa, cuando cambien las dependencias o las importaciones |
 
-## ¿Por qué?
+## Por qué
 
-- Formato consistente
-- Lockfile permanece sincronizado
-- Problemas de compilación/pelusa/tipo detectados tempranamente
-- Visibilidad de seguridad a través de `yarn npm audit`
-- La deriva de dependencia/importación se puede verificar con `yarn knip` sin convertirlo en un ruidoso gancho de parada global.
-- Una implementación de enlace compartido para Codex y Cursor
-- Las ramas de tareas temporales permanecen alineadas con el flujo de trabajo del árbol de trabajo del repositorio.
+- Formato coherente
+- El lockfile se mantiene sincronizado
+- Cada nuevo `useEffect` o memo añadido en el sitio about recibe una segunda revisión explícita antes de que el agente termine
+- Los problemas de compilación, lint o tipos del workspace afectado se detectan pronto, sin forzar la compilación completa multiidioma de la documentación en cada tarea
+- Visibilidad de seguridad gracias a `yarn npm audit`
+- La deriva de dependencias e importaciones se puede revisar con `yarn knip` sin convertirlo en un ruidoso hook de parada global
+- Una única implementación de hooks compartida entre Codex y Cursor
+- Las ramas de tarea temporales se mantienen alineadas con el flujo de worktrees del repositorio
 
-## Ejemplos de secuencias de comandos de gancho
+## Ejemplos de scripts de hook
 
-### Gancho de formato
+### Hook de formato
 
 ```bash
 #!/bin/bash
-# Formatear automáticamente archivos JS/TS después de las ediciones AI
-# Hook recibe JSON a través de stdin con file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Verificar gancho
+### Hook de verificación
 
 ```bash
 #!/bin/bash
-# Ejecute compilación, pelusa, verificación de tipo, verificación de formato y auditoría de seguridad cuando el agente finalice
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-De forma predeterminada, `scripts/agent-hooks/verify.sh` sale de un valor distinto de cero cuando falla una verificación requerida. Configure `AGENT_VERIFY_MODE=advisory` solo cuando intencionalmente necesite señal de un árbol roto sin bloquear el gancho. Mantenga `yarn knip` fuera de la puerta principal a menos que el repositorio decida explícitamente fallar en cuestiones de importación/dependencia de asesoramiento.
+De forma predeterminada, `scripts/agent-hooks/verify.sh` termina con un código distinto de cero cuando falla una comprobación obligatoria. Active `AGENT_VERIFY_MODE=advisory` solo cuando necesite deliberadamente obtener señal de un árbol roto sin bloquear el hook. Mantenga `yarn knip` fuera del control bloqueante salvo que el repositorio decida explícitamente fallar ante problemas orientativos de importaciones o dependencias.
 
-### Gancho de instalación de hilo
+Los hooks de ciclo de vida no sustituyen la verificación manual en el navegador. Ante cambios de interfaz o visuales, siga ejecutando las comprobaciones de `playwright-cli` en `chrome`, `firefox` y `webkit`, además de un recorrido con viewport móvil en cada motor cuando cambie la adaptabilidad o el comportamiento táctil.
+
+### Hook de instalación de Yarn
 
 ```bash
 #!/bin/bash
-# Ejecute la instalación de corepack Yarn cuando se cambie package.json
-# Hook recibe JSON a través de stdin con file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Configure el cableado del gancho de acuerdo con los documentos de la herramienta de su agente (`hooks.json`, equivalente, etc.).
+Configure el cableado de los hooks según la documentación de su herramienta de agentes (`hooks.json` o su equivalente).
 
-En este repositorio, `.codex/hooks/*.sh` y `.cursor/hooks/*.sh` deben permanecer como contenedores delgados que delegan a las implementaciones compartidas en `scripts/agent-hooks/`.
+En este repositorio, `.codex/hooks/*.sh` y `.cursor/hooks/*.sh` deben seguir siendo envoltorios ligeros que delegan en las implementaciones compartidas de `scripts/agent-hooks/`.

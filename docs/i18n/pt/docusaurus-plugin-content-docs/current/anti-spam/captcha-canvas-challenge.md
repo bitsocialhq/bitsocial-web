@@ -1,24 +1,15 @@
 ---
-title: Captcha Canvas Challenge
-description: Gerador de captcha independente baseado em imagem com caracteres, dimensões e cores configuráveis.
+title: Desafio Captcha Canvas
+description: Desafio de captcha por imagem, independente, para comunidades Bitsocial.
 sidebar_position: 2
 ---
 
-# Captcha Canvas Challenge
+# Desafio Captcha Canvas
 
-:::warning Nomenclatura herdada
-Este pacote foi publicado originalmente no escopo `@plebbit`. Ele foi renomeado para `@bitsocial/captcha-canvas-challenge`. Referências ao nome antigo ainda podem aparecer em documentação ou bases de código mais antigas.
-:::
+O Captcha Canvas Challenge é um pacote independente de captcha por imagem para comunidades Bitsocial. Ele desenha um texto aleatório em um canvas e permite que a comunidade peça aos autores que resolvam a imagem antes de a publicação ser aceita.
 
-Captcha Canvas Challenge é um gerador de imagem captcha independente originalmente extraído de `plebbit-js`. Ele renderiza texto aleatório em uma tela HTML e retorna a imagem resultante, que as comunidades podem apresentar aos autores como um desafio de spam.
-
-**Código fonte:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Requisitos
-
-- **Node.js** >= 22
-- **Somente ESM** – este pacote não envia compilações CommonJS.
-- **Dependência de peer em tempo de execução:** `@plebbit/plebbit-js` (migrando para `@pkc/pkc-js`)
+- **Código-fonte e README atual:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **Pacote npm:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Instalação
 
@@ -26,19 +17,16 @@ Captcha Canvas Challenge é um gerador de imagem captcha independente originalme
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Opções de configuração
+## Onde ele se encaixa
 
-| Opção        | Tipo     | Padrão    | Descrição                                                       |
-| ------------ | -------- | --------- | --------------------------------------------------------------- |
-| `characters` | `number` | `6`       | Número de caracteres aleatórios renderizados na imagem captcha. |
-| `height`     | `number` | `100`     | Altura da imagem gerada em pixels.                              |
-| `width`      | `number` | `300`     | Largura da imagem gerada em pixels.                             |
-| `colors`     | `string` | `#32cf7e` | Cor primária usada para o texto captcha.                        |
+Desafios de captcha são úteis quando uma comunidade quer uma barreira interativa simples para resistência a spam de baixo risco. Este pacote é propositalmente restrito: ele fornece a implementação do desafio, enquanto a comunidade ou o nó Bitsocial decide quando e como apresentá-lo.
 
-## Como funciona
+Para uma proteção mais forte, combine-o com sistemas mais amplos de moderação ou de pontuação de risco, em vez de tratar um captcha como estratégia antispam completa.
 
-1. O gerador escolhe uma string aleatória com o comprimento configurado.
-2. A string é renderizada em uma tela com ruído visual para resistir ao OCR.
-3. A imagem resultante (e a resposta esperada) são retornadas para que a aplicação chamadora possa apresentar o desafio e posteriormente verificar a resposta.
+## Referência atual do pacote
 
-Como o pacote é um gerador de imagens puro, ele não cuida da rede ou do gerenciamento de sessões por conta própria. Pretende-se que seja integrado a um fluxo de desafio maior - por exemplo, como um dos tipos de desafio suportados pelo [Spam Blocker](./spam-blocker.md).
+Esta página é propositalmente uma visão geral, não uma cópia do guia de configuração. O README do pacote é a fonte da verdade para os nomes atuais dos desafios, exemplos de registro, exemplos de CLI, opções suportadas, requisitos e notas de segurança:
+
+- [README do Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Prefira o README do projeto original ao configurar uma comunidade em produção, porque as opções do pacote e os fluxos de instalação são versionados junto com o pacote, e não com este site.

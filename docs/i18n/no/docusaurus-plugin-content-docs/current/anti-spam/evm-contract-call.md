@@ -1,19 +1,15 @@
 ---
-title: EVM Contract Call Challenge
-description: Anti-spam-utfordring som verifiserer forhold i kjeden ved å ringe en EVM-smartkontrakt.
+title: EVM-kontraktkallutfordring
+description: Anti-spam-utfordring som verifiserer betingelser på kjeden ved å kalle en EVM-smartkontrakt.
 sidebar_position: 4
 ---
 
-# EVM Contract Call Challenge
+# EVM-kontraktkallutfordring
 
-EVM Contract Call Challenge er en anti-spam-mekanisme som verifiserer kjedeforhold før en publisering tillates. Det lar fellesskapseiere kreve at forfattere oppfyller smartkontrakt-definerte kriterier – for eksempel å ha en minimum token-saldo – for å kunne legge ut.
+EVM-kontraktkallutfordringen verifiserer en forfatters tilstand på kjeden før en publisering tillates. Fellesskapseiere kan kreve at en lommebok eller en oppslått identitet oppfyller en skrivebeskyttet betingelse i en smartkontrakt, for eksempel å ha en minstebeholdning av et token, før det kan publiseres.
 
-**Kildekode:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Krav
-
-- **Node.js** >= 22
-- **Kun ESM** -- denne pakken sender ikke CommonJS-bygg.
+- **Kildekode og gjeldende README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **npm-pakke:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Installasjon
 
@@ -21,34 +17,26 @@ EVM Contract Call Challenge er en anti-spam-mekanisme som verifiserer kjedeforho
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Konfigurasjonsalternativer
+## Hvor den passer inn
 
-| Alternativ    | Skriv inn | Beskrivelse                                                                     |
-| ------------- | --------- | ------------------------------------------------------------------------------- |
-| `chainTicker` | `string`  | Kjeden som skal forespørres (f.eks. `eth`, `matic`, `avax`).                    |
-| `address`     | `string`  | Den smarte kontraktsadressen å ringe.                                           |
-| `abi`         | `string`  | ABI-fragmentet for funksjonen som kalles.                                       |
-| `condition`   | `string`  | Et sammenligningsuttrykk evaluert mot kontraktens returverdi (f.eks. `> 1000`). |
-| `error`       | `string`  | Feilmeldingen vises til forfattere som ikke oppfyller betingelsen.              |
+Bruk denne utfordringen i fellesskap der deltakelse skal avhenge av et eksternt EVM-signal: tokeneierskap, NFT-eierskap, poeng for proof-of-personhood, medlemskap i styring eller en annen betingelse som kan leses fra en kontrakt.
 
-## Eksempel
+Sett fra forfatterens side er utfordringen automatisk når den først er satt opp. Den sjekker aktuelle lommebok- eller identitetskilder, kaller den konfigurerte kontraktmetoden og sammenligner verdien som returneres, mot fellesskapets betingelse.
 
-En fellesskapseier som ønsker å begrense innlegg til forfattere som har mer enn 1000 av et bestemt ERC-20-token, vil konfigurere utfordringen med:
+## Gjeldende pakkereferanse
 
-- `chainTicker`: `"eth"`
-- `address`: token-kontraktadressen
-- `abi`: ABI for `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Denne siden er bevisst en oversikt, ikke en speilet konfigurasjonsreferanse. Pakkens README er kilden til sannhet for utfordringsnavn, eksempler med Bitsocial CLI, registrering i pkc-js, standardverdier for alternativer, ABI-eksempler, RPC-oppførsel og støttede lommebokkilder:
 
-Når en forfatter prøver å publisere, kaller utfordringen `balanceOf` med forfatterens adresse og sjekker om den returnerte verdien tilfredsstiller betingelsen. Hvis den gjør det, fortsetter publiseringen; ellers returneres den konfigurerte feilmeldingen.
+- [README for EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Når du skal bruke den
+Foretrekk README-en oppstrøms når du konfigurerer et aktivt fellesskap, fordi kontraktalternativer og eksempler versjoneres sammen med pakken og ikke med dette nettstedet.
 
-EVM Contract Call Challenge er ideell for:
+## Når den bør brukes
 
-- **Token-gatede fellesskap** som begrenser publisering til token-innehavere.
-- **NFT-gated tilgang** der eierskap av en spesifikk NFT kreves.
-- **DAO-styringsrom** der deltakelse er begrenset til innehavere av styringstokener.
+EVM-kontraktkallutfordringen passer godt for:
 
-For fellesskap som ikke er avhengig av kjedeidentitet, bør du vurdere [Spamblokkering](./spam-blocker.md) eller [Voucher Challenge](./voucher-challenge.md) i stedet.
+- **Token-avgrensede fellesskap** som begrenser publisering til dem som eier et token.
+- **NFT-avgrenset tilgang** der eierskap til en bestemt NFT kreves.
+- **DAO-styringsrom** der deltakelse er begrenset til dem som eier styringstokener.
+
+For fellesskap som ikke baserer seg på identitet på kjeden, kan du i stedet vurdere [Spam Blocker](./spam-blocker.md) eller [Voucher-utfordringen](./voucher-challenge.md).

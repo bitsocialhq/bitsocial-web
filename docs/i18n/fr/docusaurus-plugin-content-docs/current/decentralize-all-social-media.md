@@ -1,52 +1,72 @@
 ---
 title: Décentraliser tous les médias sociaux
-description: Phase 5 du plan directeur Bitsocial et l’état final qu’elle vise.
+description: Phase 5 du plan directeur, centrée sur le financement et la construction de la longue traîne des clients sociaux Bitsocial.
 ---
 
 # Décentraliser tous les médias sociaux
 
-C’est l’état final décrit par le plan directeur Bitsocial : non pas une application, mais un écosystème d’applications Bitsocial qui peut rivaliser avec toutes les grandes catégories de médias sociaux.
+L'aboutissement n'est pas une application unique. C'est un marché de clients, de nœuds, de services
+et de communautés capable de remplacer la propriété d'une plateforme par la concurrence autour d'un
+protocole commun.
 
-## Le modèle
+La phase 5, c'est le moment où Bitsocial dépasse les premières catégories prioritaires et commence à
+financer autant de formats sociaux que possible.
 
-Dans l’état de maturité proposé du réseau :
+## Ce qu'il reste à construire
 
-- plusieurs fournisseurs RPC publics se font concurrence pour héberger des nœuds de profil
-- les utilisateurs peuvent toujours s'auto-héberger
-- les algorithmes de flux deviennent des services facultatifs au lieu d'une loi obligatoire sur les plateformes
-- la monétisation ne dépend pas de la volonté des banques de maintenir la plateforme en vie
-- les applications rivalisent sur la qualité des produits, la découverte et la conception de l'interface
+Les premières phases se concentrent sur les catégories au plus fort effet de levier : imageboards,
+forums, RPC public, Bitsocial Chain, nœuds de profil, l'alternative à Twitter/X de la phase 3 et
+l'économie de services qui les entoure.
 
-## À quoi ressemblerait le succès
+Ensuite, le réseau doit s'étendre à la longue traîne :
 
-Les applications Bitsocial devraient être capables de défier les plateformes dans tous les formats, et pas seulement dans un seul créneau :
+- des clients de blogging
+- des applications de financement participatif
+- de la vidéo de créateurs et une [alternative crédible à YouTube](https://github.com/bitsocialnet/wetube)
+- des communautés de créateurs
+- des expérimentations autour des formats courts
+- des applications sociales locales ou propres à une langue
+- des clients de niche, trop petits pour les quatre premières phases
+- des outils qui facilitent la gestion des communautés existantes
 
-- texte et discussion
-- tableaux d'images
-- forums
-- communautés de créateurs
-- vidéo courte et produits médiatiques plus larges
+Certaines de ces applications peuvent être open source. D'autres peuvent être des clients
+centralisés. Certaines peuvent être construites par Bitsocial Forge, et beaucoup devraient l'être
+par des développeurs indépendants.
 
-L’objectif n’est pas d’imposer une interface universelle à tout le monde. Il s’agit de donner à de nombreuses applications l’accès aux mêmes communautés, identités et réseaux sous-jacents.
+## Financer de nombreux constructeurs
 
-## Pourquoi la couche RPC est importante ici
+L'objectif est de rendre les nouveaux clients sociaux finançables avant même qu'ils aient atteint la
+traction d'une plateforme.
 
-Les communautés et les profils toujours actifs deviennent beaucoup plus pratiques une fois que les marchés RPC publics existent. Sans cette couche, l’auto-hébergement reste trop problématique pour de nombreux utilisateurs, en particulier sur mobile.
+Cela peut passer par l'investissement direct, des subventions, du financement communautaire, les
+revenus de services Bitsocial à succès ou des programmes de subventions décentralisés où la
+communauté Bitsocial au sens large aide à décider quels développeurs soutenir.
 
-## Pourquoi la couche réseau est importante ici
+L'essentiel, c'est le pluralisme. Le réseau doit financer de nombreuses tentatives plutôt
+qu'attendre qu'une application officielle couvre chaque catégorie.
 
-Si la monétisation du contenu peut être interrompue par la pression bancaire ordinaire ou par la pression des plateformes, l’écosystème reste alors fragile. Bitsocial Chain est proposé comme la couche économique qui rend la concurrence à long terme plus crédible.
+## À quoi ressemble la réussite
 
-## Le pari principal
+Bitsocial réussit lorsque les médias sociaux peuvent être découpés en couches remplaçables :
 
-Le grand pari est que les médias sociaux puissent être divisés en couches remplaçables :
+- le protocole
+- les communautés
+- l'identité
+- l'hébergement
+- la découverte
+- la modération
+- la monétisation
+- les applications
 
-- protocole
-- communautés
-- identité
-- hébergement
-- découverte
-- monétisation
-- applications
+Une fois ces couches remplaçables, aucune entreprise n'a besoin de posséder l'intégralité du graphe
+social pour que le produit fonctionne.
 
-Une fois ces couches remplaçables, aucune entreprise n’a besoin de posséder l’intégralité du graphe social pour que le produit fonctionne.
+## Le pari fondamental
+
+Un écosystème Bitsocial arrivé à maturité devrait comporter des RPC publics, des nœuds
+auto-hébergés, des marchés d'algorithmes de fil, des hébergeurs de médias, des services de
+découverte, des clients open source, des clients commerciaux et des expérimentations financées par
+la communauté.
+
+Les médias sociaux trouvent enfin leur équilibre : un réseau social entièrement décentralisé et
+peer-to-peer que personne ne possède ; Bitsocial.

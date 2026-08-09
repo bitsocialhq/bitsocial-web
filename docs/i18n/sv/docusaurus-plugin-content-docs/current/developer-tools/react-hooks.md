@@ -6,90 +6,86 @@ sidebar_position: 1
 
 # React Hooks
 
-:::warning Äldre namngivning
-Detta paket använder för närvarande äldre namnkonventioner som ärvts från dess uppströmsgaffel. Referenser till "plebbit" i kod, API:er och konfiguration kommer att migreras till "bitsocial" i en framtida version. Funktionaliteten påverkas inte.
-:::
+Paketet `bitsocial-react-hooks` erbjuder ett välbekant API med React hooks för att arbeta mot Bitsocial-protokollet. Det sköter hämtning av flöden, kommentarer och författarprofiler, hantering av konton, publicering av innehåll och prenumerationer på communities -- helt utan att förlita sig på en central server.
 
-`bitsocial-react-hooks`-paketet tillhandahåller ett välbekant React hooks API för interaktion med Bitsocial-protokollet. Den hanterar att hämta flöden, kommentarer och författarprofiler, hantera konton, publicera innehåll och prenumerera på gemenskaper – allt utan att förlita sig på en central server.
-
-Detta bibliotek är det primära gränssnittet som används av [5chan](/apps/5chan/) och andra Bitsocial-klientapplikationer.
+Biblioteket är det huvudsakliga gränssnittet som används av [5chan](/apps/5chan/) och andra Bitsocial-klienter.
 
 :::note
-`bitsocial-react-hooks` är en tillfällig gaffel av `plebbit/plebbit-react-hooks` som underhålls för AI-stödd utveckling. Den konsumeras direkt från GitHub snarare än publicerad till npm.
+`bitsocial-react-hooks` hämtas för närvarande direkt från GitHub i stället för att publiceras på npm.
 :::
 
 ## Installation
 
-Eftersom paketet ännu inte är på npm, installera det direkt från GitHub, fästa till en specifik commit-hash:
+Eftersom paketet ännu inte finns på npm installerar du det direkt från GitHub och låser det till en specifik commit-hash:
 
 ```bash
 yarn add https://github.com/bitsocialnet/bitsocial-react-hooks.git#<commit-hash>
 ```
 
-Ersätt `<commit-hash>` med den commit du vill rikta in dig på.
+Byt ut `<commit-hash>` mot den commit du vill utgå från.
 
 ## API-översikt
 
-Krokarna är organiserade i funktionskategorier. Nedan följer en sammanfattning av de mest använda krokarna i varje kategori. För fullständiga signaturer, parametrar och returtyper, se [fullständig API-referens på GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks).
+Hookarna är indelade i funktionella kategorier. Nedan följer en sammanfattning av de vanligaste hookarna i varje kategori. Fullständiga signaturer, parametrar och returtyper finns i [den kompletta API-referensen på GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks).
 
-### konton
+### Konton
 
 Hantera lokala användarkonton, identitet och inställningar.
 
 - `useAccount(accountName?)` -- returnerar det aktiva (eller namngivna) kontoobjektet
 - `useAccounts()` -- returnerar alla lokalt lagrade konton
-- `useAccountComments(options?)` -- returnerar kommentarer publicerade av det aktiva kontot
+- `useAccountComments(options?)` -- returnerar kommentarer som publicerats av det aktiva kontot
 
 ### Kommentarer
 
-Hämta och interagera med enskilda kommentarer och trådar.
+Hämta och arbeta med enskilda kommentarer och trådar.
 
-- `useComment(commentCid?)` -- hämtar en enstaka kommentar av sitt kund-ID
-- `useComments(commentCids?)` -- hämtar flera kommentarer i batch
+- `useComment(commentCid?)` -- hämtar en enskild kommentar utifrån dess CID
+- `useComments(commentCids?)` -- hämtar flera kommentarer i en batch
 - `useEditedComment(comment?)` -- returnerar den senast redigerade versionen av en kommentar
 
-### gemenskaper
+### Communities
 
-Hämta community-metadata och inställningar.
+Hämta metadata och inställningar för communities.
 
-- `useSubplebbit(subplebbitAddress?)` -- hämtar en gemenskap efter adress
-- `useSubplebbits(subplebbitAddresses?)` -- hämtar flera gemenskaper
-- `useSubplebbitStats(subplebbitAddress?)` -- returnerar antalet prenumeranter och inlägg
+- Hook för uppslag av en enskild community -- hämtar en community utifrån dess adress
+- Hook för uppslag av flera communities -- hämtar flera communities samtidigt
+- Hook för community-statistik -- returnerar antal prenumeranter och inlägg
 
 ### Författare
 
 Slå upp författarprofiler och metadata.
 
 - `useAuthor(authorAddress?)` -- hämtar en författarprofil
-- `useAuthorComments(options?)` -- returnerar kommentarer av en specifik författare
-- `useResolvedAuthorAddress(authorAddress?)` -- löser en mänsklig läsbar adress (t.ex. ENS) till dess protokolladress
+- `useAuthorComments(options?)` -- returnerar kommentarer från en viss författare
+- `useResolvedAuthorAddress(authorAddress?)` -- översätter en läsbar adress (t.ex. ENS) till dess protokolladress
 
-### Matar
+### Flöden
 
-Prenumerera på och sidnumrera innehållsflöden.
+Prenumerera på och paginera innehållsflöden.
 
-- `useFeed(options?)` -- returnerar ett sidnumrerat flöde med inlägg från en eller flera grupper
+- `useFeed(options?)` -- returnerar ett paginerat flöde med inlägg från en eller flera communities
 - `useBufferedFeeds(feedOptions?)` -- förbuffrar flera flöden för snabbare rendering
-- `useAuthorFeed(authorAddress?)` -- returnerar ett flöde med inlägg av en specifik författare
+- `useAuthorFeed(authorAddress?)` -- returnerar ett flöde med inlägg från en viss författare
 
 ### Åtgärder
 
 Publicera innehåll och utför skrivoperationer.
 
-- `usePublishComment(options?)` -- publicera en ny kommentar eller svar
+- `usePublishComment(options?)` -- publicera en ny kommentar eller ett svar
 - `usePublishVote(options?)` -- rösta upp eller ned
-- `useSubscribe(options?)` -- prenumerera eller avsluta prenumerationen på en gemenskap
+- `useSubscribe(options?)` -- prenumerera på eller avsluta prenumerationen på en community
 
-### stater och RPC
+### Tillstånd och RPC
 
-Övervaka anslutningstillståndet och interagera med en fjärransluten Bitsocial-demon.
+Bevaka anslutningstillstånd och arbeta mot en fjärransluten Bitsocial-daemon.
 
-- `useClientsStates(options?)` -- returnerar anslutningstillståndet för IPFS/pubsub-klienter
-- `usePlebbitRpcSettings()` -- returnerar aktuell RPC-demonkonfiguration
+- `useClientsStates(options?)` -- returnerar anslutningstillståndet för IPFS- och pubsub-klienterna
+- Hook för RPC-inställningar -- returnerar den aktuella konfigurationen för RPC-daemonen
 
 ## Utveckling
 
-Så här arbetar du med hooks-biblioteket lokalt:
+Så här arbetar du med hook-biblioteket lokalt:
 
 **Förutsättningar:** Node.js, Corepack aktiverat, Yarn 4
 
@@ -100,9 +96,9 @@ corepack enable
 yarn install
 ```
 
-Se arkivet README för test- och byggkommandon.
+Se repots README för kommandon för test och bygge.
 
 ## Länkar
 
-- **GitHub:** [fullständig API-referens på GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks)
-- **Licens:** Endast GPL-2.0
+- **GitHub:** [bitsocialnet/bitsocial-react-hooks](https://github.com/bitsocialnet/bitsocial-react-hooks)
+- **Licens:** GPL-2.0-only

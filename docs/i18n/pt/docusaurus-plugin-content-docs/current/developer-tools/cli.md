@@ -1,79 +1,69 @@
 ---
-title: CLI
+title: CLI do Bitsocial
 description: Interface de linha de comando para executar um nó Bitsocial, criar comunidades e gerenciar operações de protocolo.
 sidebar_position: 2
 ---
 
-# CLI
+# CLI do Bitsocial
 
-:::warning Nomenclatura herdada
-Este pacote atualmente usa convenções de nomenclatura herdadas de sua dependência upstream. As referências a "plebbit" em comandos, saída e configuração serão migradas para "bitsocial" em uma versão futura. A funcionalidade não é afetada.
-:::
+O `bitsocial-cli` é uma ferramenta de linha de comando para interagir com o backend do protocolo Bitsocial. Com ela você executa um daemon P2P local, cria e configura comunidades e publica conteúdo -- tudo pelo terminal.
 
-O `bitsocial-cli` é uma ferramenta de linha de comando para interagir com o backend do protocolo Bitsocial. Ele permite executar um daemon P2P local, criar e configurar comunidades e publicar conteúdo – tudo a partir do terminal.
-
-Ele é construído sobre `plebbit-js` e é usado por [5chan](/apps/5chan/) e [Seedit](/apps/seedit/) para criação de comunidades e gerenciamento de nós.
+Ela é construída sobre a camada compartilhada de cliente do protocolo Bitsocial e é usada pelo [5chan](/apps/5chan/) e pelo [Seedit](/apps/seedit/) para criar comunidades e gerenciar nós.
 
 ## Instalação
 
-Binários pré-construídos estão disponíveis para Windows, macOS e Linux. Baixe a versão mais recente para sua plataforma no GitHub:
+Há binários prontos para Windows, macOS e Linux. Baixe a versão mais recente para a sua plataforma no GitHub:
 
-**[Baixar das versões do GitHub](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Baixar nas releases do GitHub](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Após o download, torne o binário executável (macOS/Linux):
+Depois do download, torne o binário executável (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
-## Executando o Daemon
+## Executando o daemon
 
 O uso mais comum da CLI é executar um nó Bitsocial. O daemon inicia a camada de rede P2P e expõe uma API local à qual os clientes podem se conectar.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-Na primeira inicialização, o daemon gera links para o **WebUI**, uma interface gráfica baseada em navegador para gerenciar seu nó, comunidades e configurações. Isso é útil se você preferir uma GUI em vez de comandos de terminal.
+Na primeira execução, o daemon mostra links para a **WebUI**, uma interface gráfica no navegador para gerenciar o seu nó, as comunidades e as configurações. Ela é útil se você prefere uma GUI em vez de comandos no terminal.
 
-## Comandos principais
+## Ações principais
 
-| Comando             | Descrição                                                         |
-| ------------------- | ----------------------------------------------------------------- |
-| `daemon`            | Inicie o nó Bitsocial P2P                                         |
-| `create subplebbit` | Crie uma nova comunidade                                          |
-| `subplebbit edit`   | Atualizar configurações da comunidade (título, descrição, regras) |
-| `subplebbit list`   | Listar comunidades hospedadas neste nó                            |
-| `subplebbit start`  | Comece a servir uma comunidade específica                         |
-| `subplebbit stop`   | Pare de servir uma comunidade específica                          |
+| Ação                      | Descrição                                                            |
+| ------------------------- | -------------------------------------------------------------------- |
+| Iniciar o daemon          | Executar o nó P2P Bitsocial                                          |
+| Criar uma comunidade      | Criar uma nova comunidade                                            |
+| Editar uma comunidade     | Atualizar as configurações da comunidade (título, descrição, regras) |
+| Listar comunidades locais | Listar as comunidades hospedadas neste nó                            |
+| Iniciar uma comunidade    | Começar a servir uma comunidade específica                           |
+| Parar uma comunidade      | Parar de servir uma comunidade específica                            |
 
-Execute qualquer comando com `--help` para ver as opções e sinalizadores disponíveis:
+Execute a CLI com `--help` para ver os nomes de comandos e as flags que a sua versão instalada expõe:
 
 ```bash
-bitsocial-cli daemon --help
-bitsocial-cli create subplebbit --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Fluxo de trabalho típico
 
-Um fluxo de configuração comum para hospedar uma nova comunidade:
+Um fluxo comum para hospedar uma nova comunidade:
 
 ```bash
-# 1. Inicie o daemon
-bitsocial-cli daemon
+# 1. Start the daemon
+bitsocial daemon
 
-# 2. Em outro terminal, crie uma comunidade
-bitsocial-cli create subplebbit
-
-# 3. Configure a comunidade
-bitsocial-cli subplebbit edit <address> --title "My Community" --description "A decentralized forum"
-
-# 4. Comece a servir
-bitsocial-cli subplebbit start <address>
+# 2. In another terminal, inspect the available community-management commands
+bitsocial --help
 ```
 
-A comunidade agora está ativa na rede Bitsocial e acessível a partir de qualquer cliente compatível.
+A partir daí, use os comandos de gerenciamento de comunidades da versão instalada para criar, configurar e começar a servir uma comunidade. Depois de iniciada, a comunidade fica ativa na rede Bitsocial e acessível a partir de clientes compatíveis.
 
-## Ligações
+## Links
 
 - **GitHub:** [bitsocialnet/bitsocial-cli](https://github.com/bitsocialnet/bitsocial-cli)

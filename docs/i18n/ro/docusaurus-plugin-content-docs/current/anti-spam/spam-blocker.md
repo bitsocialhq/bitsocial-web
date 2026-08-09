@@ -1,83 +1,79 @@
 ---
 title: Spam Blocker
-description: Serviciu centralizat de detectare a spamului cu punctaj de risc, provocări OAuth și praguri de nivel configurabile.
+description: Serviciu centralizat de detectare a spamului, cu punctare a riscului, provocări OAuth și praguri de nivel configurabile.
 sidebar_position: 1
 ---
 
 # Spam Blocker
 
-:::warning Denumire moștenită
-Acest pachet a fost publicat inițial în domeniul de aplicare `@plebbit`. A fost redenumit în `@bitsocial/spam-blocker-server` și `@bitsocial/spam-blocker-challenge`. Referințele la nume vechi pot apărea în continuare în documentația sau bazele de coduri mai vechi.
-:::
+Spam Blocker este un serviciu centralizat de detectare a spamului, care evaluează publicările primite și le atribuie scoruri de risc. Este format din două pachete:
 
-Spam Blocker este un serviciu centralizat de detectare a spam-ului care evaluează publicațiile primite și atribuie scoruri de risc. Este format din două pachete:
-
-- **`@bitsocial/spam-blocker-server`** -- serverul HTTP care găzduiește API-urile de evaluare și provocare.
-- **`@bitsocial/spam-blocker-challenge`** -- un pachet de clienți ușor pe care comunitățile îl integrează pentru a trimite publicații pentru evaluare.
+- **`@bitsocial/spam-blocker-server`** -- serverul HTTP care găzduiește API-urile de evaluare și de provocare.
+- **`@bitsocial/spam-blocker-challenge`** -- un pachet client ușor, pe care comunitățile îl integrează pentru a trimite publicările spre evaluare.
 
 **Cod sursă:** [github.com/bitsocialnet/spam-blocker](https://github.com/bitsocialnet/spam-blocker)
 
-## Cum funcționează scorul de risc
+## Cum funcționează punctarea riscului
 
-Fiecare publicație trimisă la punctul final `/evaluate` primește un scor de risc numeric. Scorul este o combinație ponderată de mai multe semnale:
+Fiecare publicare trimisă către endpointul `/evaluate` primește un scor numeric de risc. Scorul este o combinație ponderată a mai multor semnale:
 
-| Semnal              | Descriere                                                                                                                                                   |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Vârsta contului     | Conturile mai noi primesc scoruri de risc mai mari.                                                                                                         |
-| Karma               | Karma comunității acumulată reduce riscul.                                                                                                                  |
-| Reputația autorului | Date de reputație colectate de indexorul de rețea de fundal.                                                                                                |
-| Analiză de conținut | Euristice la nivel de text (densitatea linkurilor, modele cunoscute de spam etc.).                                                                          |
-| Viteza              | Postările rapide succesive ale aceluiași autor cresc riscul.                                                                                                |
-| Inteligență IP      | Geolocalizare la nivel de țară și căutări de amenințări. Sunt stocate doar codurile de țară -- adresele IP brute nu sunt niciodată partajate comunităților. |
+| Semnal               | Descriere                                                                                                                                                                   |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Vechimea contului    | Conturile mai noi primesc scoruri de risc mai mari.                                                                                                                         |
+| Karma                | Karma acumulată în comunitate reduce riscul.                                                                                                                                |
+| Reputația autorului  | Date de reputație colectate de indexatorul de rețea care rulează în fundal.                                                                                                 |
+| Analiza conținutului | Euristici la nivel de text (densitatea linkurilor, tipare de spam cunoscute etc.).                                                                                          |
+| Ritmul de publicare  | Postările rapide și succesive ale aceluiași autor cresc riscul.                                                                                                             |
+| Informații despre IP | Geolocalizare la nivel de țară și interogări în fluxuri de amenințări. Se stochează doar codurile de țară -- adresele IP brute nu sunt niciodată partajate cu comunitățile. |
 
-## Praguri de nivel
+## Praguri pe niveluri
 
-Scorul de risc se mapează la unul dintre cele patru niveluri configurabile care determină ce se întâmplă în continuare:
+Scorul de risc corespunde unuia dintre cele patru niveluri configurabile care determină ce se întâmplă mai departe:
 
-1. **Acceptare automată** -- scorul este suficient de scăzut pentru ca publicația să fie aprobată fără nicio provocare.
-2. **OAuth-sufficient** -- autorul trebuie să finalizeze o verificare OAuth pentru a continua.
-3. **OAuth-plus-more** -- OAuth singur nu este suficient; este necesară o verificare suplimentară (de exemplu, CAPTCHA).
-4. **Respingere automată** -- scorul este prea mare; publicația este respinsă definitiv.
+1. **Acceptare automată** -- scorul este suficient de mic încât publicarea este aprobată fără nicio provocare.
+2. **OAuth suficient** -- autorul trebuie să finalizeze o verificare OAuth pentru a putea continua.
+3. **OAuth plus verificări suplimentare** -- OAuth singur nu este suficient; este necesară o verificare în plus (de exemplu, CAPTCHA).
+4. **Respingere automată** -- scorul este prea mare, iar publicarea este respinsă direct.
 
-Toate valorile de prag sunt configurabile pentru fiecare comunitate.
+Toate valorile de prag sunt configurabile pentru fiecare comunitate în parte.
 
-## Fluxul provocării
+## Fluxul provocărilor
 
-Când o publicație se încadrează într-un nivel care necesită verificare, începe fluxul provocării:
+Când o publicare ajunge într-un nivel care necesită verificare, începe fluxul de provocare:
 
-1. Autorului i se solicită mai întâi să se autentifice prin **OAuth** (GitHub, Google, Twitter și alți furnizori acceptați).
-2. Dacă numai OAuth este insuficient (nivelul 3), este prezentat o **CAPTCHA alternativă** alimentată de Cloudflare Turnstile.
-3. Identitatea OAuth este folosită numai pentru verificare -- **nu este niciodată partajată** comunității sau altor utilizatori.
+1. Autorului i se cere mai întâi să se autentifice prin **OAuth** (GitHub, Google, Twitter și alți furnizori acceptați).
+2. Dacă OAuth singur nu este suficient (nivelul 3), se afișează o **soluție de rezervă cu CAPTCHA**, bazată pe Cloudflare Turnstile.
+3. Identitatea OAuth este folosită exclusiv pentru verificare -- ea nu este **niciodată partajată** cu comunitatea sau cu alți utilizatori.
 
-## Puncte finale API
+## Endpointuri API
 
 ### `POST /evaluate`
 
-Trimiteți o publicație pentru evaluarea riscurilor. Returnează scorul de risc calculat și nivelul de provocare necesar.
+Trimite o publicare pentru evaluarea riscului. Returnează scorul de risc calculat și nivelul de provocare necesar.
 
 ### `POST /challenge/verify`
 
-Trimiteți rezultatul unei provocări finalizate (token OAuth, soluție CAPTCHA sau ambele) pentru verificare.
+Trimite spre verificare rezultatul unei provocări finalizate (token OAuth, soluție CAPTCHA sau ambele).
 
 ### `GET /iframe/:sessionId`
 
-Returnează o pagină HTML încorporabilă care redă interfața de utilizare de provocare adecvată pentru sesiunea dată.
+Returnează o pagină HTML încorporabilă, care randează interfața de provocare potrivită pentru sesiunea dată.
 
 ## Limitarea ratei
 
-Limitele ratelor sunt aplicate dinamic în funcție de vârsta și reputația autorului. Autorii mai noi sau cu o reputație mai scăzută se confruntă cu limite mai stricte, în timp ce autorii consacrați se bucură de praguri mai generoase. Acest lucru previne inundațiile de spam fără a penaliza participanții de încredere.
+Limitele de rată sunt aplicate dinamic, în funcție de vechimea și de reputația autorului. Autorii mai noi sau cu reputație mai scăzută au limite mai stricte, în timp ce autorii consacrați beneficiază de praguri mai generoase. Astfel se previn valurile de spam fără a-i penaliza pe participanții de încredere.
 
-## Indexator de rețea de fundal
+## Indexatorul de rețea din fundal
 
-Serverul rulează un indexator de fundal care accesează continuu cu crawlere rețeaua pentru a construi și menține datele despre reputația autorului. Aceste date se alimentează direct în conducta de evaluare a riscurilor, permițând sistemului să recunoască participanții repetați de bună-credință din comunități.
+Serverul rulează un indexator în fundal, care parcurge continuu rețeaua pentru a construi și a menține datele de reputație ale autorilor. Aceste date alimentează direct fluxul de punctare a riscului, permițând sistemului să recunoască participanții de bună-credință care revin în mai multe comunități.
 
 ## Confidențialitate
 
-Spam Blocker este proiectat ținând cont de confidențialitate:
+Spam Blocker este proiectat având în vedere confidențialitatea:
 
-- Identitățile OAuth sunt folosite numai pentru verificarea provocării și **nu sunt niciodată divulgate** comunităților.
-- Adresele IP sunt rezolvate în **numai coduri de țară**; IP-urile brute nu sunt stocate sau partajate.
+- Identitățile OAuth sunt folosite doar pentru verificarea provocărilor și nu sunt **niciodată dezvăluite** comunităților.
+- Adresele IP sunt reduse **doar la coduri de țară**; adresele IP brute nu sunt stocate și nu sunt partajate.
 
-## Baza de date
+## Bază de date
 
-Serverul folosește **SQLite** (prin `better-sqlite3`) pentru persistența locală a datelor despre reputație, starea sesiunii și configurația.
+Serverul folosește **SQLite** (prin `better-sqlite3`) pentru persistența locală a datelor de reputație, a stării sesiunilor și a configurației.

@@ -1,68 +1,68 @@
 ---
-title: CLI
-description: Komentorivikäyttöliittymä Bitsocial-solmun suorittamiseen, yhteisöjen luomiseen ja protokollatoimintojen hallintaan.
+title: Bitsocial CLI
+description: Komentorivikäyttöliittymä Bitsocial-solmun ajamiseen, yhteisöjen luomiseen ja protokollatoimintojen hallintaan.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-`bitsocial-cli` on komentorivityökalu vuorovaikutukseen Bitsocial-protokollan taustajärjestelmän kanssa. Sen avulla voit ajaa paikallista P2P-demonia, luoda ja määrittää yhteisöjä sekä julkaista sisältöä – kaikki päätteestä.
+`bitsocial-cli` on komentorivityökalu, jolla ollaan yhteydessä Bitsocial-protokollan taustajärjestelmään. Sen avulla voit ajaa paikallista P2P-taustaprosessia, luoda ja määrittää yhteisöjä sekä julkaista sisältöä – kaikki päätteestä käsin.
 
-Se on rakennettu jaetun Bitsocial-protokollan asiakaskerroksen päälle, ja [5chan](/apps/5chan/) ja [Seedit] (/apps/seedit/) käyttävät sitä yhteisön luomiseen ja solmujen hallintaan.
+Se on rakennettu jaetun Bitsocial-protokollan asiakaskerroksen päälle, ja [5chan](/apps/5chan/) sekä [Seedit](/apps/seedit/) käyttävät sitä yhteisöjen luomiseen ja solmujen hallintaan.
 
 ## Asennus
 
-Valmiiksi rakennetut binaarit ovat saatavilla Windowsille, macOS:lle ja Linuxille. Lataa alustallesi uusin julkaisu GitHubista:
+Valmiit binäärit ovat saatavilla Windowsille, macOS:lle ja Linuxille. Lataa alustallesi uusin julkaisu GitHubista:
 
-**[Lataa GitHub-julkaisuista](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Lataa GitHubin julkaisuista](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Latauksen jälkeen tee binaarista suoritettava (macOS/Linux):
-
-```bash
-chmod +x bitsocial-cli
-```
-
-## Daemonin ajaminen
-
-CLI:n yleisin käyttötapa on Bitsocial-solmun käyttö. Daemon käynnistää P2P-verkkokerroksen ja paljastaa paikallisen API:n, johon asiakkaat voivat muodostaa yhteyden.
+Tee binääristä latauksen jälkeen suoritettava (macOS/Linux):
 
 ```bash
-bitsocial-cli daemon
+chmod +x bitsocial
 ```
 
-Ensimmäisellä käynnistyksellä daemon lähettää linkit **WebUI:hen**, selainpohjaiseen graafiseen käyttöliittymään solmun, yhteisöjen ja asetusten hallintaan. Tämä on hyödyllistä, jos haluat käyttää graafista käyttöliittymää päätekomentojen sijaan.
+## Taustaprosessin ajaminen
 
-## Avaintoiminnot
+CLI:n yleisin käyttötapa on Bitsocial-solmun ajaminen. Taustaprosessi käynnistää P2P-verkkokerroksen ja tarjoaa paikallisen rajapinnan, johon asiakasohjelmat voivat yhdistää.
 
-| Toiminta                    | Kuvaus                                                |
+```bash
+bitsocial daemon
+```
+
+Ensimmäisellä käynnistyskerralla taustaprosessi tulostaa linkit **WebUI**-käyttöliittymään, joka on selainpohjainen graafinen käyttöliittymä solmun, yhteisöjen ja asetusten hallintaan. Tästä on hyötyä, jos pidät graafisesta käyttöliittymästä enemmän kuin päätekomennoista.
+
+## Keskeiset toiminnot
+
+| Toiminto                    | Kuvaus                                                |
 | --------------------------- | ----------------------------------------------------- |
-| Käynnistä demoni            | Käynnistä Bitsocial P2P -solmu                        |
+| Käynnistä taustaprosessi    | Käynnistä Bitsocialin P2P-solmu                       |
 | Luo yhteisö                 | Luo uusi yhteisö                                      |
 | Muokkaa yhteisöä            | Päivitä yhteisön asetukset (otsikko, kuvaus, säännöt) |
 | Listaa paikalliset yhteisöt | Listaa tässä solmussa isännöidyt yhteisöt             |
-| Aloita yhteisö              | Aloita tietyn yhteisön palveleminen                   |
-| Pysäytä yhteisö             | Lopeta tietyn yhteisön palveleminen                   |
+| Käynnistä yhteisö           | Aloita tietyn yhteisön tarjoaminen                    |
+| Pysäytä yhteisö             | Lopeta tietyn yhteisön tarjoaminen                    |
 
-Suorita CLI `--help`:lla nähdäksesi asennetun julkaisun nykyiset komentojen nimet ja liput:
+Aja CLI `--help`-valitsimella nähdäksesi asentamasi julkaisun nykyiset komentojen nimet ja valitsimet:
 
 ```bash
-bitsocial-cli --help
-bitsocial-cli daemon --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Tyypillinen työnkulku
 
-Yleinen asennuskulku uuden yhteisön isännöimiseksi:
+Tavanomainen kulku uuden yhteisön isännöinnin aloittamiseen:
 
 ```bash
 # 1. Start the daemon
-bitsocial-cli daemon
+bitsocial daemon
 
 # 2. In another terminal, inspect the available community-management commands
-bitsocial-cli --help
+bitsocial --help
 ```
 
-Sieltä voit luoda, määrittää ja aloittaa yhteisön palvelemisen asennetun julkaisun yhteisönhallintakomentojen avulla. Kun yhteisö on alkanut, se on live-tilassa Bitsocial-verkossa ja käytettävissä yhteensopivien asiakkaiden kanssa.
+Käytä siitä eteenpäin asentamasi julkaisun yhteisönhallintakomentoja yhteisön luomiseen, määrittämiseen ja tarjoamisen aloittamiseen. Kun yhteisö on käynnistetty, se on aktiivisena Bitsocial-verkossa ja tavoitettavissa yhteensopivista asiakasohjelmista.
 
 ## Linkit
 

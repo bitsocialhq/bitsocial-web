@@ -1,19 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Standalone na image-based na captcha generator na may mga na-configure na character, dimensyon, at kulay.
+description: Nakapag-iisang hamong captcha na nakabatay sa imahe para sa mga komunidad ng Bitsocial.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-Ang Captcha Canvas Challenge ay isang standalone na image captcha generator. Nag-render ito ng randomized na text sa isang HTML canvas at ibinabalik ang nagreresultang larawan, na maaaring ipakita ng mga komunidad sa mga may-akda bilang hamon sa spam.
+Ang Captcha Canvas Challenge ay isang nakapag-iisang pakete ng image captcha para sa mga komunidad ng Bitsocial. Nagre-render ito ng random na teksto sa isang canvas at hinahayaan ang isang komunidad na hilingin sa mga may-akda na lutasin ang imahe bago tanggapin ang isang publikasyon.
 
-**Source code:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Mga kinakailangan
-
-- **Node.js** >= 22
-- **ESM-only** -- hindi nagpapadala ang package na ito ng mga CommonJS build.
+- **Source code at kasalukuyang README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **Pakete sa npm:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Pag-install
 
@@ -21,19 +17,16 @@ Ang Captcha Canvas Challenge ay isang standalone na image captcha generator. Nag
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Mga Pagpipilian sa Pag-configure
+## Saan Ito Bagay
 
-| Pagpipilian  | Uri      | Default   | Paglalarawan                                                           |
-| ------------ | -------- | --------- | ---------------------------------------------------------------------- |
-| `characters` | `number` | `6`       | Bilang ng mga random na character na nai-render sa captcha na larawan. |
-| `height`     | `number` | `100`     | Taas ng nabuong imahe sa mga pixel.                                    |
-| `width`      | `number` | `300`     | Lapad ng nabuong imahe sa mga pixel.                                   |
-| `colors`     | `string` | `#32cf7e` | Pangunahing kulay na ginamit para sa captcha text.                     |
+Kapaki-pakinabang ang mga hamong captcha kapag gusto ng isang komunidad ng simple at interaktibong hadlang para sa paglaban sa spam na mababa ang taya. Sadyang makitid ang pakete na ito: ibinibigay nito ang implementasyon ng hamon, habang ang komunidad o ang Bitsocial node ang nagpapasya kung kailan at paano ito ipapakita.
 
-## Paano Ito Gumagana
+Para sa mas matibay na proteksyon, pagsamahin ito sa mas malawak na sistema ng moderation o ng pagmamarka ng panganib sa halip na ituring ang captcha bilang isang kumpletong estratehiya laban sa spam.
 
-1. Pinipili ng generator ang isang random na string ng naka-configure na haba.
-2. Ang string ay na-render sa isang canvas na may visual na ingay upang labanan ang OCR.
-3. Ang nagreresultang larawan (at ang inaasahang sagot) ay ibinalik upang maipakita ng application sa pagtawag ang hamon at sa paglaon ay ma-verify ang tugon.
+## Sanggunian sa Kasalukuyang Pakete
 
-Dahil ang package ay isang purong image generator, hindi nito pinangangasiwaan ang networking o session management sa sarili nitong. Ito ay nilayon na maisama sa isang mas malaking daloy ng hamon -- halimbawa, bilang isa sa mga uri ng hamon na sinusuportahan ng [Spam Blocker](./spam-blocker.md).
+Sadyang isang pangkalahatang-ideya lamang ang pahinang ito, hindi isang kopya ng gabay sa pag-setup. Ang README ng pakete ang pinagmumulan ng katotohanan para sa kasalukuyang mga pangalan ng hamon, mga halimbawa ng pagpaparehistro, mga halimbawa sa CLI, mga sinusuportahang opsyon, mga kinakailangan, at mga tala tungkol sa seguridad:
+
+- [README ng Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Mas mainam ang upstream na README kapag nagko-configure ng isang live na komunidad, dahil ang mga opsyon ng pakete at ang daloy ng pag-install ay may bersyong kaugnay ng paketeng iyon at hindi ng website na ito.

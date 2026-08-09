@@ -1,56 +1,98 @@
 ---
 title: Bitsocial Chain
-description: Phase 4 ng master plan, na sumasaklaw sa nakabahaging appchain layer na iminungkahi para sa Bitsocial app.
+description: Ika-2 yugto ng master plan, sumasaklaw sa iminungkahing Ethereum L2 appchain bilang layer ng ekonomiya para sa mga app ng Bitsocial.
 ---
 
 # Bitsocial Chain
 
-Ang Bitsocial Chain ay ang pangalang ginamit sa master plan para sa nakabahaging layer ng appchain na makikita sa ilalim ng mga Bitsocial app.
+Ang Bitsocial Chain ang iminungkahing Ethereum L2 appchain na magsisilbing layer ng ekonomiya para sa
+mga app ng Bitsocial. Ang kasalukuyang site na nakatuon sa chain ay
+[chain.bitsocial.net](https://chain.bitsocial.net).
 
-Ang ideya ay hindi palitan ang peer-to-peer social layer. Ito ay upang magbigay ng nakabahaging pang-ekonomiya at koordinasyon na mga primitive na kakailanganin ng mga social app kung sila ay makikipagkumpitensya sa kasalukuyang mga platform sa sukat.
+Dahil sa peer-to-peer na social layer, nakakalabas ang mga komunidad, pagkakakilanlan, at nilalaman
+sa database ng isang sentralisadong platform. Layunin ng Bitsocial Chain na idagdag ang mga
+ibinabahaging primitive para sa pagpapangalan, monetisasyon, at pagbabayad na nagpapahirap na
+maputulan ng pondo ang mga app na iyon.
 
-## Ano ang ibig sabihin ng kapangyarihan
+## Ano ang dapat nitong paganahin
 
-- mga desentralisadong Bitsocial na domain gaya ng `.bso`
-- nakabahaging pagkatubig sa mga app
-- matibay na riles ng monetization
-- mga istrukturang pampinansyal na mas mahirap mabulunan ng mga bangko o platform
-- mga epekto sa network na hindi nakadepende sa isang kumpanya na nagmamay-ari ng buong stack
+- mga desentralisadong domain ng Bitsocial tulad ng `.bso`
+- mga award at tipping
+- matatag na daluyan ng monetisasyon
+- ibinabahaging liquidity sa iba't ibang app
+- mga estrukturang pampinansyal na mas mahirap sakalin ng mga bangko o platform
+- mga network effect na hindi nakadepende sa iisang kumpanyang nagmamay-ari ng buong stack
+
+Hindi mekanika ng token ang dapat maunang ipakita. Ang layunin ay gawing mas matibay, mas madaling
+pondohan, at mas hindi umaasa sa mga sentralisadong provider ng pagbabayad o pagpapangalan ang mga
+kapaki-pakinabang na social app.
+
+## Kasalukuyang proof of concept
+
+Nakatuon ang unang proof of concept ng Bitsocial Chain sa mga native na pangalang `.bso`.
+Pinatutunayan nito na maaaring ihango ang isang name registry mula sa kasaysayan ng Ethereum L1 nang
+hindi inilalagay on-chain ang social na nilalaman:
+
+- isinusumite ng mga user ang mga intent na register, update, transfer, at revoke sa pamamagitan ng
+  payak na mga transaksyon sa Ethereum L1
+- kahit sino ay makakapagpatakbo ng derivation node at makakabuo muli ng parehong estado ng `.bso`
+  registry
+- may resolver na nagmamapa ng isang pangalang `.bso` sa Bitsocial public key na ginagamit na ng mga
+  client sa peer-to-peer na protocol
+- nananatiling off-chain at peer-to-peer ang mga post, boto, moderation, feed, at nilalaman ng
+  komunidad
+
+Ang proof of concept na iyon ay hindi pa isang production na paglulunsad ng Stage 2. Wala pa itong
+proof system, challenge game, in-audit na code, live na deployment, panghuling presyo, o panghuling
+governance. Ang pangmatagalang tindig nito ay transparent bilang default at tugma sa privacy mula sa
+disenyo: pampubliko ang core chain, samantalang dapat iwasan ng mga susunod na tipping, pagbabayad,
+award, at liquidity na pilitin ang permanenteng ugnayan sa pagitan ng social na pagkakakilanlan at
+kasaysayan ng wallet.
 
 ## Bakit ito mahalaga
 
-Ang desentralisasyon ng mga komunidad at pagkakakilanlan ay kailangan, ngunit hindi ito sapat para i-desentralisa ang lahat ng social media.
+Kailangan ang pagdedesentralisa ng mga komunidad at pagkakakilanlan, ngunit hindi iyon sapat upang
+maidesentralisa ang buong social media.
 
-Kung ang economic layer ay nakadepende pa rin sa ilang mga sentralisadong riles, kung gayon ang mga app ay mananatiling madaling i-pressure, i-deplatform, o magutom sa pananalapi. Ang Bitsocial Chain ay ang iminungkahing sagot sa pangalawang layer ng dependency.
+Kung nakadepende pa rin ang mga social app sa iilang sentralisadong daluyan ng pera, madali pa rin
+silang mapipilitan, matatanggal sa platform, o mapuputulan ng pondo. Ang Bitsocial Chain ang
+iminungkahing sagot sa pangalawang layer ng pagdepende na iyon.
 
-## Relasyon sa natitirang bahagi ng Bitsocial
+## Ugnayan sa mga app
 
-Ang Bitsocial Chain ay iminungkahi bilang nakabahaging imprastraktura para sa Bitsocial app, hindi bilang produkto na direktang nakikipag-ugnayan sa mga user araw-araw.
+Dapat manatili ang Bitsocial Chain sa ilalim ng mga app ng Bitsocial, hindi bilang kapalit ng mga
+ito.
 
-Ang resulta na nakaharap sa publiko ay:
+Ang dapat makita ng publiko ay:
 
 - nananatiling peer-to-peer ang mga komunidad
-- mananatiling naiiba ang mga app
-- nagiging mas matibay ang monetization at pagpapangalan
-- ang halaga ay maaaring lumipat sa buong ecosystem nang hindi muling nililikha ang isang sentralisadong may-ari ng platform
+- nananatiling magkakaiba ang mga app
+- nakakakuha ang mga user ng praktikal na feature para sa pagpapangalan at monetisasyon
+- nakakatanggap ng suporta ang mga creator at komunidad sa iba't ibang client
+- nakakagalaw ang halaga sa buong ecosystem nang hindi muling lumilikha ng isang sentralisadong
+  may-ari ng platform
 
-## Bakit ito nasa Phase 4
+## Bakit maaga ito inilagay sa plano
 
-Inilalagay ito ng master plan pagkatapos ng mga naunang punto ng patunay sa antas ng app:
+Sa kasalukuyang master plan, agad na sumusunod ang Bitsocial Chain sa mga unang kategoryang
+pambungad: mga imageboard, forum, at ang pampublikong RPC layer na nagpapadali sa paggamit ng mga
+app na iyon para sa mas maraming user.
 
-1. desentralisahin ang mga imageboard
-2. ilunsad ang Bitsocial RPC
-3. desentralisado ang mga forum
-4. ilunsad ang Bitsocial Chain
+Mahalaga ang timing na iyon dahil kailangan ng mga social app ng malalakas na network effect. Kung
+masyadong huli ang pagdating ng pagpapangalan, suporta, award, tipping, at monetisasyon, mas
+matagal na mahahawakan ng mga sentralisadong katunggali ang kanilang pinakamalaking bentahe.
 
-Makatuwiran ang pagkakasunud-sunod na iyon dahil mas kapaki-pakinabang ang isang layer ng koordinasyon sa antas ng ecosystem kapag umiral na ang mga totoong app at totoong gawi ng user sa network.
+## Mga prinsipyo sa disenyo
 
-## Mga Prinsipyo sa Disenyo
+Dahil iminungkahing imprastraktura pa lamang ang Bitsocial Chain at hindi pa isang inilunsad na
+produkto, dapat manatiling disiplinado ang plano:
 
-Dahil iminungkahing imprastraktura pa lamang ang Bitsocial Chain at hindi pa inilulunsad na produkto, dapat manatiling disiplinado ang kasalukuyang plano sa ilang bagay:
-
-- Unahin ang mga app at komunidad. Dapat sumunod ang network layer sa totoong paggamit sa loob ng mga Bitsocial app, hindi mauna sa mga mapagsapalarang financial feature.
-- Mas mahalaga ang tunay na ambag kaysa hype. Kung magdadagdag ang Bitsocial sa hinaharap ng mga asset sa antas ng komunidad, creator, o client, dapat nitong gantimpalaan ang pakikilahok at pangmatagalang pagbuo kaysa panggagayang launch o panandaliang trading.
-- Pinapayagan ang curation. Maaaring hubugin ng mga Bitsocial app ang rankings, defaults, discovery, at timing ng rollout upang paboran ang matitibay na komunidad kaysa asal na parang casino.
-- Mabuti ang unti-unting rollout. Makatuwirang ipagpaliban ang appchain-native na mga financial feature hanggang magkaroon ang ecosystem ng sapat na users, moderation tools, at linaw ng produkto upang masuportahan ang mga ito nang ligtas.
-- Bukas pa rin ang eksaktong mechanics. Ipinapaliwanag ng pahinang ito ang papel ng Bitsocial Chain, hindi isang nakapirming pangako tungkol sa mga token launcher, formula ng fee, o pinal na tokenomics.
+- Mga app at komunidad muna. Dapat palakasin ng network layer ang mga totoong social na produkto.
+- Praktikal na feature muna. Mas madaling ipaliwanag ang mga pangalan, award, tipping, at pagbabayad
+  kaysa sa abstraktong arkitekturang pampinansyal.
+- Tunay na ambag kaysa sa hype. Dapat gantimpalaan ng mga primitive ng ekonomiya ang paglahok,
+  pagbuo, at suporta sa komunidad.
+- Pinapayagan ang curation. Maaaring hubugin ng mga app ang ranking, default, at pagtuklas upang
+  paboran ang matatatag na komunidad.
+- Bukas pa ang eksaktong mekanika. Ipinapaliwanag ng pahinang ito ang papel ng Bitsocial Chain,
+  hindi isang nakakandadong pangako tungkol sa panghuling ekonomiya.

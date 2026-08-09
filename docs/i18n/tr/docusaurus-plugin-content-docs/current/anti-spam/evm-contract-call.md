@@ -1,24 +1,15 @@
 ---
 title: EVM Contract Call Challenge
-description: EVM akıllı sözleşmesini çağırarak zincir üzerindeki koşulları doğrulayan anti-spam mücadelesi.
+description: Bir EVM akıllı sözleşmesini çağırarak zincir üzerindeki koşulları doğrulayan anti-spam sınaması.
 sidebar_position: 4
 ---
 
 # EVM Contract Call Challenge
 
-:::warning Eski Adlandırma
-Bu paket ilk olarak `@plebbit` kapsamı altında yayımlandı. `@bitsocial/evm-contract-challenge` olarak yeniden adlandırıldı. Eski isme yapılan atıflar eski belgelerde veya kod tabanlarında görünmeye devam edebilir.
-:::
+EVM Contract Call Challenge, bir yayına izin vermeden önce yazarın zincir üzerindeki durumunu doğrular. Topluluk sahipleri, gönderi paylaşılmadan önce bir cüzdanın veya çözümlenmiş bir kimliğin, asgari bir token bakiyesi tutmak gibi salt okunur bir akıllı sözleşme koşulunu karşılamasını zorunlu kılabilir.
 
-EVM Sözleşme Çağrısı Mücadelesi, bir yayına izin vermeden önce zincir üzerindeki koşulları doğrulayan bir anti-spam mekanizmasıdır. Orijinal olarak `plebbit-js`'dan bağımsız bir paket olarak çıkarılan bu özellik, topluluk sahiplerinin gönderi yayınlamak için yazarların akıllı sözleşmeyle tanımlanmış kriterleri (örneğin, minimum token bakiyesine sahip olmak) karşılamasını talep etmesine olanak tanıyor.
-
-**Kaynak kodu:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Gereksinimler
-
-- **Node.js** >= 22
-- **Yalnızca ESM** -- bu paket CommonJS yapılarını göndermez.
-- **Çalışma zamanı eş bağımlılığı:** `@plebbit/plebbit-js` (`@pkc/pkc-js`'ya geçiş)
+- **Kaynak kodu ve güncel README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **npm paketi:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Kurulum
 
@@ -26,34 +17,26 @@ EVM Sözleşme Çağrısı Mücadelesi, bir yayına izin vermeden önce zincir �
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Yapılandırma Seçenekleri
+## Nereye Oturur
 
-| Option        | Tür      | Açıklama                                                                                |
-| ------------- | -------- | --------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | Sorgulanacak zincir (ör. `eth`, `matic`, `avax`).                                       |
-| `address`     | `string` | Aranacak akıllı sözleşme adresi.                                                        |
-| `abi`         | `string` | Çağrılan işlevin ABI parçası.                                                           |
-| `condition`   | `string` | Sözleşme getiri değerine göre değerlendirilen bir karşılaştırma ifadesi (ör. `> 1000`). |
-| `error`       | `string` | Koşulu karşılamayan yazarlara gösterilen hata mesajı.                                   |
+Bu doğrulamayı, katılımın harici bir EVM sinyaline bağlı olması gereken topluluklarda kullanın: token sahipliği, NFT sahipliği, kişilik kanıtı puanları, yönetişim üyeliği veya sözleşmeden okunabilen başka bir koşul.
 
-## Örnek
+Bir kez yapılandırıldıktan sonra doğrulama, yazar açısından otomatiktir. Uygun cüzdan ya da kimlik kaynaklarını denetler, yapılandırılmış sözleşme metodunu çağırır ve dönen değeri topluluğun koşuluyla karşılaştırır.
 
-Gönderileri belirli bir ERC-20 tokeninden 1.000'den fazla tutan yazarlarla sınırlamak isteyen bir topluluk sahibi, bu mücadeleyi şu şekilde yapılandırabilir:
+## Güncel Paket Referansı
 
-- `chainTicker`: `"eth"`
-- `address`: token sözleşme adresi
-- `abi`: `balanceOf(address)` için ABI
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Bu sayfa bilinçli olarak bir genel bakıştır; birebir yansıtılmış bir yapılandırma referansı değildir. Doğrulama adları, Bitsocial CLI örnekleri, pkc-js kaydı, seçenek varsayılanları, ABI örnekleri, RPC davranışı ve desteklenen cüzdan kaynakları için kaynak, paketin README dosyasıdır:
 
-Bir yazar yayınlamayı denediğinde, sorgulama yazarın adresiyle `balanceOf`'yu çağırır ve döndürülen değerin koşulu karşılayıp karşılamadığını kontrol eder. Eğer öyleyse yayın devam eder; aksi takdirde yapılandırılmış hata mesajı döndürülür.
+- [EVM Contract Challenge README](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Ne Zaman Kullanılmalı?
+Canlı bir topluluğu yapılandırırken yukarı akıştaki README'yi tercih edin; çünkü sözleşme seçenekleri ve örnekleri bu web sitesiyle değil, o paketle birlikte sürümlenir.
 
-EVM Sözleşme Çağrı Yarışması aşağıdakiler için idealdir:
+## Ne Zaman Kullanılır
 
-- **Belirteç sahipleriyle gönderimi kısıtlayan **belirteçli topluluklar\*\*.
-- Belirli bir NFT'ye sahip olmanın gerekli olduğu **NFT geçitli erişim**.
-- Katılımın yönetim tokeni sahipleriyle sınırlı olduğu **DAO yönetişim alanları**.
+EVM Contract Call Challenge şunlar için idealdir:
 
-Zincir içi kimliğe dayanmayan topluluklar için bunun yerine [Spam Blocker](./spam-blocker.md) veya [Voucher Challenge](./voucher-challenge.md) seçeneğini düşünün.
+- Gönderi paylaşmayı token sahipleriyle sınırlayan **token kapılı topluluklar**.
+- Belirli bir NFT'ye sahip olmanın zorunlu tutulduğu **NFT kapılı erişim**.
+- Katılımın yönetişim tokeni sahipleriyle sınırlandığı **DAO yönetişim alanları**.
+
+Zincir üzerindeki kimliğe dayanmayan topluluklar için bunun yerine [Spam Blocker](./spam-blocker.md) veya [Voucher Challenge](./voucher-challenge.md) seçeneklerini değerlendirin.

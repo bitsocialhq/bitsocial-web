@@ -1,34 +1,37 @@
-# Configurare Agent Hooks
+# Configurarea hook-urilor pentru agenți
 
-Dacă asistentul dvs. de codare AI acceptă cârlige pentru ciclul de viață, configurați-le pentru acest depozit.
+Dacă asistentul dumneavoastră AI de programare suportă hook-uri de ciclu de viață, configurați-le pe acestea pentru depozitul de față.
 
-## Cârlige recomandate
+## Hook-uri recomandate
 
-| Cârlig          | Comanda                                    | Scop                                                                                                                                                                                                              |
-| --------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Formatați automat fișierele după editările AI                                                                                                                                                                     |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Rulați `corepack yarn install` când `package.json` se modifică                                                                                                                                                    |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Eliminați referințele învechite și ștergeți ramurile de sarcini temporare integrate                                                                                                                               |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Verificări de construcție hard-gate, scame, verificare tip și format; păstrați `yarn npm audit` informațional și rulați `yarn knip` separat ca audit consultativ atunci când dependențele/importurile se modifică |
+| Hook            | Comandă                                       | Scop                                                                                                                                                                                                                                      |
+| --------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Formatează automat fișierele după modificările făcute de AI                                                                                                                                                                               |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Rulează `corepack yarn install` când se modifică `package.json`                                                                                                                                                                           |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Când un diff adaugă primitive `useEffect`/memo în `about/src/`, îi amintește agentului să reanalizeze decizia cu skill-urile de revizuire React                                                                                           |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Curăță referințele învechite și șterge ramurile temporare de lucru deja integrate                                                                                                                                                         |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Rescanează diff-ul curent după efecte/memo React noi în `about/src/` înainte de bariera finală de verificare                                                                                                                              |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Impune ca barieră fermă verificarea țintită a build-ului, lint, typecheck și verificarea formatării; păstrează `yarn npm audit` informativ și rulează `yarn knip` separat, ca audit consultativ, când se schimbă dependențe sau importuri |
 
 ## De ce
 
-- Formatare consistentă
-- Lockfile rămâne sincronizat
-- Problemele de construcție/scame/tip au fost detectate devreme
-- Vizibilitate de securitate prin `yarn npm audit`
-- Derivarea dependenței/importului poate fi verificată cu `yarn knip` fără a o transforma într-un cârlig de oprire global zgomotos
-- O implementare de cârlig partajată atât pentru Codex, cât și pentru Cursor
-- Ramurile de sarcini temporare rămân aliniate cu fluxul de lucru al arborelui de lucru al repo
+- Formatare consecventă
+- Lockfile-ul rămâne sincronizat
+- Fiecare `useEffect`/memo nou adăugat în site-ul about primește o a doua privire explicită înainte ca agentul să încheie
+- Problemele de build, lint și tipuri relevante pentru workspace sunt prinse devreme, fără a impune build-ul complet multilingv al documentației la fiecare sarcină
+- Vizibilitate asupra securității prin `yarn npm audit`
+- Devierea dependențelor și a importurilor poate fi verificată cu `yarn knip` fără a-l transforma într-un hook global de oprire, zgomotos
+- O singură implementare de hook-uri, comună pentru Codex și Cursor
+- Ramurile temporare de lucru rămân aliniate cu fluxul de worktree-uri al depozitului
 
-## Exemple de Scripturi Hook
+## Exemple de scripturi de hook
 
-### Format Hook
+### Hook de formatare
 
 ```bash
 #!/bin/bash
-# Formatați automat fișierele JS/TS după editările AI
-# Hook primește JSON prin stdin cu calea_fișier
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Verificați Hook
+### Hook de verificare
 
 ```bash
 #!/bin/bash
-# Rulați build, lint, typecheck, format check și audit de securitate când agentul termină
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-În mod implicit, `scripts/agent-hooks/verify.sh` iese diferit de zero atunci când o verificare necesară eșuează. Setați `AGENT_VERIFY_MODE=advisory` numai atunci când aveți nevoie în mod intenționat de semnal de la un copac rupt, fără a bloca cârligul. Păstrați `yarn knip` departe de poarta rigidă, cu excepția cazului în care repo decide în mod explicit să eșueze din cauza problemelor de importare/dependență.
+În mod implicit, `scripts/agent-hooks/verify.sh` iese cu cod diferit de zero atunci când o verificare obligatorie eșuează. Setați `AGENT_VERIFY_MODE=advisory` doar când aveți nevoie în mod intenționat de semnal dintr-un arbore stricat, fără a bloca hook-ul. Țineți `yarn knip` în afara barierei ferme, cu excepția cazului în care depozitul decide explicit să eșueze la probleme consultative de importuri sau dependențe.
 
-### Cârlig de instalare a firelor
+Hook-urile de ciclu de viață nu înlocuiesc verificarea manuală în browser. Pentru modificări de interfață sau vizuale, rulați în continuare verificări `playwright-cli` în `chrome`, `firefox` și `webkit`, plus un flux pe viewport mobil în fiecare motor atunci când s-a schimbat comportamentul responsiv sau cel tactil.
+
+### Hook pentru instalarea Yarn
 
 ```bash
 #!/bin/bash
-# Rulați corepack yarn install atunci când package.json este schimbat
-# Hook primește JSON prin stdin cu calea_fișier
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Configurați cablajul cârligului în funcție de documentele instrumentului dvs. de agent (`hooks.json`, echivalent etc.).
+Configurați legarea hook-urilor conform documentației instrumentului dumneavoastră de agent (`hooks.json`, echivalent etc.).
 
-În acest depozit, `.codex/hooks/*.sh` și `.cursor/hooks/*.sh` ar trebui să rămână ca pachete subțiri care deleg implementările partajate sub `scripts/agent-hooks/`.
+În acest depozit, `.codex/hooks/*.sh` și `.cursor/hooks/*.sh` ar trebui să rămână simple învelișuri care deleagă către implementările comune din `scripts/agent-hooks/`.

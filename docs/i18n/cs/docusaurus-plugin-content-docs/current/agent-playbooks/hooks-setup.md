@@ -1,34 +1,37 @@
-# Nastavení Agent Hooks
+# Nastavení hooků pro agenty
 
-Pokud váš asistent kódování AI podporuje háčky životního cyklu, nakonfigurujte je pro toto úložiště.
+Pokud váš AI asistent pro psaní kódu podporuje hooky životního cyklu, nastavte si pro tento repozitář ty následující.
 
-## Doporučené háčky
+## Doporučené hooky
 
-| Háček           | Příkaz                                     | Účel                                                                                                                                                                                         |
-| --------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Automatické formátování souborů po úpravách AI                                                                                                                                               |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Spustit `corepack yarn install` při změně `package.json`                                                                                                                                     |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Ořízněte zastaralé odkazy a odstraňte integrované větve dočasné úlohy                                                                                                                        |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Sestavení hard-gate, lint, typová kontrola a kontrola formátu; ponechat `yarn npm audit` informační a spustit `yarn knip` samostatně jako poradenský audit, když se změní závislosti/importy |
+| Hook            | Příkaz                                        | Účel                                                                                                                                                                                                         |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Automatické formátování souborů po úpravách AI                                                                                                                                                               |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Spustí `corepack yarn install`, když se změní `package.json`                                                                                                                                                 |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Když diff přidá primitiva `useEffect` nebo memo v `about/src/`, připomene agentovi, aby změnu znovu zvážil pomocí dovedností pro kontrolu Reactu                                                             |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Ořeže zastaralé reference a smaže začleněné dočasné větve úloh                                                                                                                                               |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Před závěrečnou ověřovací branou znovu prohledá aktuální diff na nové React efekty a memo v `about/src/`                                                                                                     |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Tvrdá brána pro cílené ověření buildu, lint, typovou kontrolu a kontrolu formátu; `yarn npm audit` zůstává informativní a `yarn knip` se při změně závislostí nebo importů spouští zvlášť jako poradní audit |
 
-## Proč?
+## Proč
 
 - Konzistentní formátování
-- Lockfile zůstává synchronizován
-- Problémy se sestavením/vlákněním/typem byly zachyceny brzy
-- Viditelnost zabezpečení přes `yarn npm audit`
-- Posun závislosti/importu lze zkontrolovat pomocí `yarn knip`, aniž by se z něj stal hlučný globální brzdový hák
-- Jedna sdílená implementace háku pro Codex i Cursor
-- Větve dočasných úkolů zůstávají v souladu s pracovním postupem pracovního stromu repo
+- Lockfile zůstává synchronizovaný
+- Každé nové přidání `useEffect` nebo memo na webu about projde před dokončením agenta výslovnou druhou kontrolou
+- Problémy s buildem, lintem a typy relevantní pro daný workspace se odhalí včas, aniž by se u každé úlohy vynucoval plný vícejazyčný build dokumentace
+- Přehled o bezpečnosti díky `yarn npm audit`
+- Odchylky v závislostech a importech lze kontrolovat pomocí `yarn knip`, aniž by se z toho stal hlučný globální stop hook
+- Jedna sdílená implementace hooků pro Codex i Cursor
+- Dočasné větve úloh zůstávají v souladu s pracovním postupem worktree v tomto repozitáři
 
-## Příklad hákových skriptů
+## Ukázkové skripty hooků
 
-### Formátovat háček
+### Formátovací hook
 
 ```bash
 #!/bin/bash
-# Automatické formátování souborů JS/TS po úpravách AI
-# Hook přijímá JSON přes stdin s file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Ověřte Hook
+### Ověřovací hook
 
 ```bash
 #!/bin/bash
-# Po dokončení agenta spusťte sestavení, lint, typovou kontrolu, kontrolu formátu a bezpečnostní audit
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Ve výchozím nastavení se `scripts/agent-hooks/verify.sh` ukončí nenulovou hodnotou, když selže požadovaná kontrola. `AGENT_VERIFY_MODE=advisory` nastavte pouze tehdy, když záměrně potřebujete signál ze zlomeného stromu bez blokování háku. Udržujte `yarn knip` mimo pevnou bránu, pokud se repo výslovně nerozhodne selhat při problémech s importem/závislostí.
+Ve výchozím stavu `scripts/agent-hooks/verify.sh` skončí nenulovým kódem, když některá povinná kontrola selže. `AGENT_VERIFY_MODE=advisory` nastavte jen tehdy, když záměrně potřebujete signál z rozbitého stromu, aniž by hook blokoval. `yarn knip` držte mimo tvrdou bránu, dokud se v repozitáři výslovně nerozhodne, že poradní problémy s importy a závislostmi mají být důvodem k selhání.
 
-### Háček pro instalaci příze
+Hooky životního cyklu nenahrazují ruční ověření v prohlížeči. U změn v uživatelském rozhraní nebo ve vzhledu i nadále spouštějte kontroly přes `playwright-cli` v enginech `chrome`, `firefox` a `webkit` a v každém z nich projděte také mobilní viewport, pokud se změnila responzivita nebo chování dotyku.
+
+### Hook pro instalaci Yarn
 
 ```bash
 #!/bin/bash
-# Při změně package.json spusťte instalaci příze corepack
-# Hook přijímá JSON přes stdin s file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Nakonfigurujte hákové zapojení podle dokumentů vašeho agenta (`hooks.json`, ekvivalent atd.).
+Zapojení hooků nastavte podle dokumentace svého agentního nástroje (`hooks.json` a podobně).
 
-V tomto úložišti by `.codex/hooks/*.sh` a `.cursor/hooks/*.sh` měly zůstat jako tenké obaly, které delegují sdílené implementace pod `scripts/agent-hooks/`.
+V tomto repozitáři mají `.codex/hooks/*.sh` a `.cursor/hooks/*.sh` zůstat tenkými obaly, které delegují na sdílené implementace pod `scripts/agent-hooks/`.

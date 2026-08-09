@@ -1,43 +1,43 @@
 ---
 title: 5chan
-description: Um imageboard descentralizado e sem servidor construído no protocolo Bitsocial onde qualquer pessoa pode criar e possuir painéis.
+description: Um imageboard descentralizado e sem servidor, construído sobre o protocolo Bitsocial, em que qualquer pessoa pode criar e ser dona de boards.
 sidebar_position: 1
 ---
 
-:::warning[Nomenclatura herdada]
-A base de código deste projeto ainda usa a nomenclatura herdada "plebbit" de antes da reformulação da marca Bitsocial. Nomes de pacotes, referências de API e alguma terminologia interna serão atualizados em uma versão futura. A funcionalidade descrita aqui é atual — apenas a nomenclatura está desatualizada.
-:::
-
 # 5chan
 
-5chan é um imageboard sem servidor, sem administração e totalmente descentralizado que roda no protocolo Bitsocial. Ele segue a estrutura familiar de diretórios do imageboard, ao mesmo tempo em que introduz propriedade descentralizada – qualquer um pode criar um conselho, e vários conselhos podem competir pelo mesmo slot de diretório por meio de um mecanismo de votação.
+O 5chan é um imageboard sem servidor, sem administrador e totalmente descentralizado, que roda sobre o protocolo Bitsocial. Ele mantém a estrutura de diretórios familiar dos imageboards, mas introduz a posse descentralizada — qualquer pessoa pode criar um board, e vários boards podem disputar o mesmo espaço de diretório por meio de um mecanismo de votação.
 
-## Transferências
+## Downloads
 
-| Plataforma       | Ligação                              |
-| ---------------- | ------------------------------------ |
-| Rede             | [5chan.app](https://5chan.app)       |
-| Área de trabalho | Disponível para Mac, Windows e Linux |
-| Móvel            | Disponível para Android              |
+| Plataforma | Link                                 |
+| ---------- | ------------------------------------ |
+| Web        | [5chan.app](https://5chan.app)       |
+| Desktop    | Disponível para Mac, Windows e Linux |
+| Celular    | Disponível para Android              |
 
-## Como funcionam as placas
+## Como funcionam os boards
 
-O 5chan organiza o conteúdo em painéis usando um layout de diretório clássico (por exemplo, `/b/`, `/g/`). Ao contrário dos imageboards tradicionais, onde um administrador central controla cada quadro, o 5chan permite que qualquer usuário crie e possua totalmente seu próprio quadro. Quando vários conselhos têm como alvo o mesmo espaço no diretório, eles competem por essa posição por meio de votação.
+O 5chan organiza o conteúdo em boards usando o layout clássico de diretórios (por exemplo, `/b/`, `/g/`). Ao contrário dos imageboards tradicionais, em que um administrador central controla todos os boards, o 5chan permite que qualquer usuário crie e seja plenamente dono do próprio board. Quando vários boards apontam para o mesmo espaço de diretório, eles disputam essa posição por votação.
 
-### Criando um quadro
+### Como criar um board
 
-Para criar uma nova placa, você precisa executar `bitsocial-cli` como um nó ponto a ponto. Isso garante que seu quadro seja hospedado de maneira descentralizada, sem depender de nenhum servidor central.
+Para criar um novo board, você precisa executar o `bitsocial-cli` como um nó peer-to-peer. Isso garante que seu board seja hospedado de forma descentralizada, sem depender de nenhum servidor central.
 
 ### Atribuições de diretório
 
-As atribuições de slot de diretório (qual placa aparece em qual caminho) são atualmente gerenciadas por meio de solicitações pull do GitHub para o arquivo `5chan-directories.json`. Este é um processo temporário – versões futuras suportarão a criação de quadros no aplicativo e votação baseada em pubsub para lidar com atribuições de diretório automaticamente.
+As atribuições dos espaços de diretório (qual board aparece em qual caminho) são gerenciadas hoje por meio de pull requests no GitHub ao arquivo `5chan-directories.json`. Esse processo é temporário — versões futuras vão permitir a criação de boards dentro do aplicativo e votação via pubsub para cuidar das atribuições de diretório automaticamente.
 
-## Internos
+## Detalhes internos
 
-Nos bastidores, o 5chan usa a camada de cliente do protocolo Bitsocial compartilhado para suas interações de rede. O aplicativo da web em 5chan.app também pode executar um nó Helia no navegador quando o navegador P2P está habilitado nas configurações avançadas, para que os leitores possam carregar de pares sem um gateway IPFS centralizado. Consulte a seção P2P do navegador nas notas do protocolo ponto a ponto.
+Por baixo dos panos, o 5chan usa a camada de cliente compartilhada do protocolo Bitsocial para suas
+interações de rede. O aplicativo web em 5chan.app roda um nó Helia no navegador por padrão, então
+uma aba comum entra na rede como peer: ela carrega boards de outros peers e publica via pubsub, sem
+nenhum gateway IPFS centralizado no caminho do conteúdo. Veja [Peer-to-peer no navegador](/browser-p2p/) para saber o que isso
+envolve e o que um nó de navegador ainda não consegue fazer.
 
-## Ligações
+## Links
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
-- **Telegrama**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licença**: somente GPL-2.0
+- **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
+- **Licença**: GPL-2.0-only

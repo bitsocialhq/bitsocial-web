@@ -1,52 +1,67 @@
 ---
 title: Decentralisera alla sociala medier
-description: Fas 5 av Bitsocial masterplan och det sluttillstånd den siktar på.
+description: Fas 5 av masterplanen, med fokus på att finansiera och bygga den långa svansen av sociala Bitsocial-klienter.
 ---
 
 # Decentralisera alla sociala medier
 
-Detta är sluttillståndet som beskrivs av Bitsocial masterplan: inte en app, utan ett ekosystem av Bitsocial-appar som kan konkurrera med alla större kategorier av sociala medier.
+Sluttillståndet är inte en enda app. Det är en marknad av klienter, noder, tjänster och communities
+som kan ersätta plattformsägande med konkurrens mellan protokoll.
 
-## Modellen
+Fas 5 är där Bitsocial går bortom de första prioriterade kategorierna och börjar finansiera så många
+sociala format som möjligt.
 
-I det föreslagna mogna tillståndet för nätverket:
+## Vad som fortfarande behöver byggas
 
-- flera offentliga RPC-leverantörer konkurrerar om att vara värd för profilnoder
-- användare kan fortfarande vara värd
-- flödesalgoritmer blir valfria tjänster istället för obligatoriska plattformslagar
-- monetarisering beror inte på att bankerna är villiga att hålla plattformen vid liv
-- appar konkurrerar om produktkvalitet, upptäckt och gränssnittsdesign
+De första faserna fokuserar på kategorierna med störst hävstång: imageboards, forum, publik RPC,
+Bitsocial Chain, profilnoder, Twitter/X-alternativet i fas 3 och tjänsteekonomin runt dem.
 
-## Hur framgång skulle se ut
+Därefter bör nätverket expandera in i den långa svansen:
 
-Bitsocial-appar ska kunna utmana plattformar i olika format, inte bara i en nisch:
+- bloggklienter
+- appar för crowdfunding
+- kreatörsvideo och ett trovärdigt [YouTube-alternativ](https://github.com/bitsocialnet/wetube)
+- kreatörscommunities
+- experiment med kortformat
+- lokala eller språkspecifika sociala appar
+- nischade klienter som är för små för de fyra första faserna
+- verktyg som gör befintliga communities lättare att driva
 
-- text och diskussion
-- bildtavlor
-- forum
-- skapargemenskaper
-- kortformad video och bredare mediaprodukter
+Några av de här apparna kan ha öppen källkod. Några kan vara centraliserade klienter. Några kan
+byggas av Bitsocial Forge, och många bör byggas av oberoende utvecklare.
 
-Målet är inte att tvinga på alla ett universellt gränssnitt. Det är för att ge många appar åtkomst till samma underliggande gemenskaper, identiteter och nätverk.
+## Att finansiera många byggare
 
-## Varför RPC-lagret är viktigt här
+Målet är att göra nya sociala klienter finansierbara innan de redan har dragkraft i plattformsskala.
 
-Alltid-på-gemenskaper och profiler blir mycket mer praktiska när väl offentliga RPC-marknader finns. Utan det lagret förblir självhotell för hög friktion för många användare, särskilt på mobilen.
+Det kan omfatta direktinvesteringar, bidrag, communityfinansiering, intäkter från framgångsrika
+Bitsocial-tjänster eller decentraliserade bidragsprogram där den bredare Bitsocial-communityn hjälper
+till att avgöra vilka utvecklare som bör få stöd.
 
-## Varför nätverkslagret är viktigt här
+Det viktiga är mångfalden. Nätverket bör finansiera många försök i stället för att vänta på att en
+officiell app ska täcka varje kategori.
 
-Om intäktsgenerering för innehåll kan avbrytas av vanligt bank- eller plattformstryck, förblir ekosystemet bräckligt. Bitsocial Chain föreslås som det ekonomiska lager som gör långsiktig konkurrens mer trovärdig.
+## Hur framgång ser ut
 
-## Kärnsatsningen
-
-Den stora satsningen är att sociala medier kan delas upp i utbytbara lager:
+Bitsocial lyckas när sociala medier kan brytas ner i utbytbara lager:
 
 - protokoll
-- samhällen
+- communities
 - identitet
-- värdskap
-- upptäckt
+- hosting
+- innehållsupptäckt
+- moderering
 - intäktsgenerering
 - appar
 
-När dessa lager är utbytbara behöver inget företag äga hela den sociala grafen för att produkten ska fungera.
+När de lagren är utbytbara behöver inget enskilt företag äga hela den sociala grafen för att
+produkten ska fungera.
+
+## Den centrala satsningen
+
+Ett moget Bitsocial-ekosystem bör innehålla publika RPC:er, egendrivna noder, marknader för
+flödesalgoritmer, mediavärdar, tjänster för innehållsupptäckt, klienter med öppen källkod,
+kommersiella klienter och communityfinansierade experiment.
+
+Sociala medier hittar äntligen sin jämvikt: ett fullständigt decentraliserat, peer-to-peer socialt
+nätverk som ingen äger; Bitsocial.

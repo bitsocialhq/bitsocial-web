@@ -1,79 +1,79 @@
 ---
 title: Spam Blocker
-description: Centralized spam detection service with risk scoring, OAuth challenges, and configurable tier thresholds.
+description: Scentralizowana usługa wykrywania spamu z punktacją ryzyka, wyzwaniami OAuth i konfigurowalnymi progami poziomów.
 sidebar_position: 1
 ---
 
 # Spam Blocker
 
-Spam Blocker to scentralizowana usługa wykrywania spamu, która ocenia przychodzące publikacje i przypisuje oceny ryzyka. Składa się z dwóch pakietów:
+Spam Blocker to scentralizowana usługa wykrywania spamu, która ocenia napływające publikacje i przypisuje im punktację ryzyka. Składa się z dwóch pakietów:
 
-- **`@bitsocial/spam-blocker-server`** — serwer HTTP obsługujący interfejsy API oceny i sprawdzania.
-- **`@bitsocial/spam-blocker-challenge`** — lekki pakiet klienta, który społeczności integrują w celu wysyłania publikacji do oceny.
+- **`@bitsocial/spam-blocker-server`** -- serwer HTTP udostępniający API oceny i wyzwań.
+- **`@bitsocial/spam-blocker-challenge`** -- lekki pakiet kliencki, który społeczności integrują u siebie, aby wysyłać publikacje do oceny.
 
 **Kod źródłowy:** [github.com/bitsocialnet/spam-blocker](https://github.com/bitsocialnet/spam-blocker)
 
 ## Jak działa punktacja ryzyka
 
-Każda publikacja przesłana do punktu końcowego `/evaluate` otrzymuje liczbową ocenę ryzyka. Wynik jest ważoną kombinacją kilku sygnałów:
+Każda publikacja przesłana do endpointu `/evaluate` dostaje liczbową punktację ryzyka. Wynik jest ważoną kombinacją kilku sygnałów:
 
-| Sygnał           | Opis                                                                                                                                                                      |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Wiek konta       | Nowsze konta otrzymują wyższe oceny ryzyka.                                                                                                                               |
-| Karma            | Skumulowana karma społeczności zmniejsza ryzyko.                                                                                                                          |
-| Reputacja autora | Dane dotyczące reputacji zebrane przez indeksator sieci w tle.                                                                                                            |
-| Analiza treści   | Heurystyka na poziomie tekstu (gęstość łączy, znane wzorce spamu itp.).                                                                                                   |
-| Prędkość         | Szybkie kolejne posty tego samego autora zwiększają ryzyko.                                                                                                               |
-| Inteligencja IP  | Geolokalizacja na poziomie kraju i wyszukiwanie źródeł zagrożeń. Przechowywane są tylko kody krajów – nieprzetworzone adresy IP nigdy nie są udostępniane społecznościom. |
+| Sygnał             | Opis                                                                                                                                                                             |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wiek konta         | Nowsze konta dostają wyższą punktację ryzyka.                                                                                                                                    |
+| Karma              | Zgromadzona karma w społeczności obniża ryzyko.                                                                                                                                  |
+| Reputacja autora   | Dane o reputacji zbierane przez działający w tle indekser sieci.                                                                                                                 |
+| Analiza treści     | Heurystyki na poziomie tekstu (gęstość linków, znane wzorce spamu itp.).                                                                                                         |
+| Tempo publikowania | Szybkie serie wpisów od tego samego autora podnoszą ryzyko.                                                                                                                      |
+| Dane o adresach IP | Geolokalizacja na poziomie kraju i sprawdzanie w kanałach informacji o zagrożeniach. Zapisywane są wyłącznie kody krajów -- surowe adresy IP nigdy nie trafiają do społeczności. |
 
 ## Progi poziomów
 
-Ocena ryzyka jest przypisana do jednego z czterech konfigurowalnych poziomów, które określają, co stanie się dalej:
+Punktacja ryzyka przekłada się na jeden z czterech konfigurowalnych poziomów, które decydują o dalszym przebiegu:
 
-1. **Automatyczna akceptacja** – wynik jest na tyle niski, że publikacja została zatwierdzona bez żadnych zastrzeżeń.
-2. **Wystarczający OAuth** – aby kontynuować, autor musi przejść weryfikację OAuth.
-3. **OAuth-plus-więcej** — sam protokół OAuth nie wystarczy; wymagana jest dodatkowa weryfikacja (np. CAPTCHA).
-4. **Automatyczne odrzucenie** – wynik jest zbyt wysoki; publikacja zostaje natychmiast odrzucona.
+1. **Automatyczna akceptacja** -- wynik jest na tyle niski, że publikacja zostaje przyjęta bez żadnego wyzwania.
+2. **Wystarczy OAuth** -- autor musi przejść weryfikację OAuth, aby kontynuować.
+3. **OAuth i coś więcej** -- sam OAuth nie wystarcza; wymagana jest dodatkowa weryfikacja (np. CAPTCHA).
+4. **Automatyczne odrzucenie** -- wynik jest zbyt wysoki; publikacja zostaje odrzucona od razu.
 
-Wszystkie wartości progowe można konfigurować dla każdej społeczności.
+Wszystkie wartości progów można konfigurować osobno dla każdej społeczności.
 
-## Przepływ wyzwań
+## Przebieg wyzwania
 
-Kiedy publikacja zalicza się do poziomu wymagającego weryfikacji, rozpoczyna się proces sprawdzania:
+Gdy publikacja trafia do poziomu wymagającego weryfikacji, zaczyna się przebieg wyzwania:
 
-1. Autor jest najpierw proszony o uwierzytelnienie za pomocą **OAuth** (GitHub, Google, Twitter i inni obsługiwani dostawcy).
-2. Jeśli sam OAuth jest niewystarczający (poziom 3), prezentowana jest **awaria CAPTCHA** obsługiwana przez Cloudflare Turnstile.
-3. Tożsamość OAuth służy wyłącznie do weryfikacji – **nigdy nie jest udostępniana** społeczności ani innym użytkownikom.
+1. Autor zostaje najpierw poproszony o uwierzytelnienie przez **OAuth** (GitHub, Google, Twitter i inni obsługiwani dostawcy).
+2. Jeśli sam OAuth nie wystarcza (poziom 3), pojawia się **awaryjna CAPTCHA** oparta na Cloudflare Turnstile.
+3. Tożsamość z OAuth służy wyłącznie do weryfikacji -- **nigdy nie jest przekazywana** społeczności ani innym użytkownikom.
 
-## Punkty końcowe interfejsu API
+## Endpointy API
 
 ### `POST /evaluate`
 
-Prześlij publikację do oceny ryzyka. Zwraca obliczoną ocenę ryzyka i wymaganą warstwę wyzwania.
+Przesyła publikację do oceny ryzyka. Zwraca wyliczoną punktację ryzyka i wymagany poziom wyzwania.
 
 ### `POST /challenge/verify`
 
-Prześlij wynik ukończonego wyzwania (token OAuth, rozwiązanie CAPTCHA lub jedno i drugie) do weryfikacji.
+Przesyła do weryfikacji wynik ukończonego wyzwania (token OAuth, rozwiązanie CAPTCHA albo oba).
 
 ### `GET /iframe/:sessionId`
 
-Zwraca osadzaną stronę HTML, która renderuje odpowiedni interfejs użytkownika wyzwania dla danej sesji.
+Zwraca osadzalną stronę HTML, która renderuje interfejs wyzwania właściwy dla danej sesji.
 
-## Ograniczanie szybkości
+## Ograniczanie liczby żądań
 
-Limity stawek są stosowane dynamicznie w oparciu o wiek i reputację autora. Autorzy nowsi lub autorzy o niższej reputacji podlegają bardziej rygorystycznym ograniczeniom, podczas gdy autorzy uznani mogą korzystać z bardziej hojnych progów. Zapobiega to zalewom spamu bez karania zaufanych uczestników.
+Limity żądań są dobierane dynamicznie na podstawie wieku i reputacji autora. Nowsi autorzy oraz ci o niższej reputacji podlegają ostrzejszym limitom, a autorzy o ugruntowanej pozycji mają progi bardziej hojne. Dzięki temu system powstrzymuje zalewy spamu, nie karząc zaufanych uczestników.
 
-## Indeksator sieci w tle
+## Działający w tle indekser sieci
 
-Na serwerze działa indeksator działający w tle, który w sposób ciągły przeszukuje sieć w celu tworzenia i utrzymywania danych dotyczących reputacji autora. Dane te są przekazywane bezpośrednio do systemu oceny ryzyka, umożliwiając systemowi rozpoznawanie powtarzających się uczestników działających w dobrej wierze w różnych społecznościach.
+Serwer uruchamia działający w tle indekser, który nieprzerwanie przeszukuje sieć, aby budować i utrzymywać dane o reputacji autorów. Dane te zasilają wprost proces oceny ryzyka, dzięki czemu system rozpoznaje uczestników działających w dobrej wierze w różnych społecznościach.
 
 ## Prywatność
 
-Blokowanie spamu zostało zaprojektowane z myślą o prywatności:
+Spam Blocker zaprojektowano z myślą o prywatności:
 
-- Tożsamości OAuth są używane wyłącznie do weryfikacji typu „challenge” i **nigdy nie są ujawniane** społecznościom.
-- Adresy IP są rozpoznawane na **tylko kody krajów**; Surowe adresy IP nie są przechowywane ani udostępniane.
+- Tożsamości OAuth służą wyłącznie do weryfikacji wyzwań i **nigdy nie są ujawniane** społecznościom.
+- Adresy IP są rozwiązywane wyłącznie do **kodów krajów**; surowe adresy IP nie są przechowywane ani udostępniane.
 
 ## Baza danych
 
-Serwer używa **SQLite** (poprzez `better-sqlite3`) do lokalnego utrwalania danych dotyczących reputacji, stanu sesji i konfiguracji.
+Serwer korzysta z **SQLite** (poprzez `better-sqlite3`) do lokalnego przechowywania danych o reputacji, stanu sesji i konfiguracji.

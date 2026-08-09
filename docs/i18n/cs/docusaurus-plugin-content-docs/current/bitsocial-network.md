@@ -1,56 +1,91 @@
 ---
 title: Bitsocial Chain
-description: Fáze 4 hlavního plánu pokrývající vrstvu sdílených aplikací navrženou pro aplikace Bitsocial.
+description: Druhá fáze hlavního plánu popisující navrhovanou ekonomickou vrstvu pro aplikace Bitsocial postavenou jako appchain na Ethereum L2.
 ---
 
 # Bitsocial Chain
 
-Bitsocial Chain je název používaný v hlavním plánu pro sdílenou vrstvu appchain, která by seděla pod Bitsocial apps.
+Bitsocial Chain je navrhovaná ekonomická vrstva pro aplikace Bitsocial, postavená jako appchain na
+Ethereum L2. Samostatný web věnovaný chainu najdete na
+[chain.bitsocial.net](https://chain.bitsocial.net).
 
-Cílem není nahradit sociální vrstvu peer-to-peer. Má poskytnout sdílená ekonomická a koordinační primitiva, která budou sociální aplikace potřebovat, pokud chtějí ve velkém konkurovat zavedeným platformám.
+Sociální vrstva peer-to-peer umožňuje komunitám, identitám i obsahu existovat mimo centrální
+databázi jedné platformy. Bitsocial Chain k tomu má přidat sdílená primitiva pro pojmenování,
+monetizaci a platby, díky nimž půjde takové aplikace hůř finančně vyhladovět.
 
-## Co to znamená moc
+## Co má pohánět
 
-- decentralizované bitsociální domény, jako je `.bso`
-- sdílená likvidita napříč aplikacemi
-- odolné monetizační lišty
-- finanční struktury, které je pro banky nebo platformy těžší udusit
-- síťové efekty, které nezávisí na jedné společnosti vlastnící celý stack
+- decentralizované domény Bitsocial, například `.bso`
+- ocenění a spropitné
+- odolné monetizační kanály
+- sdílenou likviditu napříč aplikacemi
+- finanční struktury, které banky nebo platformy hůř odstřihnou
+- síťové efekty, které nezávisejí na jedné firmě vlastnící celý stack
+
+Cílem není stavět do popředí mechaniku tokenů. Cílem je, aby užitečné sociální aplikace byly
+odolnější, snáz financovatelné a méně závislé na centralizovaných poskytovatelích plateb
+a pojmenování.
+
+## Současný proof of concept
+
+První proof of concept Bitsocial Chain se soustředí na nativní jména `.bso`. Ukazuje, že registr
+jmen lze odvodit z historie Ethereum L1, aniž by se sociální obsah dostal on-chain:
+
+- uživatelé posílají záměry registrovat, aktualizovat, převést a zrušit jméno běžnými transakcemi na
+  Ethereum L1
+- odvozovací uzel může provozovat kdokoli a zrekonstruovat tentýž stav registru `.bso`
+- resolver mapuje jméno `.bso` na veřejný klíč Bitsocial, který klienti už používají v protokolu
+  peer-to-peer
+- příspěvky, hlasy, moderace, feedy i obsah komunit zůstávají mimo chain a peer-to-peer
+
+Tento proof of concept není produkčním spuštěním na úrovni Stage 2. Zatím nemá důkazní systém,
+challenge game, auditovaný kód, živé nasazení, konečné ceny ani konečnou podobu governance.
+Dlouhodobě má být ve výchozím stavu transparentní a zároveň navržený tak, aby byl slučitelný se
+soukromím: samotný chain je veřejný, zatímco budoucí spropitné, platby, ocenění a likvidita by
+neměly vynucovat trvalé propojení mezi sociální identitou a historií peněženky.
 
 ## Proč na tom záleží
 
-Decentralizace komunit a identit je nezbytná, ale nestačí decentralizovat všechna sociální média.
+Decentralizovat komunity a identity je nutné, ale k decentralizaci všech sociálních médií to
+nestačí.
 
-Pokud ekonomická vrstva stále závisí na hrstce centralizovaných kolejnic, pak aplikace zůstávají snadno pod tlakem, deplatformují se nebo finančně hladoví. Bitsocial Chain je navrhovanou odpovědí na tuto druhou vrstvu závislosti.
+Pokud sociální aplikace stále závisejí na několika centralizovaných ekonomických kanálech, je i
+nadále snadné na ně tlačit, odstavit je nebo je finančně vyhladovět. Bitsocial Chain je navrhovanou
+odpovědí na tuto druhou vrstvu závislosti.
 
-## Vztah ke zbytku Bitsocial
+## Vztah k aplikacím
 
-Bitsocial Chain je navržen jako sdílená infrastruktura pro aplikace Bitsocial, nikoli jako produkt, se kterým uživatelé komunikují přímo každý den.
+Bitsocial Chain by měl sedět pod aplikacemi Bitsocial, ne je nahrazovat.
 
-Výsledek pro veřejnost by byl:
+Navenek viditelný výsledek by měl být takový, že:
 
 - komunity zůstávají peer-to-peer
-- aplikace zůstávají diferencované
-- monetizace a pojmenování se stávají trvanlivějšími
-- hodnota se může pohybovat napříč ekosystémem, aniž by bylo nutné znovu vytvořit centralizovaného vlastníka platformy
+- aplikace zůstávají odlišené
+- uživatelé dostanou praktické funkce pro pojmenování a monetizaci
+- tvůrci a komunity mohou dostávat podporu napříč klienty
+- hodnota se může pohybovat napříč ekosystémem, aniž by znovu vznikl centralizovaný vlastník
+  platformy
 
-## Proč je to ve fázi 4
+## Proč přichází takto brzy
 
-Hlavní plán to umístí za předchozí body kontroly na úrovni aplikace:
+Aktuální hlavní plán řadí Bitsocial Chain hned za první prioritní kategorie: imageboardy, fóra
+a veřejnou RPC vrstvu, díky které jsou tyto aplikace použitelné pro širší okruh lidí.
 
-1. decentralizovat imageboardy
-2. spustit Bitsocial RPC
-3. decentralizovat fóra
-4. spustit Bitsocial Chain
-
-Tato sekvence dává smysl, protože koordinační vrstva na úrovni ekosystému je užitečnější, jakmile v síti již existují skutečné aplikace a skutečné chování uživatelů.
+Na tomto načasování záleží, protože sociální aplikace potřebují silné síťové efekty. Pokud
+pojmenování, podpora, ocenění, spropitné a monetizace dorazí příliš pozdě, udrží si centralizovaní
+konkurenti svou největší výhodu příliš dlouho.
 
 ## Principy návrhu
 
-Protože je Bitsocial Chain zatím navrhovanou infrastrukturou a ne spuštěným produktem, měl by současný plán zůstat disciplinovaný v několika ohledech:
+Protože je Bitsocial Chain stále navrhovanou infrastrukturou, a ne spuštěným produktem, měl by plán
+zůstat disciplinovaný:
 
-- Nejdřív aplikace a komunity. Síťová vrstva by měla vycházet ze skutečného používání v aplikacích Bitsocial, ne začínat spekulativními finančními funkcemi.
-- Skutečný přínos má přednost před humbukem. Pokud Bitsocial později přidá aktiva na úrovni komunit, tvůrců nebo klientů, měla by odměňovat účast a dlouhodobé budování, ne napodobovací launchy nebo krátkodobé obchodování.
-- Kurátorství je v pořádku. Aplikace Bitsocial mohou nastavovat žebříčky, výchozí volby, objevování i tempo zavádění tak, aby upřednostňovaly trvanlivé komunity před kasinovým chováním.
-- Postupné zavádění je zdravé. Dává smysl odložit finanční funkce nativní pro appchain, dokud ekosystém nebude mít dost uživatelů, nástrojů pro moderaci a produktové jasnosti, aby je bylo možné bezpečně podpořit.
-- Přesné mechanismy zůstávají otevřené. Tato stránka vysvětluje roli Bitsocial Chain, nikoli pevný slib o launcherech tokenů, vzorcích poplatků nebo konečné tokenomice.
+- Nejdřív aplikace a komunity. Síťová vrstva má posilovat skutečné sociální produkty.
+- Nejdřív praktické funkce. Jména, ocenění, spropitné a platby se vysvětlují snáz než abstraktní
+  finanční architektura.
+- Skutečný přínos má přednost před humbukem. Ekonomická primitiva by měla odměňovat účast, budování
+  a podporu komunit.
+- Kurátorství je v pořádku. Aplikace mohou tvarovat žebříčky, výchozí volby i objevování tak, aby
+  zvýhodňovaly trvanlivé komunity.
+- Přesné mechanismy zůstávají otevřené. Tato stránka vysvětluje roli Bitsocial Chain, ne pevný slib
+  o konečné ekonomice.

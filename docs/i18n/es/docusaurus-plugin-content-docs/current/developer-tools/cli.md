@@ -1,68 +1,68 @@
 ---
-title: CLI
-description: Interfaz de línea de comandos para ejecutar un nodo Bitsocial, crear comunidades y gestionar operaciones de protocolo.
+title: CLI de Bitsocial
+description: Interfaz de línea de comandos para ejecutar un nodo de Bitsocial, crear comunidades y gestionar operaciones del protocolo.
 sidebar_position: 2
 ---
 
-# CLI
+# CLI de Bitsocial
 
-`bitsocial-cli` es una herramienta de línea de comandos para interactuar con el backend del protocolo Bitsocial. Le permite ejecutar un demonio P2P local, crear y configurar comunidades y publicar contenido, todo desde la terminal.
+`bitsocial-cli` es una herramienta de línea de comandos para trabajar con el backend del protocolo Bitsocial. Permite ejecutar un demonio P2P local, crear y configurar comunidades y publicar contenido, todo desde la terminal.
 
-Está construido sobre la capa de cliente del protocolo Bitsocial compartido y lo utilizan [5chan](/apps/5chan/) y [Seeditar](/apps/seedit/) para la creación de comunidades y la gestión de nodos.
+Está construida sobre la capa cliente compartida del protocolo Bitsocial y la usan [5chan](/apps/5chan/) y [Seedit](/apps/seedit/) para crear comunidades y gestionar nodos.
 
 ## Instalación
 
-Los archivos binarios prediseñados están disponibles para Windows, macOS y Linux. Descargue la última versión para su plataforma desde GitHub:
+Hay binarios precompilados para Windows, macOS y Linux. Descarga la última versión para tu plataforma desde GitHub:
 
-**[Descargar desde versiones de GitHub](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Descargar desde GitHub Releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Después de la descarga, haga el binario ejecutable (macOS/Linux):
+Después de la descarga, dale permisos de ejecución al binario (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
-## Ejecutando el demonio
+## Ejecutar el demonio
 
-El uso más común de la CLI es ejecutar un nodo Bitsocial. El demonio inicia la capa de red P2P y expone una API local a la que los clientes pueden conectarse.
+El uso más habitual de la CLI es ejecutar un nodo de Bitsocial. El demonio arranca la capa de red P2P y expone una API local a la que se pueden conectar los clientes.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-En el primer lanzamiento, el demonio genera enlaces a **WebUI**, una interfaz gráfica basada en navegador para administrar su nodo, comunidades y configuraciones. Esto es útil si prefiere una GUI a los comandos de terminal.
+En el primer arranque, el demonio muestra enlaces a la **WebUI**, una interfaz gráfica basada en navegador para gestionar tu nodo, tus comunidades y su configuración. Resulta útil si prefieres una interfaz gráfica a los comandos de terminal.
 
-## Acciones clave
+## Acciones principales
 
-| Acción                     | Descripción                                                               |
-| -------------------------- | ------------------------------------------------------------------------- |
-| Iniciar el demonio         | Lanzar el nodo P2P de Bitsocial                                           |
-| Crear una comunidad        | Crear una nueva comunidad                                                 |
-| Editar una comunidad       | Actualizar la configuración de la comunidad (título, descripción, reglas) |
-| Listar comunidades locales | Listar comunidades alojadas en este nodo                                  |
-| Iniciar una comunidad      | Comience a servir a una comunidad específica                              |
-| Detener una comunidad      | Dejar de servir a una comunidad específica                                |
+| Acción                     | Descripción                                                          |
+| -------------------------- | -------------------------------------------------------------------- |
+| Arrancar el demonio        | Poner en marcha el nodo P2P de Bitsocial                             |
+| Crear una comunidad        | Crear una comunidad nueva                                            |
+| Editar una comunidad       | Actualizar los ajustes de la comunidad (título, descripción, reglas) |
+| Listar comunidades locales | Listar las comunidades alojadas en este nodo                         |
+| Iniciar una comunidad      | Empezar a servir una comunidad concreta                              |
+| Detener una comunidad      | Dejar de servir una comunidad concreta                               |
 
-Ejecute la CLI con `--help` para ver los nombres de comandos actuales y los indicadores expuestos por su versión instalada:
+Ejecuta la CLI con `--help` para ver los nombres de comando y las opciones que expone la versión que tienes instalada:
 
 ```bash
-bitsocial-cli --help
-bitsocial-cli daemon --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Flujo de trabajo típico
 
-Un flujo de configuración común para albergar una nueva comunidad:
+Un flujo de configuración habitual para alojar una comunidad nueva:
 
 ```bash
 # 1. Start the daemon
-bitsocial-cli daemon
+bitsocial daemon
 
 # 2. In another terminal, inspect the available community-management commands
-bitsocial-cli --help
+bitsocial --help
 ```
 
-A partir de ahí, utilice los comandos de administración de comunidades de la versión instalada para crear, configurar y comenzar a brindar servicios a una comunidad. Una vez iniciada, la comunidad está activa en la red Bitsocial y es accesible desde clientes compatibles.
+A partir de ahí, usa los comandos de gestión de comunidades de la versión instalada para crear, configurar y empezar a servir una comunidad. Una vez iniciada, la comunidad está activa en la red de Bitsocial y es accesible desde clientes compatibles.
 
 ## Enlaces
 

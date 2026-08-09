@@ -1,56 +1,97 @@
 ---
 title: Bitsocial Chain
-description: Phase 4 du plan directeur, couvrant la couche de chaîne d'applications partagée proposée pour les applications Bitsocial.
+description: Phase 2 du plan directeur, consacrée à la couche économique proposée pour les applications Bitsocial, sous la forme d'une appchain L2 Ethereum.
 ---
 
 # Bitsocial Chain
 
-Bitsocial Chain est le nom utilisé dans le plan directeur pour la couche de chaîne d'applications partagée qui se trouverait sous les applications Bitsocial.
+Bitsocial Chain est la couche économique proposée pour les applications Bitsocial, sous la forme
+d'une appchain L2 Ethereum. Le site actuellement dédié à la chaîne est
+[chain.bitsocial.net](https://chain.bitsocial.net).
 
-L’idée n’est pas de remplacer la couche sociale peer-to-peer. Il s’agit de fournir les primitives économiques et de coordination partagées dont les applications sociales auront besoin si elles veulent rivaliser avec les plateformes historiques à grande échelle.
+La couche sociale peer-to-peer permet aux communautés, aux identités et aux contenus d'exister en
+dehors de la base de données d'une plateforme centrale. Bitsocial Chain doit y ajouter les
+primitives partagées de nommage, de monétisation et de paiement qui rendent ces applications plus
+difficiles à asphyxier financièrement.
 
-## Ce qu'il est censé alimenter
+## Ce qu'elle doit alimenter
 
-- domaines Bitsocial décentralisés tels que `.bso`
-- liquidité partagée entre les applications
-- rails de monétisation durables
-- des structures financières plus difficiles à étouffer pour les banques ou les plateformes
-- des effets de réseau qui ne dépendent pas du fait qu'une seule entreprise possède l'ensemble de la pile
+- des domaines Bitsocial décentralisés comme `.bso`
+- les récompenses et les pourboires
+- des rails de monétisation durables
+- une liquidité partagée entre les applications
+- des structures financières plus difficiles à couper pour les banques ou les plateformes
+- des effets de réseau qui ne reposent pas sur une entreprise unique propriétaire de toute la pile
+
+L'objectif n'est pas de mettre en avant les mécanismes de token. L'objectif est de rendre les
+applications sociales utiles plus durables, plus faciles à financer et moins dépendantes de
+fournisseurs centralisés de paiement ou de nommage.
+
+## Preuve de concept actuelle
+
+La première preuve de concept de Bitsocial Chain porte sur les noms natifs `.bso`. Elle démontre
+qu'un registre de noms peut être dérivé de l'historique de la L1 Ethereum sans placer le contenu
+social sur la chaîne :
+
+- les utilisateurs soumettent leurs intentions d'enregistrement, de mise à jour, de transfert et de
+  révocation par de simples transactions sur la L1 Ethereum
+- n'importe qui peut faire tourner le nœud de dérivation et reconstituer le même état du registre
+  `.bso`
+- un résolveur associe un nom `.bso` à la clé publique Bitsocial que les clients utilisent déjà sur
+  le protocole peer-to-peer
+- les publications, les votes, la modération, les fils et les contenus des communautés restent hors
+  chaîne et peer-to-peer
+
+Cette preuve de concept n'est pas un lancement Stage 2 en production. Elle n'a encore ni système de
+preuves, ni jeu de contestation, ni code audité, ni déploiement en service, ni tarification
+définitive, ni gouvernance définitive. Sa posture de long terme est la transparence par défaut et la
+compatibilité avec la vie privée dès la conception : la chaîne principale est publique, tandis que
+les futurs pourboires, paiements, récompenses et mécanismes de liquidité devraient éviter d'imposer
+des liens permanents entre identité sociale et historique de portefeuille.
 
 ## Pourquoi c'est important
 
-La décentralisation des communautés et des identités est nécessaire, mais cela ne suffit pas pour décentraliser tous les médias sociaux.
+Décentraliser les communautés et les identités est nécessaire, mais cela ne suffit pas à
+décentraliser l'ensemble des médias sociaux.
 
-Si la couche économique dépend encore d’une poignée de rails centralisés, alors les applications restent faciles à faire pression, à déplateforme ou à mourir de faim financièrement. Bitsocial Chain est la réponse proposée à cette deuxième couche de dépendance.
+Si les applications sociales continuent de dépendre de quelques rails économiques centralisés, elles
+restent faciles à faire plier, à écarter ou à priver de ressources financières. Bitsocial Chain est
+la réponse proposée à cette seconde couche de dépendance.
 
-## Relation avec le reste de Bitsocial
+## Relation avec les applications
 
-Bitsocial Chain est proposé comme une infrastructure partagée pour les applications Bitsocial, et non comme un produit avec lequel les utilisateurs interagissent directement quotidiennement.
+Bitsocial Chain doit se placer sous les applications Bitsocial, pas les remplacer.
 
-Le résultat destiné au public serait :
+Le résultat visible côté public devrait être :
 
 - les communautés restent peer-to-peer
 - les applications restent différenciées
-- la monétisation et la dénomination deviennent plus durables
-- la valeur peut se déplacer à travers l’écosystème sans recréer un propriétaire de plateforme centralisé
+- les utilisateurs disposent de fonctions concrètes de nommage et de monétisation
+- les créateurs et les communautés peuvent recevoir du soutien depuis n'importe quel client
+- la valeur peut circuler dans l'écosystème sans recréer un propriétaire de plateforme centralisé
 
-## Pourquoi cela se situe dans la phase 4
+## Pourquoi cette étape arrive tôt
 
-Le plan directeur place ceci après les points de preuve précédents au niveau de l'application :
+Le plan directeur actuel place Bitsocial Chain juste après les premières catégories prioritaires :
+les imageboards, les forums et la couche RPC publique qui rend ces applications utilisables par un
+public plus large.
 
-1. décentraliser les tableaux d'images
-2. lancer Bitsocial RPC
-3. décentraliser les forums
-4. lancer le réseau Bitsocial
-
-Cette séquence est logique car une couche de coordination au niveau de l’écosystème est plus utile une fois que de vraies applications et un véritable comportement d’utilisateur existent déjà sur le réseau.
+Ce calendrier compte parce que les applications sociales ont besoin d'effets de réseau puissants. Si
+le nommage, le soutien, les récompenses, les pourboires et la monétisation arrivent trop tard, les
+concurrents centralisés conservent bien trop longtemps leur principal avantage.
 
 ## Principes de conception
 
-Comme Bitsocial Chain reste une infrastructure proposée et non un produit déjà lancé, le plan actuel doit rester discipliné sur quelques points :
+Comme Bitsocial Chain reste une infrastructure proposée plutôt qu'un produit lancé, le plan doit
+rester discipliné :
 
-- Les applications et les communautés d’abord. La couche réseau doit suivre l’usage réel dans les applications Bitsocial, et non prendre de l’avance avec des fonctions financières spéculatives.
-- La contribution réelle avant le battage. Si Bitsocial ajoute plus tard des actifs au niveau des communautés, des créateurs ou des clients, ils devraient récompenser la participation et la construction de long terme plutôt que des lancements imitateurs ou du trading de court terme.
-- La curation est légitime. Les applications Bitsocial peuvent façonner les classements, les paramètres par défaut, la découverte et le calendrier de déploiement afin de favoriser les communautés durables plutôt que des dynamiques de casino.
-- Un déploiement progressif est sain. Il est raisonnable de repousser les fonctions financières natives à l’appchain jusqu’à ce que l’écosystème dispose d’assez d’utilisateurs, d’outils de modération et de clarté produit pour les prendre en charge en toute sécurité.
-- Les mécanismes exacts restent ouverts. Cette page explique le rôle de Bitsocial Chain, pas une promesse figée sur des lanceurs de tokens, des formules de frais ou la tokenomique finale.
+- Les applications et les communautés d'abord. La couche réseau doit renforcer de vrais produits
+  sociaux.
+- Les fonctions concrètes d'abord. Les noms, les récompenses, les pourboires et les paiements sont
+  plus faciles à expliquer qu'une architecture financière abstraite.
+- La contribution réelle plutôt que le battage. Les primitives économiques doivent récompenser la
+  participation, la construction et le soutien aux communautés.
+- La curation est légitime. Les applications peuvent façonner les classements, les paramètres par
+  défaut et la découverte pour favoriser les communautés durables.
+- Les mécanismes exacts restent ouverts. Cette page explique le rôle de Bitsocial Chain, et non une
+  promesse figée sur l'économie finale.

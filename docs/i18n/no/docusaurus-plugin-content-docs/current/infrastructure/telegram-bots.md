@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Feed-roboter som overvåker Bitsocial-fellesskapslister og videresender innlegg til Telegram-kanaler.
-sidebar_position: 3
+title: Telegram-boter
+description: Feed-boter som overvåker fellesskapslister på Bitsocial og videresender innlegg til Telegram-kanaler.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Telegram-boter
 
-Bitsocial Telegram-robotene overvåker klientfellesskapslister på Bitsocial-nettverket og videresender automatisk nye innlegg til Telegram-kanaler. Hver videresendt melding inkluderer innebygde knapper som lenker tilbake til det opprinnelige innlegget på 5chan og Seedit.
+Bitsocials Telegram-boter overvåker klientenes fellesskapslister på Bitsocial-nettverket og videresender automatisk nye innlegg til Telegram-kanaler. Hver videresendte melding har innebygde knapper som lenker tilbake til det opprinnelige innlegget på 5chan og Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
-## Tilgjengelige bots
+## Tilgjengelige boter
 
-| Bot               | Status   | Beskrivelse                                                              |
-| ----------------- | -------- | ------------------------------------------------------------------------ |
-| **5-kanals feed** | Aktiv    | Overvåker alle 5chan-kataloger og videresender nye innlegg til Telegram. |
-| **Seedit-feed**   | Planlagt | Vil gi samme funksjonalitet for Seedit-fellesskap.                       |
+| Bot             | Status   | Beskrivelse                                                              |
+| --------------- | -------- | ------------------------------------------------------------------------ |
+| **5chan Feed**  | Aktiv    | Overvåker alle 5chan-kataloger og videresender nye innlegg til Telegram. |
+| **Seedit Feed** | Planlagt | Vil gi den samme funksjonaliteten for Seedit-fellesskap.                 |
 
 ## Oppsett
 
 ### Forutsetninger
 
 - Node.js
-- Garn
-- Et Telegram bot-token (opprett en via [BotFather](https://t.me/BotFather))
+- Yarn
+- Et Telegram-bot-token (opprett ett via [BotFather](https://t.me/BotFather))
 
 ### Installasjon
 
-Klon depotet og installer avhengigheter:
+Klon repoet og installer avhengighetene:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -43,9 +43,9 @@ Opprett en `.env`-fil i prosjektroten med bot-tokenet ditt:
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Løper
+### Kjøring
 
-Start boten etter å ha konfigurert miljøet ditt:
+Start boten når miljøet er satt opp:
 
 ```bash
 yarn start
@@ -53,9 +53,9 @@ yarn start
 
 ## Innleggsformat
 
-Når boten videresender et innlegg til Telegram, inkluderer den to innebygde knapper:
+Når boten videresender et innlegg til Telegram, legger den ved to innebygde knapper:
 
-- **Se på 5chan** -- Åpner innlegget i 5chan-nettklienten.
-- **Se på Seedit** -- Åpner innlegget i Seedit-webklienten.
+- **Vis på 5chan** -- Åpner innlegget i 5chan-nettklienten.
+- **Vis på Seedit** -- Åpner innlegget i Seedit-nettklienten.
 
-Dette lar Telegram-abonnenter hoppe direkte til hele diskusjonstråden på hvilken klient de foretrekker.
+Slik kan Telegram-abonnenter hoppe rett til hele diskusjonstråden i den klienten de selv foretrekker.

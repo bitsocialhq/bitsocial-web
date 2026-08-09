@@ -1,34 +1,37 @@
 # Ajan Kancaları Kurulumu
 
-Yapay zeka kodlama yardımcınız yaşam döngüsü kancalarını destekliyorsa bunları bu depo için yapılandırın.
+Yapay zeka kodlama asistanınız yaşam döngüsü kancalarını destekliyorsa, bu depo için aşağıdakileri yapılandırın.
 
 ## Önerilen Kancalar
 
-| Kanca           | Komut                                      | Amaç                                                                                                                                                                                                                                        |
-| --------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | AI düzenlemelerinden sonra dosyaları otomatik olarak biçimlendirin                                                                                                                                                                          |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | `package.json` değiştiğinde `corepack yarn install`'yu çalıştırın                                                                                                                                                                           |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Eski referansları budayın ve entegre geçici görev dallarını silin                                                                                                                                                                           |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Sabit kapı oluşturma, tüy bırakmama, yazım denetimi ve format kontrolleri; `yarn npm audit`'yu bilgi amaçlı tutun ve bağımlılıklar/içe aktarmalar değiştiğinde `yarn knip`'yu tavsiye niteliğinde bir denetim olarak ayrı olarak çalıştırın |
+| Kanca           | Komut                                         | Amaç                                                                                                                                                                                                                                                          |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Yapay zeka düzenlemelerinden sonra dosyaları otomatik biçimlendirir                                                                                                                                                                                           |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | `package.json` değiştiğinde `corepack yarn install` çalıştırır                                                                                                                                                                                                |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Bir diff `about/src/` içine `useEffect`/memo ilkelleri eklediğinde, ajana React inceleme becerileriyle konuyu yeniden değerlendirmesini hatırlatır                                                                                                            |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Eskimiş referansları budar ve entegre edilmiş geçici görev dallarını siler                                                                                                                                                                                    |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Son doğrulama kapısından önce mevcut diff'i `about/src/` içindeki yeni React efektleri/memo'ları açısından yeniden tarar                                                                                                                                      |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Hedefli derleme doğrulaması, lint, tip denetimi ve biçim kontrolleri için katı kapı uygular; `yarn npm audit`'i bilgilendirme amaçlı tutar, bağımlılıklar/içe aktarmalar değiştiğinde `yarn knip`'i ayrı ve tavsiye niteliğinde bir denetim olarak çalıştırır |
 
 ## Neden
 
 - Tutarlı biçimlendirme
 - Kilit dosyası senkronize kalır
-- Oluşturma/tüy bırakma/yazma sorunları erken yakalandı
-- `yarn npm audit` aracılığıyla güvenlik görünürlüğü
-- Bağımlılık/içe aktarma sapması `yarn knip` ile onu gürültülü bir küresel durdurma kancasına dönüştürmeden kontrol edilebilir
-- Hem Codex hem de İmleç için tek bir paylaşılan kanca uygulaması
-- Geçici görev dalları deponun iş ağacı iş akışıyla uyumlu kalır
+- About sitesine eklenen yeni `useEffect`/memo kullanımları, ajan işi bitirmeden önce açıkça ikinci kez gözden geçirilir
+- Her görevde tam çok dilli belge derlemesini zorunlu kılmadan, çalışma alanıyla ilgili derleme/lint/tip sorunları erkenden yakalanır
+- `yarn npm audit` ile güvenlik görünürlüğü
+- Bağımlılık/içe aktarma sapması, gürültülü bir küresel durdurma kancasına dönüştürülmeden `yarn knip` ile denetlenebilir
+- Hem Codex hem de Cursor için tek bir paylaşılan kanca uygulaması
+- Geçici görev dalları, deponun worktree iş akışıyla uyumlu kalır
 
 ## Örnek Kanca Komut Dosyaları
 
-### Kancayı Biçimlendir
+### Biçimlendirme Kancası
 
 ```bash
 #!/bin/bash
-# AI düzenlemelerinden sonra JS/TS dosyalarını otomatik olarak biçimlendirin
-# Hook, JSON'u file_path ile stdin aracılığıyla alır
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Kancayı Doğrula
+### Doğrulama Kancası
 
 ```bash
 #!/bin/bash
-# Aracı bittiğinde build, lint, typecheck, format kontrolü ve güvenlik denetimini çalıştırın
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Varsayılan olarak `scripts/agent-hooks/verify.sh`, gerekli bir denetim başarısız olduğunda sıfırdan farklı olarak çıkar. `AGENT_VERIFY_MODE=advisory`'yu yalnızca kancayı engellemeden kırık bir ağaçtan kasıtlı olarak sinyal almanız gerektiğinde ayarlayın. Repo, tavsiye amaçlı içe aktarma/bağımlılık konularında açıkça başarısız olmaya karar vermedikçe, `yarn knip`'yu sabit kapının dışında tutun.
+Varsayılan olarak `scripts/agent-hooks/verify.sh`, gerekli bir denetim başarısız olduğunda sıfırdan farklı bir kodla çıkar. `AGENT_VERIFY_MODE=advisory` değerini yalnızca kancayı engellemeden bozuk bir ağaçtan bilerek sinyal almanız gerektiğinde ayarlayın. Depo, tavsiye niteliğindeki içe aktarma/bağımlılık sorunlarında başarısız olmaya açıkça karar vermedikçe `yarn knip`'i katı kapının dışında bırakın.
 
-### İplik Takma Kancası
+Yaşam döngüsü kancaları, elle yapılan tarayıcı doğrulamasının yerini tutmaz. Arayüz veya görsel değişikliklerde yine de `chrome`, `firefox` ve `webkit` motorlarında `playwright-cli` kontrollerini çalıştırın; duyarlılık ya da dokunma davranışı değiştiyse her motorda ayrıca bir mobil görünüm akışı deneyin.
+
+### Yarn Kurulum Kancası
 
 ```bash
 #!/bin/bash
-# package.json değiştirildiğinde corepack iplik kurulumunu çalıştırın
-# Hook, JSON'u file_path ile stdin aracılığıyla alır
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Kanca kablolamasını aracı aracınızın belgelerine (`hooks.json`, eşdeğeri vb.) göre yapılandırın.
+Kanca bağlantılarını ajan aracınızın belgelerine göre yapılandırın (`hooks.json` veya eşdeğeri gibi).
 
-Bu depoda, `.codex/hooks/*.sh` ve `.cursor/hooks/*.sh`, `scripts/agent-hooks/` altındaki paylaşılan uygulamalara yetki veren ince sarmalayıcılar olarak kalmalıdır.
+Bu depoda `.codex/hooks/*.sh` ve `.cursor/hooks/*.sh` dosyaları, `scripts/agent-hooks/` altındaki paylaşılan uygulamalara yetki devreden ince sarmalayıcılar olarak kalmalıdır.

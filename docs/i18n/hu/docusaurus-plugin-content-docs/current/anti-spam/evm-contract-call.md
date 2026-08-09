@@ -1,19 +1,15 @@
 ---
 title: EVM Contract Call Challenge
-description: Anti-spam kihívás, amely EVM intelligens szerződés lehívásával ellenőrzi a láncon belüli feltételeket.
+description: Spamellenes kihívás, amely EVM okosszerződés hívásával ellenőrzi a láncon lévő feltételeket.
 sidebar_position: 4
 ---
 
 # EVM Contract Call Challenge
 
-Az EVM Contract Call Challenge egy spamellenes mechanizmus, amely a közzététel engedélyezése előtt ellenőrzi a láncon belüli feltételeket. Lehetővé teszi a közösségtulajdonosok számára, hogy a közzétételhez megköveteljék a szerzőktől, hogy megfeleljenek az intelligens szerződésben meghatározott feltételeknek – például minimális tokenegyenleg birtokában.
+Az EVM Contract Call Challenge a szerző láncon lévő állapotát ellenőrzi, mielőtt engedélyezné a közzétételt. A közösség tulajdonosa előírhatja, hogy egy tárca vagy feloldott identitás a bejegyzés elküldése előtt megfeleljen egy csak olvasható okosszerződés-feltételnek, például rendelkezzen egy minimális tokenegyenleggel.
 
-**Forráskód:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Követelmények
-
-- **Node.js** >= 22
-- **Csak ESM** – ez a csomag nem szállít CommonJS buildeket.
+- **Forráskód és aktuális README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **npm csomag:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Telepítés
 
@@ -21,34 +17,26 @@ Az EVM Contract Call Challenge egy spamellenes mechanizmus, amely a közzététe
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Konfigurációs lehetőségek
+## Hol a helye
 
-| Opció         | Típus    | Leírás                                                                               |
-| ------------- | -------- | ------------------------------------------------------------------------------------ |
-| `chainTicker` | `string` | A lekérdezendő lánc (pl. `eth`, `matic`, `avax`).                                    |
-| `address`     | `string` | A hívható intelligens szerződés címe.                                                |
-| `abi`         | `string` | A hívott függvény ABI-töredéke.                                                      |
-| `condition`   | `string` | Összehasonlítási kifejezés a szerződés visszatérési értékéhez képest (pl. `> 1000`). |
-| `error`       | `string` | A hibaüzenet azoknak a szerzőknek jelenik meg, akik nem felelnek meg a feltételnek.  |
+Ezt a kihívást olyan közösségekben érdemes használni, ahol a részvétel egy külső EVM-jeltől függ: tokentulajdonlástól, NFT-tulajdonlástól, proof-of-personhood pontszámoktól, kormányzási tagságtól vagy más, szerződésből kiolvasható feltételtől.
 
-## Példa
+Beállítás után a kihívás a szerző szempontjából automatikus. Ellenőrzi a szóba jöhető tárca- vagy identitásforrásokat, meghívja a beállított szerződésmetódust, majd a visszakapott értéket összeveti a közösség feltételével.
 
-Az a közösségtulajdonos, aki a közzétételt olyan szerzőkre szeretné korlátozni, akik több mint 1000 ERC-20 tokennel rendelkeznek, a kihívást a következőkkel konfigurálják:
+## A csomag aktuális dokumentációja
 
-- `chainTicker`: `"eth"`
-- `address`: a jogkivonat-szerződés címe
-- `abi`: ABI a `balanceOf(address)` számára
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Ez az oldal szándékosan áttekintés, nem pedig lemásolt konfigurációs referencia. A kihívásnevek, a Bitsocial CLI-példák, a pkc-js regisztráció, az alapértelmezett beállítások, az ABI-példák, az RPC-viselkedés és a támogatott tárcaforrások tekintetében a csomag README-je a mérvadó forrás:
 
-Amikor egy szerző megpróbálja közzétenni, a kihívás meghívja a `balanceOf`-t a szerző címével, és ellenőrzi, hogy a visszaadott érték megfelel-e a feltételnek. Ha igen, a közzététel folytatódik; ellenkező esetben a konfigurált hibaüzenet jelenik meg.
+- [EVM Contract Challenge README](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Mikor kell használni
+Éles közösség beállításakor mindig az eredeti README-t vegye alapul, mert a szerződéssel kapcsolatos beállítások és példák a csomaggal együtt verziózódnak, nem ezzel a weboldallal.
 
-Az EVM Contract Call Challenge ideális:
+## Mikor érdemes használni
 
-- **Token-kapus közösségek**, amelyek a bejegyzést a token-tulajdonosokra korlátozzák.
-- **NFT-kapu hozzáférés**, ahol egy adott NFT tulajdonjogára van szükség.
-- **DAO irányítási terek**, ahol a részvétel az irányítási token-tulajdonosokra korlátozódik.
+Az EVM Contract Call Challenge a következő esetekben ideális:
 
-Azon közösségek esetében, amelyek nem támaszkodnak a láncon belüli identitásra, fontolja meg helyette a [Spam Blocker](./spam-blocker.md) vagy az [Utalványkihívás](./voucher-challenge.md) szolgáltatást.
+- **Tokenhez kötött közösségek**, ahol csak a tokentulajdonosok tehetnek közzé tartalmat.
+- **NFT-hez kötött hozzáférés**, ahol egy adott NFT tulajdonlása kötelező.
+- **DAO kormányzási terek**, ahol a részvétel a kormányzási token tulajdonosaira korlátozódik.
+
+Azoknak a közösségeknek, amelyek nem támaszkodnak láncon lévő identitásra, inkább a [Spam Blocker](./spam-blocker.md) vagy a [Voucher Challenge](./voucher-challenge.md) ajánlott.

@@ -1,52 +1,71 @@
 ---
 title: Descentralizar todas las redes sociales
-description: Fase 5 del plan maestro de Bitsocial y el estado final al que apunta.
+description: La fase 5 del plan maestro, centrada en financiar y construir la larga cola de clientes sociales de Bitsocial.
 ---
 
 # Descentralizar todas las redes sociales
 
-Este es el estado final descrito por el plan maestro de Bitsocial: no una aplicación, sino un ecosistema de aplicaciones de Bitsocial que puede rivalizar con todas las categorías principales de redes sociales.
+El destino final no es una sola aplicación. Es un mercado de clientes, nodos, servicios y comunidades
+capaz de sustituir la propiedad de una plataforma por la competencia entre implementaciones de un
+protocolo.
 
-## el modelo
+La fase 5 es el momento en el que Bitsocial va más allá de las primeras categorías prioritarias y
+empieza a financiar tantos formatos sociales como sea posible.
 
-En el estado maduro propuesto de la red:
+## Qué queda por construir
 
-- múltiples proveedores públicos de RPC compiten para alojar nodos de perfil
-- los usuarios aún pueden autohospedarse
-- Los algoritmos de alimentación se convierten en servicios opcionales en lugar de una ley de plataforma obligatoria.
-- la monetización no depende de que los bancos estén dispuestos a mantener viva la plataforma
-- Las aplicaciones compiten en calidad de producto, descubrimiento y diseño de interfaz.
+Las primeras fases se centran en las categorías con más impacto: imageboards, foros, RPC pública,
+Bitsocial Chain, nodos de perfil, la alternativa a Twitter/X de la fase 3 y la economía de servicios
+que las rodea.
 
-## ¿Cómo sería el éxito?
+Después de eso, la red debería expandirse hacia la larga cola:
 
-Las aplicaciones Bitsocial deberían poder desafiar a las plataformas en todos los formatos, no solo en un nicho:
-
-- texto y discusión
-- tableros de imágenes
-- foros
+- clientes de blogs
+- aplicaciones de micromecenazgo
+- vídeo de creadores y una [alternativa creíble a YouTube](https://github.com/bitsocialnet/wetube)
 - comunidades de creadores
-- Vídeo de formato corto y productos multimedia más amplios.
+- experimentos con contenido de formato corto
+- aplicaciones sociales locales o para un idioma concreto
+- clientes de nicho demasiado pequeños para las cuatro primeras fases
+- herramientas que faciliten la gestión de las comunidades que ya existen
 
-El objetivo no es imponer una interfaz universal a todos. Se trata de dar a muchas aplicaciones acceso a las mismas comunidades, identidades y redes subyacentes.
+Algunas de estas aplicaciones pueden ser de código abierto. Otras pueden ser clientes centralizados.
+Algunas las puede construir Bitsocial Forge, y muchas deberían construirlas desarrolladores
+independientes.
 
-## Por qué es importante la capa RPC aquí
+## Financiar a muchos equipos
 
-Las comunidades y los perfiles siempre activos se vuelven mucho más prácticos una vez que existen mercados públicos de RPC. Sin esa capa, el autohospedaje sigue siendo demasiado complicado para muchos usuarios, especialmente en dispositivos móviles.
+El objetivo es que los nuevos clientes sociales se puedan financiar antes de tener ya tracción a
+escala de plataforma.
 
-## Por qué la capa de red es importante aquí
+Eso puede incluir inversión directa, becas, financiación comunitaria, ingresos procedentes de
+servicios de Bitsocial que funcionen bien o programas de becas descentralizados en los que la
+comunidad de Bitsocial ayude a decidir qué desarrolladores reciben apoyo.
 
-Si la monetización de contenidos puede verse interrumpida por la presión bancaria o de las plataformas ordinarias, entonces el ecosistema sigue siendo frágil. Bitsocial Chain se propone como la capa económica que hace más creíble la competencia a largo plazo.
+Lo importante es el pluralismo. La red debería financiar muchos intentos en lugar de esperar a que
+una aplicación oficial cubra todas las categorías.
 
-## La apuesta central
+## Cómo se ve el éxito
 
-La gran apuesta es que las redes sociales se pueden dividir en capas reemplazables:
+Bitsocial tiene éxito cuando las redes sociales se pueden dividir en capas reemplazables:
 
 - protocolo
 - comunidades
 - identidad
 - alojamiento
 - descubrimiento
+- moderación
 - monetización
 - aplicaciones
 
-Una vez que esas capas sean reemplazables, ninguna empresa tendrá que poseer todo el gráfico social para que el producto funcione.
+Una vez que esas capas son reemplazables, ninguna empresa tiene que ser dueña de todo el grafo social
+para que el producto funcione.
+
+## La apuesta de fondo
+
+Un ecosistema maduro de Bitsocial debería incluir RPC públicas, nodos autoalojados, mercados de
+algoritmos de feed, servicios de alojamiento multimedia, servicios de descubrimiento, clientes de
+código abierto, clientes comerciales y experimentos financiados por la comunidad.
+
+Las redes sociales encuentran por fin su equilibrio: una red social totalmente descentralizada y
+peer-to-peer que no es de nadie; Bitsocial.

@@ -1,68 +1,68 @@
 ---
-title: CLI
-description: Kommandolinjegrensesnitt for å kjøre en Bitsocial-node, opprette fellesskap og administrere protokolloperasjoner.
+title: Bitsocial CLI
+description: Kommandolinjegrensesnitt for å kjøre en Bitsocial-node, opprette fellesskap og håndtere protokolloperasjoner.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-`bitsocial-cli` er et kommandolinjeverktøy for å samhandle med Bitsocial-protokollens backend. Den lar deg kjøre en lokal P2P-demon, opprette og konfigurere fellesskap og publisere innhold - alt fra terminalen.
+`bitsocial-cli` er et kommandolinjeverktøy for å samhandle med backend-en i Bitsocial-protokollen. Med det kan du kjøre en lokal P2P-daemon, opprette og konfigurere fellesskap og publisere innhold -- alt fra terminalen.
 
-Den er bygget på toppen av det delte Bitsocial-protokollklientlaget og brukes av [5chan](/apps/5chan/) og [Seedit](/apps/seedit/) for opprettelse av fellesskap og nodeadministrasjon.
+Det er bygget på det delte klientlaget for Bitsocial-protokollen og brukes av [5chan](/apps/5chan/) og [Seedit](/apps/seedit/) til å opprette fellesskap og administrere noder.
 
 ## Installasjon
 
-Forhåndsbygde binærfiler er tilgjengelige for Windows, macOS og Linux. Last ned den siste utgivelsen for plattformen din fra GitHub:
+Ferdigbygde binærfiler finnes for Windows, macOS og Linux. Last ned den nyeste utgivelsen for plattformen din fra GitHub:
 
-**[Last ned fra GitHub-utgivelser](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Last ned fra GitHub Releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Etter nedlasting gjør du den binære kjørbare (macOS/Linux):
+Gjør binærfilen kjørbar etter nedlasting (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
-## Kjører Daemon
+## Kjøre daemonen
 
-Den vanligste bruken av CLI er å kjøre en Bitsocial-node. Daemonen starter P2P-nettverkslaget og avslører et lokalt API som klienter kan koble til.
+Den vanligste bruken av CLI-en er å kjøre en Bitsocial-node. Daemonen starter P2P-nettverkslaget og eksponerer et lokalt API som klienter kan koble seg til.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-Ved første lansering sender demonen ut koblinger til **WebUI**, et nettleserbasert grafisk grensesnitt for å administrere noden, fellesskapene og innstillingene dine. Dette er nyttig hvis du foretrekker en GUI fremfor terminalkommandoer.
+Ved første oppstart skriver daemonen ut lenker til **WebUI**, et nettleserbasert grafisk grensesnitt for å administrere noden, fellesskapene og innstillingene dine. Det er nyttig hvis du foretrekker et GUI framfor terminalkommandoer.
 
-## Nøkkelhandlinger
+## Sentrale handlinger
 
-| Handling              | Beskrivelse                                                     |
-| --------------------- | --------------------------------------------------------------- |
-| Start demonen         | Start Bitsocial P2P-noden                                       |
-| Opprett et fellesskap | Opprett et nytt fellesskap                                      |
-| Rediger et fellesskap | Oppdater fellesskapsinnstillinger (tittel, beskrivelse, regler) |
-| Liste lokalsamfunn    | Liste fellesskap som er vert for denne noden                    |
-| Start et fellesskap   | Begynn å betjene et bestemt fellesskap                          |
-| Stopp et fellesskap   | Slutt å tjene et bestemt fellesskap                             |
+| Handling                   | Beskrivelse                                                           |
+| -------------------------- | --------------------------------------------------------------------- |
+| Start daemonen             | Start Bitsocial-P2P-noden                                             |
+| Opprett et fellesskap      | Opprett et nytt fellesskap                                            |
+| Rediger et fellesskap      | Oppdater innstillinger for fellesskapet (tittel, beskrivelse, regler) |
+| List opp lokale fellesskap | List opp fellesskapene som driftes på denne noden                     |
+| Start et fellesskap        | Begynn å servere et bestemt fellesskap                                |
+| Stopp et fellesskap        | Slutt å servere et bestemt fellesskap                                 |
 
-Kjør CLI med `--help` for å se gjeldende kommandonavn og flagg eksponert av den installerte versjonen:
+Kjør CLI-en med `--help` for å se kommandonavnene og flaggene som den installerte utgivelsen din tilbyr:
 
 ```bash
-bitsocial-cli --help
-bitsocial-cli daemon --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Typisk arbeidsflyt
 
-En vanlig oppsettflyt for å være vert for et nytt fellesskap:
+En vanlig oppsettsflyt for å drifte et nytt fellesskap:
 
 ```bash
 # 1. Start the daemon
-bitsocial-cli daemon
+bitsocial daemon
 
 # 2. In another terminal, inspect the available community-management commands
-bitsocial-cli --help
+bitsocial --help
 ```
 
-Derfra bruker du den installerte utgivelsens kommandoer for fellesskapsadministrasjon for å opprette, konfigurere og begynne å betjene et fellesskap. Når det er startet, er fellesskapet live på Bitsocial-nettverket og tilgjengelig fra kompatible klienter.
+Derfra bruker du kommandoene for fellesskapsadministrasjon i den installerte utgivelsen til å opprette, konfigurere og begynne å servere et fellesskap. Når det er startet, er fellesskapet live på Bitsocial-nettverket og tilgjengelig fra kompatible klienter.
 
 ## Lenker
 

@@ -59,6 +59,7 @@ Agents may use compiled context to navigate quickly, but must verify against sou
 | `package.json` changed | Run `yarn install` to keep `yarn.lock` in sync |
 | Dependencies or import graph changed | Run `yarn knip` as an advisory manifest/import audit |
 | Translation key/value changed | Use `docs/agent-playbooks/translations.md` |
+| Docs-site locale files under `docs/i18n/**` changed | Run `python3 scripts/check-docs-translations.py --locales <locale...> --paths <page...>`; it must exit 0. Editing an English page under `docs/` makes every locale copy of that page stale |
 | Public-facing English content changed (`about/public/translations/en/default.json`, docs pages, app directory data, public README text, or `scripts/generate-llms-files.mjs`) | Run `yarn llms:generate`; inspect and commit any resulting changes to `about/public/llms*.txt` and `docs/static/llms*.txt` so LLM indexes stay current |
 | Bug report | Reproduce the reported behavior or establish the defect from conclusive source/runtime evidence before editing; for a specific file/line, also start with the git history scan in `docs/agent-playbooks/bug-investigation.md` |
 | UI or visual behavior changed | Verify in browser with `playwright-cli` across Chrome/Blink, Firefox/Gecko, and WebKit/Safari; use `./scripts/pw-session.sh` so only one browser is active machine-wide, run engines sequentially, reuse each session for desktop/mobile, and close it before opening the next; check desktop and mobile behavior when relevant |

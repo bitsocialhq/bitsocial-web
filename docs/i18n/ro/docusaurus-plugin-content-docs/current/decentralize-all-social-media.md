@@ -1,52 +1,69 @@
 ---
-title: Descentralizați toate rețelele de socializare
-description: Faza 5 a master planului Bitsocial și stadiul final pe care îl urmărește.
+title: Descentralizarea tuturor rețelelor sociale
+description: Faza 5 a planului general, axată pe finanțarea și construirea cozii lungi de clienți sociali Bitsocial.
 ---
 
-# Descentralizați toate rețelele de socializare
+# Descentralizarea tuturor rețelelor sociale
 
-Aceasta este starea finală descrisă de planul general Bitsocial: nu o aplicație, ci un ecosistem de aplicații Bitsocial care poate rivaliza cu fiecare categorie majoră de rețele sociale.
+Starea finală nu este o singură aplicație. Este o piață de clienți, noduri, servicii și comunități
+care poate înlocui proprietatea asupra platformei cu o concurență la nivel de protocol.
 
-## Modelul
+Faza 5 este momentul în care Bitsocial trece dincolo de primele categorii prioritare și începe să
+finanțeze cât mai multe formate sociale posibil.
 
-În starea de maturitate propusă a rețelei:
+## Ce mai trebuie construit
 
-- mai mulți furnizori publici RPC concurează pentru a găzdui noduri de profil
-- utilizatorii se pot auto-găzdui
-- algoritmii de alimentare devin servicii opționale în loc de legea obligatorie a platformei
-- monetizarea nu depinde de faptul că băncile sunt dispuse să mențină platforma în viață
-- aplicațiile concurează în ceea ce privește calitatea produsului, descoperirea și designul interfeței
+Primele faze se concentrează pe categoriile cu cel mai mare efect de pârghie: imageboard-uri,
+forumuri, RPC public, Bitsocial Chain, noduri de profil, alternativa la Twitter/X din Faza 3 și
+economia de servicii din jurul lor.
 
-## Cum ar arăta succesul
+După aceea, rețeaua ar trebui să se extindă spre coada lungă:
 
-Aplicațiile Bitsocial ar trebui să fie capabile să provoace platformele în diferite formate, nu doar într-o singură nișă:
-
-- text și discuție
-- plăci de imagini
-- forumuri
+- clienți de blogging
+- aplicații de crowdfunding
+- video pentru creatori și o [alternativă YouTube](https://github.com/bitsocialnet/wetube) credibilă
 - comunități de creatori
-- produse video de format scurt și produse media mai ample
+- experimente cu conținut media de format scurt
+- aplicații sociale locale sau dedicate unei limbi
+- clienți de nișă, prea mici pentru primele patru faze
+- instrumente care fac comunitățile existente mai ușor de administrat
 
-Scopul nu este de a forța o singură interfață universală asupra tuturor. Este de a oferi multor aplicații acces la aceleași comunități, identități și rețea subiacente.
+Unele dintre aceste aplicații pot fi open source. Unele pot fi clienți centralizați. Unele pot fi
+construite de Bitsocial Forge, iar multe ar trebui construite de dezvoltatori independenți.
 
-## De ce contează aici stratul RPC
+## Finanțarea a cât mai mulți constructori
 
-Comunitățile și profilurile mereu active devin mult mai practice odată ce piețele publice RPC există. Fără acest strat, auto-găzduirea rămâne o frecare prea mare pentru mulți utilizatori, în special pe mobil.
+Scopul este ca noii clienți sociali să poată fi finanțați înainte de a avea deja tracțiune la scară
+de platformă.
 
-## De ce contează nivelul de rețea aici
+Asta poate însemna investiții directe, granturi, finanțare din partea comunității, venituri din
+servicii Bitsocial de succes sau programe de granturi descentralizate, în care comunitatea
+Bitsocial mai largă ajută la decizia privind dezvoltatorii care ar trebui să primească sprijin.
 
-Dacă monetizarea conținutului poate fi întreruptă de presiunea bancară obișnuită sau a platformei, atunci ecosistemul rămâne fragil. Bitsocial Chain este propus ca stratul economic care face concurența pe termen lung mai credibilă.
+Partea importantă este pluralismul. Rețeaua ar trebui să finanțeze multe încercări, nu să aștepte
+ca o singură aplicație oficială să acopere fiecare categorie.
 
-## Pariul de bază
+## Cum arată succesul
 
-Marele pariu este că rețelele sociale pot fi împărțite în straturi înlocuibile:
+Bitsocial reușește atunci când rețelele sociale pot fi descompuse în straturi înlocuibile:
 
 - protocol
-- comunităților
+- comunități
 - identitate
-- gazduire
+- găzduire
 - descoperire
+- moderare
 - monetizare
 - aplicații
 
-Odată ce aceste straturi sunt înlocuibile, nicio companie nu trebuie să dețină întregul grafic social pentru ca produsul să funcționeze.
+Odată ce aceste straturi devin înlocuibile, nicio companie nu mai trebuie să dețină întregul graf
+social pentru ca produsul să funcționeze.
+
+## Pariul de bază
+
+Un ecosistem Bitsocial matur ar trebui să conțină RPC-uri publice, noduri auto-găzduite, piețe de
+algoritmi pentru fluxuri, gazde de media, servicii de descoperire, clienți open source, clienți
+comerciali și experimente finanțate de comunitate.
+
+Rețelele sociale își găsesc în sfârșit echilibrul: o rețea socială complet descentralizată,
+peer-to-peer, pe care nu o deține nimeni; Bitsocial.

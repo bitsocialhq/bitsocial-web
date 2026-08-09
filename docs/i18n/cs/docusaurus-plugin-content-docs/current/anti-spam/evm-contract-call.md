@@ -1,19 +1,15 @@
 ---
-title: Výzva na smluvní volání EVM
-description: Antispamová výzva, která ověřuje podmínky v řetězci voláním inteligentní smlouvy EVM.
+title: Výzva voláním EVM kontraktu
+description: Antispamová výzva, která ověřuje on-chain podmínky voláním chytrého kontraktu EVM.
 sidebar_position: 4
 ---
 
-# Výzva na smluvní volání EVM
+# Výzva voláním EVM kontraktu
 
-EVM Contract Call Challenge je antispamový mechanismus, který před povolením zveřejnění ověřuje podmínky v řetězci. Umožňuje vlastníkům komunit vyžadovat, aby autori splnili kritéria definovaná inteligentní smlouvou – například držení minimálního zůstatku tokenů – aby mohli zveřejňovat příspěvky.
+EVM Contract Call Challenge ověří on-chain stav autora dřív, než povolí publikaci. Vlastníci komunit mohou před publikováním vyžadovat, aby peněženka nebo rozpoznaná identita splnila podmínku čtenou z chytrého kontraktu, například držení minimálního zůstatku tokenu.
 
-**Zdrojový kód:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Požadavky
-
-- **Node.js** >= 22
-- **Pouze ESM** – tento balíček nedodává sestavení CommonJS.
+- **Zdrojový kód a aktuální README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Balíček na npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Instalace
 
@@ -21,34 +17,26 @@ EVM Contract Call Challenge je antispamový mechanismus, který před povolením
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Možnosti konfigurace
+## Kde se hodí
 
-| Možnost       | Typ      | Popis                                                                          |
-| ------------- | -------- | ------------------------------------------------------------------------------ |
-| `chainTicker` | `string` | Řetězec, který se má dotazovat (např. `eth`, `matic`, `avax`).                 |
-| `address`     | `string` | Adresa chytré smlouvy, na kterou chcete zavolat.                               |
-| `abi`         | `string` | Fragment ABI pro volanou funkci.                                               |
-| `condition`   | `string` | Porovnávací výraz vyhodnocený oproti vrácené hodnotě smlouvy (např. `> 1000`). |
-| `error`       | `string` | Chybová zpráva zobrazená autorům, kteří nesplňují podmínku.                    |
+Tuto výzvu použijte pro komunity, kde má účast záviset na externím signálu z EVM: vlastnictví tokenu, vlastnictví NFT, skóre potvrzující lidskost, členství ve správě projektu nebo jiné podmínce čitelné z kontraktu.
 
-## Příklad
+Z pohledu autora je výzva po nastavení automatická. Zkontroluje způsobilé zdroje peněženek či identit, zavolá nakonfigurovanou metodu kontraktu a vrácenou hodnotu porovná s podmínkou komunity.
 
-Vlastník komunity, který chce omezit zveřejňování příspěvků na autory, kteří vlastní více než 1 000 konkrétního tokenu ERC-20, by výzvu nakonfiguroval takto:
+## Aktuální dokumentace balíčku
 
-- `chainTicker`: `"eth"`
-- `address`: adresa smlouvy o tokenu
-- `abi`: ABI pro `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Tato stránka je záměrně přehledem, nikoli zrcadlenou referencí konfigurace. Zdrojem pravdy pro názvy výzev, příklady pro Bitsocial CLI, registraci v pkc-js, výchozí hodnoty voleb, příklady ABI, chování RPC a podporované zdroje peněženek je README balíčku:
 
-Když se autor pokusí publikovat, výzva zavolá `balanceOf` s adresou autora a zkontroluje, zda vrácená hodnota splňuje podmínku. Pokud ano, publikace pokračuje; jinak se vrátí nakonfigurovaná chybová zpráva.
+- [README balíčku EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+
+Při konfiguraci živé komunity dávejte přednost upstream README, protože volby kontraktu a příklady jsou verzované spolu s balíčkem, nikoli s tímto webem.
 
 ## Kdy ji použít
 
-EVM Contract Call Challenge je ideální pro:
+Výzva voláním EVM kontraktu je ideální pro:
 
-- **Komunity chráněné tokeny**, které omezují odesílání příspěvků na držitele tokenů.
-- **Přístup s bránou NFT**, kde je vyžadováno vlastnictví konkrétního NFT.
-- **Prostory řízení DAO**, kde je účast omezena na držitele tokenu řízení.
+- **Komunity s přístupem podle tokenu**, které publikování omezují na držitele tokenu.
+- **Přístup podle NFT**, kde je vyžadováno vlastnictví konkrétního NFT.
+- **Prostory pro správu DAO**, kde je účast omezena na držitele governance tokenu.
 
-Pro komunity, které se nespoléhají na on-chain identitu, zvažte místo toho [Blokátor spamu](./spam-blocker.md) nebo [Voucherová výzva](./voucher-challenge.md).
+Pro komunity, které se na on-chain identitu nespoléhají, zvažte místo toho [Blokátor spamu](./spam-blocker.md) nebo [Výzvu s voucherem](./voucher-challenge.md).

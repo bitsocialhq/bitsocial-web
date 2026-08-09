@@ -1,15 +1,15 @@
 ---
 title: BSO Resolver
-description: Phân giải tên miền .bso thành khóa chung bằng cách sử dụng bản ghi ENS TXT, với bộ nhớ đệm tích hợp và hỗ trợ đa nền tảng.
+description: Phân giải tên miền .bso thành khóa công khai thông qua bản ghi TXT của Bitsocial.
 sidebar_position: 1
 ---
 
 # BSO Resolver
 
-Trình phân giải BSO dịch tên miền `.bso` thành khóa công khai tương ứng bằng cách đọc các bản ghi TXT Bitsocial được lưu trữ trên ENS. Nó cung cấp một ứng dụng khách viem dùng chung, bộ nhớ đệm liên tục và hoạt động trong cả môi trường Node.js và trình duyệt.
+BSO Resolver chuyển tên miền `.bso` thành khóa công khai tương ứng bằng cách đọc các bản ghi TXT của Bitsocial. Đây là gói phân giải mà bộ công cụ Bitsocial dùng khi một tên `.bso` hiển thị cho người dùng cần trở thành phần khóa mà ngăn xếp ngang hàng hiểu được.
 
-- **GitHub**: [bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver)
-- **Giấy phép**: Chỉ GPL-2.0
+- **Mã nguồn và README hiện tại:** [github.com/bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver#readme)
+- **Gói npm:** [`@bitsocial/bso-resolver`](https://www.npmjs.com/package/@bitsocial/bso-resolver)
 
 ## Cài đặt
 
@@ -17,73 +17,16 @@ Trình phân giải BSO dịch tên miền `.bso` thành khóa công khai tươn
 npm install @bitsocial/bso-resolver
 ```
 
-## Tạo một bộ giải quyết
+## Vị trí của nó trong hệ thống
 
-Khởi tạo trình phân giải bằng cách chuyển một đối tượng cấu hình tới hàm tạo:
+Tên Bitsocial được thiết kế để làm điểm vào dễ đọc với con người cho các cộng đồng và tác giả. Bộ phân giải giữ lớp đặt tên đó tách khỏi mã ứng dụng, nhờ vậy máy khách có thể hỏi xem một tên có được hỗ trợ hay không rồi phân giải nó qua điểm vào dành riêng cho môi trường chạy của gói.
 
-```js
-const resolver = new BsoResolver({ key, provider, dataPath });
-```
+Hãy dùng nó khi bạn tích hợp một máy khách, công cụ dòng lệnh hoặc dịch vụ có hiểu Bitsocial và cần chấp nhận tên `.bso` thay vì chỉ khóa công khai thô.
 
-| Tham số    | Bắt buộc | Mô tả                                                          |
-| ---------- | -------- | -------------------------------------------------------------- |
-| `key`      | Có       | Mã định danh cho phiên bản trình phân giải.                    |
-| `provider` | Có       | Cấu hình vận chuyển (xem bên dưới).                            |
-| `dataPath` | Không    | Thư mục dành cho tệp bộ nhớ đệm SQLite (chỉ dành cho Node.js). |
+## Tài liệu tham chiếu của gói hiện tại
 
-### Tùy chọn nhà cung cấp
+Trang này cố ý chỉ là phần tổng quan, không phải bản sao của tài liệu API. README của gói mới là nguồn thông tin chuẩn cho các tùy chọn khởi tạo, kiểu dữ liệu trả về, hành vi bộ nhớ đệm, các điểm vào, ví dụ về provider và ngữ nghĩa tắt dịch vụ được hỗ trợ:
 
-Tham số `provider` chấp nhận ba định dạng:
+- [README của BSO Resolver](https://github.com/bitsocialnet/bso-resolver#readme)
 
-- **`"viem"`** -- Sử dụng phương tiện giao thông công cộng mặc định do viem cung cấp.
-- **URL HTTP(S)** -- Kết nối thông qua điểm cuối JSON-RPC (ví dụ: `https://mainnet.infura.io/v3/YOUR_KEY`).
-- **URL WebSocket** -- Kết nối thông qua điểm cuối WebSocket RPC (ví dụ: `wss://mainnet.infura.io/ws/v3/YOUR_KEY`).
-
-## phương pháp
-
-### `resolve({ name, abortSignal? })`
-
-Tra cứu tên `.bso` và trả về khóa chung được liên kết. `AbortSignal` tùy chọn có thể được chuyển để hủy các yêu cầu dài hạn.
-
-### `canResolve({ name })`
-
-Trả về một boolean cho biết liệu trình phân giải có thể xử lý tên đã cho hay không. Sử dụng tính năng này để kiểm tra hỗ trợ trước khi thử độ phân giải đầy đủ.
-
-### `destroy()`
-
-Phá bỏ trình phân giải, đóng các kết nối cơ sở dữ liệu và giải phóng tài nguyên. Gọi điều này khi trình phân giải không còn cần thiết nữa.
-
-## Bộ nhớ đệm
-
-Tên đã giải quyết được lưu trữ tự động để giảm việc tra cứu mạng dư thừa. Phần phụ trợ bộ nhớ đệm được chọn dựa trên môi trường thời gian chạy:
-
-| Môi trường  | Phần cuối          | Ghi chú                                                                |
-| ----------- | ------------------ | ---------------------------------------------------------------------- |
-| Node.js     | SQLite             | Được lưu trữ tại `dataPath`. Sử dụng chế độ WAL để truy cập đồng thời. |
-| Trình duyệt | IndexedDB          | Sử dụng các giao dịch IndexedDB gốc.                                   |
-| Dự phòng    | `Map` trong bộ nhớ | Được sử dụng khi cả SQLite lẫn IndexedDB đều không có sẵn.             |
-
-Tất cả các mục trong bộ nhớ đệm đều có **TTL một giờ** và sẽ tự động bị xóa sau khi hết hạn.
-
-## Tích hợp với pkc-js
-
-Trình phân giải có thể được cắm trực tiếp vào pkc-js thông qua tùy chọn `nameResolvers`, cho phép phân giải tên `.bso` trong suốt trong quá trình tra cứu khóa:
-
-```js
-const pkc = new Pkc({
-  nameResolvers: [resolver],
-  // ...other options
-});
-```
-
-## Đồng thời
-
-Trình phân giải được thiết kế để an toàn khi sử dụng đồng thời:
-
-- Một máy khách viem được chia sẻ duy nhất sẽ tránh được các kết nối dư thừa.
-- SQLite hoạt động ở chế độ WAL (Ghi nhật ký ghi trước), cho phép đọc đồng thời mà không bị chặn.
-- Bộ nhớ đệm của trình duyệt dựa vào các giao dịch IndexedDB gốc để tách biệt.
-
-## Điểm vào nền tảng
-
-Gói này cung cấp các điểm vào riêng biệt cho các bản dựng trình duyệt và Node.js. Các gói hỗ trợ trường `exports` trong `package.json` sẽ tự động chọn đúng gói.
+Hãy ưu tiên README ở thượng nguồn khi sao chép mã vào một dự án, vì hành vi của bộ phân giải được đánh phiên bản theo gói đó chứ không theo trang web này.

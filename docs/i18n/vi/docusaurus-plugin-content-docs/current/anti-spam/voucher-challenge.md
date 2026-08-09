@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Thử thách chống thư rác ngăn chặn việc xuất bản các mã phiếu thưởng duy nhất do chủ sở hữu cộng đồng phân phối.
+description: Thử thách chống thư rác đặt việc xuất bản sau các mã voucher duy nhất do chủ sở hữu cộng đồng phân phát.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Thử thách phiếu thưởng là một cơ chế chống thư rác nhằm kiểm soát việc xuất bản nội dung bằng các mã phiếu thưởng duy nhất. Thay vì dựa vào khả năng phát hiện tự động, nó chuyển niềm tin sang chủ sở hữu cộng đồng, người sẽ phân phối mã theo cách thủ công cho những người mà họ tin tưởng.
+Voucher Challenge đặt việc xuất bản nội dung phía sau các mã voucher duy nhất do chủ sở hữu cộng đồng phân phát. Thay vì dựa vào chấm điểm tự động, nó chuyển sự tin cậy sang một luồng mời thủ công, nơi những người đã được biết đến sẽ nhận mã qua một kênh do chủ sở hữu kiểm soát.
 
-**Mã nguồn:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Mã nguồn và README hiện hành:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Gói npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
 
-## Nó hoạt động như thế nào
+## Cài đặt
 
-1. Chủ sở hữu cộng đồng tạo một hoặc nhiều mã chứng từ duy nhất.
-2. Chủ sở hữu phân phối các mã đó cho các tác giả đáng tin cậy thông qua kênh mà họ lựa chọn (tin nhắn trực tiếp, email, trực tiếp, v.v.).
-3. Khi một tác giả cố gắng xuất bản, hệ thống thử thách sẽ nhắc họ nhập mã chứng từ.
-4. Mã được xác thực -- nếu mã đó là chính hãng và chưa được sử dụng thì ấn phẩm sẽ được chấp nhận.
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
-Mỗi mã phiếu thưởng được gắn với một tác giả cụ thể sau khi đổi, ngăn người khác sử dụng lại.
+## Cách hoạt động
 
-## Khi nào nên sử dụng nó
+1. Chủ sở hữu cộng đồng tạo ra một hoặc nhiều mã voucher duy nhất.
+2. Chủ sở hữu phân phát các mã đó cho những tác giả đáng tin cậy qua kênh mà họ chọn (tin nhắn riêng, email, trao trực tiếp, v.v.).
+3. Khi một tác giả định xuất bản, hệ thống thử thách sẽ yêu cầu họ nhập mã voucher.
+4. Mã được kiểm tra -- nếu mã hợp lệ và chưa từng được dùng, nội dung sẽ được chấp nhận xuất bản.
 
-Thử thách Voucher phù hợp nhất cho:
+Mỗi mã voucher, sau khi được sử dụng, sẽ gắn với một tác giả cụ thể, nên người khác không thể dùng lại.
 
-- **Cộng đồng chỉ mời** nơi tư cách thành viên bị hạn chế có chủ ý.
-- **Không gian được tuyển chọn** nơi chủ sở hữu đích thân kiểm tra từng người tham gia.
-- **Môi trường có độ tin cậy cao** nơi việc chấm điểm thư rác tự động là không cần thiết hoặc không mong muốn.
+## Tài liệu tham chiếu hiện hành của gói
 
-Bởi vì nó yêu cầu phân phối mã thủ công nên nó không mở rộng ra các cộng đồng mở lớn. Đối với những trường hợp đó, hãy xem xét [Spam Blocker](./spam-blocker.md) hoặc [EVM Contract Call Challenge](./evm-contract-call.md) thay thế.
+Trang này cố tình chỉ là phần tổng quan, không phải bản sao của hướng dẫn cài đặt. README của gói mới là nguồn thông tin chuẩn cho tên thử thách hiện hành, ví dụ Bitsocial CLI, cách đăng ký với pkc-js, các tùy chọn được hỗ trợ và hành vi khi sử dụng mã:
 
-## Tích hợp
+- [README của Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Thử thách Voucher cắm vào giao diện thử thách tương tự được sử dụng bởi các gói chống thư rác khác trong hệ sinh thái Bitsocial. Chủ sở hữu cộng đồng kích hoạt nó thông qua cài đặt cộng đồng của họ và thử thách sẽ tự động được đưa ra cho tác giả khi họ cố gắng đăng bài.
+Khi cấu hình một cộng đồng đang chạy thật, hãy ưu tiên README ở thượng nguồn, vì các tùy chọn voucher và luồng cài đặt được đánh phiên bản theo chính gói đó chứ không theo trang web này.
+
+## Khi nào nên dùng
+
+Voucher Challenge phù hợp nhất với:
+
+- **Cộng đồng chỉ vào bằng lời mời**, nơi thành viên bị giới hạn một cách có chủ đích.
+- **Không gian được tuyển chọn**, nơi chủ sở hữu đích thân xét duyệt từng người tham gia.
+- **Môi trường tin cậy cao**, nơi việc chấm điểm thư rác tự động là không cần thiết hoặc không mong muốn.
+
+Vì cần phân phát mã thủ công, cách này không mở rộng được cho các cộng đồng mở quy mô lớn. Với những tình huống đó, hãy cân nhắc [Spam Blocker](./spam-blocker.md) hoặc [EVM Contract Call Challenge](./evm-contract-call.md) để thay thế.

@@ -1,19 +1,15 @@
 ---
 title: EVM Contract Call Challenge
-description: Anti-spam challenge na nagbe-verify ng on-chain na mga kundisyon sa pamamagitan ng pagtawag sa isang EVM smart contract.
+description: Hamon laban sa spam na nagve-verify ng mga kundisyon on-chain sa pamamagitan ng pagtawag sa isang EVM smart contract.
 sidebar_position: 4
 ---
 
 # EVM Contract Call Challenge
 
-Ang EVM Contract Call Challenge ay isang anti-spam na mekanismo na nagbe-verify ng on-chain na mga kondisyon bago payagan ang isang publikasyon. Hinahayaan nito ang mga may-ari ng komunidad na hilingin sa mga may-akda na matugunan ang pamantayang tinukoy ng matalinong kontrata -- halimbawa, may hawak na minimum na balanse ng token -- upang makapag-post.
+Sinusuri ng EVM Contract Call Challenge ang on-chain na kalagayan ng isang may-akda bago pahintulutan ang isang publikasyon. Maaaring hilingin ng mga may-ari ng komunidad na matugunan muna ng isang wallet o naresolbang pagkakakilanlan ang isang read-only na kundisyon sa smart contract, gaya ng paghawak ng pinakamababang balanse ng token, bago mag-post.
 
-**Source code:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Mga kinakailangan
-
-- **Node.js** >= 22
-- **ESM-only** -- hindi nagpapadala ang package na ito ng mga CommonJS build.
+- **Source code at kasalukuyang README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Pakete sa npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Pag-install
 
@@ -21,34 +17,26 @@ Ang EVM Contract Call Challenge ay isang anti-spam na mekanismo na nagbe-verify 
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Mga Pagpipilian sa Pag-configure
+## Saan Ito Bagay
 
-| Pagpipilian   | Uri      | Paglalarawan                                                                                             |
-| ------------- | -------- | -------------------------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | Ang chain na itatanong (hal., `eth`, `matic`, `avax`).                                                   |
-| `address`     | `string` | Ang matalinong address ng kontrata na tatawagan.                                                         |
-| `abi`         | `string` | Ang ABI fragment para sa function na tinatawag.                                                          |
-| `condition`   | `string` | Isang paghahambing na expression na sinusuri laban sa halaga ng pagbabalik ng kontrata (hal., `> 1000`). |
-| `error`       | `string` | Ang mensahe ng error na ipinapakita sa mga may-akda na hindi nakakatugon sa kundisyon.                   |
+Gamitin ang hamong ito para sa mga komunidad kung saan dapat nakadepende ang paglahok sa isang panlabas na signal mula sa EVM: pagmamay-ari ng token, pagmamay-ari ng NFT, mga marka ng proof-of-personhood, pagiging kasapi sa pamamahala, o iba pang kundisyong nababasa mula sa isang contract.
 
-## Halimbawa
+Awtomatiko ang hamon mula sa pananaw ng may-akda kapag na-configure na. Sinusuri nito ang mga karapat-dapat na pinagmulan ng wallet o pagkakakilanlan, tinatawag ang naka-configure na contract method, at inihahambing ang ibinalik na halaga sa kundisyon ng komunidad.
 
-Ang isang may-ari ng komunidad na gustong higpitan ang pag-post sa mga may-akda na may hawak na higit sa 1,000 ng isang partikular na ERC-20 token ay iko-configure ang hamon sa:
+## Sanggunian sa Kasalukuyang Pakete
 
-- `chainTicker`: `"eth"`
-- `address`: ang address ng kontrata ng token
-- `abi`: ang ABI para sa `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Sadyang isang pangkalahatang-ideya lamang ang pahinang ito, hindi isang kopya ng sanggunian sa configuration. Ang README ng pakete ang pinagmumulan ng katotohanan para sa mga pangalan ng hamon, mga halimbawa sa Bitsocial CLI, pagpaparehistro sa pkc-js, mga default na opsyon, mga halimbawa ng ABI, kilos ng RPC, at mga sinusuportahang pinagmulan ng wallet:
 
-Kapag sinubukan ng isang may-akda na mag-publish, tatawagan ng hamon ang `balanceOf` kasama ang address ng may-akda at titingnan kung ang ibinalik na halaga ay nakakatugon sa kundisyon. Kung nangyari ito, magpapatuloy ang publikasyon; kung hindi, ibabalik ang na-configure na mensahe ng error.
+- [README ng EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Kailan Ito Gamitin
+Mas mainam ang upstream na README kapag nagko-configure ng isang live na komunidad, dahil ang mga opsyon at halimbawa ng contract ay may bersyong kaugnay ng paketeng iyon at hindi ng website na ito.
 
-Ang EVM Contract Call Challenge ay mainam para sa:
+## Kailan Ito Gagamitin
 
-- **Token-gated na mga komunidad** na naghihigpit sa pag-post sa mga may hawak ng token.
-- **NFT-gated access** kung saan kinakailangan ang pagmamay-ari ng isang partikular na NFT.
-- **Mga puwang sa pamamahala ng DAO** kung saan ang paglahok ay limitado sa mga may hawak ng token ng pamamahala.
+Angkop ang EVM Contract Call Challenge para sa:
 
-Para sa mga komunidad na hindi umaasa sa on-chain na pagkakakilanlan, isaalang-alang ang [Spam Blocker](./spam-blocker.md) o [Hamon ng Voucher](./voucher-challenge.md) sa halip.
+- **Mga komunidad na naka-gate sa token** na naglilimita ng pag-post sa mga may hawak ng token.
+- **Access na naka-gate sa NFT** kung saan kinakailangan ang pagmamay-ari ng isang partikular na NFT.
+- **Mga espasyo ng pamamahala ng DAO** kung saan limitado ang paglahok sa mga may hawak ng governance token.
+
+Para sa mga komunidad na hindi umaasa sa on-chain na pagkakakilanlan, isaalang-alang ang [Spam Blocker](./spam-blocker.md) o [Voucher Challenge](./voucher-challenge.md) sa halip.

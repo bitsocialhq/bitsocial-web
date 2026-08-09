@@ -1,56 +1,90 @@
 ---
 title: Bitsocial Chain
-description: Bitsocial uygulamaları için önerilen paylaşılan uygulama zinciri katmanını kapsayan master planın 4. aşaması.
+description: Ana planın, Bitsocial uygulamaları için önerilen Ethereum L2 appchain ekonomi katmanını kapsayan 2. aşaması.
 ---
 
 # Bitsocial Chain
 
-Bitsocial Chain, Bitsocial uygulamalarının altında yer alacak paylaşılan uygulama zinciri katmanının ana planında kullanılan addır.
+Bitsocial Chain, Bitsocial uygulamaları için önerilen Ethereum L2 appchain ekonomi katmanıdır.
+Zincire özel güncel site [chain.bitsocial.net](https://chain.bitsocial.net) adresindedir.
 
-Buradaki fikir, eşler arası sosyal katmanın yerini almak değil. Sosyal uygulamaların, yerleşik platformlarla geniş ölçekte rekabet edebilmesi için ihtiyaç duyacağı ortak ekonomik ve koordinasyon ilkelerini sağlamaktır.
+Eşler arası sosyal katman; toplulukların, kimliklerin ve içeriğin merkezî bir platform
+veritabanının dışına çıkmasını sağlar. Bitsocial Chain ise bu uygulamaların finansal olarak
+kurutulmasını zorlaştıran ortak adlandırma, para kazanma ve ödeme ilkellerini eklemeyi amaçlar.
 
-## İktidar olmak ne demek
+## Neyi güçlendirmesi amaçlanıyor
 
-- `.bso` gibi merkezi olmayan Bitsosyal alanlar
+- `.bso` gibi merkeziyetsiz Bitsocial alan adları
+- ödüller ve bahşiş verme
+- kalıcı para kazanma rayları
 - uygulamalar arasında paylaşılan likidite
-- dayanıklı para kazanma rayları
-- bankaların veya platformların boğulması daha zor olan finansal yapılar
+- bankaların ya da platformların kesip atmasının daha zor olduğu finansal yapılar
 - tek bir şirketin tüm yığına sahip olmasına bağlı olmayan ağ etkileri
 
-## Neden önemli?
+Amaç, token mekaniklerini öne çıkarmak değildir. Amaç; işe yarar sosyal uygulamaları daha kalıcı,
+daha finanse edilebilir ve merkezî ödeme veya adlandırma sağlayıcılarına daha az bağımlı hâle
+getirmektir.
 
-Toplulukların ve kimliklerin merkezden uzaklaştırılması gerekli ancak tüm sosyal medyanın merkezden uzaklaştırılması yeterli değil.
+## Mevcut kavram kanıtı
 
-Ekonomik katman hala bir avuç merkezi raya bağlıysa, o zaman uygulamalara baskı yapılması, platformun kaldırılması veya mali açıdan aç bırakılması kolaydır. Bitsosyal Ağ, bu ikinci bağımlılık katmanına önerilen cevaptır.
+İlk Bitsocial Chain kavram kanıtı, yerel `.bso` adlarına odaklanır. Sosyal içeriği zincire koymadan
+bir ad kaydının Ethereum L1 geçmişinden türetilebileceğini gösterir:
 
-## Bitsocial'ın geri kalanıyla ilişki
+- kullanıcılar kaydetme, güncelleme, aktarma ve iptal etme niyetlerini sıradan Ethereum L1
+  işlemleriyle iletir
+- türetme düğümünü herkes çalıştırabilir ve aynı `.bso` kayıt durumunu yeniden oluşturabilir
+- bir çözümleyici, `.bso` adını istemcilerin eşler arası protokolde zaten kullandığı Bitsocial açık
+  anahtarına eşler
+- gönderiler, oylar, moderasyon, akışlar ve topluluk içeriği zincir dışında ve eşler arası kalır
 
-Bitsocial Chain, kullanıcıların her gün doğrudan etkileşime girdiği bir ürün olarak değil, Bitsocial uygulamaları için paylaşımlı bir altyapı olarak öneriliyor.
+Bu kavram kanıtı, üretime hazır bir Stage 2 lansmanı değildir. Henüz bir kanıt sistemi, itiraz
+oyunu, denetlenmiş kod, canlı dağıtım, nihai fiyatlandırma veya nihai yönetişim modeli yoktur.
+Uzun vadeli duruşu varsayılan olarak şeffaf ve tasarım gereği gizlilikle uyumludur: çekirdek zincir
+herkese açıktır; buna karşılık ileride gelecek bahşiş, ödeme, ödül ve likidite özellikleri sosyal
+kimlik ile cüzdan geçmişi arasında kalıcı bağlar kurmaya zorlamamalıdır.
 
-Kamuya açık sonuç şöyle olacaktır:
+## Neden önemli
+
+Toplulukları ve kimlikleri merkeziyetsizleştirmek gereklidir; ancak tüm sosyal medyayı
+merkeziyetsizleştirmek için tek başına yeterli değildir.
+
+Sosyal uygulamalar hâlâ birkaç merkezî ekonomik raya bağımlıysa, baskı altına alınmaları, platform
+dışına itilmeleri veya finansal olarak kurutulmaları kolay kalır. Bitsocial Chain, bu ikinci
+bağımlılık katmanına önerilen yanıttır.
+
+## Uygulamalarla ilişkisi
+
+Bitsocial Chain, Bitsocial uygulamalarının yerini almak yerine onların altında yer almalıdır.
+
+Kullanıcıya yansıyan sonuç şöyle olmalıdır:
 
 - topluluklar eşler arası kalır
-- uygulamalar farklı kalıyor
-- para kazanma ve isimlendirme daha kalıcı hale geliyor
-- değer, merkezi bir platform sahibini yeniden yaratmadan ekosistemde hareket edebilir
+- uygulamalar birbirinden farklılaşmış kalır
+- kullanıcılar pratik adlandırma ve para kazanma özelliklerine kavuşur
+- içerik üreticileri ve topluluklar farklı istemciler üzerinden destek alabilir
+- değer, merkezî bir platform sahibini yeniden yaratmadan ekosistem içinde hareket edebilir
 
-## Bu neden 4. Aşamada yer alıyor?
+## Bu neden planda erken yer alıyor
 
-Ana plan bunu daha önceki uygulama düzeyindeki kanıt noktalarından sonra yerleştirir:
+Güncel ana plan, Bitsocial Chain'i ilk öncelikli kategorilerin hemen ardına yerleştirir:
+imageboard'lar, forumlar ve bu uygulamaları daha çok kullanıcı için pratik hâle getiren genel RPC
+katmanı.
 
-1. görüntü panolarını merkezi olmayan hale getirmek
-2. Bitsocial RPC'yi başlat
-3. forumları merkezileştirmek
-4. Bitsocial Chain'ü başlat
+Bu zamanlama önemlidir, çünkü sosyal uygulamaların güçlü ağ etkilerine ihtiyacı vardır. Adlandırma,
+destek, ödüller, bahşiş ve para kazanma çok geç gelirse merkezî rakipler en büyük avantajlarını
+fazla uzun süre ellerinde tutar.
 
-Bu sıralama mantıklıdır çünkü ekosistem düzeyindeki bir koordinasyon katmanı, gerçek uygulamalar ve gerçek kullanıcı davranışı ağda zaten mevcut olduğunda daha kullanışlı olur.
+## Tasarım ilkeleri
 
-## Tasarım İlkeleri
+Bitsocial Chain hâlâ piyasaya çıkmış bir ürün değil, önerilen bir altyapı olduğu için planın
+disiplinli kalması gerekir:
 
-Bitsocial Chain hâlâ yayımlanmış bir ürün değil, önerilmiş bir altyapı olduğu için mevcut planın birkaç konuda disiplinli kalması gerekir:
-
-- Önce uygulamalar ve topluluklar. Ağ katmanı, spekülatif finansal özelliklerle öne geçmek yerine Bitsocial uygulamalarındaki gerçek kullanımı takip etmelidir.
-- Heyecandan önce gerçek katkı. Bitsocial ileride topluluk, üretici veya istemci düzeyinde varlıklar eklerse, bunlar kopya lansmanlar ya da kısa vadeli al-sat yerine katılımı ve uzun vadeli inşayı ödüllendirmelidir.
-- Kürasyon kabul edilebilir. Bitsocial uygulamaları sıralamaları, varsayılanları, keşfi ve rollout zamanlamasını, casino benzeri davranışlar yerine kalıcı toplulukları destekleyecek şekilde biçimlendirebilir.
-- Kademeli rollout sağlıklıdır. Appchain'e özgü finansal özellikleri, ekosistem bunları güvenle destekleyebilecek yeterli kullanıcıya, moderasyon aracına ve ürün netliğine ulaşana kadar ertelemek makuldür.
-- Kesin mekanikler hâlâ açıktır. Bu sayfa Bitsocial Chain'ün rolünü açıklar; token launcher'lar, ücret formülleri veya nihai tokenomics hakkında kilitlenmiş bir vaat değildir.
+- Önce uygulamalar ve topluluklar. Ağ katmanı, gerçek sosyal ürünleri güçlendirmelidir.
+- Önce pratik özellikler. Adları, ödülleri, bahşişi ve ödemeleri anlatmak, soyut bir finansal
+  mimariyi anlatmaktan daha kolaydır.
+- Şişirilmiş beklenti yerine gerçek katkı. Ekonomik ilkeller; katılımı, üretmeyi ve topluluk
+  desteğini ödüllendirmelidir.
+- Kürasyona izin vardır. Uygulamalar; sıralamaları, varsayılanları ve keşfi kalıcı toplulukları
+  öne çıkaracak şekilde biçimlendirebilir.
+- Kesin mekanikler hâlâ açıktır. Bu sayfa Bitsocial Chain'in rolünü açıklar; nihai ekonomi
+  hakkında kilitlenmiş bir vaat vermez.

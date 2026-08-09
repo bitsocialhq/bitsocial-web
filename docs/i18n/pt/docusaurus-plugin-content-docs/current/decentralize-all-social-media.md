@@ -1,52 +1,70 @@
 ---
-title: Descentralize todas as mídias sociais
-description: Fase 5 do plano diretor do Bitsocial e o resultado final que ele almeja.
+title: Descentralizar todas as mídias sociais
+description: Fase 5 do plano diretor, focada em financiar e construir a cauda longa de clientes sociais do Bitsocial.
 ---
 
-# Descentralize todas as mídias sociais
+# Descentralizar todas as mídias sociais
 
-Este é o estado final descrito pelo plano diretor da Bitsocial: não um aplicativo, mas um ecossistema de aplicativos Bitsocial que pode rivalizar com todas as principais categorias de mídia social.
+O estado final não é um único aplicativo. É um mercado de clientes, nós, serviços e comunidades capaz
+de substituir a posse da plataforma por concorrência em torno do protocolo.
 
-## O modelo
+A fase 5 é onde o Bitsocial vai além das primeiras categorias prioritárias e passa a financiar o
+maior número possível de formatos sociais.
 
-No estado maduro proposto da rede:
+## O que ainda precisa ser construído
 
-- vários provedores públicos de RPC competem para hospedar nós de perfil
-- os usuários ainda podem se auto-hospedar
-- algoritmos de feed tornam-se serviços opcionais em vez de lei de plataforma obrigatória
-- a monetização não depende da disposição dos bancos em manter a plataforma viva
-- aplicativos competem em qualidade de produto, descoberta e design de interface
+As primeiras fases se concentram nas categorias de maior alavancagem: imageboards, fóruns, RPC
+público, Bitsocial Chain, nós de perfil, a alternativa ao Twitter/X da fase 3 e a economia de
+serviços ao redor delas.
 
-## Como seria o sucesso
+Depois disso, a rede deve se expandir para a cauda longa:
 
-Os aplicativos Bitsocial devem ser capazes de desafiar plataformas em vários formatos, não apenas em um nicho:
-
-- texto e discussão
-- painéis de imagens
-- fóruns
+- clientes de blog
+- aplicativos de financiamento coletivo
+- vídeo para criadores e uma [alternativa crível ao YouTube](https://github.com/bitsocialnet/wetube)
 - comunidades de criadores
-- vídeos curtos e produtos de mídia mais amplos
+- experimentos com mídia em formato curto
+- aplicativos sociais locais ou específicos de um idioma
+- clientes de nicho pequenos demais para as quatro primeiras fases
+- ferramentas que facilitem a administração de comunidades já existentes
 
-O objetivo não é forçar uma interface universal para todos. É dar a muitos aplicativos acesso às mesmas comunidades, identidades e redes subjacentes.
+Alguns desses aplicativos podem ser de código aberto. Outros podem ser clientes centralizados.
+Alguns podem ser construídos pela Bitsocial Forge, e muitos devem ser construídos por
+desenvolvedores independentes.
 
-## Por que a camada RPC é importante aqui
+## Financiar muitos construtores
 
-Comunidades e perfis sempre ativos tornam-se muito mais práticos quando existem mercados públicos de RPC. Sem essa camada, a auto-hospedagem continua sendo muito difícil para muitos usuários, especialmente em dispositivos móveis.
+O objetivo é tornar novos clientes sociais financiáveis antes que eles já tenham tração em escala de
+plataforma.
 
-## Por que a camada de rede é importante aqui
+Isso pode incluir investimento direto, bolsas, financiamento comunitário, receita de serviços
+Bitsocial bem-sucedidos ou programas descentralizados de bolsas em que a comunidade Bitsocial mais
+ampla ajuda a decidir quais desenvolvedores devem receber apoio.
 
-Se a monetização de conteúdo puder ser interrompida pela pressão bancária ou de plataforma comum, o ecossistema permanecerá frágil. A Rede Bitsocial é proposta como a camada económica que torna a concorrência a longo prazo mais credível.
+O que importa é o pluralismo. A rede deve financiar muitas tentativas, em vez de esperar que um
+aplicativo oficial cubra todas as categorias.
 
-## A aposta principal
+## Como é o sucesso
 
-A grande aposta é que as redes sociais possam ser divididas em camadas substituíveis:
+O Bitsocial dá certo quando as mídias sociais podem ser divididas em camadas substituíveis:
 
 - protocolo
 - comunidades
 - identidade
 - hospedagem
 - descoberta
+- moderação
 - monetização
 - aplicativos
 
-Depois que essas camadas são substituíveis, nenhuma empresa precisa possuir todo o gráfico social para que o produto funcione.
+Quando essas camadas são substituíveis, nenhuma empresa isolada precisa ser dona de todo o grafo
+social para o produto funcionar.
+
+## A aposta central
+
+Um ecossistema Bitsocial maduro deve conter RPCs públicos, nós auto-hospedados, mercados de
+algoritmos de feed, hospedagens de mídia, serviços de descoberta, clientes de código aberto,
+clientes comerciais e experimentos financiados pela comunidade.
+
+As mídias sociais finalmente encontram seu equilíbrio: uma rede social peer-to-peer, totalmente
+descentralizada, que não pertence a ninguém; Bitsocial.

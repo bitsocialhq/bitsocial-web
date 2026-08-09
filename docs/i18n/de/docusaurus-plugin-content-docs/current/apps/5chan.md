@@ -1,12 +1,12 @@
 ---
 title: 5chan
-description: Ein serverloses, dezentrales Imageboard, das auf dem Bitsocial-Protokoll basiert und auf dem jeder Boards erstellen und besitzen kann.
+description: Ein serverloses, dezentrales Imageboard auf Basis des Bitsocial-Protokolls, auf dem jeder Boards erstellen und besitzen kann.
 sidebar_position: 1
 ---
 
 # 5chan
 
-5chan ist ein serverloses, verwaltungsloses und vollständig dezentralisiertes Imageboard, das auf dem Bitsocial-Protokoll läuft. Es folgt der bekannten Imageboard-Verzeichnisstruktur und führt gleichzeitig eine dezentrale Eigentümerschaft ein – jeder kann ein Board erstellen, und mehrere Boards können über einen Abstimmungsmechanismus um denselben Verzeichnisplatz konkurrieren.
+5chan ist ein serverloses, adminloses und vollständig dezentrales Imageboard, das auf dem Bitsocial-Protokoll läuft. Es folgt der vertrauten Verzeichnisstruktur klassischer Imageboards und führt zugleich dezentrale Eigentümerschaft ein: Jeder kann ein Board erstellen, und mehrere Boards können über eine Abstimmung um denselben Verzeichnisplatz konkurrieren.
 
 ## Downloads
 
@@ -18,22 +18,27 @@ sidebar_position: 1
 
 ## Wie Boards funktionieren
 
-5chan organisiert Inhalte in Boards mithilfe eines klassischen Verzeichnislayouts (z. B. `/b/`, `/g/`). Im Gegensatz zu herkömmlichen Imageboards, bei denen ein zentraler Administrator jedes Board kontrolliert, ermöglicht 5chan jedem Benutzer, sein eigenes Board zu erstellen und vollständig zu besitzen. Wenn mehrere Boards denselben Verzeichnisplatz anstreben, konkurrieren sie durch Abstimmung um diese Position.
+5chan organisiert Inhalte in Boards mit einem klassischen Verzeichnislayout (z. B. `/b/`, `/g/`). Anders als bei herkömmlichen Imageboards, bei denen ein zentraler Administrator jedes Board kontrolliert, kann bei 5chan jeder Nutzer ein eigenes Board erstellen und vollständig besitzen. Streben mehrere Boards denselben Verzeichnisplatz an, konkurrieren sie per Abstimmung um diese Position.
 
 ### Ein Board erstellen
 
-Um ein neues Board zu erstellen, müssen Sie `bitsocial-cli` als Peer-to-Peer-Knoten ausführen. Dadurch wird sichergestellt, dass Ihr Board dezentral gehostet wird, ohne auf einen zentralen Server angewiesen zu sein.
+Um ein neues Board zu erstellen, müssen Sie `bitsocial-cli` als Peer-to-Peer-Knoten betreiben. So wird sichergestellt, dass Ihr Board dezentral gehostet wird, ohne von einem zentralen Server abzuhängen.
 
 ### Verzeichniszuweisungen
 
-Zuweisungen von Verzeichnissteckplätzen (welches Board in welchem Pfad angezeigt wird) werden derzeit über GitHub-Pull-Anfragen an die Datei `5chan-directories.json` verwaltet. Dies ist ein vorübergehender Prozess – zukünftige Versionen werden die Erstellung von In-App-Boards und Pubsub-basierte Abstimmungen unterstützen, um Verzeichniszuweisungen automatisch durchzuführen.
+Die Zuweisung der Verzeichnisplätze (welches Board unter welchem Pfad erscheint) wird derzeit über GitHub-Pull-Requests an der Datei `5chan-directories.json` verwaltet. Das ist ein vorläufiges Verfahren: Künftige Versionen werden das Anlegen von Boards direkt in der App sowie Abstimmungen über pubsub unterstützen, damit Verzeichniszuweisungen automatisch ablaufen.
 
 ## Interna
 
-Unter der Haube nutzt 5chan die gemeinsame Bitsocial-Protokoll-Client-Schicht für seine Netzwerkinteraktionen. Die Web-App bei 5chan.app kann auch einen Helia-Knoten im Browser ausführen, wenn Browser-P2P in den erweiterten Einstellungen aktiviert ist, sodass Leser von Peers ohne ein zentrales IPFS-Gateway laden können. Weitere Informationen finden Sie im Abschnitt „Browser-P2P“ in den Hinweisen zum Peer-to-Peer-Protokoll.
+Intern nutzt 5chan die gemeinsame Client-Schicht des Bitsocial-Protokolls für seine
+Netzwerkinteraktionen. Die Web-App unter 5chan.app betreibt standardmäßig einen Helia-Knoten im
+Browser, sodass ein gewöhnlicher Tab dem Netzwerk als Peer beitritt: Er lädt Boards von anderen
+Peers und veröffentlicht über pubsub, ohne zentralisiertes IPFS-Gateway im Pfad der Inhalte. Unter
+[Browser-Peer-to-Peer](/browser-p2p/) steht, was das mit sich bringt und was ein Browser-Knoten
+weiterhin nicht leisten kann.
 
 ## Links
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
-- **Telegramm**: [t.me/fünfchandev](https://t.me/fivechandev)
-- **Lizenz**: nur GPL-2.0
+- **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
+- **Lizenz**: GPL-2.0-only

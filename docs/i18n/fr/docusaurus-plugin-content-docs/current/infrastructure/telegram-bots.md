@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Alimentez les robots qui surveillent les listes de la communauté Bitsocial et transfèrent les publications vers les chaînes Telegram.
-sidebar_position: 3
+title: Bots Telegram
+description: Bots de flux qui surveillent les listes de communautés Bitsocial et transfèrent les publications vers des canaux Telegram.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Bots Telegram
 
-Les robots Bitsocial Telegram surveillent les listes de communautés de clients sur le réseau Bitsocial et transfèrent automatiquement les nouvelles publications vers les canaux Telegram. Chaque message transféré comprend des boutons en ligne qui renvoient à la publication d'origine sur 5chan et Seedit.
+Les bots Telegram de Bitsocial surveillent les listes de communautés des clients sur le réseau Bitsocial et transfèrent automatiquement les nouvelles publications vers des canaux Telegram. Chaque message transféré comporte des boutons intégrés qui renvoient à la publication d'origine sur 5chan et Seedit.
 
-- **GitHub** : [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
+- **GitHub** : [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
 ## Bots disponibles
 
-| Bot             | Statut | Descriptif                                                                              |
-| --------------- | ------ | --------------------------------------------------------------------------------------- |
-| **Flux 5chan**  | Actif  | Surveille tous les répertoires 5chan et transmet les nouvelles publications à Telegram. |
-| **Flux Seedit** | Prévu  | Fournit la même fonctionnalité pour les communautés Seedit.                             |
+| Bot             | Statut | Description                                                                                 |
+| --------------- | ------ | ------------------------------------------------------------------------------------------- |
+| **5chan Feed**  | Actif  | Surveille tous les répertoires 5chan et transfère les nouvelles publications vers Telegram. |
+| **Seedit Feed** | Prévu  | Offrira les mêmes fonctionnalités pour les communautés Seedit.                              |
 
-## Configuration
+## Mise en place
 
-### Conditions préalables
+### Prérequis
 
-- Noeud.js
-- Fil
+- Node.js
+- Yarn
 - Un jeton de bot Telegram (créez-en un via [BotFather](https://t.me/BotFather))
 
-### Mise en place
+### Installation
 
-Clonez le dépôt et installez les dépendances :
+Clonez le dépôt et installez les dépendances :
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -37,25 +37,25 @@ yarn install
 
 ### Configuration
 
-Créez un fichier `.env` à la racine du projet avec votre jeton de bot :
+Créez un fichier `.env` à la racine du projet avec votre jeton de bot :
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Courir
+### Exécution
 
-Démarrez le bot après avoir configuré votre environnement :
+Démarrez le bot une fois votre environnement configuré :
 
 ```bash
 yarn start
 ```
 
-## Format du message
+## Format des publications
 
-Lorsque le bot transfère une publication à Telegram, il comprend deux boutons en ligne :
+Lorsque le bot transfère une publication vers Telegram, il y ajoute deux boutons intégrés :
 
-- **Afficher sur 5chan** -- Ouvre la publication dans le client Web 5chan.
-- **Afficher sur Seedit** -- Ouvre la publication dans le client Web Seedit.
+- **Voir sur 5chan** -- Ouvre la publication dans le client web 5chan.
+- **Voir sur Seedit** -- Ouvre la publication dans le client web Seedit.
 
-Cela permet aux abonnés de Telegram d'accéder directement au fil de discussion complet sur le client qu'ils préfèrent.
+Les abonnés Telegram peuvent ainsi accéder directement au fil de discussion complet sur le client de leur choix.

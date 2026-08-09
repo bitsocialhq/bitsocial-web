@@ -1,34 +1,45 @@
 ---
-title: Voucher Challenge
-description: Tantangan anti-spam yang menjadi gerbang penerbitan di balik kode voucher unik yang didistribusikan oleh pemilik komunitas.
+title: Tantangan Voucher
+description: Tantangan anti-spam yang mengunci penerbitan konten di balik kode voucher unik yang dibagikan oleh pemilik komunitas.
 sidebar_position: 3
 ---
 
-# Voucher Challenge
+# Tantangan Voucher
 
-Tantangan Voucher adalah mekanisme anti-spam yang membuka gerbang publikasi konten di balik kode voucher unik. Daripada mengandalkan deteksi otomatis, hal ini mengalihkan kepercayaan kepada pemilik komunitas, yang secara manual mendistribusikan kode kepada orang-orang yang mereka percayai.
+Tantangan Voucher mengunci penerbitan konten di balik kode voucher unik yang dibagikan oleh pemilik komunitas. Alih-alih mengandalkan penilaian otomatis, tantangan ini memindahkan kepercayaan ke alur undangan manual, yaitu ketika orang-orang yang sudah dikenal menerima kode melalui kanal yang dikendalikan pemilik komunitas.
 
-**Kode sumber:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Kode sumber dan README terkini:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Paket npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Instalasi
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Cara Kerjanya
 
-1. Pemilik komunitas menghasilkan satu atau lebih kode voucher unik.
-2. Pemilik mendistribusikan kode tersebut kepada penulis tepercaya melalui saluran pilihan mereka (pesan langsung, email, tatap muka, dll.).
-3. Ketika seorang penulis mencoba untuk mempublikasikan, sistem tantangan meminta mereka untuk memberikan kode voucher.
-4. Kode telah divalidasi -- jika kode tersebut asli dan belum pernah digunakan, maka publikasinya diterima.
+1. Pemilik komunitas membuat satu atau beberapa kode voucher unik.
+2. Pemilik membagikan kode-kode tersebut kepada penulis tepercaya melalui kanal pilihannya (pesan langsung, email, tatap muka, dan sebagainya).
+3. Ketika seorang penulis hendak menerbitkan konten, sistem tantangan meminta kode voucher kepadanya.
+4. Kode itu divalidasi -- jika asli dan belum pernah dipakai, publikasinya diterima.
 
-Setiap kode voucher terikat pada penulis tertentu setelah ditukarkan, sehingga mencegah penggunaan kembali oleh orang lain.
+Setiap kode voucher terikat pada satu penulis tertentu begitu ditukarkan, sehingga tidak dapat dipakai ulang oleh orang lain.
+
+## Rujukan Paket Terkini
+
+Halaman ini sengaja hanya berupa ikhtisar, bukan salinan panduan penyiapan. README paket adalah sumber kebenaran untuk nama tantangan terkini, contoh Bitsocial CLI, pendaftaran pkc-js, opsi yang didukung, dan perilaku penukaran kode:
+
+- [README Tantangan Voucher](https://github.com/bitsocialnet/voucher-challenge#readme)
+
+Utamakan README upstream saat mengonfigurasi komunitas yang sudah berjalan, karena opsi voucher dan alur instalasinya mengikuti versi paket tersebut, bukan versi situs web ini.
 
 ## Kapan Menggunakannya
 
 Tantangan Voucher paling cocok untuk:
 
-- **Komunitas khusus undangan** yang keanggotaannya sengaja dibatasi.
-- **Ruang yang dikurasi** tempat pemiliknya secara pribadi memeriksa setiap peserta.
-- **Lingkungan dengan kepercayaan tinggi** di mana penilaian spam otomatis tidak diperlukan atau tidak diinginkan.
+- **Komunitas khusus undangan** yang keanggotaannya memang sengaja dibatasi.
+- **Ruang terkurasi** yang setiap pesertanya diseleksi langsung oleh pemiliknya.
+- **Lingkungan berkepercayaan tinggi** yang tidak memerlukan atau tidak menginginkan penilaian spam otomatis.
 
-Karena memerlukan distribusi kode manual, maka tidak berskala ke komunitas terbuka yang besar. Untuk skenario tersebut, pertimbangkan [Spam Blocker](./spam-blocker.md) atau [EVM Contract Call Challenge](./evm-contract-call.md) sebagai gantinya.
-
-## Integrasi
-
-Tantangan Voucher dihubungkan ke antarmuka tantangan yang sama dengan yang digunakan oleh paket anti-spam lainnya di ekosistem Bitsocial. Pemilik komunitas mengaktifkannya melalui pengaturan komunitas mereka, dan tantangan diberikan kepada penulis secara otomatis ketika mereka mencoba memposting.
+Karena menuntut distribusi kode secara manual, pendekatan ini tidak bisa diperbesar skalanya untuk komunitas terbuka yang besar. Untuk skenario semacam itu, pertimbangkan [Pemblokir Spam](./spam-blocker.md) atau [Tantangan Panggilan Kontrak EVM](./evm-contract-call.md).

@@ -1,19 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Itsenäinen kuvapohjainen captcha-generaattori, jossa on määritettävissä olevat merkit, mitat ja värit.
+description: Itsenäinen kuvapohjainen captcha-haaste Bitsocial-yhteisöille.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-Captcha Canvas Challenge on itsenäinen kuvien captcha-generaattori. Se hahmontaa satunnaista tekstiä HTML-kankaalle ja palauttaa tuloksena olevan kuvan, jonka yhteisöt voivat esittää kirjoittajille roskapostihaasteena.
+Captcha Canvas Challenge on itsenäinen kuvacaptcha-paketti Bitsocial-yhteisöille. Se piirtää satunnaistettua tekstiä kankaalle ja antaa yhteisön pyytää kirjoittajia ratkaisemaan kuvan ennen kuin julkaisu hyväksytään.
 
-**Lähdekoodi:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Vaatimukset
-
-- **Node.js** >= 22
-- **Vain ESM** – tämä paketti ei toimita CommonJS-koontiversioita.
+- **Lähdekoodi ja ajantasainen README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **npm-paketti:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Asennus
 
@@ -21,19 +17,16 @@ Captcha Canvas Challenge on itsenäinen kuvien captcha-generaattori. Se hahmonta
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Kokoonpanoasetukset
+## Mihin se sopii
 
-| Vaihtoehto   | Tyyppi   | Oletus    | Kuvaus                                                   |
-| ------------ | -------- | --------- | -------------------------------------------------------- |
-| `characters` | `number` | `6`       | Captcha-kuvassa näytettyjen satunnaisten merkkien määrä. |
-| `height`     | `number` | `100`     | Luodun kuvan korkeus pikseleinä.                         |
-| `width`      | `number` | `300`     | Luodun kuvan leveys pikseleinä.                          |
-| `colors`     | `string` | `#32cf7e` | Captcha-tekstin pääväri.                                 |
+Captcha-haasteet ovat hyödyllisiä, kun yhteisö haluaa yksinkertaisen vuorovaikutteisen portin kevyeen roskapostisuojaukseen. Tämä paketti on tarkoituksella suppea: se tarjoaa haasteen toteutuksen, kun taas yhteisö tai Bitsocial-solmu päättää, milloin ja miten haaste esitetään.
 
-## Miten se toimii
+Vahvempaa suojaa varten yhdistä se laajempiin moderointi- tai riskipisteytysjärjestelmiin sen sijaan, että kohtelisit captchaa kokonaisena roskapostin torjuntastrategiana.
 
-1. Generaattori valitsee konfiguroidun pituisen satunnaisen merkkijonon.
-2. Merkkijono renderöidään kankaalle visuaalisella kohinalla, joka vastustaa tekstintunnistusta.
-3. Tuloksena oleva kuva (ja odotettu vastaus) palautetaan, jotta kutsuva sovellus voi esittää haasteen ja myöhemmin tarkistaa vastauksen.
+## Paketin ajantasainen dokumentaatio
 
-Koska paketti on pelkkä kuvageneraattori, se ei käsittele verkottumista tai istunnonhallintaa yksinään. Se on tarkoitettu integroitavaksi suurempaan haastevirtaan – esimerkiksi yhtenä [Roskapostin eston](./spam-blocker.md) tukemista haastetyypeistä.
+Tämä sivu on tarkoituksella yleiskatsaus, ei peilattu asennusopas. Paketin README on luotettava lähde ajantasaisille haasteiden nimille, rekisteröintiesimerkeille, CLI-esimerkeille, tuetuille asetuksille, vaatimuksille ja tietoturvahuomioille:
+
+- [Captcha Canvas Challenge -paketin README](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Suosi alkuperäistä README-tiedostoa, kun määrität käytössä olevaa yhteisöä, koska paketin asetukset ja asennustavat versioidaan kyseisen paketin mukana eikä tämän sivuston mukana.

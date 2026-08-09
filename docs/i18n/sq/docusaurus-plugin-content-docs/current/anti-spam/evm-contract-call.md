@@ -1,24 +1,15 @@
 ---
-title: EVM Contract Call Challenge
-description: Sfida anti-spam që verifikon kushtet në zinxhir duke thirrur një kontratë inteligjente EVM.
+title: Sfida e thirrjes së kontratës EVM
+description: Sfidë kundër spamit që verifikon kushte në zinxhir duke thirrur një kontratë inteligjente EVM.
 sidebar_position: 4
 ---
 
-# EVM Contract Call Challenge
+# Sfida e thirrjes së kontratës EVM
 
-:::warning Emërtimi i trashëgimisë
-Kjo paketë fillimisht u botua nën sferën `@plebbit`. Është riemërtuar në `@bitsocial/evm-contract-challenge`. Referencat për emrin e vjetër mund të shfaqen ende në dokumentacionin ose bazat e kodeve më të vjetra.
-:::
+Sfida e thirrjes së kontratës EVM verifikon gjendjen në zinxhir të një autori përpara se të lejojë një publikim. Pronarët e komuniteteve mund të kërkojnë që një portofol ose një identitet i zgjidhur të plotësojë një kusht të lexueshëm nga një kontratë inteligjente, si për shembull mbajtja e një bilanci minimal tokenësh, përpara se të postohet.
 
-EVM Contract Call Challenge është një mekanizëm anti-spam që verifikon kushtet në zinxhir përpara se të lejojë një publikim. E nxjerrë fillimisht nga `plebbit-js` si një paketë e pavarur, ajo u lejon pronarëve të komunitetit të kërkojnë që autorët të plotësojnë kriteret e përcaktuara nga kontrata inteligjente -- për shembull, të mbajnë një bilanc minimal simbolik -- në mënyrë që të postojnë.
-
-**Kodi burimor:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Kërkesat
-
-- **Nyja.js** >= 22
-- **Vetëm për ESM** -- kjo paketë nuk dërgon ndërtime CommonJS.
-- **Varësia e bashkëmoshatarëve në kohën e ekzekutimit:** `@plebbit/plebbit-js` (duke migruar në `@pkc/pkc-js`)
+- **Kodi burimor dhe README-ja aktuale:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Paketa npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Instalimi
 
@@ -26,34 +17,26 @@ EVM Contract Call Challenge është një mekanizëm anti-spam që verifikon kush
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Opsionet e konfigurimit
+## Ku përshtatet
 
-| Opsioni       | Lloji    | Përshkrimi                                                                                    |
-| ------------- | -------- | --------------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | Zinxhiri për të kërkuar (p.sh., `eth`, `matic`, `avax`).                                      |
-| `address`     | `string` | Adresa e kontratës inteligjente për të telefonuar.                                            |
-| `abi`         | `string` | Fragmenti ABI për funksionin që thirret.                                                      |
-| `condition`   | `string` | Një shprehje krahasimi e vlerësuar kundrejt vlerës së kthimit të kontratës (p.sh., `> 1000`). |
-| `error`       | `string` | Mesazhi i gabimit u shfaqet autorëve që nuk e plotësojnë kushtin.                             |
+Përdoreni këtë sfidë për komunitete ku pjesëmarrja duhet të varet nga një sinjal i jashtëm EVM: pronësia e tokenëve, pronësia e NFT-ve, rezultatet e provës së personit, anëtarësia në qeverisje ose një kusht tjetër i lexueshëm nga një kontratë.
 
-## Shembull
+Pasi konfigurohet, sfida është automatike nga këndvështrimi i autorit. Ajo kontrollon burimet e pranueshme të portofolit ose të identitetit, thërret metodën e konfiguruar të kontratës dhe krahason vlerën e kthyer me kushtin e komunitetit.
 
-Një pronar i komunitetit që dëshiron të kufizojë postimin tek autorët që mbajnë më shumë se 1000 të një tokeni të veçantë ERC-20, do ta konfiguronte sfidën me:
+## Referenca aktuale e paketës
 
-- `chainTicker`: `"eth"`
-- `address`: adresa e kontratës simbolike
-- `abi`: ABI për `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Kjo faqe është me qëllim një përmbledhje, jo një kopje e referencës së konfigurimit. README-ja e paketës është burimi i së vërtetës për emrat e sfidave, shembujt me Bitsocial CLI, regjistrimin në pkc-js, vlerat e parazgjedhura të opsioneve, shembujt e ABI-së, sjelljen e RPC-së dhe burimet e mbështetura të portofolave:
 
-Kur një autor përpiqet të publikojë, sfida thërret `balanceOf` me adresën e autorit dhe kontrollon nëse vlera e kthyer e plotëson kushtin. Nëse ndodh, publikimi vazhdon; përndryshe, mesazhi i gabimit të konfiguruar kthehet.
+- [README-ja e EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+
+Kur konfiguroni një komunitet të gjallë, preferoni README-në e burimit, sepse opsionet dhe shembujt e kontratës versionohen bashkë me atë paketë, jo me këtë faqe.
 
 ## Kur ta përdorni
 
 Sfida e thirrjes së kontratës EVM është ideale për:
 
-- **Komunitetet e mbyllura me token ** që kufizojnë postimin tek mbajtësit e shenjave.
-- **Qasje me porta NFT** ku kërkohet pronësia e një NFT specifike.
-- **Hapësirat e qeverisjes DAO** ku pjesëmarrja është e kufizuar për mbajtësit e tokenave të qeverisjes.
+- **Komunitete me akses sipas tokenit** që e kufizojnë postimin vetëm te mbajtësit e tokenit.
+- **Akses sipas NFT-së** ku kërkohet pronësia e një NFT-je të caktuar.
+- **Hapësira qeverisjeje DAO** ku pjesëmarrja kufizohet te mbajtësit e tokenit të qeverisjes.
 
-Për komunitetet që nuk mbështeten në identitetin e zinxhirit, merrni në vend të tyre [Spam Blocker](./spam-blocker.md) ose [Voucher Challenge](./voucher-challenge.md).
+Për komunitetet që nuk mbështeten te identiteti në zinxhir, shqyrtoni në vend të saj [Spam Blocker](./spam-blocker.md) ose [Sfidën Voucher](./voucher-challenge.md).

@@ -1,56 +1,95 @@
 ---
 title: Bitsocial Chain
-description: Fase 4 del pla director, que cobreix la capa d'appchain compartida proposada per a les aplicacions Bitsocial.
+description: Fase 2 del pla director, que cobreix la capa econòmica proposada en forma d'appchain L2 d'Ethereum per a les aplicacions Bitsocial.
 ---
 
 # Bitsocial Chain
 
-Xarxa Bitsocial és el nom que s'utilitza al pla mestre per a la capa de cadena d'aplicacions compartida que s'ubicaria a les aplicacions Bitsocial.
+Bitsocial Chain és la capa econòmica proposada per a les aplicacions Bitsocial, en forma d'appchain
+L2 d'Ethereum. El lloc web dedicat actualment a la cadena és
+[chain.bitsocial.net](https://chain.bitsocial.net).
 
-La idea no és substituir la capa social peer-to-peer. Es tracta de proporcionar les primitives econòmiques i de coordinació compartides que necessitaran les aplicacions socials si volen competir amb les plataformes existents a escala.
+La capa social peer-to-peer permet que les comunitats, les identitats i el contingut visquin fora de
+la base de dades d'una plataforma central. Bitsocial Chain hi ha d'afegir les primitives compartides
+de noms, monetització i pagaments que fan que aquestes aplicacions siguin més difícils d'ofegar
+econòmicament.
 
-## Què vol dir poder
+## Què ha de fer possible
 
 - dominis Bitsocial descentralitzats com ara `.bso`
-- shared liquidity across apps
-- carrils de monetització duradors
-- estructures financeres que són més difícils d'asfixiar per als bancs o les plataformes
-- efectes de xarxa que no depenen que una empresa sigui propietaria de tota la pila
+- premis i propines
+- vies de monetització duradores
+- liquiditat compartida entre aplicacions
+- estructures financeres més difícils d'escanyar per part de bancs o plataformes
+- efectes de xarxa que no depenen que una sola empresa sigui propietària de tota la pila
+
+L'objectiu no és començar per la mecànica dels tokens. L'objectiu és fer que les aplicacions socials
+útils siguin més duradores, més fàcils de finançar i menys dependents de proveïdors centralitzats de
+pagaments o de noms.
+
+## Prova de concepte actual
+
+La primera prova de concepte de Bitsocial Chain se centra en els noms natius `.bso`. Demostra que un
+registre de noms es pot derivar de l'historial de l'L1 d'Ethereum sense posar contingut social a la
+cadena:
+
+- els usuaris envien intencions de registre, actualització, transferència i revocació mitjançant
+  transaccions normals de l'L1 d'Ethereum
+- qualsevol pot executar el node de derivació i reconstruir el mateix estat del registre `.bso`
+- un resolutor associa un nom `.bso` a la clau pública de Bitsocial que els clients ja fan servir
+  sobre el protocol peer-to-peer
+- les publicacions, els vots, la moderació, els feeds i el contingut de les comunitats es mantenen
+  fora de la cadena i peer-to-peer
+
+Aquesta prova de concepte no és un llançament Stage 2 en producció. Encara no té sistema de proves,
+joc de desafiaments, codi auditat, desplegament en actiu, preus definitius ni governança definitiva.
+La seva posició a llarg termini és transparent per defecte i compatible amb la privadesa per
+disseny: la cadena base és pública, mentre que les propines, els pagaments, els premis i la
+liquiditat del futur han d'evitar forçar vincles permanents entre la identitat social i l'historial
+de la cartera.
 
 ## Per què importa
 
-La descentralització de comunitats i identitats és necessària, però no n'hi ha prou amb descentralitzar totes les xarxes socials.
+Descentralitzar les comunitats i les identitats és necessari, però no n'hi ha prou per descentralitzar
+totes les xarxes socials.
 
-Si la capa econòmica encara depèn d'un grapat de rails centralitzats, aleshores les aplicacions són fàcils de pressionar, desplataformar o morir de fam econòmicament. Bitsocial Chain és la resposta proposada a aquesta segona capa de dependència.
+Si les aplicacions socials continuen depenent d'unes poques vies econòmiques centralitzades, segueixen
+sent fàcils de pressionar, d'expulsar de les plataformes o d'ofegar econòmicament. Bitsocial Chain és
+la resposta proposada a aquesta segona capa de dependència.
 
-## Relació amb la resta de Bitsocial
+## Relació amb les aplicacions
 
-Bitsocial Chain es proposa com a infraestructura compartida per a les aplicacions Bitsocial, no com el producte amb el qual els usuaris interactuen directament cada dia.
+Bitsocial Chain s'ha de situar sota les aplicacions Bitsocial, no substituir-les.
 
-El resultat de cara al públic seria:
+El resultat de cara al públic hauria de ser:
 
-- comunitats es mantenen entre iguals
+- les comunitats es mantenen peer-to-peer
 - les aplicacions es mantenen diferenciades
-- la monetització i la denominació són més duradores
-- el valor pot moure's per l'ecosistema sense recrear el propietari d'una plataforma centralitzada
+- els usuaris obtenen funcions pràctiques de noms i de monetització
+- els creadors i les comunitats poden rebre suport des de qualsevol client
+- el valor es pot moure per l'ecosistema sense recrear el propietari d'una plataforma centralitzada
 
-## Per què això es troba a la Fase 4
+## Per què arriba tan aviat
 
-El pla mestre situa això després dels punts de prova anteriors a nivell d'aplicació:
+El pla director actual situa Bitsocial Chain immediatament després de les primeres categories de
+palanca: els taulers d'imatges, els fòrums i la capa d'RPC públic que fa que aquestes aplicacions
+siguin pràctiques per a més usuaris.
 
-1. descentralitzar les plaques d'imatge
-2. llançar Bitsocial RPC
-3. descentralitzar els fòrums
-4. llançar Bitsocial Chain
-
-Aquesta seqüència té sentit perquè una capa de coordinació a nivell d'ecosistema és més útil quan ja existeixen aplicacions reals i comportament real dels usuaris a la xarxa.
+Aquest calendari importa perquè les aplicacions socials necessiten efectes de xarxa forts. Si els
+noms, el suport, els premis, les propines i la monetització arriben massa tard, els competidors
+centralitzats conserven el seu avantatge més gran durant massa temps.
 
 ## Principis de disseny
 
-Com que Bitsocial Chain continua sent una infraestructura proposada i no un producte ja llançat, el pla actual ha de mantenir disciplina en alguns punts:
+Com que Bitsocial Chain continua sent infraestructura proposada i no un producte ja llançat, el pla
+s'ha de mantenir disciplinat:
 
-- Primer les aplicacions i les comunitats. La capa de xarxa ha de seguir l'ús real dins de les aplicacions de Bitsocial, no avançar-se amb funcions financeres especulatives.
-- La contribució real per sobre del soroll. Si més endavant Bitsocial afegeix actius de comunitat, de creador o de client, haurien de premiar la participació i la construcció a llarg termini en lloc de llançaments imitadors o trading a curt termini.
-- La curació és vàlida. Les aplicacions de Bitsocial poden definir rànquings, valors per defecte, descoberta i ritme de desplegament per afavorir comunitats duradores davant de dinàmiques de casino.
-- El desplegament gradual és saludable. Té sentit retardar les funcions financeres natives de l'appchain fins que l'ecosistema tingui prou usuaris, eines de moderació i claredat de producte per sostenir-les amb seguretat.
-- Els mecanismes exactes continuen oberts. Aquesta pàgina explica el paper de Bitsocial Chain, no una promesa tancada sobre llançadors de tokens, fórmules de comissions o la tokenòmica final.
+- Primer les aplicacions i les comunitats. La capa de xarxa ha de reforçar productes socials reals.
+- Primer les funcions pràctiques. Els noms, els premis, les propines i els pagaments són més fàcils
+  d'explicar que una arquitectura financera abstracta.
+- La contribució real per damunt del soroll. Les primitives econòmiques han de premiar la
+  participació, la construcció i el suport a la comunitat.
+- La curació és legítima. Les aplicacions poden modelar rànquings, valors per defecte i descoberta
+  per afavorir comunitats duradores.
+- Els mecanismes exactes continuen oberts. Aquesta pàgina explica el paper de Bitsocial Chain, no una
+  promesa tancada sobre l'economia definitiva.

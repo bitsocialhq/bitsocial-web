@@ -1,52 +1,67 @@
 ---
-title: Decentralizovat všechny sociální sítě
-description: Fáze 5 hlavního plánu Bitsocial a konečný stav, ke kterému směřuje.
+title: Decentralizace všech sociálních médií
+description: Pátá fáze hlavního plánu zaměřená na financování a budování dlouhého ocasu sociálních klientů Bitsocial.
 ---
 
-# Decentralizovat všechny sociální sítě
+# Decentralizace všech sociálních médií
 
-Toto je konečný stav popsaný hlavním plánem Bitsocial: ne jedna aplikace, ale ekosystém aplikací Bitsocial, který může konkurovat každé hlavní kategorii sociálních médií.
+Cílovým stavem není jedna aplikace. Je to trh klientů, uzlů, služeb a komunit, který dokáže nahradit
+vlastnictví platformy soutěží nad společným protokolem.
 
-## Modelka
+Pátá fáze je bodem, kdy Bitsocial jde za hranice prvních prioritních kategorií a začíná financovat
+co nejvíce sociálních formátů.
 
-V navrhovaném zralém stavu sítě:
+## Co ještě zbývá postavit
 
-- více veřejných poskytovatelů RPC soutěží o hostitelské profilové uzly
-- uživatelé mohou stále hostovat sami
-- algoritmy feedu se stávají volitelnými službami namísto povinných platforem
-- monetizace nezávisí na ochotě bank udržet platformu při životě
-- aplikace soutěží o kvalitu produktu, objevování a design rozhraní
+První fáze se soustředí na kategorie s největší pákou: imageboardy, fóra, veřejné RPC, Bitsocial
+Chain, profilové uzly, alternativu k Twitteru/X ze třetí fáze a ekonomiku služeb okolo nich.
 
-## Jak by vypadal úspěch
+Poté by se síť měla rozšířit do dlouhého ocasu:
 
-Bitsocial aplikace by měly být schopny čelit platformám napříč formáty, nejen v jednom výklenku:
-
-- text a diskuze
-- obrazové desky
-- fórech
+- blogovací klienty
+- crowdfundingové aplikace
+- video pro tvůrce a věrohodná [alternativa k YouTube](https://github.com/bitsocialnet/wetube)
 - komunity tvůrců
-- krátké video a širší mediální produkty
+- experimenty s krátkými formáty
+- lokální nebo jazykově specifické sociální aplikace
+- specializované klienty, kteří jsou pro první čtyři fáze příliš malí
+- nástroje, které usnadňují provoz existujících komunit
 
-Cílem není vnutit všem jedno univerzální rozhraní. Má umožnit mnoha aplikacím přístup ke stejným základním komunitám, identitám a síti.
+Některé z těchto aplikací mohou být open source. Některé mohou být centralizovanými klienty. Některé
+může postavit Bitsocial Forge a mnoho by jich měli postavit nezávislí vývojáři.
 
-## Proč zde záleží na vrstvě RPC
+## Financování mnoha tvůrců
 
-Vždy aktivní komunity a profily se stanou mnohem praktičtějšími, jakmile budou existovat veřejné trhy RPC. Bez této vrstvy zůstává vlastní hostování pro mnoho uživatelů příliš náročné, zejména na mobilních zařízeních.
+Cílem je, aby noví sociální klienti byli financovatelní dřív, než získají dosah na úrovni platforem.
 
-## Proč zde záleží na síťové vrstvě
+To může zahrnovat přímé investice, granty, komunitní financování, výnosy z úspěšných služeb
+postavených na Bitsocial nebo decentralizované grantové programy, kde širší komunita kolem Bitsocial
+pomáhá rozhodovat, kteří vývojáři mají podporu dostat.
 
-Pokud lze monetizaci obsahu přerušit běžným bankovním nebo platformovým tlakem, pak ekosystém zůstane křehký. Bitsocial Chain je navržen jako ekonomická vrstva, která dělá dlouhodobou konkurenci důvěryhodnější.
+Podstatná je pluralita. Síť by měla financovat mnoho pokusů, ne čekat na jednu oficiální aplikaci,
+která pokryje každou kategorii.
 
-## Základní sázka
+## Jak vypadá úspěch
 
-Velká sázka je, že sociální média lze rozdělit do vyměnitelných vrstev:
+Bitsocial uspěje ve chvíli, kdy půjde sociální média rozložit na nahraditelné vrstvy:
 
 - protokol
-- společenství
-- identity
-- hostování
-- objev
-- zpeněžení
+- komunity
+- identita
+- hosting
+- objevování obsahu
+- moderace
+- monetizace
 - aplikace
 
-Jakmile jsou tyto vrstvy vyměnitelné, žádná jednotlivá společnost nemusí vlastnit celý sociální graf, aby produkt fungoval.
+Jakmile budou tyto vrstvy nahraditelné, nebude muset jediná firma vlastnit celý sociální graf, aby
+produkt fungoval.
+
+## Klíčová sázka
+
+Zralý ekosystém Bitsocial by měl obsahovat veřejná RPC, vlastní hostované uzly, trhy s algoritmy pro
+feedy, hostitele médií, služby pro objevování obsahu, open source klienty, komerční klienty a
+komunitně financované experimenty.
+
+Sociální média konečně nacházejí svou rovnováhu: plně decentralizovanou peer-to-peer sociální síť,
+kterou nikdo nevlastní; Bitsocial.

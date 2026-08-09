@@ -1,34 +1,37 @@
-# Pengaturan Agen Hooks
+# Penyiapan Hook Agen
 
-Jika asisten pengkodean AI Anda mendukung kait siklus hidup, konfigurasikan ini untuk repo ini.
+Jika asisten pemrograman AI Anda mendukung hook siklus hidup, konfigurasikan hook berikut untuk repo ini.
 
-## Kait yang Direkomendasikan
+## Hook yang Direkomendasikan
 
-| Kait            | Memerintah                                 | Tujuan                                                                                                                                                                                                   |
-| --------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Format file secara otomatis setelah pengeditan AI                                                                                                                                                        |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Jalankan `corepack yarn install` ketika `package.json` berubah                                                                                                                                           |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Pangkas referensi lama dan hapus cabang tugas sementara yang terintegrasi                                                                                                                                |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Pemeriksaan pembuatan hard-gate, lint, typecheck, dan format; simpan `yarn npm audit` informasional dan jalankan `yarn knip` secara terpisah sebagai audit penasehat ketika ketergantungan/impor berubah |
+| Hook            | Perintah                                      | Tujuan                                                                                                                                                                                                                          |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Memformat berkas secara otomatis setelah AI menyunting                                                                                                                                                                          |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Menjalankan `corepack yarn install` ketika `package.json` berubah                                                                                                                                                               |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Ketika sebuah diff menambahkan primitif `useEffect`/memo di `about/src/`, mengingatkan agen untuk menimbang ulang lewat skill peninjauan React                                                                                  |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Memangkas ref usang dan menghapus branch tugas sementara yang sudah terintegrasi                                                                                                                                                |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Memindai ulang diff saat ini untuk mencari effect/memo React baru di `about/src/` sebelum gerbang verifikasi akhir                                                                                                              |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Gerbang keras untuk verifikasi build tertarget, lint, typecheck, dan pemeriksaan format; jaga `yarn npm audit` tetap bersifat informasi dan jalankan `yarn knip` terpisah sebagai audit penasihat saat dependensi/impor berubah |
 
-## Mengapa
+## Alasannya
 
 - Pemformatan yang konsisten
 - Lockfile tetap sinkron
-- Masalah build/lint/type diketahui lebih awal
-- Visibilitas keamanan melalui `yarn npm audit`
-- Penyimpangan ketergantungan/impor dapat diperiksa dengan `yarn knip` tanpa mengubahnya menjadi stop hook global yang berisik
-- Satu implementasi hook bersama untuk Codex dan Cursor
-- Cabang tugas sementara tetap selaras dengan alur kerja pohon kerja repo
+- Penambahan `useEffect`/memo baru di situs about mendapat pemeriksaan kedua secara eksplisit sebelum agen selesai
+- Masalah build/lint/tipe yang relevan dengan workspace tertangkap lebih awal tanpa memaksa build dokumentasi multi-locale penuh pada setiap tugas
+- Visibilitas keamanan lewat `yarn npm audit`
+- Penyimpangan dependensi/impor dapat diperiksa dengan `yarn knip` tanpa menjadikannya stop hook global yang berisik
+- Satu implementasi hook bersama untuk Codex maupun Cursor
+- Branch tugas sementara tetap selaras dengan alur kerja worktree repo
 
-## Contoh Skrip Kait
+## Contoh Skrip Hook
 
-### Kait Format
+### Hook Format
 
 ```bash
 #!/bin/bash
-# Format otomatis file JS/TS setelah pengeditan AI
-# Hook menerima JSON melalui stdin dengan file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Verifikasi Kait
+### Hook Verifikasi
 
 ```bash
 #!/bin/bash
-# Jalankan build, lint, typecheck, format check, dan audit keamanan setelah agen selesai
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Secara default, `scripts/agent-hooks/verify.sh` keluar bukan nol ketika pemeriksaan yang diperlukan gagal. Setel `AGENT_VERIFY_MODE=advisory` hanya ketika Anda sengaja membutuhkan sinyal dari pohon yang patah tanpa menghalangi pengaitnya. Jauhkan `yarn knip` dari hard gate kecuali repo secara eksplisit memutuskan untuk gagal dalam masalah impor/ketergantungan.
+Secara bawaan, `scripts/agent-hooks/verify.sh` keluar dengan kode bukan nol ketika sebuah pemeriksaan wajib gagal. Setel `AGENT_VERIFY_MODE=advisory` hanya ketika Anda memang sengaja butuh sinyal dari tree yang rusak tanpa memblokir hook. Jauhkan `yarn knip` dari gerbang keras kecuali repo secara eksplisit memutuskan untuk menggagalkan build karena masalah impor/dependensi yang sifatnya penasihat.
 
-### Kait Pemasangan Benang
+Hook siklus hidup tidak menggantikan verifikasi browser secara manual. Untuk perubahan UI atau visual, tetap jalankan pemeriksaan `playwright-cli` di `chrome`, `firefox`, dan `webkit`, ditambah alur viewport mobile pada setiap engine ketika responsivitas atau perilaku sentuh ikut berubah.
+
+### Hook Yarn Install
 
 ```bash
 #!/bin/bash
-# Jalankan corepack Yarn install ketika package.json diubah
-# Hook menerima JSON melalui stdin dengan file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Konfigurasikan pengkabelan kait sesuai dengan dokumen alat agen Anda (`hooks.json`, yang setara, dll.).
+Atur penyambungan hook sesuai dokumentasi alat agen yang Anda pakai (`hooks.json`, padanannya, dan sebagainya).
 
-Dalam repo ini, `.codex/hooks/*.sh` dan `.cursor/hooks/*.sh` harus tetap sebagai pembungkus tipis yang mendelegasikan ke implementasi bersama di bawah `scripts/agent-hooks/`.
+Di repo ini, `.codex/hooks/*.sh` dan `.cursor/hooks/*.sh` harus tetap menjadi pembungkus tipis yang mendelegasikan ke implementasi bersama di bawah `scripts/agent-hooks/`.

@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Syötebotit, jotka seuraavat Bitsocial-yhteisöluetteloita ja välittävät viestejä Telegram-kanaville.
-sidebar_position: 3
+title: Telegram-botit
+description: Syötebotit, jotka seuraavat Bitsocial-yhteisöluetteloita ja välittävät julkaisuja Telegram-kanaville.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Telegram-botit
 
-Bitsocial Telegram -botit valvovat asiakasyhteisöluetteloita Bitsocial-verkossa ja välittävät automaattisesti uudet viestit Telegram-kanaville. Jokainen edelleenlähetetty viesti sisältää upotetut painikkeet, jotka linkittävät takaisin alkuperäiseen viestiin 5chanissa ja Seeditissä.
+Bitsocialin Telegram-botit seuraavat asiakasohjelmien yhteisöluetteloita Bitsocial-verkossa ja välittävät uudet julkaisut automaattisesti Telegram-kanaville. Jokaisessa välitetyssä viestissä on upotetut painikkeet, jotka johtavat takaisin alkuperäiseen julkaisuun 5chanissa ja Seeditissä.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
 ## Saatavilla olevat botit
 
-| Bot                 | Status      | Kuvaus                                                                   |
-| ------------------- | ----------- | ------------------------------------------------------------------------ |
-| **5 kanavan syöte** | Aktiivinen  | Valvoo kaikkia 5chan-hakemistoja ja välittää uudet viestit Telegramille. |
-| **Seedit-syöte**    | Suunniteltu | Tarjoaa samat toiminnot Seedit-yhteisöille.                              |
+| Botti           | Tila          | Kuvaus                                                                    |
+| --------------- | ------------- | ------------------------------------------------------------------------- |
+| **5chan Feed**  | Aktiivinen    | Seuraa kaikkia 5chan-hakemistoja ja välittää uudet julkaisut Telegramiin. |
+| **Seedit Feed** | Suunnitteilla | Tarjoaa saman toiminnallisuuden Seedit-yhteisöille.                       |
 
-## Asennus
+## Käyttöönotto
 
-### Edellytykset
+### Esivaatimukset
 
 - Node.js
-- Lanka
-- Telegram-bottitunnus (luo sellainen käyttämällä [BotFather](https://t.me/BotFather))
+- Yarn
+- Telegram-bottitunnus (luo sellainen [BotFatherin](https://t.me/BotFather) kautta)
 
 ### Asennus
 
-Kloonaa arkisto ja asenna riippuvuudet:
+Kloonaa repositorio ja asenna riippuvuudet:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -35,27 +35,27 @@ cd bitsocial-telegram-bots
 yarn install
 ```
 
-### Kokoonpano
+### Määritykset
 
-Luo `.env`-tiedosto projektin juureen robottitunnuksellasi:
+Luo projektin juureen `.env`-tiedosto, jossa on bottitunnuksesi:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Juoksemassa
+### Käynnistäminen
 
-Käynnistä botti ympäristön määrittämisen jälkeen:
+Käynnistä botti, kun ympäristö on määritetty:
 
 ```bash
 yarn start
 ```
 
-## Viestimuoto
+## Julkaisun muoto
 
-Kun botti lähettää viestin edelleen Telegramille, se sisältää kaksi upotettua painiketta:
+Kun botti välittää julkaisun Telegramiin, mukana on kaksi upotettua painiketta:
 
-- **Näytä 5chanissa** – Avaa viestin 5chan-verkkosovelluksessa.
-- **Näytä Seeditissä** - Avaa viestin Seedit-verkkosovelluksessa.
+- **Näytä 5chanissa** – avaa julkaisun 5chanin verkkoasiakkaassa.
+- **Näytä Seeditissä** – avaa julkaisun Seeditin verkkoasiakkaassa.
 
-Näin Telegram-tilaajat voivat siirtyä suoraan koko keskustelusäikeen haluamansa asiakkaan kohdalla.
+Näin Telegram-tilaajat pääsevät suoraan koko keskusteluketjuun haluamassaan asiakasohjelmassa.

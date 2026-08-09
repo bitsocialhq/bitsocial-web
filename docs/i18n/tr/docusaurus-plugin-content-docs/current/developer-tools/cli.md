@@ -1,78 +1,68 @@
 ---
-title: CLI
-description: Bitsocial düğümünü çalıştırmak, topluluklar oluşturmak ve protokol işlemlerini yönetmek için komut satırı arayüzü.
+title: Bitsocial CLI
+description: Bir Bitsocial düğümü çalıştırmak, topluluk oluşturmak ve protokol işlemlerini yönetmek için komut satırı arayüzü.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-:::warning Eski Adlandırma
-Bu paket şu anda yukarı akış bağımlılığından devralınan eski adlandırma kurallarını kullanıyor. Komutlarda, çıktılarda ve konfigürasyonda "plebbit"e yapılan atıflar gelecekteki bir sürümde "bitsocial"a taşınacaktır. İşlevsellik etkilenmez.
-:::
+`bitsocial-cli`, Bitsocial protokol arka ucuyla etkileşim kurmaya yarayan bir komut satırı aracıdır. Yerel bir P2P arka plan hizmeti çalıştırmanıza, topluluk oluşturup yapılandırmanıza ve içerik yayımlamanıza olanak tanır — hepsi terminalden.
 
-`bitsocial-cli`, Bitsocial protokolü arka ucuyla etkileşime geçmek için kullanılan bir komut satırı aracıdır. Terminalden yerel bir P2P arka plan programı çalıştırmanıza, topluluklar oluşturup yapılandırmanıza ve içerik yayınlamanıza olanak tanır.
-
-`plebbit-js` üzerine inşa edilmiştir ve topluluk oluşturma ve düğüm yönetimi için [5chan](/apps/5chan/) ve [Seedit](/apps/seedit/) tarafından kullanılır.
+Paylaşılan Bitsocial protokol istemci katmanı üzerine kuruludur ve topluluk oluşturma ile düğüm yönetimi için [5chan](/apps/5chan/) ve [Seedit](/apps/seedit/) tarafından kullanılır.
 
 ## Kurulum
 
-Windows, macOS ve Linux için önceden oluşturulmuş ikili dosyalar mevcuttur. Platformunuz için en son sürümü GitHub'dan indirin:
+Windows, macOS ve Linux için önceden derlenmiş ikili dosyalar mevcuttur. Platformunuza uygun en son sürümü GitHub'dan indirin:
 
-**[GitHub Sürümlerinden İndirin](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[GitHub Releases'ten indirin](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-İndirdikten sonra ikili dosyayı yürütülebilir hale getirin (macOS/Linux):
+İndirdikten sonra ikili dosyayı çalıştırılabilir yapın (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
-## Daemon'u Çalıştırmak
+## Arka Plan Hizmetini Çalıştırma
 
-CLI'nin en yaygın kullanımı Bitsosyal düğümü çalıştırmaktır. Arka plan programı, P2P ağ katmanını başlatır ve istemcilerin bağlanabileceği yerel bir API'yi ortaya çıkarır.
+CLI'nin en yaygın kullanımı bir Bitsocial düğümü çalıştırmaktır. Arka plan hizmeti P2P ağ katmanını başlatır ve istemcilerin bağlanabileceği yerel bir API sunar.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-İlk başlatıldığında arka plan programı, düğümünüzü, topluluklarınızı ve ayarlarınızı yönetmek için tarayıcı tabanlı bir grafik arayüz olan **WebUI**'ya bağlantılar çıkarır. Terminal komutları yerine GUI'yi tercih ediyorsanız bu kullanışlıdır.
+İlk başlatmada arka plan hizmeti, düğümünüzü, topluluklarınızı ve ayarlarınızı yönetmeye yarayan tarayıcı tabanlı grafik arayüz olan **WebUI**'ye giden bağlantıları çıktı olarak verir. Terminal komutları yerine grafik arayüz kullanmayı tercih ediyorsanız bu işinize yarar.
 
-## Tuş Komutları
+## Temel İşlemler
 
-| Komut               | Açıklama                                                     |
-| ------------------- | ------------------------------------------------------------ |
-| `daemon`            | Bitsocial P2P düğümünü başlatın                              |
-| `create subplebbit` | Yeni bir topluluk oluşturun                                  |
-| `subplebbit edit`   | Topluluk ayarlarını güncelleyin (başlık, açıklama, kurallar) |
-| `subplebbit list`   | Bu düğümde barındırılan toplulukları listeleyin              |
-| `subplebbit start`  | Belirli bir topluluğa hizmet vermeye başlayın                |
-| `subplebbit stop`   | Belirli bir topluluğa hizmet vermeyi durdurma                |
+| İşlem                        | Açıklama                                                   |
+| ---------------------------- | ---------------------------------------------------------- |
+| Arka plan hizmetini başlatma | Bitsocial P2P düğümünü başlatır                            |
+| Topluluk oluşturma           | Yeni bir topluluk oluşturur                                |
+| Topluluğu düzenleme          | Topluluk ayarlarını günceller (başlık, açıklama, kurallar) |
+| Yerel toplulukları listeleme | Bu düğümde barındırılan toplulukları listeler              |
+| Topluluğu başlatma           | Belirli bir topluluğu sunmaya başlar                       |
+| Topluluğu durdurma           | Belirli bir topluluğu sunmayı durdurur                     |
 
-Kullanılabilir seçenekleri ve bayrakları görmek için `--help` ile herhangi bir komutu çalıştırın:
+Kurulu sürümünüzün sunduğu güncel komut adlarını ve bayrakları görmek için CLI'yi `--help` ile çalıştırın:
 
 ```bash
-bitsocial-cli daemon --help
-bitsocial-cli create subplebbit --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Tipik İş Akışı
 
-Yeni bir topluluğa ev sahipliği yapmak için ortak bir kurulum akışı:
+Yeni bir topluluğu barındırmak için sık kullanılan kurulum akışı:
 
 ```bash
-# 1. Arka plan programını başlatın
-bitsocial-cli daemon
+# 1. Start the daemon
+bitsocial daemon
 
-# 2. Başka bir terminalde bir topluluk oluşturun
-bitsocial-cli create subplebbit
-
-# 3. Topluluğu yapılandırın
-bitsocial-cli subplebbit edit <address> --title "My Community" --description "A decentralized forum"
-
-# 4. Servis etmeye başlayın
-bitsocial-cli subplebbit start <address>
+# 2. In another terminal, inspect the available community-management commands
+bitsocial --help
 ```
 
-Topluluk artık Bitsocial ağında yayında ve uyumlu herhangi bir istemciden erişilebilir.
+Buradan sonra, bir topluluğu oluşturmak, yapılandırmak ve sunmaya başlamak için kurulu sürümün topluluk yönetimi komutlarını kullanın. Topluluk bir kez başlatıldığında Bitsocial ağında yayına girer ve uyumlu istemcilerden erişilebilir olur.
 
 ## Bağlantılar
 

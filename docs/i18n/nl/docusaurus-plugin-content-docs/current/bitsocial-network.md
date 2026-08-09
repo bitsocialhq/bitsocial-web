@@ -1,56 +1,91 @@
 ---
 title: Bitsocial Chain
-description: Fase 4 van het masterplan, dat de gedeelde appchain-laag omvat die is voorgesteld voor Bitsocial-apps.
+description: Fase 2 van het masterplan, over de voorgestelde economische laag als Ethereum L2-appchain voor Bitsocial-apps.
 ---
 
 # Bitsocial Chain
 
-Bitsocial Chain is de naam die in het masterplan wordt gebruikt voor de gedeelde appchain-laag die onder Bitsocial-apps zou zitten.
+Bitsocial Chain is de voorgestelde economische laag als Ethereum L2-appchain voor Bitsocial-apps. De
+huidige site over de chain zelf is [chain.bitsocial.net](https://chain.bitsocial.net).
 
-Het idee is niet om de peer-to-peer sociale laag te vervangen. Het is bedoeld om de gedeelde economische en coördinatieprimitieven te bieden die sociale apps nodig hebben als ze op grote schaal willen concurreren met gevestigde platforms.
+Dankzij de peer-to-peer sociale laag kunnen community's, identiteiten en content zich buiten een
+centrale platformdatabase bewegen. Bitsocial Chain moet daar de gedeelde primitieven voor naamgeving,
+monetisatie en betalingen aan toevoegen die deze apps financieel moeilijker uit te hongeren maken.
 
-## Wat het is bedoeld om
+## Wat het moet aandrijven
 
 - gedecentraliseerde Bitsocial-domeinen zoals `.bso`
+- onderscheidingen en fooien
+- duurzame rails voor monetisatie
 - gedeelde liquiditeit tussen apps
-- duurzame rails voor het genereren van inkomsten
-- financiële structuren die moeilijker voor banken of platforms om te verstikken
-- netwerkeffecten die niet afhankelijk zijn van één bedrijf dat de hele stapel bezit
+- financiële structuren die banken of platforms lastiger kunnen dichtdraaien
+- netwerkeffecten die niet afhangen van één bedrijf dat de hele stack bezit
+
+Het doel is niet om met tokenmechanismen voorop te lopen. Het doel is om nuttige sociale apps
+duurzamer en beter financierbaar te maken, en minder afhankelijk van gecentraliseerde aanbieders van
+betalingen of naamgeving.
+
+## Huidig proof of concept
+
+Het eerste proof of concept van Bitsocial Chain richt zich op native `.bso`-namen. Het toont aan dat
+een naamregister kan worden afgeleid uit de historie van Ethereum L1 zonder sociale content on-chain
+te zetten:
+
+- gebruikers dienen intents voor registreren, bijwerken, overdragen en intrekken in via gewone
+  Ethereum L1-transacties
+- iedereen kan de afleidingsnode draaien en dezelfde `.bso`-registerstatus reconstrueren
+- een resolver koppelt een `.bso`-naam aan de publieke Bitsocial-sleutel die clients al gebruiken via
+  het peer-to-peer protocol
+- posts, stemmen, moderatie, feeds en communitycontent blijven off-chain en peer-to-peer
+
+Dat proof of concept is geen Stage 2-lancering in productie. Er is nog geen proofsysteem, challenge
+game, geauditeerde code, live deployment, definitieve prijsstelling of definitieve governance. De
+langetermijnhouding is standaard transparant en privacycompatibel van opzet: de kernchain is publiek,
+terwijl toekomstige fooien, betalingen, onderscheidingen en liquiditeit moeten voorkomen dat sociale
+identiteit en walletgeschiedenis permanent aan elkaar vastzitten.
 
 ## Waarom het ertoe doet
 
-Het decentraliseren van gemeenschappen en identiteiten is noodzakelijk, maar het is niet voldoende om alle sociale media te decentraliseren.
+Het decentraliseren van community's en identiteiten is noodzakelijk, maar het is niet genoeg om alle
+social media te decentraliseren.
 
-Als de economische laag nog steeds afhankelijk is van een handvol gecentraliseerde rails, dan blijven apps gemakkelijk onder druk te zetten, te deplatformeren of financieel uit te hongeren. Bitsocial Chain is het voorgestelde antwoord op die tweede laag van afhankelijkheid.
+Zolang sociale apps nog afhangen van een handvol gecentraliseerde economische rails, blijven ze
+makkelijk onder druk te zetten, te deplatformen of financieel uit te hongeren. Bitsocial Chain is het
+voorgestelde antwoord op die tweede laag van afhankelijkheid.
 
-## Relatie met de rest van Bitsocial
+## Relatie met apps
 
-Bitsocial Chain wordt voorgesteld als gedeelde infrastructuur voor Bitsocial-apps, niet als het product waarmee gebruikers elke dag rechtstreeks communiceren.
+Bitsocial Chain hoort onder Bitsocial-apps te liggen, niet in de plaats daarvan te komen.
 
-Het publieke resultaat zou zijn:
+Het resultaat voor de buitenwereld zou moeten zijn:
 
-- gemeenschappen blijven peer-to-peer
-- apps blijven gedifferentieerd
-- het genereren van inkomsten en de naamgeving worden duurzamer
-- waarde kan zich door het hele ecosysteem verplaatsen zonder opnieuw een gecentraliseerde platformeigenaar te creëren
+- community's blijven peer-to-peer
+- apps blijven zich van elkaar onderscheiden
+- gebruikers krijgen praktische functies voor naamgeving en monetisatie
+- makers en community's kunnen in alle clients steun ontvangen
+- waarde kan zich door het ecosysteem bewegen zonder opnieuw een gecentraliseerde platformeigenaar te
+  creëren
 
-## Waarom dit zich in fase 4 bevindt
+## Waarom dit vroeg in de volgorde staat
 
-Het masterplan plaatst dit na de eerdere bewijspunten op app-niveau:
+Het huidige masterplan plaatst Bitsocial Chain direct na de eerste doorbraakcategorieën: imageboards,
+forums en de publieke RPC-laag die deze apps voor meer gebruikers bruikbaar maakt.
 
-1. decentraliseer imageboards
-2. lanceer Bitsocial RPC
-3. decentraliseren forums
-4. lanceer Bitsocial Chain
-
-Die volgorde is logisch omdat een coördinatielaag op ecosysteemniveau nuttiger is zodra er al echte apps en echt gebruikersgedrag op het netwerk bestaan.
+Die timing is belangrijk omdat sociale apps sterke netwerkeffecten nodig hebben. Als naamgeving,
+steun, onderscheidingen, fooien en monetisatie te laat komen, houden gecentraliseerde concurrenten
+hun grootste voordeel te lang vast.
 
 ## Ontwerpprincipes
 
-Omdat Bitsocial Chain nog steeds voorgestelde infrastructuur is en geen gelanceerd product, moet het huidige plan op een paar punten gedisciplineerd blijven:
+Omdat Bitsocial Chain nog steeds voorgestelde infrastructuur is en geen gelanceerd product, moet het
+plan gedisciplineerd blijven:
 
-- Apps en communities eerst. De netwerklaag moet echte gebruikspatronen in Bitsocial-apps volgen en niet vooroplopen met speculatieve financiële functies.
-- Echte bijdrage boven hype. Als Bitsocial later assets op community-, creator- of clientniveau toevoegt, moeten die deelname en langetermijnopbouw belonen in plaats van kopieer-lanceringen of kortetermijnhandel.
-- Curatie is toegestaan. Bitsocial-apps kunnen rankings, standaarden, discovery en rollout-timing vormgeven om duurzame communities te bevoordelen boven casino-achtig gedrag.
-- Een geleidelijke uitrol is gezond. Het is redelijk om appchain-native financiële functies uit te stellen totdat het ecosysteem genoeg gebruikers, moderatietools en productduidelijkheid heeft om ze veilig te ondersteunen.
-- De exacte mechanismen liggen nog open. Deze pagina legt de rol van Bitsocial Chain uit, niet een vaststaande belofte over token launchers, feeformules of definitieve tokenomics.
+- Apps en community's eerst. De netwerklaag moet echte sociale producten sterker maken.
+- Praktische functies eerst. Namen, onderscheidingen, fooien en betalingen zijn makkelijker uit te
+  leggen dan abstracte financiële architectuur.
+- Echte bijdrage boven hype. Economische primitieven moeten deelname, bouwen en steun aan de
+  community belonen.
+- Curatie is toegestaan. Apps kunnen rankings, standaardinstellingen en discovery vormgeven om
+  duurzame community's te bevoordelen.
+- De exacte mechanismen liggen nog open. Deze pagina legt de rol van Bitsocial Chain uit, niet een
+  vastgelegde belofte over de definitieve economie.

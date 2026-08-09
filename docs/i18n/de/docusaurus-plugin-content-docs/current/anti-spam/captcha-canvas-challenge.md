@@ -1,19 +1,15 @@
 ---
-title: Captcha Canvas-Herausforderung
-description: Eigenständiger bildbasierter Captcha-Generator mit konfigurierbaren Zeichen, Abmessungen und Farben.
+title: Captcha Canvas Challenge
+description: Eigenständige bildbasierte Captcha-Prüfung für Bitsocial-Communities.
 sidebar_position: 2
 ---
 
-# Captcha Canvas-Herausforderung
+# Captcha Canvas Challenge
 
-Captcha Canvas Challenge ist ein eigenständiger Bild-Captcha-Generator. Es rendert zufälligen Text auf einer HTML-Leinwand und gibt das resultierende Bild zurück, das Communities den Autoren als Spam-Herausforderung präsentieren können.
+Captcha Canvas Challenge ist ein eigenständiges Bild-Captcha-Paket für Bitsocial-Communities. Es zeichnet zufällig erzeugten Text auf ein Canvas und erlaubt einer Community, von Autoren das Lösen des Bildes zu verlangen, bevor eine Veröffentlichung angenommen wird.
 
-**Quellcode:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Anforderungen
-
-- **Node.js** >= 22
-- **Nur ESM** – dieses Paket liefert keine CommonJS-Builds.
+- **Quellcode und aktuelle README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **npm-Paket:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Installation
 
@@ -21,19 +17,16 @@ Captcha Canvas Challenge ist ein eigenständiger Bild-Captcha-Generator. Es rend
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Konfigurationsoptionen
+## Wofür es gedacht ist
 
-| Option       | Geben Sie | ein Standard | Beschreibung                                               |
-| ------------ | --------- | ------------ | ---------------------------------------------------------- |
-| `characters` | `number`  | `6`          | Anzahl der im Captcha-Bild gerenderten zufälligen Zeichen. |
-| `height`     | `number`  | `100`        | Höhe des generierten Bildes in Pixel.                      |
-| `width`      | `number`  | `300`        | Breite des generierten Bildes in Pixel.                    |
-| `colors`     | `string`  | `#32cf7e`    | Primärfarbe, die für den Captcha-Text verwendet wird.      |
+Captcha-Prüfungen sind nützlich, wenn eine Community eine einfache interaktive Hürde gegen Spam bei geringem Risiko möchte. Dieses Paket ist bewusst eng gefasst: Es liefert die Umsetzung der Prüfung, während die Community oder der Bitsocial-Knoten entscheidet, wann und wie sie angezeigt wird.
 
-## Wie es funktioniert
+Für stärkeren Schutz kombinieren Sie es mit umfassenderen Moderations- oder Risikobewertungssystemen, statt ein Captcha als vollständige Anti-Spam-Strategie zu betrachten.
 
-1. Der Generator wählt eine zufällige Zeichenfolge mit der konfigurierten Länge aus.
-2. Die Zeichenfolge wird mit visuellem Rauschen auf eine Leinwand gerendert, um OCR zu verhindern.
-3. Das resultierende Bild (und die erwartete Antwort) werden zurückgegeben, damit die aufrufende Anwendung die Herausforderung präsentieren und später die Antwort überprüfen kann.
+## Aktuelle Paketreferenz
 
-Da es sich bei dem Paket um einen reinen Bildgenerator handelt, übernimmt es weder die Netzwerk- noch die Sitzungsverwaltung alleine. Es soll in einen größeren Challenge-Flow integriert werden – beispielsweise als einer der Challenge-Typen, die von [Spam-Blocker](./spam-blocker.md) unterstützt werden.
+Diese Seite ist bewusst eine Übersicht und keine gespiegelte Einrichtungsanleitung. Die README des Pakets ist die maßgebliche Quelle für aktuelle Namen der Prüfungen, Registrierungsbeispiele, CLI-Beispiele, unterstützte Optionen, Voraussetzungen und Sicherheitshinweise:
+
+- [README von Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Halten Sie sich beim Einrichten einer produktiven Community lieber an die README im Upstream, denn Paketoptionen und Installationsabläufe werden mit diesem Paket versioniert und nicht mit dieser Website.

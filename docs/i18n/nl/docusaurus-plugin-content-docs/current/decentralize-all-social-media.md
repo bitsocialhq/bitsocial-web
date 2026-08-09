@@ -1,52 +1,70 @@
 ---
-title: Decentraliseer alle sociale media
-description: Fase 5 van het Bitsocial-masterplan en de eindtoestand waarnaar het streeft.
+title: Alle social media decentraliseren
+description: Fase 5 van het masterplan, gericht op het financieren en bouwen van de long tail aan sociale Bitsocial-clients.
 ---
 
-# Decentraliseer alle sociale media
+# Alle social media decentraliseren
 
-Dit is de eindtoestand beschreven door het Bitsocial-masterplan: niet één app, maar een ecosysteem van Bitsocial-apps die kunnen wedijveren met elke grote categorie sociale media.
+De eindtoestand is niet één app. Het is een markt van clients, nodes, diensten en community's die
+platformeigendom kan vervangen door concurrentie op protocolniveau.
 
-## Het model
+In fase 5 gaat Bitsocial voorbij de eerste prioritaire categorieën en begint het zo veel mogelijk
+sociale vormen te financieren.
 
-In de voorgestelde volwassen staat van het netwerk:
+## Wat er nog gebouwd moet worden
 
-- meerdere publieke RPC-providers concurreren om profielknooppunten te hosten
-- gebruikers kunnen nog steeds zelf hosten
-- feedalgoritmen worden optionele services in plaats van een verplicht platform wet
-- het genereren van inkomsten is niet afhankelijk van de bereidheid van banken om het platform in leven te houden
-- apps concurreren op productkwaliteit, ontdekking en interface-ontwerp
+De eerste fases richten zich op de categorieën met de meeste hefboomwerking: imageboards, forums,
+publieke RPC, Bitsocial Chain, profielnodes, het Twitter/X-alternatief uit fase 3 en de diensteneconomie
+eromheen.
 
-## Hoe succes eruit zou zien
+Daarna zou het netwerk moeten uitbreiden naar de long tail:
 
-Bitsocial-apps zouden platforms in verschillende formaten moeten kunnen uitdagen, niet alleen in één niche:
+- blogclients
+- crowdfunding-apps
+- video van makers en een geloofwaardig [YouTube-alternatief](https://github.com/bitsocialnet/wetube)
+- makerscommunity's
+- experimenten met korte content
+- lokale of taalspecifieke social apps
+- nicheclients die te klein zijn voor de eerste vier fases
+- tools die bestaande community's makkelijker te runnen maken
 
-- tekst en discussie
-- imageboards
-- forums
-- creator communities
-- korte video en bredere mediaproducten
+Sommige van deze apps kunnen open source zijn. Sommige kunnen gecentraliseerde clients zijn. Sommige
+kunnen door Bitsocial Forge worden gebouwd, en veel ervan zouden door onafhankelijke ontwikkelaars
+gebouwd moeten worden.
 
-Het doel is niet om iedereen één universele interface op te dringen. Het is bedoeld om veel apps toegang te geven tot dezelfde onderliggende communities, identiteiten en netwerken.
+## Veel bouwers financieren
 
-## Waarom de RPC-laag hier van belang is
+Het doel is om nieuwe sociale clients financierbaar te maken voordat ze al tractie op platformschaal
+hebben.
 
-Always-on communities en profielen worden veel praktischer zodra er openbare RPC-markten bestaan. Zonder die laag blijft self-hosting voor veel gebruikers een te grote uitdaging, vooral op mobiele apparaten.
+Dat kan directe investeringen omvatten, subsidies, financiering vanuit de community, omzet uit
+succesvolle Bitsocial-diensten of gedecentraliseerde subsidieprogramma's waarbij de bredere
+Bitsocial-community meebeslist welke ontwikkelaars steun krijgen.
 
-## Waarom de netwerklaag hier van belang is
+Het belangrijkste is pluralisme. Het netwerk moet veel pogingen financieren en niet wachten tot één
+officiële app elke categorie afdekt.
 
-Als het genereren van inkomsten met inhoud kan worden afgesneden door gewone bank- of platformdruk, blijft het ecosysteem kwetsbaar. Bitsocial Chain wordt voorgesteld als de economische laag die concurrentie op de lange termijn geloofwaardiger maakt.
+## Hoe succes eruitziet
 
-## De kern van de weddenschap
-
-De grote gok is dat sociale media kunnen worden opgesplitst in vervangbare lagen:
+Bitsocial slaagt wanneer social media in vervangbare lagen uiteen kan vallen:
 
 - protocol
-- communities
+- community's
 - identiteit
 - hosting
 - ontdekking
+- moderatie
 - monetisatie
 - apps
 
-Zodra deze lagen vervangbaar zijn, hoeft geen enkel bedrijf de volledige sociale grafiek te bezitten om het product te laten werken.
+Zodra die lagen vervangbaar zijn, hoeft geen enkel bedrijf de volledige sociale graaf te bezitten om
+het product te laten werken.
+
+## De kernweddenschap
+
+Een volwassen Bitsocial-ecosysteem zou publieke RPC's moeten bevatten, zelfgehoste nodes, markten voor
+feedalgoritmes, mediahosts, ontdekkingsdiensten, open-source clients, commerciële clients en
+experimenten die door de community zijn gefinancierd.
+
+Social media vindt eindelijk zijn evenwicht: een volledig gedecentraliseerd, peer-to-peer sociaal
+netwerk dat van niemand is; Bitsocial.

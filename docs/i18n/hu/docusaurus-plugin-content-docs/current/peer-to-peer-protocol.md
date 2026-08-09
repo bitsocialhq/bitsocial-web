@@ -1,44 +1,95 @@
 ---
-title: Peer-to-Peer Protokoll
-description: Hogyan használja a Bitsocial az IPFS/libp2p-t, a nyilvános kulcsú címzést, a peer-to-peer pub-ot és a böngésző P2P-csomópontjait a kiszolgáló nélküli közösségi média eléréséhez.
+title: Peer-to-peer protokoll
+description: Hogyan használja a Bitsocial az IPFS/libp2p készletet, a nyilvános kulcsú címzést, a peer-to-peer pubsubot és a böngészős P2P-csomópontokat a szerver nélküli közösségi médiához.
 ---
 
-# Peer-to-Peer Protokoll
+# Peer-to-peer protokoll
 
-A Bitsocial nem használ blokkláncot, összevonási szervert vagy központi háttérrendszert. Ehelyett két ötletet ötvöz – **nyilvános kulcson alapuló címzés** és **peer-to-peer pub** –, amelyek lehetővé teszik, hogy bárki otthont adjon egy közösségnek fogyasztói hardverről, miközben a felhasználók fiókok nélkül olvasnak és posztolnak a vállalat által vezérelt szolgáltatásokban.
+A Bitsocial nem használ blokkláncot, föderációs szervert vagy központi háttérrendszert. Ehelyett az
+IPFS/libp2p készletre épít, és két ötletet kapcsol össze: a **nyilvános kulcson alapuló címzést** és
+a **peer-to-peer pubsubot**. Együtt lehetővé teszik, hogy bárki hétköznapi hardverről üzemeltessen
+közösséget, a felhasználók pedig úgy olvassanak és tegyenek közzé bejegyzéseket, hogy egyetlen cég
+által felügyelt szolgáltatásban sincs fiókjuk.
 
-A kevésbé technikai áttekintésért olvassa el [A Bitsocial protokoll teljes laikus magyarázata](./layman-protocol-explanation.md).
+Kevésbé technikai áttekintésért olvassa el
+[A Bitsocial protokoll teljes laikus magyarázata](./layman-protocol-explanation.md) oldalt.
+
+## Használ a Bitsocial IPFS-t?
+
+Igen. A Bitsocial csomópontjai IPFS/libp2p primitíveket használnak a peer-to-peer réteghez:
+nyilvános kulccsal címzett közösségi rekordokat, társak közötti tartalomátvitelt és gossipsub
+pubsubot a valós idejű üzenetekhez. Amikor ez a dokumentáció „pubsubot” említ, IPFS/libp2p pubsubra
+gondol, nem pedig külön, központi üzenetközvetítőre.
+
+A protokoll jelenleg HTTP-útválasztókon keresztüli felderítést ír le, mert a Bitsocial kliensei az
+útválasztók végpontjaitól kérik le a szolgáltató társak címeit, ahelyett hogy minden egyes
+kereséshez a böngészők számára nehezen használható DHT-re támaszkodnának. Az útválasztók csak
+társakat adnak vissza; a tartalomátvitel és a pubsub forgalma továbbra is a peer-to-peer hálózaton
+halad.
 
 ## A két probléma
 
-A decentralizált közösségi hálózatnak két kérdésre kell választ adnia:
+Egy decentralizált közösségi hálózatnak két kérdésre kell választ adnia:
 
-1. **Adatok** — hogyan tárolja és szolgálja ki a világ közösségi tartalmait központi adatbázis nélkül?
-2. **Spam** — hogyan akadályozhatja meg a visszaéléseket, miközben a hálózat ingyenesen használható?
+1. **Adat** — hogyan tárolható és szolgálható ki a világ közösségi tartalma központi adatbázis
+   nélkül?
+2. **Spam** — hogyan előzhető meg a visszaélés úgy, hogy a hálózat használata ingyenes maradjon?
 
-A Bitsocial úgy oldja meg az adatproblémát, hogy teljesen kihagyja a blokkláncot: a közösségi médiának nincs szüksége globális tranzakciós rendelésre vagy minden régi bejegyzés állandó elérhetőségére. Megoldja a levélszemét-problémát azáltal, hogy minden közösség számára lehetővé teszi a saját levélszemét-ellenes kihívásának futtatását a peer-to-peer hálózaton keresztül.
+A Bitsocial az adatproblémát a blokklánc teljes kihagyásával oldja meg: a közösségi médiának nincs
+szüksége globális tranzakciósorrendre, sem arra, hogy minden régi bejegyzés tartósan elérhető
+maradjon. A spamproblémát pedig azzal oldja meg, hogy minden közösség a saját spamellenes kihívását
+futtathatja a peer-to-peer hálózaton.
 
-A hálózati réteg feletti felfedezési modellhez lásd: [Tartalom felfedezése](./content-discovery.md).
+Az e hálózati réteg fölé épülő felderítési modellről lásd a
+[Tartalom felfedezése](./content-discovery.md) oldalt.
 
 ---
 
-## Nyilvános kulcs alapú címzés
+## Nyilvános kulcson alapuló címzés {#public-key-based-addressing}
 
-A BitTorrentben egy fájl hash-je lesz a címe (_tartalom-alapú címzés_). A Bitsocial hasonló ötletet használ a nyilvános kulcsokkal: egy közösség nyilvános kulcsának hash-je lesz a hálózati címe.
+A BitTorrentben egy fájl hash-e lesz a címe (_tartalomalapú címzés_). A Bitsocial hasonló ötletet
+alkalmaz nyilvános kulcsokkal: egy közösség nyilvános kulcsának hash-e lesz a hálózati címe.
 
 ```mermaid
 graph LR
     K["🔑 Community keypair"] --> H["#️⃣ Hash of public key"]
-    H --> A["📍 Network address"]
-    A --> D["🌐 DHT lookup"]
-    D --> C["📄 Latest community content"]
+    H --> D["🌐 HTTP router(s) lookup of hash"]
+    D --> P["🔌 Provider peer addresses"]
+    P --> C["📄 Latest community content from peers"]
 ```
 
-A hálózat bármely partnere végrehajthat egy DHT (distributed hash table) lekérdezést az adott címre, és lekérheti a közösség legújabb állapotát. Minden alkalommal, amikor a tartalom frissül, a verziószáma növekszik. A hálózat csak a legújabb verziót tartja meg – nincs szükség minden történelmi állapot megőrzésére, ami miatt ez a megközelítés könnyű a blokklánchoz képest.
+A hálózat bármelyik társa lekérdezheti ezt a címet egy **HTTP-útválasztónál**: az útválasztó
+azoknak a társaknak a hálózati címeit adja vissza, amelyek éppen szolgáltatják a közösség hash-ét, a
+kliens pedig közvetlenül ezekhez a társakhoz csatlakozik, hogy lekérje a közösség legfrissebb
+állapotát. A tartalom minden frissítésekor nő a verziószám. A hálózat csak a legutóbbi verziót
+őrzi meg — nem kell megőrizni minden korábbi állapotot, és éppen ettől lesz ez a megközelítés
+könnyűsúlyú a blokklánchoz képest.
+
+> **Mit tárol valójában egy HTTP-útválasztó.** A HTTP-útválasztó vékony index. Minden általa ismert
+> tartalomcímhez kizárólag azoknak a társaknak a hálózati címét tárolja, amelyek szolgáltatóként
+> bejelentkeztek (IP/port párok, libp2p multiaddrok és hasonlók). **Nem** tárolja a közösség
+> tartalmát, metaadatait, a bejegyzések szövegét, a tagok listáját, de még annak ember által
+> olvasható megnevezését sem, ami az adott címen található; csupán arra válaszol, hogy „mely társak
+> állítják, hogy náluk megvan ez a hash?”. Ettől lesznek az útválasztók olcsón üzemeltethetők,
+> könnyen cserélhetők, és nem felelnek azért, amit a felhasználók közzétesznek — hasonlóan egy
+> BitTorrent trackerhez, csak torrent-metaadatok nélkül: a tracker infohasheket képez le társakra,
+> míg a HTTP-útválasztó csak egy tartalomcímet képez le szolgáltató társak címeire.
+>
+> A redundancia érdekében a kliens **több HTTP-útválasztót párhuzamosan** kérdez le, és összefésüli
+> a visszakapott szolgáltatólistákat. Útválasztót bárki üzemeltethet, útválasztó cseréje vagy
+> hozzáadása pedig konfigurációs változtatás, adatmigráció nélkül.
+>
+> A Bitsocial azért használ DHT helyett HTTP-útválasztókat, mert a tartalomfelderítéshez szükséges
+> méretben DHT-t üzemeltetni drága, különösen mobilon. A DHT ráadásul böngészőben nem működik,
+> mivel a böngészők nem tudnak közvetlenül csatlakozni egy libp2p DHT-hez. A HTTP-útválasztó olcsón
+> fut hétköznapi HTTP-infrastruktúrán, és telefonról vagy böngészőből ugyanolyan jól működik.
 
 ### Mi kerül tárolásra a címen
 
-A közösségi cím nem tartalmazza közvetlenül a teljes bejegyzés tartalmát. Ehelyett a tartalomazonosítók listáját tárolja – a tényleges adatokra mutató kivonatokat. A kliens ezután lekéri az egyes tartalmakat a DHT vagy tracker-stílusú kereséseken keresztül.
+A közösség címe nem közvetlenül a teljes bejegyzéstartalmat tartalmazza. Ehelyett
+tartalomazonosítók listáját tárolja — hash-eket, amelyek a tényleges adatokra mutatnak. A kliens
+ezután minden egyes tartalomrészletet közvetlenül azoktól a társaktól kér le, amelyeket a
+HTTP-útválasztók adtak vissza. Maguk az útválasztók soha nem látják és nem tárolják a tartalmat.
 
 ```mermaid
 graph TD
@@ -49,53 +100,66 @@ graph TD
     P --> P3["📝 Post 3 content"]
 ```
 
-Legalább egy partner mindig rendelkezik az adatokkal: a közösségi operátor csomópontja. Ha a közösség népszerű, akkor sok más társ is rendelkezik vele, és a terhelés magától eloszlik, ugyanúgy, ahogy a népszerű torrentek letöltése is gyorsabb.
+Legalább egy társnál mindig megvan az adat: a közösség üzemeltetőjének csomópontjánál. Ha a
+közösség népszerű, sok további társnál is megvan, és a terhelés magától eloszlik — ugyanúgy, ahogy
+a népszerű torrentek gyorsabban töltődnek le.
 
 ---
 
-## Peer-to-peer pub
+## Peer-to-peer pubsub
 
-A Pubsub (közzététel-feliratkozás) egy üzenetküldési minta, amelyben a társak feliratkoznak egy témára, és megkapják az adott témában közzétett minden üzenetet. A Bitsocial peer-to-peer pub-hálózatot használ – bárki publikálhat, bárki feliratkozhat, és nincs központi üzenetközvetítő.
+A pubsub (közzététel-feliratkozás) olyan üzenetküldési minta, amelyben a társak feliratkoznak egy
+témára, és megkapnak minden abban a témában közzétett üzenetet. A Bitsocial peer-to-peer pubsub
+hálózatot használ — bárki közzétehet, bárki feliratkozhat, és nincs központi üzenetközvetítő.
 
-Egy közösségnek való bejegyzés közzétételéhez a felhasználó közzétesz egy üzenetet, amelynek témája megegyezik a közösség nyilvános kulcsával. A közösségi üzemeltető csomópontja felveszi, ellenőrzi, és – ha megfelel a levélszemét-ellenes kihívásnak – beleveszi a következő tartalomfrissítésbe.
+Ahhoz, hogy valaki bejegyzést tegyen közzé egy közösségben, olyan üzenetet publikál, amelynek témája
+megegyezik a közösség nyilvános kulcsával. A közösség üzemeltetőjének csomópontja felveszi,
+ellenőrzi, és — ha átmegy a spamellenes kihíváson — beleveszi a következő tartalomfrissítésbe.
 
 ---
 
-## Anti-spam: kihívások a pubsub miatt
+## Spamvédelem: kihívások pubsubon keresztül
 
-A nyílt pub-hálózat ki van téve a levélszemét-özönnek. A Bitsocial ezt úgy oldja meg, hogy megköveteli a megjelenítőktől, hogy teljesítsenek egy **kihívást**, mielőtt tartalmukat elfogadják.
+A nyílt pubsub hálózat sebezhető a spamáradattal szemben. A Bitsocial ezt úgy oldja meg, hogy a
+közzétevőknek egy **kihívást** kell teljesíteniük, mielőtt a tartalmukat elfogadják.
 
-A kihívásrendszer rugalmas: minden közösségi üzemeltető konfigurálja a saját szabályzatát. A lehetőségek a következők:
+A kihívásrendszer rugalmas: minden közösség üzemeltetője a saját szabályzatát állítja be. A
+lehetőségek között szerepel:
 
-| Kihívás típusa       | Hogyan működik                                              |
-| -------------------- | ----------------------------------------------------------- | ------------------ |
-| **Captcha**          | Az alkalmazásban bemutatott vizuális vagy interaktív puzzle |
-| **Drátakorlátozás**  | Bejegyzések korlátozása időablakonként identitásonként      |
-| **Token gate**       | Egy adott token egyenlegének igazolása                      |
-| **Fizetés**          | Kis befizetés megkövetelése bejegyzésenként                 |
-| **Engedélyezőlista** | Csak előre jóváhagyott személyazonosságok tehetnek közzé    |
-| **Egyéni kód**       | Bármilyen szabályzat, amely                                 | kódban kifejezhető |
+| Kihívás típusa       | Hogyan működik                                                  |
+| -------------------- | --------------------------------------------------------------- |
+| **Captcha**          | Az alkalmazásban megjelenő vizuális vagy interaktív feladvány   |
+| **Sebességkorlát**   | Bejegyzések korlátozása identitásonként, adott időablakon belül |
+| **Token gate**       | Egy adott token egyenlegének igazolása                          |
+| **Fizetés**          | Kis összegű fizetés megkövetelése bejegyzésenként               |
+| **Engedélyezőlista** | Csak előre jóváhagyott identitások tehetnek közzé               |
+| **Egyéni kód**       | Bármilyen szabályzat, amely kódban kifejezhető                  |
 
-A túl sok sikertelen kihívási kísérletet közvetítő társak le vannak tiltva a közzétételi témakörből, ami megakadályozza a szolgáltatásmegtagadási támadásokat a hálózati rétegen.
+A túl sok sikertelen kihívási kísérletet továbbító társakat a hálózat kizárja a pubsub témából, ami
+megakadályozza a szolgáltatásmegtagadási támadásokat a hálózati rétegen.
 
 ---
 
 ## Életciklus: közösség olvasása
 
-Ez történik, amikor a felhasználó megnyitja az alkalmazást, és megtekinti egy közösség legújabb bejegyzéseit.
+Ez történik, amikor a felhasználó megnyitja az alkalmazást, és megnézi egy közösség legfrissebb
+bejegyzéseit.
 
 ```mermaid
 sequenceDiagram
     participant User as 👤 User app
-    participant DHT as 🌐 DHT network
+    participant Routers as 🌐 HTTP routers
     participant Node as 🖥️ Community node
 
-    User->>DHT: Query community address
-    Note over DHT: Distributed lookup<br/>across network peers
-    DHT-->>User: Return latest content pointers + metadata
+    User->>Routers: Query community address (in parallel)
+    Note over Routers: Each router returns<br/>peer addresses only, never content
+    Routers-->>User: Return provider peer addresses
 
-    User->>DHT: Fetch post content by hash
-    DHT-->>User: Return post data
+    User->>Node: Connect to peer, fetch latest pointers + metadata
+    Node-->>User: Return latest content pointers + metadata
+
+    User->>Node: Fetch post content by hash
+    Node-->>User: Return post data
     Note over User: Render posts in<br/>familiar social UI
 
     Note over User,Node: Multiple community queries<br/>run concurrently
@@ -103,19 +167,24 @@ sequenceDiagram
 
 **Lépésről lépésre:**
 
-1. A felhasználó megnyitja az alkalmazást, és egy közösségi felületet lát.
-2. A kliens csatlakozik a peer-to-peer hálózathoz, és DHT-lekérdezést végez minden egyes közösség számára
-   következik. A lekérdezések mindegyike néhány másodpercet vesz igénybe, de párhuzamosan fut.
-3. Minden lekérdezés visszaadja a közösség legújabb tartalmi mutatóit és metaadatait (cím, leírás,
-   moderátorlista, kihívás konfigurációja).
-4. A kliens lekéri a bejegyzés tényleges tartalmát ezen mutatók segítségével, majd mindent megjelenít a
-   ismerős közösségi felület.
+1. A felhasználó megnyitja az alkalmazást, és közösségi felületet lát.
+2. A kliens minden követett közösséghez párhuzamosan több HTTP-útválasztót kérdez le; minden
+   útválasztó kizárólag társcímeket ad vissza, tartalmat soha. A lekérdezés késleltetése a hálózati
+   körülményektől és az útválasztók terhelésétől függ; szokásos, alacsony késleltetésű
+   körülmények között a lekérdezések gyakran körülbelül egy másodpercen belül visszatérnek, és
+   párhuzamosan futnak.
+3. Amint a kliensnek megvannak a társcímek, csatlakozik ezekhez a társakhoz, és lekéri a közösség
+   legfrissebb tartalommutatóit és metaadatait (cím, leírás, moderátorlista, kihívás
+   konfigurációja).
+4. A kliens ezekkel a mutatókkal lekéri a tényleges bejegyzéstartalmat, majd mindent megjelenít egy
+   megszokott közösségi felületen.
 
 ---
 
 ## Életciklus: bejegyzés közzététele
 
-A közzététel egy kihívás-válasz kézfogást jelent a pubsub felett, mielőtt a bejegyzést elfogadják.
+A közzététel a bejegyzés elfogadása előtt egy pubsubon keresztül zajló kihívás-válasz kézfogást is
+magában foglal.
 
 ```mermaid
 sequenceDiagram
@@ -149,24 +218,25 @@ sequenceDiagram
 
 **Lépésről lépésre:**
 
-1. Az alkalmazás létrehoz egy kulcspárt a felhasználó számára, ha még nem rendelkezik ilyennel.
-2. A felhasználó bejegyzést ír egy közösség számára.
-3. Az ügyfél csatlakozik az adott közösség közzétételi témájához (a közösség nyilvános kulcsához kulcsolva).
-4. Az ügyfél kihívást kér a pubsub-on keresztül.
-5. A közösségi operátor csomópontja kihívást küld vissza (például captcha).
+1. Az alkalmazás kulcspárt generál a felhasználónak, ha még nincs neki.
+2. A felhasználó megír egy bejegyzést egy közösségbe.
+3. A kliens csatlakozik az adott közösség pubsub témájához (amelynek kulcsa a közösség nyilvános
+   kulcsa).
+4. A kliens pubsubon keresztül kihívást kér.
+5. A közösség üzemeltetőjének csomópontja visszaküld egy kihívást (például egy captchát).
 6. A felhasználó teljesíti a kihívást.
-7. Az ügyfél elküldi a bejegyzést a kihívás válaszával együtt a pubsub-on keresztül.
-8. A közösségi operátor csomópontja érvényesíti a választ. Ha helyes, a posztot elfogadjuk.
-9. A csomópont a pubsub-on keresztül sugározza az eredményt, így a hálózati partnerek tudják, hogy folytatják a továbbítást
-   üzenetek ettől a felhasználótól.
+7. A kliens a kihívásra adott válasszal együtt beküldi a bejegyzést pubsubon keresztül.
+8. A közösség üzemeltetőjének csomópontja ellenőrzi a választ. Ha helyes, a bejegyzést elfogadja.
+9. A csomópont pubsubon keresztül közzéteszi az eredményt, hogy a hálózat társai tudják: továbbra is
+   továbbíthatják ennek a felhasználónak az üzeneteit.
 10. A csomópont frissíti a közösség tartalmát a nyilvános kulcsú címén.
 11. Néhány percen belül a közösség minden olvasója megkapja a frissítést.
 
 ---
 
-## Építészeti áttekintés
+## Az architektúra áttekintése
 
-A teljes rendszer három rétegből áll, amelyek együtt működnek:
+A teljes rendszer három, egymással együttműködő rétegből áll:
 
 ```mermaid
 graph TB
@@ -183,103 +253,186 @@ graph TB
     end
 
     subgraph Network ["Network layer"]
-        DHT["🗂️ DHT<br/>(content discovery)"]
+        Router["🛰️ HTTP router<br/>(content discovery)"]
         GS["💬 Gossipsub<br/>(real-time messaging)"]
         TR["📦 Content transfer<br/>(data exchange)"]
     end
 
     A1 & A2 & A3 --> PK & PS & CH
-    PK --> DHT
+    PK --> Router
     PS --> GS
     CH --> GS
     PK --> TR
 ```
 
-| Réteg           | Szerep                                                                                                                                                |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Alkalmazás**  | Felhasználói felület. Több alkalmazás is létezhet, mindegyik saját dizájnnal rendelkezik, és mindegyik ugyanazt a közösséget és identitást használja. |
-| **Jegyzőkönyv** | Meghatározza a közösségek megszólításának módját, a bejegyzések közzétételének módját és a spamek megelőzésének módját.                               |
-| **Hálózat**     | A mögöttes peer-to-peer infrastruktúra: DHT a felfedezéshez, gossipsub a valós idejű üzenetküldéshez és tartalomátvitel az adatcseréhez.              |
+| Réteg          | Szerep                                                                                                                                                      |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Alkalmazás** | Felhasználói felület. Több alkalmazás is létezhet, mindegyik saját arculattal, és mind ugyanazokon a közösségeken és identitásokon osztozik.                |
+| **Protokoll**  | Meghatározza, hogyan címezhetők a közösségek, hogyan tehetők közzé a bejegyzések, és hogyan előzhető meg a spam.                                            |
+| **Hálózat**    | Az alapul szolgáló peer-to-peer infrastruktúra: HTTP-útválasztók a felderítéshez, gossipsub a valós idejű üzenetküldéshez, tartalomátvitel az adatcseréhez. |
 
 ---
 
-## Adatvédelem: a szerzők leválasztása az IP-címekről
+## Adatvédelem: a szerzők és az IP-címek szétválasztása
 
-Amikor egy felhasználó közzétesz egy bejegyzést, a tartalmat **titkosítják a közösségi üzemeltető nyilvános kulcsával**, mielőtt belépne a közzétételi hálózatba. Ez azt jelenti, hogy bár a hálózati megfigyelők láthatják, hogy egy társszolgáltató közzétett _valamit_, nem tudják megállapítani:
+Amikor egy felhasználó bejegyzést tesz közzé, a tartalom **a közösség üzemeltetőjének nyilvános
+kulcsával titkosítva** kerül be a pubsub hálózatba. Ez azt jelenti, hogy bár a hálózat megfigyelői
+látják, hogy egy társ közzétett _valamit_, azt nem tudják megállapítani:
 
-- amit a tartalom mond
-- melyik szerző identitása tette közzé
+- hogy mi áll a tartalomban
+- melyik szerzői identitás tette közzé
 
-Ez hasonló ahhoz, ahogy a BitTorrent lehetővé teszi annak felfedezését, hogy mely IP-címek indítanak el egy torrentet, de azt nem, hogy eredetileg ki hozta létre azt. A titkosítási réteg az alapvonalon felül további adatvédelmi garanciát ad.
+Ez ahhoz hasonlít, ahogy a BitTorrentnél kideríthető, mely IP-címek osztanak meg egy torrentet, az
+viszont nem, hogy eredetileg ki hozta létre. A titkosítási réteg ezen az alapszinten felül további
+adatvédelmi garanciát ad.
 
 ---
 
-## Böngésző peer-to-peer
+## Böngészős peer-to-peer
 
-A P2P böngésző mostantól lehetséges a Bitsocial kliensekben. A böngészőalkalmazások futtathatnak egy [Helia](https://helia.io/) csomópontot, ugyanazt a Bitsocial protokoll kliens veremét használhatják, mint más alkalmazások, és tartalmat kérhetnek le a társaktól, ahelyett, hogy központi IPFS-átjárót kérnének a kiszolgáláshoz. A böngésző közvetlenül is részt vehet a közzétételben, így a közzétételhez nincs szükség platformtulajdonos pubsub-szolgáltatóra a boldog útvonalon.
+A böngészős P2P immár megvalósítható a Bitsocial klienseiben. Egy böngészőben futó alkalmazás
+elindíthat egy [Helia](https://helia.io/) csomópontot, ugyanazt a Bitsocial protokollkliens-készletet
+használhatja, mint a többi alkalmazás, és a tartalmat társaktól kérheti le ahelyett, hogy egy
+központi IPFS-átjárótól kérné a kiszolgálását. A böngésző közvetlenül részt vehet a pubsubban is,
+így a közzétételhez a szokásos úton nincs szükség platformtulajdonban lévő pubsub-szolgáltatóra.
 
-Ez a webes terjesztés fontos mérföldköve: egy normál HTTPS-webhely megnyílhat élő P2P közösségi klienssé. A felhasználóknak nem kell asztali alkalmazást telepíteniük ahhoz, hogy olvashassanak a hálózatról, és az alkalmazás üzemeltetőjének nem kell központi átjárót futtatnia, amely minden böngészőfelhasználó számára a cenzúra vagy a moderálás korlátja lesz.
+Ez a webes terjesztés fontos mérföldköve: egy hétköznapi HTTPS-webhely élő P2P közösségi klienssé
+tud megnyílni. A felhasználóknak nem kell asztali alkalmazást telepíteniük ahhoz, hogy olvassanak a
+hálózatról, az alkalmazás üzemeltetőjének pedig nem kell központi átjárót futtatnia, amely minden
+böngészős felhasználó számára a cenzúra vagy a moderálás szűk keresztmetszetévé válna.
 
-A böngésző elérési útja eltérő korlátokkal rendelkezik, mint egy asztali vagy kiszolgáló csomópont:
+A böngészős út más korlátokkal jár, mint egy asztali vagy szerveres csomópont:
 
-- egy böngésző csomópont általában nem tud tetszőleges bejövő kapcsolatokat elfogadni a nyilvános internetről
-- képes betölteni, ellenőrizni, gyorsítótárazni és közzétenni az adatokat, amíg az alkalmazás nyitva van
-- nem szabad egy közösség adatainak hosszú életű gazdájaként kezelni
-- a teljes közösségi tárhelyszolgáltatást továbbra is legjobban egy asztali alkalmazás, a `bitsocial-cli` vagy más
-  mindig bekapcsolt csomópont
+- egy böngészőcsomópont általában nem tud tetszőleges bejövő kapcsolatot fogadni a nyílt internetről
+- amíg az alkalmazás nyitva van, be tud tölteni, ellenőrizni, gyorsítótárazni és közzétenni adatokat
+- nem szabad úgy tekinteni rá, mint egy közösség adatainak hosszú életű gazdájára
+- egy közösség teljes tárhelyszolgáltatását továbbra is asztali alkalmazás, a `bitsocial-cli` vagy
+  más, folyamatosan futó csomópont látja el a legjobban
 
-A HTTP-útválasztók továbbra is fontosak a tartalomfelderítés szempontjából: a közösségi hash-hez szolgáltatói címeket adnak vissza. Ezek nem IPFS-átjárók, mert nem magát a tartalmat szolgálják ki. A felfedezés után a böngészőkliens csatlakozik a társakhoz, és lekéri az adatokat a P2P-veremen keresztül.
+A HTTP-útválasztók a tartalomfelderítéshez továbbra is fontosak: egy közösség hash-éhez szolgáltatói
+címeket adnak vissza. Nem IPFS-átjárók, mert magát a tartalmat nem szolgálják ki. A felderítés után
+a böngészőkliens csatlakozik a társakhoz, és a P2P-készleten keresztül kéri le az adatokat.
 
-Az 5chan ezt a normál 5chan.app webalkalmazás Speciális beállítások kapcsolójaként teszi közzé. A legújabb `pkc-js` böngészőverem kellően stabillá vált a nyilvános teszteléshez, miután a libp2p/gossipsub felfelé irányuló együttműködési munkája címzett üzeneteket kézbesített a Helia és a Kubo partnerek között. A beállítás a böngésző P2P vezérlését tartja, miközben több valós tesztelést kap; amint elegendő termelési biztonsággal rendelkezik, az alapértelmezett webes elérési úttá válhat.
+A böngészős P2P mostanra az alapértelmezett webes út, nem pedig kapcsoló mögé rejtett kísérlet. Az
+5chan alapértelmezés szerint tiszta böngészős P2P-vel fut az 5chan.app címen, és ugyanezt teszi a
+bitsocial.net oldalon futó Bitsocial blog is. A böngészőben futó társak biztonságos WebSocketeken
+keresztül építenek kapcsolatot; a `pkc-js` alapértelmezés szerint elutasítja a WebRTC- és
+WebTransport-kapcsolódásokat, mert ezek kapcsolatfelépítési útvonalai lassúak és megbízhatatlanok a
+böngészőben. Az a felsőbb szintű változás, amely 2026-ban gyakorlativá tette a böngészőből való
+közzétételt, a gossipsub sorszámjavítása volt a `@libp2p/gossipsub` 15.0.21-es verziójában: ezután a
+Kubo társak már nem dobták el a JavaScript csomópontok által közzétett üzeneteket.
 
-## Átjáró tartalék
+A teljes képért — beleértve azt is, hogy egy böngészőcsomópont mire továbbra sem képes — lásd a
+[Böngészős peer-to-peer](/browser-p2p/) oldalt.
 
-Az átjáró által támogatott böngészőhozzáférés továbbra is hasznos a kompatibilitás és a bevezetés tartalékaként. Az átjáró adatokat továbbíthat a P2P hálózat és a böngészőkliens között, ha a böngésző nem tud közvetlenül csatlakozni a hálózathoz, vagy ha az alkalmazás szándékosan a régebbi utat választja. Ezek az átjárók:
+## Átjárós tartalék {#gateway-fallback}
 
-- bárki irányíthatja
-- nem igényel felhasználói fiókot vagy fizetést
-- ne szerezzen felügyeleti jogot a felhasználói identitások vagy közösségek felett
-- adatvesztés nélkül kicserélhető
+Az átjáróra épülő böngészős hozzáférés kompatibilitási és bevezetési tartalékként továbbra is
+hasznos. Az átjáró adatot tud közvetíteni a P2P-hálózat és egy böngészőkliens között, ha a böngésző
+nem tud közvetlenül csatlakozni a hálózathoz, vagy ha az alkalmazás szándékosan a régebbi utat
+választja. Ezek az átjárók:
 
-A célarchitektúra először a böngésző P2P, és az átjárók opcionális tartalék, nem pedig az alapértelmezett szűk keresztmetszet.
+- bárki által üzemeltethetők
+- nem igényelnek felhasználói fiókot vagy fizetést
+- nem szereznek rendelkezési jogot a felhasználói identitások vagy közösségek felett
+- adatvesztés nélkül cserélhetők
+
+A cél olyan architektúra, amelyben a böngészős P2P az elsődleges, az átjárók pedig opcionális
+tartalékként szolgálnak, nem pedig alapértelmezett szűk keresztmetszetként.
 
 ---
 
 ## Miért nem blokklánc?
 
-A blokkláncok megoldják a dupla költés problémáját: tudniuk kell minden tranzakció pontos sorrendjét, nehogy valaki kétszer költse el ugyanazt az érmét.
+A blokkláncok a kettős költés problémáját oldják meg: ismerniük kell minden tranzakció pontos
+sorrendjét, hogy senki ne költhesse el kétszer ugyanazt az érmét.
 
-A közösségi médiának nincs dupla költési problémája. Nem számít, ha az A bejegyzést egy ezredmásodperccel a B bejegyzés előtt tették közzé, és a régi bejegyzéseknek nem kell állandóan elérhetőnek lenniük minden csomóponton.
+A közösségi médiában nincs kettős költés. Nem számít, hogy az A bejegyzés egy ezredmásodperccel a B
+bejegyzés előtt jelent-e meg, és a régi bejegyzéseknek sem kell tartósan elérhetőnek maradniuk
+minden csomóponton.
 
-A blokklánc kihagyásával a Bitsocial elkerüli:
+A blokklánc kihagyásával a Bitsocial elkerüli a következőket:
 
-- **gázdíj** — a postázás ingyenes
-- **áteresztőképességi korlátok** — nincs blokkméret vagy blokkidő szűk keresztmetszet
-- **tárhely felfúvódás** — a csomópontok csak azt tartják meg, amire szükségük van
-- **konszenzusos költség** — nincs szükség bányászokra, érvényesítőkre vagy kockára
+- **gázdíjak** — a közzététel ingyenes
+- **átbocsátási korlátok** — nincs blokkméretből vagy blokkidőből eredő szűk keresztmetszet
+- **tárolási felduzzadás** — a csomópontok csak azt tartják meg, amire szükségük van
+- **konszenzus többletterhelése** — nincs szükség bányászokra, validátorokra vagy letétbe helyezésre
 
-A kompromisszum az, hogy a Bitsocial nem garantálja a régi tartalmak állandó elérhetőségét. De a közösségi médiában ez elfogadható kompromisszum: a közösségi üzemeltető csomópontja tárolja az adatokat, a népszerű tartalom sok társ között elterjed, és a nagyon régi bejegyzések természetesen elhalványulnak – ugyanúgy, ahogy minden közösségi platformon teszik.
+A kompromisszum az, hogy a Bitsocial nem garantálja a régi tartalom állandó elérhetőségét. A
+közösségi média esetében azonban ez elfogadható kompromisszum: az adat a közösség üzemeltetőjének
+csomópontján van, a népszerű tartalom sok társ között terjed, a nagyon régi bejegyzések pedig
+természetes módon halványulnak el — ugyanúgy, ahogy minden más közösségi platformon.
 
-## Miért nem szövetség?
+## Miért nem föderáció?
 
-Az egyesített hálózatok (például az e-mail vagy az ActivityPub-alapú platformok) javítják a központosítást, de továbbra is vannak szerkezeti korlátai:
+A föderált hálózatok (mint az e-mail vagy az ActivityPub-alapú platformok) előrelépést jelentenek a
+központosításhoz képest, de szerkezeti korlátaik továbbra is vannak:
 
-- **Szerverfüggőség** – minden közösségnek szüksége van egy tartományra, TLS-re és folyamatos szerverre
-  karbantartás
-- **Rendszergazdai bizalom** – a szerveradminisztrátor teljes mértékben felügyeli a felhasználói fiókokat és a tartalmat
-- **Fragmentáltság** – a szerverek közötti mozgás gyakran követők, előzmények vagy identitás elvesztésével jár
-- **Költség** – valakinek fizetnie kell a tárhelyért, ami nyomást gyakorol a konszolidációra
+- **Szerverfüggőség** — minden közösségnek szüksége van egy szerverre domainnel, TLS-sel és
+  folyamatos karbantartással
+- **Adminisztrátori bizalom** — a szerver adminisztrátora teljes ellenőrzést gyakorol a
+  felhasználói fiókok és a tartalom felett
+- **Széttöredezettség** — a szerverek közötti költözés gyakran a követők, az előzmények vagy az
+  identitás elvesztésével jár
+- **Költség** — valakinek fizetnie kell a tárhelyet, ami a koncentráció felé tolja a hálózatot
 
-A Bitsocial peer-to-peer megközelítése teljesen eltávolítja a szervert az egyenletből. Egy közösségi csomópont futhat laptopon, Raspberry Pi-n vagy olcsó VPS-en. Az operátor szabályozza a moderálási szabályzatot, de nem tudja lefoglalni a felhasználói identitásokat, mivel az identitásokat kulcspár vezérli, nem a szerver adja meg.
+A Bitsocial peer-to-peer megközelítése teljesen kiveszi a szervert a képletből. Egy közösségi
+csomópont futhat laptopon, Raspberry Pi-n vagy olcsó VPS-en. Az üzemeltető a moderálási szabályzat
+felett rendelkezik, de a felhasználói identitásokat nem tudja elvenni, mert az identitásokat
+kulcspárok vezérlik, nem a szerver osztja ki őket.
+
+## Mi a helyzet a Nostrral?
+
+A Nostr egyik kategóriába sem illik bele tisztán. Nem ActivityPub-stílusú föderáció, mert a
+felhasználók nem az egyes példányoktól kapnak fiókot, és az identitás nem kötődik egyetlen
+szerverhez. De blokklánc-alapú közösségi média sem, mert nincs benne lánc, konszenzus, gáz vagy
+globális tranzakciósorrend.
+
+A Nostrt pontosabb **relay-alapú közösségi médiaként** leírni. Az alapprotokollban
+([NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md)) a felhasználók kulcspárokat
+birtokolnak, eseményeket írnak alá, és ezeket az eseményeket WebSocket relayekre teszik közzé. A
+kliensek szűrőkkel iratkoznak fel a relayekre, lekérik az illeszkedő eseményeket, és helyben
+ellenőrzik az aláírásokat. A felhasználók relaylista-metaadatokat is közzétehetnek
+([NIP-65](https://github.com/nostr-protocol/nips/blob/master/65.md)), amelyek megmondják a
+klienseknek, hogy általában mely relayekre írnak, és mely relayeket részesítik előnyben az
+említések olvasásához.
+
+Ez egy fontos szempontból közelebb helyezi a Nostrt a Bitsocialhoz, mint a föderált vagy
+blokklánc-alapú rendszereket: az identitás kriptográfiai és hordozható. A fő különbség az adatréteg.
+A Nostrban a relayek jelentik a szokásos tároló- és kézbesítési réteget. A Bitsocialban a
+HTTP-útválasztók csak abban segítenek a klienseknek, hogy megtalálják a társakat. Az útválasztók nem
+tárolnak bejegyzéseket, profilokat, közösségi metaadatokat vagy moderálási állapotot; szolgáltató
+társak címeit adják vissza, a kliensek pedig ezt követően a társaktól kérik le a tartalmat.
+
+A közösségeknél ugyanez a kettősség figyelhető meg. A Nostrban vannak opcionális minták a
+[relay-alapú csoportokra](https://github.com/nostr-protocol/nips/blob/master/29.md) és a
+[moderátor által jóváhagyott közösségekre](https://github.com/nostr-protocol/nips/blob/master/72.md),
+ezek azonban továbbra is a relayek szabályzatától, a relayen tárolt csoportállapottól vagy attól
+függenek, hogy a kliens mely jóváhagyásokat veszi figyelembe. A Bitsocial a közösségeket elsőrangú
+kriptográfiai objektumként kezeli: az üzemeltető csomópontja ellenőrzi a bejegyzéseket, futtatja a
+közösség kihívási szabályzatát, és közzéteszi a legfrissebb elfogadott állapotot a peer-to-peer
+hálózatba.
+
+| Kérdés           | Nostr                                                                                                 | Bitsocial                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Kategória        | Relay-alapú protokoll                                                                                 | Peer-to-peer közösségi hálózat                                              |
+| Identitás        | Felhasználói nyilvános kulcs                                                                          | Felhasználói és közösségi kulcspárok                                        |
+| Adatútvonal      | Relayekre közzétett aláírt események                                                                  | A nyilvános kulcsú cím társakra oldódik fel; a tartalom a társaktól érkezik |
+| Ki tartja online | A felhasználók és a kliensek által választott relayek                                                 | A közösség tulajdonosának csomópontja és a segítő seederek                  |
+| Közösségek       | Opcionális relay-alapú csoportok vagy moderátor által jóváhagyott közösségek                          | Elsőrangú közösségi objektumok, üzemeltető által vezérelt moderálással      |
+| Spamvédelem      | Relay-szabályzat, hitelesítés, fizetés, proof-of-work, kliensoldali szűrők vagy moderátori jóváhagyás | Közösség által meghatározott kihíváslogika a befogadás előtt                |
+| Fő kompromisszum | Hordozható identitás, de relayfüggő elérhetőség és szabályzat                                         | Kevesebb relayfüggőség, de a régi tartalom nem marad meg garantáltan örökre |
 
 ---
 
-## Összegzés
+## Összefoglalás
 
-A Bitsocial két primitívre épül: a nyilvános kulcson alapuló címzésre a tartalomfelderítéshez és a peer-to-peer pub-ra a valós idejű kommunikációhoz. Együtt létrehoznak egy közösségi hálózatot, ahol:
+A Bitsocial két primitívre épül: a tartalomfelderítéshez nyilvános kulcson alapuló címzésre, a valós
+idejű kommunikációhoz pedig peer-to-peer pubsubra. Ezek együtt olyan közösségi hálózatot hoznak
+létre, ahol:
 
-- a közösségeket kriptográfiai kulcsok azonosítják, nem pedig domain nevek
-- a tartalom torrentként terjed a társaik között, nem egyetlen adatbázisból szolgálják ki
-- A kéretlen levelekkel szembeni ellenállás minden közösségben helyi jellegű, nem egy platform kényszeríti rá
-- a felhasználók kulcspárokon keresztül birtokolják identitásukat, nem visszavonható fiókokon keresztül
-- az egész rendszer szerverek, blokkláncok vagy platformdíjak nélkül fut
+- a közösségeket kriptográfiai kulcsok azonosítják, nem domainnevek
+- a tartalom torrentszerűen terjed a társak között, nem egyetlen adatbázisból szolgálják ki
+- a spamvédelem közösségenként helyi, nem egy platform kényszeríti rá
+- a felhasználók kulcspárokon keresztül birtokolják az identitásukat, nem visszavonható fiókokon át
+- az egész rendszer szerverek, blokkláncok és platformdíjak nélkül működik

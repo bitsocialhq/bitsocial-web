@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Roskapostin vastainen haaste, joka sulkee julkaisemisen yhteisön omistajien jakamien ainutlaatuisten kuponkikoodien taakse.
+description: Roskapostin torjuntahaaste, joka sulkee julkaisemisen yhteisön omistajien jakamien yksilöllisten kuponkikoodien taakse.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Voucher Challenge on roskapostin estomekanismi, joka sulkee sisällön julkaisemisen ainutlaatuisten kuponkikoodien taakse. Sen sijaan, että luottaisi automaattiseen havaitsemiseen, se siirtää luottamuksen yhteisön omistajalle, joka jakaa koodit manuaalisesti ihmisille, joihin he luottavat.
+Voucher Challenge sulkee sisällön julkaisemisen yhteisön omistajan jakamien yksilöllisten kuponkikoodien taakse. Automaattisen pisteytyksen sijaan se siirtää luottamuksen manuaaliseen kutsuprosessiin, jossa tunnetut ihmiset saavat koodinsa omistajan hallitseman kanavan kautta.
 
-**Lähdekoodi:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Lähdekoodi ja ajantasainen README:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **npm-paketti:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Asennus
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Miten se toimii
 
 1. Yhteisön omistaja luo yhden tai useamman yksilöllisen kuponkikoodin.
-2. Omistaja jakaa nämä koodit luotettaville kirjoittajille valitsemansa kanavan kautta (suora viesti, sähköposti, henkilökohtaisesti jne.).
-3. Kun kirjoittaja yrittää julkaista, haastejärjestelmä pyytää häntä antamaan kuponkikoodin.
-4. Koodi vahvistetaan – jos se on aito eikä sitä ole vielä käytetty, julkaisu hyväksytään.
+2. Omistaja jakaa koodit luottamilleen kirjoittajille valitsemaansa kanavaa pitkin (yksityisviesti, sähköposti, kasvokkain ja niin edelleen).
+3. Kun kirjoittaja yrittää julkaista, haastejärjestelmä pyytää häneltä kuponkikoodia.
+4. Koodi tarkistetaan -- jos se on aito eikä sitä ole vielä käytetty, julkaisu hyväksytään.
 
-Jokainen kuponkikoodi on sidottu tiettyyn tekijään, kun se on lunastettu, mikä estää muita käyttämästä sitä uudelleen.
+Jokainen kuponkikoodi sidotaan lunastuksen yhteydessä tiettyyn kirjoittajaan, mikä estää muita käyttämästä sitä uudelleen.
 
-## Milloin käyttää sitä
+## Paketin ajantasainen dokumentaatio
 
-Voucher Challenge sopii parhaiten:
+Tämä sivu on tarkoituksella yleiskatsaus, ei peilattu asennusopas. Paketin README on luotettava lähde ajantasaisille haasteiden nimille, Bitsocial CLI -esimerkeille, pkc-js-rekisteröinnille, tuetuille asetuksille ja lunastuksen toiminnalle:
 
-- **Vain kutsutut yhteisöt**, joissa jäsenyyttä rajoitetaan tarkoituksella.
-- **Kuroidut tilat**, joissa omistaja tarkastaa henkilökohtaisesti jokaisen osallistujan.
-- **Korkean luotettavuuden omaavat ympäristöt**, joissa automaattinen roskapostin pisteytys on tarpeetonta tai ei-toivottua.
+- [Voucher Challenge -paketin README](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Koska se vaatii manuaalisen koodin jakelun, se ei skaalaudu suuriin avoimiin yhteisöihin. Harkitse näissä skenaarioissa [Spam Blocker](./spam-blocker.md) tai [EVM Contract Call Challenge](./evm-contract-call.md).
+Suosi alkuperäistä README-tiedostoa, kun määrität käytössä olevaa yhteisöä, koska kuponkiasetukset ja asennustavat versioidaan kyseisen paketin mukana eikä tämän sivuston mukana.
 
-## Integrointi
+## Milloin sitä kannattaa käyttää
 
-Voucher Challenge liitetään samaan haastekäyttöliittymään, jota muut Bitsocial-ekosysteemin roskapostin estopaketit käyttävät. Yhteisön omistajat ottavat sen käyttöön yhteisöasetuksissaan, ja haaste esitetään automaattisesti kirjoittajille, kun he yrittävät julkaista.
+Voucher Challenge sopii parhaiten seuraaviin:
+
+- **Vain kutsulla toimivat yhteisöt**, joissa jäsenyyttä on tarkoituksella rajoitettu.
+- **Kuratoidut tilat**, joissa omistaja tarkastaa jokaisen osallistujan henkilökohtaisesti.
+- **Korkean luottamuksen ympäristöt**, joissa automaattinen roskapostipisteytys on tarpeetonta tai ei-toivottua.
+
+Koska koodit on jaettava käsin, malli ei skaalaudu suuriin avoimiin yhteisöihin. Niitä varten harkitse sen sijaan vaihtoehtoja [Roskapostin esto](./spam-blocker.md) tai [EVM Contract Call Challenge](./evm-contract-call.md).

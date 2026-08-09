@@ -1,15 +1,15 @@
 ---
 title: BSO Resolver
-description: Lös .bso-domännamn till publika nycklar med hjälp av ENS TXT-poster, med inbyggd cachning och plattformsoberoende stöd.
+description: Slå upp .bso-domännamn till publika nycklar via Bitsocials TXT-poster.
 sidebar_position: 1
 ---
 
 # BSO Resolver
 
-BSO Resolver översätter `.bso`-domännamn till deras motsvarande publika nycklar genom att läsa Bitsocial TXT-poster lagrade på ENS. Den tillhandahåller en delad viem-klient, beständig cachning och fungerar i både Node.js och webbläsarmiljöer.
+BSO Resolver översätter `.bso`-domännamn till motsvarande publika nycklar genom att läsa Bitsocials TXT-poster. Det är resolverpaketet som Bitsocials verktyg använder när ett `.bso`-namn som visas för användaren ska bli det nyckelmaterial som peer-to-peer-stacken förstår.
 
-- **GitHub**: [bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver)
-- **Licens**: Endast GPL-2.0
+- **Källkod och aktuell README:** [github.com/bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver#readme)
+- **npm-paket:** [`@bitsocial/bso-resolver`](https://www.npmjs.com/package/@bitsocial/bso-resolver)
 
 ## Installation
 
@@ -17,73 +17,16 @@ BSO Resolver översätter `.bso`-domännamn till deras motsvarande publika nyckl
 npm install @bitsocial/bso-resolver
 ```
 
-## Skapa en resolver
+## Var det passar in
 
-Instantiera resolvern genom att skicka ett konfigurationsobjekt till konstruktorn:
+Bitsocial-namn är tänkta att vara läsbara ingångar till communities och skribenter. Resolvern håller det namnlagret skilt från applikationskoden, så att klienter först kan fråga om ett namn stöds och sedan slå upp det via paketets runtime-specifika ingångspunkt.
 
-```js
-const resolver = new BsoResolver({ key, provider, dataPath });
-```
+Använd den när du bygger en Bitsocial-medveten klient, ett kommandoradsverktyg eller en tjänst som behöver kunna ta emot `.bso`-namn och inte bara råa publika nycklar.
 
-| Parameter  | Krävs | Beskrivning                                     |
-| ---------- | ----- | ----------------------------------------------- |
-| `key`      | Ja    | Identifierare för resolver-instansen.           |
-| `provider` | Ja    | Transportkonfiguration (se nedan).              |
-| `dataPath` | Nej   | Katalog för SQLite-cachefilen (endast Node.js). |
+## Aktuell paketreferens
 
-### Leverantörsalternativ
+Den här sidan är medvetet en översikt och inte en spegling av API-referensen. Paketets README är källan till sanning för konstruktoralternativ, returtyper, cachningsbeteende, ingångspunkter, leverantörsexempel och semantiken för nedstängning:
 
-Parametern `provider` accepterar tre format:
+- [README för BSO Resolver](https://github.com/bitsocialnet/bso-resolver#readme)
 
-- **`"viem"`** -- Använder standard kollektivtrafik som tillhandahålls av viem.
-- **HTTP(S) URL** -- Ansluter via en JSON-RPC-slutpunkt (t.ex. `https://mainnet.infura.io/v3/YOUR_KEY`).
-- **WebSocket URL** -- Ansluter via en WebSocket RPC-slutpunkt (t.ex. `wss://mainnet.infura.io/ws/v3/YOUR_KEY`).
-
-## Metoder
-
-### `resolve({ name, abortSignal? })`
-
-Slår upp ett `.bso`-namn och returnerar den tillhörande publika nyckeln. En valfri `AbortSignal` kan skickas för att avbryta långvariga förfrågningar.
-
-### `canResolve({ name })`
-
-Returnerar en boolean som indikerar om resolvern kan hantera det angivna namnet. Använd detta för att kontrollera support innan du försöker en full upplösning.
-
-### `destroy()`
-
-Rivrar resolvern, stänger databasanslutningar och frigör resurser. Ring detta när resolvern inte längre behövs.
-
-## Cachning
-
-Lösta namn cachelagras automatiskt för att minska redundanta nätverkssökningar. Backend för cachning väljs baserat på runtime-miljön:
-
-| Miljö      | Backend        | Anteckningar                                                  |
-| ---------- | -------------- | ------------------------------------------------------------- |
-| Node.js    | SQLite         | Lagrat på `dataPath`. Använder WAL-läge för samtidig åtkomst. |
-| Webbläsare | IndexeradDB    | Använder inbyggda IndexedDB-transaktioner.                    |
-| Fallback   | I minnet `Map` | Används när varken SQLite eller IndexedDB är tillgängliga.    |
-
-Alla cacheposter har en **en timmes TTL** och vräkas automatiskt efter utgången.
-
-## Integration med pkc-js
-
-Resolvern kan anslutas direkt till pkc-js genom alternativet `nameResolvers`, vilket möjliggör transparent `.bso` namnupplösning under nyckelsökningar:
-
-```js
-const pkc = new Pkc({
-  nameResolvers: [resolver],
-  // ...other options
-});
-```
-
-## Samtidighet
-
-Resolvern är designad för att vara säker vid samtidig användning:
-
-- En enda delad viem-klient undviker redundanta anslutningar.
-- SQLite fungerar i WAL-läge (Write-Ahead Logging), vilket tillåter samtidiga läsningar utan att blockera.
-- Webbläsarcache förlitar sig på inbyggda IndexedDB-transaktioner för isolering.
-
-## Ingångspunkter för plattformar
-
-Paketet levererar separata ingångspunkter för Node.js och webbläsarbyggen. Samlare som stöder fältet `exports` i `package.json` kommer automatiskt att välja rätt.
+Utgå från README uppströms när du kopierar kod till ett projekt, eftersom resolverns beteende versionshanteras med paketet och inte med den här webbplatsen.

@@ -1,12 +1,12 @@
 ---
 title: 5chan
-description: Isang walang server, desentralisadong imageboard na binuo sa Bitsocial protocol kung saan maaaring gumawa at magkaroon ng mga board ang sinuman.
+description: Isang walang server at desentralisadong imageboard na binuo sa Bitsocial protocol kung saan sinuman ay maaaring lumikha at magmay-ari ng mga board.
 sidebar_position: 1
 ---
 
 # 5chan
 
-Ang 5chan ay isang walang server, walang admin, at ganap na desentralisadong imageboard na tumatakbo sa Bitsocial protocol. Sinusunod nito ang pamilyar na istraktura ng direktoryo ng imageboard habang ipinapakilala ang desentralisadong pagmamay-ari — sinuman ay maaaring lumikha ng isang board, at maraming mga board ay maaaring makipagkumpitensya para sa parehong puwang ng direktoryo sa pamamagitan ng isang mekanismo ng pagboto.
+Ang 5chan ay isang walang server, walang admin, at ganap na desentralisadong imageboard na tumatakbo sa Bitsocial protocol. Sinusunod nito ang pamilyar na istruktura ng direktoryo ng imageboard habang nagpapasok ng desentralisadong pagmamay-ari — kahit sino ay maaaring gumawa ng board, at maraming board ang maaaring maglaban para sa iisang slot sa direktoryo sa pamamagitan ng isang mekanismo ng botohan.
 
 ## Mga download
 
@@ -18,22 +18,27 @@ Ang 5chan ay isang walang server, walang admin, at ganap na desentralisadong ima
 
 ## Paano gumagana ang mga board
 
-Ang 5chan ay nag-aayos ng nilalaman sa mga board gamit ang isang klasikong layout ng direktoryo (hal., `/b/`, `/g/`). Hindi tulad ng mga tradisyonal na imageboard kung saan kinokontrol ng isang sentral na admin ang bawat board, binibigyang-daan ng 5chan ang sinumang user na lumikha at ganap na magmay-ari ng kanilang sariling board. Kapag maraming board ang nagta-target sa parehong puwang ng direktoryo, nakikipagkumpitensya sila para sa posisyong iyon sa pamamagitan ng pagboto.
+Inaayos ng 5chan ang nilalaman sa mga board gamit ang klasikong layout ng direktoryo (hal., `/b/`, `/g/`). Hindi tulad ng tradisyonal na mga imageboard kung saan kinokontrol ng isang sentral na admin ang bawat board, hinahayaan ng 5chan ang sinumang user na gumawa at ganap na magmay-ari ng sarili niyang board. Kapag maraming board ang nagta-target sa iisang slot sa direktoryo, naglalaban sila para sa posisyong iyon sa pamamagitan ng botohan.
 
-### Paglikha ng isang board
+### Paggawa ng board
 
-Para gumawa ng bagong board, kailangan mong patakbuhin ang `bitsocial-cli` bilang peer-to-peer node. Tinitiyak nito na ang iyong board ay naka-host sa isang desentralisadong paraan nang hindi umaasa sa anumang sentral na server.
+Upang gumawa ng bagong board, kailangan mong patakbuhin ang `bitsocial-cli` bilang isang peer-to-peer node. Tinitiyak nito na naka-host ang iyong board sa desentralisadong paraan nang hindi umaasa sa anumang sentral na server.
 
-### Mga takdang-aralin sa direktoryo
+### Mga pagtatalaga sa direktoryo
 
-Ang mga pagtatalaga ng slot ng direktoryo (kung aling board ang lalabas kung saang path) ay kasalukuyang pinamamahalaan sa pamamagitan ng mga kahilingan sa pull ng GitHub sa `5chan-directories.json` file. Ito ay pansamantalang proseso — susuportahan ng mga release sa hinaharap ang paggawa ng in-app na board at pagboto na nakabatay sa pubsub upang awtomatikong mahawakan ang mga pagtatalaga ng direktoryo.
+Ang pagtatalaga ng mga slot sa direktoryo (kung aling board ang lumalabas sa aling path) ay kasalukuyang pinamamahalaan sa pamamagitan ng mga GitHub pull request sa file na `5chan-directories.json`. Pansamantala lamang ang prosesong ito — susuportahan ng mga susunod na release ang paggawa ng board sa loob mismo ng app at ang botohang nakabatay sa pubsub upang awtomatikong hawakan ang mga pagtatalaga sa direktoryo.
 
-## Mga panloob
+## Mga panloob na bahagi
 
-Sa ilalim ng hood, ginagamit ng 5chan ang nakabahaging Bitsocial protocol client layer para sa mga pakikipag-ugnayan sa network nito. Ang web app sa 5chan.app ay maaari ding magpatakbo ng isang Helia node sa browser kapag ang browser P2P ay pinagana mula sa Advanced na Mga Setting, upang ang mga mambabasa ay makakapag-load mula sa mga kapantay na walang sentralisadong IPFS gateway. Tingnan ang seksyong P2P ng browser sa mga tala ng peer-to-peer na protocol.
+Sa ilalim, ginagamit ng 5chan ang ibinabahaging client layer ng Bitsocial protocol para sa mga
+interaksyon nito sa network. Ang web app sa 5chan.app ay nagpapatakbo ng Helia node sa browser
+bilang default, kaya ang isang karaniwang tab ay sumasali sa network bilang isang peer: naglo-load
+ito ng mga board mula sa ibang peer at nagpa-publish sa pamamagitan ng pubsub, nang walang
+sentralisadong IPFS gateway sa daanan ng nilalaman. Tingnan ang [Browser Peer-to-Peer](/browser-p2p/)
+para sa kung ano ang kaakibat nito at kung ano pa rin ang hindi kayang gawin ng isang browser node.
 
 ## Mga link
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Lisensya**: GPL-2.0-lamang
+- **Lisensya**: GPL-2.0-only

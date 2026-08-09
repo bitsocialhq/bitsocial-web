@@ -1,19 +1,15 @@
 ---
-title: Captcha Canvas Challenge
-description: Samostatný generátor captcha založený na obrázcích s konfigurovatelnými znaky, rozměry a barvami.
+title: Výzva Captcha Canvas
+description: Samostatná obrázková captcha výzva pro komunity Bitsocial.
 sidebar_position: 2
 ---
 
-# Captcha Canvas Challenge
+# Výzva Captcha Canvas
 
-Captcha Canvas Challenge je samostatný generátor obrázků captcha. Vykreslí náhodný text na plátno HTML a vrátí výsledný obrázek, který mohou komunity prezentovat autorům jako výzvu proti spamu.
+Captcha Canvas Challenge je samostatný balíček s obrázkovou captchou pro komunity Bitsocial. Vykresluje náhodně generovaný text na plátno a umožňuje komunitě požadovat, aby autor obrázek vyřešil dřív, než bude publikace přijata.
 
-**Zdrojový kód:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Požadavky
-
-- **Node.js** >= 22
-- **Pouze ESM** – tento balíček nedodává sestavení CommonJS.
+- **Zdrojový kód a aktuální README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **Balíček na npm:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Instalace
 
@@ -21,19 +17,16 @@ Captcha Canvas Challenge je samostatný generátor obrázků captcha. Vykreslí 
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Možnosti konfigurace
+## Kde se hodí
 
-| Možnost      | Typ      | Výchozí   | Popis                                                 |
-| ------------ | -------- | --------- | ----------------------------------------------------- |
-| `characters` | `number` | `6`       | Počet náhodných znaků vykreslených v obrázku captcha. |
-| `height`     | `number` | `100`     | Výška generovaného obrázku v pixelech.                |
-| `width`      | `number` | `300`     | Šířka generovaného obrázku v pixelech.                |
-| `colors`     | `string` | `#32cf7e` | Primární barva použitá pro text captcha.              |
+Captcha výzvy se hodí, když komunita chce jednoduchou interaktivní bránu proti spamu tam, kde nejde o mnoho. Tento balíček je záměrně úzce zaměřený: poskytuje implementaci výzvy, zatímco o tom, kdy a jak ji zobrazit, rozhoduje komunita nebo uzel Bitsocial.
 
-## Jak to funguje
+Pro silnější ochranu ji kombinujte s širšími moderačními systémy nebo systémy hodnocení rizika, místo abyste captchu považovali za kompletní antispamovou strategii.
 
-1. Generátor vybere náhodný řetězec nakonfigurované délky.
-2. Struna je vykreslena na plátno s vizuálním šumem, aby odolala OCR.
-3. Výsledný obrázek (a očekávaná odpověď) jsou vráceny, takže volající aplikace může předložit výzvu a později ověřit odpověď.
+## Aktuální dokumentace balíčku
 
-Protože je balíček čistým generátorem obrázků, nezvládá sám o sobě práci v síti ani správu relací. Je určen k integraci do většího toku výzev -- například jako jeden z typů výzev podporovaných [Blokátor spamu] (./spam-blocker.md).
+Tato stránka je záměrně přehledem, nikoli zrcadleným návodem k nastavení. Zdrojem pravdy pro aktuální názvy výzev, příklady registrace, příklady pro CLI, podporované volby, požadavky a bezpečnostní poznámky je README balíčku:
+
+- [README balíčku Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Při konfiguraci živé komunity dávejte přednost upstream README, protože volby balíčku a instalační postupy jsou verzované spolu s balíčkem, nikoli s tímto webem.

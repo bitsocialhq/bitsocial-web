@@ -1,79 +1,79 @@
 ---
 title: Spam Blocker
-description: Centralized spam detection service with risk scoring, OAuth challenges, and configurable tier thresholds.
+description: Servizio centralizzato di rilevamento dello spam con punteggi di rischio, sfide OAuth e soglie di livello configurabili.
 sidebar_position: 1
 ---
 
 # Spam Blocker
 
-Spam Blocker è un servizio centralizzato di rilevamento dello spam che valuta le pubblicazioni in arrivo e assegna punteggi di rischio. Si compone di due pacchetti:
+Spam Blocker è un servizio centralizzato di rilevamento dello spam che valuta le pubblicazioni in arrivo e assegna loro un punteggio di rischio. È composto da due pacchetti:
 
-- **`@bitsocial/spam-blocker-server`** -- il server HTTP che ospita le API di valutazione e verifica.
-- **`@bitsocial/spam-blocker-challenge`** -- un pacchetto client leggero che le comunità integrano per inviare pubblicazioni per la valutazione.
+- **`@bitsocial/spam-blocker-server`** -- il server HTTP che ospita le API di valutazione e di sfida.
+- **`@bitsocial/spam-blocker-challenge`** -- un pacchetto client leggero che le comunità integrano per inviare le pubblicazioni alla valutazione.
 
 **Codice sorgente:** [github.com/bitsocialnet/spam-blocker](https://github.com/bitsocialnet/spam-blocker)
 
-## Come funziona il punteggio del rischio
+## Come funziona il punteggio di rischio
 
-Ogni pubblicazione inviata all'endpoint `/evaluate` riceve un punteggio di rischio numerico. Il punteggio è una combinazione ponderata di diversi segnali:
+Ogni pubblicazione inviata all'endpoint `/evaluate` riceve un punteggio di rischio numerico. Il punteggio è una combinazione ponderata di più segnali:
 
-| Segnale                 | Descrizione                                                                                                                                                                     |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Età del conto           | I conti più recenti ricevono punteggi di rischio più elevati.                                                                                                                   |
-| Karma                   | Il karma comunitario accumulato riduce il rischio.                                                                                                                              |
-| Reputazione dell'autore | Dati sulla reputazione raccolti dall'indicizzatore di rete in background.                                                                                                       |
-| Analisi del contenuto   | Euristica a livello di testo (densità dei collegamenti, modelli di spam noti, ecc.).                                                                                            |
-| Velocità                | I post successivi e rapidi dello stesso autore aumentano il rischio.                                                                                                            |
-| Intelligenza IP         | Geolocalizzazione a livello di paese e ricerche nei feed di minacce. Vengono archiviati solo i codici paese: gli indirizzi IP grezzi non vengono mai condivisi con le comunità. |
+| Segnale                 | Descrizione                                                                                                                                                                           |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Anzianità dell'account  | Gli account più recenti ricevono punteggi di rischio più alti.                                                                                                                        |
+| Karma                   | Il karma accumulato nella comunità riduce il rischio.                                                                                                                                 |
+| Reputazione dell'autore | Dati di reputazione raccolti dall'indicizzatore di rete in background.                                                                                                                |
+| Analisi del contenuto   | Euristiche sul testo (densità di link, schemi di spam noti e simili).                                                                                                                 |
+| Frequenza               | Pubblicazioni ravvicinate dallo stesso autore aumentano il rischio.                                                                                                                   |
+| Informazioni sull'IP    | Geolocalizzazione a livello di paese e consultazione di feed sulle minacce. Vengono conservati solo i codici paese -- gli indirizzi IP grezzi non sono mai condivisi con le comunità. |
 
-## Soglie di livello
+## Soglie dei livelli
 
-Il punteggio di rischio si associa a uno dei quattro livelli configurabili che determinano cosa succede dopo:
+Il punteggio di rischio corrisponde a uno di quattro livelli configurabili che determinano cosa succede dopo:
 
-1. **Accettazione automatica**: il punteggio è sufficientemente basso da consentire l'approvazione della pubblicazione senza alcuna contestazione.
-2. **OAuth sufficiente**: l'autore deve completare una verifica OAuth per procedere.
-3. **OAuth-più-altro**: OAuth da solo non è sufficiente; è richiesta una verifica aggiuntiva (ad esempio CAPTCHA).
-4. **Rifiuto automatico**: il punteggio è troppo alto; la pubblicazione viene respinta in toto.
+1. **Accettazione automatica** -- il punteggio è abbastanza basso da approvare la pubblicazione senza alcuna sfida.
+2. **OAuth sufficiente** -- l'autore deve completare una verifica OAuth per procedere.
+3. **OAuth più verifica aggiuntiva** -- OAuth da solo non basta; serve una verifica ulteriore (ad esempio un CAPTCHA).
+4. **Rifiuto automatico** -- il punteggio è troppo alto e la pubblicazione viene respinta senz'altro.
 
-Tutti i valori di soglia sono configurabili per comunità.
+Tutti i valori di soglia sono configurabili per singola comunità.
 
 ## Flusso della sfida
 
-Quando una pubblicazione rientra in un livello che richiede verifica, inizia il flusso di sfida:
+Quando una pubblicazione ricade in un livello che richiede una verifica, parte il flusso della sfida:
 
-1. All'autore viene innanzitutto richiesto di autenticarsi tramite **OAuth** (GitHub, Google, Twitter e altri provider supportati).
-2. Se OAuth da solo non è sufficiente (livello 3), viene presentato un **CAPTCHA fallback** alimentato da Cloudflare Turnstile.
-3. L'identità OAuth viene utilizzata esclusivamente per la verifica: non viene mai condivisa con la community o con altri utenti.
+1. All'autore viene chiesto per prima cosa di autenticarsi tramite **OAuth** (GitHub, Google, Twitter e altri provider supportati).
+2. Se OAuth da solo non basta (livello 3), viene proposto un **CAPTCHA di riserva** basato su Cloudflare Turnstile.
+3. L'identità OAuth serve unicamente alla verifica e non viene **mai condivisa** con la comunità né con altri utenti.
 
-## Endpoint API
+## Endpoint dell'API
 
-### ZXQPLACEholder0ZXQ
+### `POST /evaluate`
 
-Presentare una pubblicazione per la valutazione del rischio. Restituisce il punteggio di rischio calcolato e il livello di sfida richiesto.
+Invia una pubblicazione alla valutazione del rischio. Restituisce il punteggio di rischio calcolato e il livello di sfida richiesto.
 
-### ZXQPLACEholder0ZXQ
+### `POST /challenge/verify`
 
-Invia il risultato di una verifica completata (token OAuth, soluzione CAPTCHA o entrambi) per la verifica.
+Invia il risultato di una sfida completata (token OAuth, soluzione del CAPTCHA o entrambi) per la verifica.
 
-### ZXQPLACEholder0ZXQ
+### `GET /iframe/:sessionId`
 
-Restituisce una pagina HTML incorporabile che esegue il rendering dell'interfaccia utente della sfida appropriata per la sessione specificata.
+Restituisce una pagina HTML incorporabile che mostra l'interfaccia di sfida adatta alla sessione indicata.
 
-## Limitazione della velocità
+## Limitazione della frequenza
 
-I limiti di tariffa vengono applicati dinamicamente in base all'età e alla reputazione dell'autore. Gli autori più nuovi o con una reputazione inferiore devono affrontare limiti più severi, mentre gli autori affermati godono di soglie più generose. Ciò impedisce inondazioni di spam senza penalizzare i partecipanti fidati.
+I limiti di frequenza vengono applicati dinamicamente in base all'anzianità e alla reputazione dell'autore. Gli autori più recenti o con reputazione più bassa incontrano limiti più stringenti, mentre quelli consolidati hanno soglie più generose. Così si evitano le ondate di spam senza penalizzare i partecipanti affidabili.
 
 ## Indicizzatore di rete in background
 
-Il server esegue un indicizzatore in background che esegue la scansione continua della rete per creare e mantenere i dati sulla reputazione dell'autore. Questi dati vengono inseriti direttamente nel processo di valutazione del rischio, consentendo al sistema di riconoscere i partecipanti in buona fede ripetuti nelle comunità.
+Il server esegue un indicizzatore in background che analizza di continuo la rete per costruire e mantenere aggiornati i dati di reputazione degli autori. Questi dati alimentano direttamente il calcolo del punteggio di rischio e permettono al sistema di riconoscere chi partecipa in buona fede in modo ricorrente nelle varie comunità.
 
 ## Privacy
 
-Spam Blocker è progettato pensando alla privacy:
+Spam Blocker è progettato tenendo conto della privacy:
 
-- Le identità OAuth vengono utilizzate solo per la verifica delle sfide e **non vengono mai divulgate** alle comunità.
-- Gli indirizzi IP vengono risolti in **solo codici paese**; gli IP grezzi non vengono archiviati o condivisi.
+- Le identità OAuth servono solo alla verifica delle sfide e non vengono **mai divulgate** alle comunità.
+- Gli indirizzi IP vengono risolti **solo in codici paese**; gli IP grezzi non vengono conservati né condivisi.
 
-## Banca dati
+## Database
 
-Il server utilizza **SQLite** (tramite `better-sqlite3`) per la persistenza locale dei dati di reputazione, stato della sessione e configurazione.
+Il server usa **SQLite** (tramite `better-sqlite3`) per la persistenza locale dei dati di reputazione, dello stato delle sessioni e della configurazione.

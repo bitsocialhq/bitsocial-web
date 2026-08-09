@@ -1,56 +1,94 @@
 ---
 title: Bitsocial Chain
-description: Faza 4 e masterplanit, që mbulon shtresën e përbashkët të zinxhirit të aplikacioneve të propozuar për aplikacionet Bitsocial.
+description: Faza 2 e masterplanit, që mbulon shtresën ekonomike të propozuar mbi një appchain Ethereum L2 për aplikacionet Bitsocial.
 ---
 
 # Bitsocial Chain
 
-Rrjeti Bitsocial është emri i përdorur në masterplanin për shtresën e përbashkët të zinxhirit të aplikacioneve që do të vendoset nën aplikacionet Bitsocial.
+Bitsocial Chain është shtresa ekonomike e propozuar mbi një appchain Ethereum L2 për aplikacionet
+Bitsocial. Faqja aktuale kushtuar zinxhirit është [chain.bitsocial.net](https://chain.bitsocial.net).
 
-Ideja nuk është që të zëvendësohet shtresa sociale kolegë-to-peer. Është për të siguruar primitivet e përbashkëta ekonomike dhe koordinuese që aplikacionet sociale do të kenë nevojë nëse do të konkurrojnë me platformat ekzistuese në shkallë.
+Shtresa sociale peer-to-peer u lejon komuniteteve, identiteteve dhe përmbajtjes të dalin jashtë një
+baze të dhënash qendrore platforme. Bitsocial Chain synon të shtojë primitivet e përbashkëta të
+emërtimit, monetizimit dhe pagesave, ato që i bëjnë këto aplikacione më të vështira për t'u lënë pa
+financim.
 
-## Çfarë do të thotë për pushtet
+## Çfarë synon të fuqizojë
 
-- domenet e decentralizuara bitsociale si `.bso`
+- domene të decentralizuara Bitsocial si `.bso`
+- shpërblime dhe bakshishe
+- kanale të qëndrueshme monetizimi
 - likuiditet të përbashkët nëpër aplikacione
-- shina të qëndrueshme të fitimit të parave
-- strukturat financiare që janë më të vështira për t'i mbytur bankat apo platformat
-- efektet e rrjetit që nuk varen nga një kompani që zotëron të gjithë stakun
+- struktura financiare që bankat ose platformat i mbysin më vështirë
+- efekte rrjeti që nuk varen nga një kompani e vetme që zotëron të gjithë stakun
+
+Qëllimi nuk është të dalim përpara me mekanikat e tokenit. Qëllimi është t'i bëjmë aplikacionet
+sociale të dobishme më të qëndrueshme, më të financueshme dhe më pak të varura nga ofrues të
+centralizuar pagesash ose emërtimi.
+
+## Prova aktuale e konceptit
+
+Prova e parë e konceptit për Bitsocial Chain fokusohet te emrat nativë `.bso`. Ajo dëshmon se një
+regjistër emrash mund të nxirret nga historiku i Ethereum L1 pa e vendosur përmbajtjen sociale në
+zinxhir:
+
+- përdoruesit dërgojnë synime regjistrimi, përditësimi, transferimi dhe revokimi përmes transaksioneve
+  të thjeshta në Ethereum L1
+- kushdo mund të drejtojë nyjen e derivimit dhe të rindërtojë të njëjtën gjendje të regjistrit `.bso`
+- një resolver e lidh një emër `.bso` me çelësin publik Bitsocial që klientët e përdorin tashmë mbi
+  protokollin peer-to-peer
+- postimet, votat, moderimi, prurjet dhe përmbajtja e komunitetit qëndrojnë jashtë zinxhirit dhe
+  peer-to-peer
+
+Kjo provë koncepti nuk është një lançim prodhimi në Stage 2. Ende nuk ka sistem provash, lojë
+sfidash, kod të audituar, vendosje live, çmime përfundimtare apo qeverisje përfundimtare. Qëndrimi i
+saj afatgjatë është transparent si parazgjedhje dhe i pajtueshëm me privatësinë nga vetë dizajni:
+zinxhiri bazë është publik, ndërsa bakshishet, pagesat, shpërblimet dhe likuiditeti i së ardhmes
+duhet të shmangin lidhjet e detyrueshme e të përhershme mes identitetit social dhe historikut të
+portofolit.
 
 ## Pse ka rëndësi
 
-Decentralizimi i komuniteteve dhe identiteteve është i nevojshëm, por nuk mjafton të decentralizohen të gjitha mediat sociale.
+Decentralizimi i komuniteteve dhe i identiteteve është i nevojshëm, por nuk mjafton për t'i
+decentralizuar të gjitha mediat sociale.
 
-Nëse shtresa ekonomike ende varet nga një pjesë e vogël e hekurudhave të centralizuara, atëherë aplikacionet mbeten të lehta për t'u bërë presion, deplatformë ose uria financiarisht. Rrjeti Bitsocial është përgjigja e propozuar për atë shtresë të dytë të varësisë.
+Nëse aplikacionet sociale vazhdojnë të varen nga pak kanale ekonomike të centralizuara, mbi to
+mbetet e lehtë të ushtrohet presion, të hiqen nga platformat ose të lihen pa financim. Bitsocial
+Chain është përgjigjja e propozuar për këtë shtresë të dytë varësie.
 
-## Marrëdhënia me pjesën tjetër të Bitsocial
+## Marrëdhënia me aplikacionet
 
-Rrjeti Bitsocial propozohet si infrastrukturë e përbashkët për aplikacionet Bitsocial, jo si produkt me të cilin përdoruesit ndërveprojnë drejtpërdrejt çdo ditë.
+Bitsocial Chain duhet të qëndrojë nën aplikacionet Bitsocial, jo t'i zëvendësojë ato.
 
-Rezultati i publikut do të ishte:
+Rezultati i dukshëm për publikun duhet të jetë:
 
-- komunitetet qëndrojnë bashkëmoshatarë
+- komunitetet qëndrojnë peer-to-peer
 - aplikacionet qëndrojnë të diferencuara
-- fitimi i parave dhe emërtimi bëhen më të qëndrueshme
+- përdoruesit marrin veçori praktike emërtimi dhe monetizimi
+- krijuesit dhe komunitetet mund të marrin mbështetje nëpër klientë të ndryshëm
 - vlera mund të lëvizë nëpër ekosistem pa rikrijuar një pronar të centralizuar platforme
 
-## Pse kjo qëndron në fazën 4
+## Pse kjo vjen herët
 
-Masterplani e vendos këtë pas pikave të mëparshme të provës në nivelin e aplikacionit:
+Masterplani aktual e vendos Bitsocial Chain menjëherë pas kategorive të para hyrëse: imageboard-et,
+forumet dhe shtresa publike RPC që i bën këto aplikacione praktike për më shumë përdorues.
 
-1. decentralizoni tabelat e imazhit
-2. lëshoni RPC Bitsocial
-3. decentralizimi i forumeve
-4. lëshoni Rrjetin Bitsocial
+Kjo renditje në kohë ka rëndësi sepse aplikacionet sociale kanë nevojë për efekte të forta rrjeti.
+Nëse emërtimi, mbështetja, shpërblimet, bakshishet dhe monetizimi vijnë shumë vonë, konkurrentët e
+centralizuar e ruajnë avantazhin e tyre më të madh për shumë gjatë.
 
-Kjo sekuencë ka kuptim sepse një shtresë koordinimi në nivel ekosistemi është më e dobishme kur aplikacionet reale dhe sjellja reale e përdoruesve ekzistojnë tashmë në rrjet.
+## Parimet e dizajnit
 
-## Parime të dizajnit
+Meqë Bitsocial Chain është ende infrastrukturë e propozuar dhe jo produkt i lançuar, plani duhet të
+mbetet i disiplinuar:
 
-Meqë Bitsocial Chain mbetet ende një infrastrukturë e propozuar dhe jo një produkt i lançuar, plani aktual duhet të mbetet i disiplinuar në disa pika:
-
-- Së pari aplikacionet dhe komunitetet. Shtresa e rrjetit duhet të ndjekë përdorimin real në aplikacionet Bitsocial, jo të dalë përpara me veçori financiare spekulative.
-- Kontributi real mbi hype-in. Nëse Bitsocial më vonë shton asete në nivel komuniteti, krijuesi ose klienti, ato duhet të shpërblejnë pjesëmarrjen dhe ndërtimin afatgjatë, jo lançime imituese apo tregtim afatshkurtër.
-- Kurimi lejohet. Aplikacionet Bitsocial mund të formësojnë renditjet, parazgjedhjet, zbulimin dhe ritmin e rollout-it për të favorizuar komunitete të qëndrueshme mbi sjelljen e stilit kazino.
-- Rollout-i gradual është i shëndetshëm. Është e arsyeshme të shtyhen veçoritë financiare native të appchain-it derisa ekosistemi të ketë mjaft përdorues, mjete moderimi dhe qartësi produkti për t'i mbështetur në mënyrë të sigurt.
-- Mekanizmat e saktë mbeten të hapur. Kjo faqe shpjegon rolin e Bitsocial Chain, jo një premtim të mbyllur për launchers tokenësh, formula tarifash ose tokenomics-in përfundimtar.
+- Së pari aplikacionet dhe komunitetet. Shtresa e rrjetit duhet t'i bëjë më të forta produktet reale
+  sociale.
+- Së pari veçoritë praktike. Emrat, shpërblimet, bakshishet dhe pagesat shpjegohen më lehtë se një
+  arkitekturë financiare abstrakte.
+- Kontributi real mbi hype-in. Primitivet ekonomike duhet të shpërblejnë pjesëmarrjen, ndërtimin dhe
+  mbështetjen e komunitetit.
+- Kurimi lejohet. Aplikacionet mund të formësojnë renditjet, parazgjedhjet dhe zbulimin për të
+  favorizuar komunitete të qëndrueshme.
+- Mekanikat e sakta mbeten ende të hapura. Kjo faqe shpjegon rolin e Bitsocial Chain, jo një premtim
+  të mbyllur për ekonominë përfundimtare.

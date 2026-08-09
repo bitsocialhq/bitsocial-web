@@ -1,29 +1,29 @@
 ---
-title: Telegram Bots
-description: Karmij boty, które monitorują listy społeczności Bitsocial i przekazują posty na kanały Telegramu.
-sidebar_position: 3
+title: Boty Telegram
+description: Boty kanałów, które śledzą listy społeczności Bitsocial i przekazują posty na kanały Telegram.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Boty Telegram
 
-Boty Bitsocial Telegram monitorują listy społeczności klientów w sieci Bitsocial i automatycznie przekazują nowe posty do kanałów Telegramu. Każda przekazana wiadomość zawiera wbudowane przyciski, które prowadzą do oryginalnego wpisu na 5chan i Seedit.
+Boty Telegram od Bitsocial śledzą listy społeczności klientów w sieci Bitsocial i automatycznie przekazują nowe posty na kanały Telegram. Każda przekazana wiadomość zawiera przyciski inline prowadzące z powrotem do oryginalnego posta na 5chan i w Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
 ## Dostępne boty
 
-| Bot              | Stan      | Opis                                                                      |
-| ---------------- | --------- | ------------------------------------------------------------------------- |
-| **Kanał 5chan**  | Aktywny   | Monitoruje wszystkie katalogi 5chan i przekazuje nowe posty do Telegramu. |
-| **Kanał nasion** | Planowane | Zapewni tę samą funkcjonalność społecznościom Seedit.                     |
+| Bot             | Status    | Opis                                                                 |
+| --------------- | --------- | -------------------------------------------------------------------- |
+| **5chan Feed**  | Aktywny   | Śledzi wszystkie katalogi 5chan i przekazuje nowe posty na Telegram. |
+| **Seedit Feed** | Planowany | Zapewni tę samą funkcjonalność dla społeczności Seedit.              |
 
-## Organizować coś
+## Konfiguracja
 
-### Warunki wstępne
+### Wymagania wstępne
 
 - Node.js
-- Przędza
-- Token bota Telegramu (utwórz go poprzez [BotFather](https://t.me/BotFather))
+- Yarn
+- Token bota Telegram (utwórz go przez [BotFather](https://t.me/BotFather))
 
 ### Instalacja
 
@@ -35,27 +35,27 @@ cd bitsocial-telegram-bots
 yarn install
 ```
 
-### Konfiguracja
+### Konfiguracja środowiska
 
-Utwórz plik `.env` w katalogu głównym projektu za pomocą tokena bota:
+Utwórz plik `.env` w katalogu głównym projektu i wpisz w nim token bota:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Działanie
+### Uruchamianie
 
-Uruchom bota po skonfigurowaniu środowiska:
+Po skonfigurowaniu środowiska uruchom bota:
 
 ```bash
 yarn start
 ```
 
-## Format postu
+## Format posta
 
-Gdy bot przekazuje post do Telegramu, zawiera dwa wbudowane przyciski:
+Gdy bot przekazuje post na Telegram, dołącza do niego dwa przyciski inline:
 
-- **Wyświetl na 5chan** -- Otwiera post w kliencie sieciowym 5chan.
-- **Wyświetl w Seedit** – otwiera post w kliencie WWW Seedit.
+- **View on 5chan** -- otwiera post w kliencie webowym 5chan.
+- **View on Seedit** -- otwiera post w kliencie webowym Seedit.
 
-Dzięki temu subskrybenci Telegramu mogą przejść bezpośrednio do pełnego wątku dyskusji na dowolnym kliencie.
+Dzięki temu subskrybenci Telegrama mogą przejść wprost do pełnego wątku dyskusji w wybranym przez siebie kliencie.

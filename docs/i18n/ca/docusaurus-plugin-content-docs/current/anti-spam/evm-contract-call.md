@@ -1,19 +1,15 @@
 ---
 title: EVM Contract Call Challenge
-description: Repte anti-spam que verifica les condicions de la cadena trucant a un contracte intel·ligent EVM.
+description: Repte anti-spam que verifica condicions a la cadena cridant un contracte intel·ligent EVM.
 sidebar_position: 4
 ---
 
 # EVM Contract Call Challenge
 
-EVM Contract Call Challenge és un mecanisme anti-spam que verifica les condicions de la cadena abans de permetre una publicació. Permet als propietaris de comunitats exigir als autors que compleixin els criteris definits pel contracte intel·ligent (per exemple, tenir un saldo mínim de testimonis) per publicar.
+EVM Contract Call Challenge verifica l'estat a la cadena d'un autor abans de permetre-li publicar. Els propietaris de comunitats poden exigir que una cartera o una identitat resolta compleixi una condició de contracte intel·ligent només de lectura, com ara tenir un saldo mínim de tokens, abans de publicar.
 
-**Codi font:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Requisits
-
-- **Node.js** >= 22
-- **Només per ESM**: aquest paquet no inclou compilacions CommonJS.
+- **Codi font i README actual:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Paquet npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Instal·lació
 
@@ -21,34 +17,26 @@ EVM Contract Call Challenge és un mecanisme anti-spam que verifica les condicio
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Opcions de configuració
+## On encaixa
 
-| Opció         | Tipus    | Descripció                                                                                    |
-| ------------- | -------- | --------------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | La cadena a consultar (p. ex., `eth`, `matic`, `avax`).                                       |
-| `address`     | `string` | L'adreça del contracte intel·ligent per trucar.                                               |
-| `abi`         | `string` | El fragment ABI de la funció que es crida.                                                    |
-| `condition`   | `string` | Una expressió de comparació avaluada amb el valor de retorn del contracte (p. ex., `> 1000`). |
-| `error`       | `string` | El missatge d'error es mostra als autors que no compleixen la condició.                       |
+Feu servir aquest repte en comunitats on la participació hagi de dependre d'un senyal EVM extern: propietat de tokens, propietat d'NFT, puntuacions de prova de personalitat, pertinença a una governança o qualsevol altra condició llegible des d'un contracte.
 
-## Exemple
+Un cop configurat, el repte és automàtic des del punt de vista de l'autor. Comprova les fonts de cartera o d'identitat elegibles, crida el mètode de contracte configurat i compara el valor retornat amb la condició de la comunitat.
 
-Un propietari de la comunitat que vulgui restringir la publicació als autors que posseeixin més de 1.000 d'un testimoni ERC-20 concret configuraria el repte amb:
+## Referència actual del paquet
 
-- `chainTicker`: `"eth"`
-- `address`: l'adreça del contracte del testimoni
-- `abi`: l'ABI per a `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Aquesta pàgina és deliberadament una visió general, i no una còpia de la referència de configuració. El README del paquet és la font de veritat per als noms de repte, els exemples de la CLI de Bitsocial, el registre amb pkc-js, els valors per defecte de les opcions, els exemples d'ABI, el comportament de l'RPC i les fonts de cartera admeses:
 
-Quan un autor intenta publicar, el repte truca a `balanceOf` amb l'adreça de l'autor i comprova si el valor retornat compleix la condició. Si ho fa, la publicació continua; en cas contrari, es retorna el missatge d'error configurat.
+- [README d'EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+
+Consulteu preferentment el README original quan configureu una comunitat en producció, perquè les opcions de contracte i els exemples es versionen amb aquest paquet i no amb aquest lloc web.
 
 ## Quan utilitzar-lo
 
 EVM Contract Call Challenge és ideal per a:
 
-- **Comunitats controlades per tokens** que restringeixen la publicació als titulars de fitxes.
-- **Accés amb control NFT** on es requereix la propietat d'una NFT específica.
-- **Espais de govern de DAO** on la participació es limita als titulars de fitxes de govern.
+- **Comunitats amb accés per token** que restringeixen la publicació a qui té tokens.
+- **Accés restringit per NFT**, on cal ser propietari d'un NFT concret.
+- **Espais de governança de DAO**, on la participació es limita a qui té tokens de governança.
 
-Per a les comunitats que no es basen en la identitat en cadena, considereu [Bloquejador de correu brossa](./spam-blocker.md) o [Repte de vals](./voucher-challenge.md).
+Per a comunitats que no depenen de la identitat a la cadena, valoreu com a alternativa [Bloquejador de correu brossa](./spam-blocker.md) o [Voucher Challenge](./voucher-challenge.md).

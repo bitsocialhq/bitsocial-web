@@ -1,34 +1,45 @@
 ---
-title: Voucher Challenge
-description: Desafio anti-spam que bloqueia a publicação por meio de códigos de voucher exclusivos distribuídos pelos proprietários da comunidade.
+title: Desafio de voucher
+description: Desafio antispam que condiciona a publicação a códigos de voucher únicos distribuídos pelos donos da comunidade.
 sidebar_position: 3
 ---
 
-# Voucher Challenge
+# Desafio de voucher
 
-Voucher Challenge é um mecanismo anti-spam que bloqueia a publicação de conteúdo por meio de códigos de voucher exclusivos. Em vez de depender da detecção automatizada, ele transfere a confiança para o proprietário da comunidade, que distribui manualmente os códigos às pessoas em quem confiam.
+O Voucher Challenge condiciona a publicação de conteúdo a códigos de voucher únicos distribuídos pelo dono da comunidade. Em vez de depender de pontuação automatizada, ele desloca a confiança para um fluxo manual de convites, em que pessoas conhecidas recebem códigos por um canal controlado pelo dono.
 
-**Código fonte:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Código-fonte e README atual:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Pacote npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Instalação
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Como funciona
 
-1. O proprietário de uma comunidade gera um ou mais códigos de voucher exclusivos.
-2. O proprietário distribui esses códigos a autores confiáveis ​​por meio de um canal de sua escolha (mensagem direta, e-mail, pessoalmente, etc.).
-3. Quando um autor tenta publicar, o sistema de desafio solicita um código de voucher.
-4. O código é validado – se for genuíno e ainda não tiver sido utilizado, a publicação é aceita.
+1. O dono da comunidade gera um ou mais códigos de voucher únicos.
+2. O dono distribui esses códigos a autores de confiança pelo canal que preferir (mensagem direta, e-mail, pessoalmente, etc.).
+3. Quando um autor tenta publicar, o sistema de desafio pede um código de voucher.
+4. O código é validado -- se for genuíno e ainda não tiver sido usado, a publicação é aceita.
 
-Cada código de voucher está vinculado a um autor específico depois de resgatado, evitando a reutilização por terceiros.
+Cada código de voucher fica vinculado a um autor específico depois de resgatado, o que impede a reutilização por outras pessoas.
+
+## Referência atual do pacote
+
+Esta página é propositalmente uma visão geral, não uma cópia do guia de configuração. O README do pacote é a fonte da verdade para os nomes atuais dos desafios, exemplos da CLI do Bitsocial, registro no pkc-js, opções suportadas e comportamento de resgate:
+
+- [README do Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+
+Prefira o README do projeto original ao configurar uma comunidade em produção, porque as opções de voucher e os fluxos de instalação são versionados junto com o pacote, e não com este site.
 
 ## Quando usar
 
 O Voucher Challenge é mais adequado para:
 
-- **Comunidades somente para convidados** onde a adesão é intencionalmente restrita.
-- **Espaços selecionados** onde o proprietário avalia pessoalmente cada participante.
-- **Ambientes de alta confiança** onde a pontuação automatizada de spam é desnecessária ou indesejável.
+- **Comunidades apenas por convite**, em que a participação é restrita de propósito.
+- **Espaços curados**, em que o dono avalia pessoalmente cada participante.
+- **Ambientes de alta confiança**, em que a pontuação automatizada de spam é desnecessária ou indesejada.
 
-Como requer distribuição manual de código, não se adapta a grandes comunidades abertas. Para esses cenários, considere [Spam Blocker](./spam-blocker.md) ou [EVM Contract Call Challenge](./evm-contract-call.md).
-
-## Integração
-
-O Voucher Challenge se conecta à mesma interface de desafio usada por outros pacotes anti-spam no ecossistema Bitsocial. Os proprietários da comunidade habilitam-no através das configurações da comunidade, e o desafio é apresentado aos autores automaticamente quando eles tentam postar.
+Como exige distribuição manual de códigos, ele não escala para grandes comunidades abertas. Nesses cenários, considere o [Spam Blocker](./spam-blocker.md) ou o [Desafio de chamada de contrato EVM](./evm-contract-call.md).

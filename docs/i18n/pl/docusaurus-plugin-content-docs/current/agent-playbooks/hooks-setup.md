@@ -1,34 +1,37 @@
 # Konfiguracja haków agenta
 
-Jeśli Twój asystent kodowania AI obsługuje haki cyklu życia, skonfiguruj je dla tego repozytorium.
+Jeśli Twój asystent programistyczny AI obsługuje haki cyklu życia, skonfiguruj je dla tego repozytorium.
 
-## Polecane haczyki
+## Zalecane haki
 
-| Hak             | Polecenie                                  | Cel                                                                                                                                                                                                            |
-| --------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Automatyczne formatowanie plików po edycjach AI                                                                                                                                                                |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Uruchom `corepack yarn install`, gdy zmieni się `package.json`                                                                                                                                                 |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Usuń nieaktualne referencje i usuń zintegrowane tymczasowe gałęzie zadań                                                                                                                                       |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Kompilacja z twardą bramką, sprawdzanie lint, sprawdzanie typu i formatu; przechowuj informacje o `yarn npm audit` i uruchamiaj `yarn knip` oddzielnie jako audyt doradczy, gdy zmienią się zależności/importy |
+| Hak             | Polecenie                                     | Cel                                                                                                                                                                                                                                     |
+| --------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Automatyczne formatowanie plików po edycjach AI                                                                                                                                                                                         |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Uruchamia `corepack yarn install`, gdy zmienia się `package.json`                                                                                                                                                                       |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Gdy diff dodaje prymitywy `useEffect`/memo w `about/src/`, przypomina agentowi, aby przemyślał zmianę z pomocą umiejętności do przeglądu React                                                                                          |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Czyści nieaktualne referencje i usuwa zintegrowane tymczasowe gałęzie zadań                                                                                                                                                             |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Ponownie skanuje bieżący diff pod kątem nowych efektów i memo React w `about/src/` przed końcową bramką weryfikacji                                                                                                                     |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Twarda bramka: ukierunkowana weryfikacja kompilacji, lint, typecheck i sprawdzenie formatowania; `yarn npm audit` pozostaje informacyjne, a `yarn knip` uruchamiaj osobno jako audyt doradczy, gdy zmieniają się zależności lub importy |
 
 ## Dlaczego
 
 - Spójne formatowanie
-- Plik blokujący pozostaje zsynchronizowany
-- Wcześnie wykryte problemy z kompilacją/lintami/typami
-- Widoczność bezpieczeństwa poprzez `yarn npm audit`
-- Zależność/dryft importu można sprawdzić za pomocą `yarn knip` bez przekształcania go w hałaśliwy globalny hak zatrzymujący
-- Jedna wspólna implementacja haka dla Kodeksu i Kursora
-- Tymczasowe gałęzie zadań pozostają zgodne z przepływem pracy w repozytorium
+- Plik blokady pozostaje zsynchronizowany
+- Nowe wystąpienia `useEffect`/memo w witrynie about dostają jawne drugie spojrzenie, zanim agent zakończy pracę
+- Problemy z kompilacją, lintem i typami istotne dla danego workspace'u wychwytywane wcześnie, bez wymuszania pełnej wielojęzycznej kompilacji dokumentacji przy każdym zadaniu
+- Widoczność kwestii bezpieczeństwa dzięki `yarn npm audit`
+- Dryf zależności i importów można sprawdzać przez `yarn knip`, bez zamieniania go w hałaśliwy globalny hak zatrzymujący
+- Jedna wspólna implementacja haków dla Codex i Cursor
+- Tymczasowe gałęzie zadań pozostają zgodne z opartym na worktree przepływem pracy repozytorium
 
-## Przykładowe skrypty hooków
+## Przykładowe skrypty haków
 
-### Sformatuj hak
+### Hak formatujący
 
 ```bash
 #!/bin/bash
-# Automatyczne formatowanie plików JS/TS po edycjach AI
-# Hook odbiera JSON przez stdin ze ścieżką_pliku
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Zweryfikuj Hooka
+### Hak weryfikujący
 
 ```bash
 #!/bin/bash
-# Uruchom kompilację, lint, kontrolę typu, sprawdzanie formatu i audyt bezpieczeństwa po zakończeniu działania agenta
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Domyślnie `scripts/agent-hooks/verify.sh` kończy działanie z wartością różną od zera, gdy wymagane sprawdzenie nie powiedzie się. Ustaw `AGENT_VERIFY_MODE=advisory` tylko wtedy, gdy celowo potrzebujesz sygnału ze złamanego drzewa bez blokowania haka. Trzymaj `yarn knip` z dala od twardej bramy, chyba że repozytorium wyraźnie zdecyduje o niepowodzeniu w przypadku doradczych problemów z importem/zależnościami.
+Domyślnie `scripts/agent-hooks/verify.sh` kończy się kodem różnym od zera, gdy wymagane sprawdzenie zawiedzie. Ustawiaj `AGENT_VERIFY_MODE=advisory` tylko wtedy, gdy celowo potrzebujesz sygnału z zepsutego drzewa bez blokowania haka. Trzymaj `yarn knip` poza twardą bramką, chyba że repozytorium jawnie zdecyduje, że doradcze problemy z importami i zależnościami mają być traktowane jako błędy.
 
-### Haczyk do instalacji przędzy
+Haki cyklu życia nie zastępują ręcznej weryfikacji w przeglądarce. Przy zmianach UI lub wizualnych nadal uruchamiaj sprawdzenia `playwright-cli` w `chrome`, `firefox` i `webkit`, a gdy zmieniła się responsywność albo obsługa dotyku — dodatkowo przepływ w mobilnym viewporcie w każdym silniku.
+
+### Hak instalacji Yarn
 
 ```bash
 #!/bin/bash
-# Uruchom instalację przędzy corepack po zmianie pakietu.json
-# Hook odbiera JSON przez stdin ze ścieżką_pliku
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Skonfiguruj okablowanie haków zgodnie z dokumentacją narzędzia agenta (`hooks.json`, odpowiednik itp.).
+Podłączenie haków skonfiguruj zgodnie z dokumentacją swojego narzędzia agentowego (`hooks.json`, odpowiednik itp.).
 
-W tym repozytorium `.codex/hooks/*.sh` i `.cursor/hooks/*.sh` powinny pozostać cienkimi opakowaniami, które delegują do współdzielonych implementacji w ramach `scripts/agent-hooks/`.
+W tym repozytorium `.codex/hooks/*.sh` i `.cursor/hooks/*.sh` powinny pozostać cienkimi nakładkami, które delegują do wspólnych implementacji w `scripts/agent-hooks/`.

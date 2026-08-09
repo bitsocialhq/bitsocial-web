@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Antispam-utmaning som låser publicering bakom unika kupongkoder som distribueras av community-ägare.
+description: Anti-spam-utmaning som låser publicering bakom unika voucherkoder som delas ut av communityägare.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Voucher Challenge är en anti-spam-mekanism som låser publicering av innehåll bakom unika kupongkoder. Istället för att förlita sig på automatiserad detektering flyttar den förtroendet till communityägaren, som manuellt distribuerar koder till personer de litar på.
+Voucher Challenge låser publicering av innehåll bakom unika voucherkoder som delas ut av communityägaren. I stället för att förlita sig på automatisk poängsättning flyttar den förtroendet till ett manuellt inbjudningsflöde där kända personer får koder via en kanal som ägaren själv kontrollerar.
 
-**Källkod:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Källkod och aktuell README:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **npm-paket:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
 
-## Hur det fungerar
+## Installation
 
-1. En communityägare genererar en eller flera unika verifikationskoder.
-2. Ägaren distribuerar dessa koder till betrodda författare via en valfri kanal (direktmeddelande, e-post, personligen, etc.).
-3. När en författare försöker publicera, uppmanar utmaningssystemet dem att ange en kupongkod.
-4. Koden är validerad -- om den är äkta och inte redan har använts accepteras publiceringen.
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
-Varje kupongkod är knuten till en specifik författare när den har lösts in, vilket förhindrar återanvändning av andra.
+## Så fungerar den
 
-## När du ska använda den
+1. En communityägare genererar en eller flera unika voucherkoder.
+2. Ägaren delar ut koderna till betrodda författare via valfri kanal (direktmeddelande, e-post, personligen och så vidare).
+3. När en författare försöker publicera ber utmaningssystemet om en voucherkod.
+4. Koden valideras – om den är äkta och inte redan har använts accepteras publikationen.
 
-Voucher Challenge är bäst lämpad för:
+Varje voucherkod knyts till en specifik författare när den lösts in, vilket hindrar andra från att återanvända den.
 
-- **Gruppen endast för inbjudningar** där medlemskapet avsiktligt begränsas.
-- **Utvalda utrymmen** där ägaren personligen vetar varje deltagare.
-- **Högförtroendemiljöer** där automatiserad skräppostpoängning är onödig eller oönskad.
+## Aktuell paketreferens
 
-Eftersom det kräver manuell koddistribution, skalas det inte till stora öppna gemenskaper. För dessa scenarier, överväg [Spam Blocker](./spam-blocker.md) eller [EVM Contract Call Challenge](./evm-contract-call.md) istället.
+Den här sidan är medvetet en översikt, inte en speglad installationsguide. Paketets README är källan till sanning för aktuella utmaningsnamn, exempel för Bitsocial CLI, registrering i pkc-js, alternativ som stöds och beteende vid inlösen:
 
-## Integration
+- [README för Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Voucher Challenge ansluts till samma utmaningsgränssnitt som används av andra anti-spam-paket i Bitsocial-ekosystemet. Gemenskapsägare aktiverar det genom sina communityinställningar, och utmaningen presenteras för författare automatiskt när de försöker göra inlägg.
+Utgå hellre från README:n uppströms när du konfigurerar ett community i drift, eftersom voucheralternativ och installationsflöden versioneras tillsammans med paketet snarare än med den här webbplatsen.
+
+## När den bör användas
+
+Voucher Challenge passar bäst för:
+
+- **Communities med inbjudan** där medlemskapet medvetet är begränsat.
+- **Kurerade utrymmen** där ägaren personligen granskar varje deltagare.
+- **Miljöer med högt förtroende** där automatisk spampoängsättning är onödig eller oönskad.
+
+Eftersom den kräver manuell distribution av koder skalar den inte till stora öppna communities. För sådana scenarier, överväg [Spam Blocker](./spam-blocker.md) eller [EVM Contract Call Challenge](./evm-contract-call.md) i stället.

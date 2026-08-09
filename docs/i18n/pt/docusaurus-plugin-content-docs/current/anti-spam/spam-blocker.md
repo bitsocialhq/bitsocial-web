@@ -1,83 +1,79 @@
 ---
 title: Spam Blocker
-description: Serviço centralizado de detecção de spam com pontuação de risco, desafios OAuth e limites de níveis configuráveis.
+description: Serviço centralizado de detecção de spam com pontuação de risco, desafios OAuth e limiares de nível configuráveis.
 sidebar_position: 1
 ---
 
 # Spam Blocker
 
-:::warning Nomenclatura herdada
-Este pacote foi publicado originalmente no escopo `@plebbit`. Ele foi renomeado para `@bitsocial/spam-blocker-server` e `@bitsocial/spam-blocker-challenge`. Referências aos nomes antigos ainda podem aparecer em documentações ou bases de código mais antigas.
-:::
+O Spam Blocker é um serviço centralizado de detecção de spam que avalia as publicações recebidas e atribui pontuações de risco. Ele é formado por dois pacotes:
 
-Spam Blocker é um serviço centralizado de detecção de spam que avalia as publicações recebidas e atribui pontuações de risco. É composto por dois pacotes:
+- **`@bitsocial/spam-blocker-server`** -- o servidor HTTP que hospeda as APIs de avaliação e de desafio.
+- **`@bitsocial/spam-blocker-challenge`** -- um pacote cliente leve que as comunidades integram para enviar publicações à avaliação.
 
-- **`@bitsocial/spam-blocker-server`** -- o servidor HTTP que hospeda as APIs de avaliação e desafio.
-- **`@bitsocial/spam-blocker-challenge`** – um pacote de cliente leve que as comunidades integram para enviar publicações para avaliação.
-
-**Código fonte:** [github.com/bitsocialnet/spam-blocker](https://github.com/bitsocialnet/spam-blocker)
+**Código-fonte:** [github.com/bitsocialnet/spam-blocker](https://github.com/bitsocialnet/spam-blocker)
 
 ## Como funciona a pontuação de risco
 
-Cada publicação enviada ao endpoint `/evaluate` recebe uma pontuação de risco numérica. A pontuação é uma combinação ponderada de vários sinais:
+Toda publicação enviada ao endpoint `/evaluate` recebe uma pontuação de risco numérica. A pontuação é uma combinação ponderada de vários sinais:
 
-| Sinal               | Descrição                                                                                                                                                                          |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Idade da conta      | As contas mais recentes recebem pontuações de risco mais altas.                                                                                                                    |
-| Carma               | O carma comunitário acumulado reduz o risco.                                                                                                                                       |
-| Reputação do autor  | Dados de reputação coletados pelo indexador da rede em segundo plano.                                                                                                              |
-| Análise de conteúdo | Heurísticas em nível de texto (densidade de links, padrões de spam conhecidos, etc.).                                                                                              |
-| Velocidade          | Postagens sucessivas e rápidas do mesmo autor aumentam o risco.                                                                                                                    |
-| Inteligência IP     | Geolocalização em nível de país e pesquisas de feed de ameaças. Apenas os códigos dos países são armazenados – os endereços IP brutos nunca são compartilhados com as comunidades. |
+| Sinal               | Descrição                                                                                                                                                                     |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Idade da conta      | Contas mais recentes recebem pontuações de risco mais altas.                                                                                                                  |
+| Karma               | O karma acumulado na comunidade reduz o risco.                                                                                                                                |
+| Reputação do autor  | Dados de reputação coletados pelo indexador de rede em segundo plano.                                                                                                         |
+| Análise do conteúdo | Heurísticas no nível do texto (densidade de links, padrões conhecidos de spam etc.).                                                                                          |
+| Velocidade          | Publicações sucessivas e rápidas do mesmo autor aumentam o risco.                                                                                                             |
+| Inteligência de IP  | Geolocalização em nível de país e consultas a feeds de ameaças. Apenas os códigos de país são armazenados -- endereços IP brutos nunca são compartilhados com as comunidades. |
 
-## Limites de nível
+## Limiares de nível
 
-A pontuação de risco é mapeada para um dos quatro níveis configuráveis ​​que determinam o que acontece a seguir:
+A pontuação de risco corresponde a um de quatro níveis configuráveis, que determinam o que acontece em seguida:
 
-1. **Aceitar automaticamente** – a pontuação é baixa o suficiente para que a publicação seja aprovada sem qualquer contestação.
-2. **OAuth-suficiente** – o autor deve concluir uma verificação OAuth para continuar.
-3. **OAuth-plus-more** -- OAuth por si só não é suficiente; verificação adicional (por exemplo, CAPTCHA) é necessária.
-4. **Rejeição automática** – a pontuação é muito alta; a publicação é rejeitada imediatamente.
+1. **Aceitação automática** -- a pontuação é baixa o suficiente para que a publicação seja aprovada sem nenhum desafio.
+2. **OAuth suficiente** -- o autor precisa concluir uma verificação OAuth para prosseguir.
+3. **OAuth e mais** -- o OAuth sozinho não basta; é necessária uma verificação adicional (por exemplo, CAPTCHA).
+4. **Rejeição automática** -- a pontuação é alta demais e a publicação é rejeitada de imediato.
 
-Todos os valores limite são configuráveis ​​por comunidade.
+Todos os valores de limiar são configuráveis por comunidade.
 
-## Fluxo do Desafio
+## Fluxo de desafio
 
 Quando uma publicação cai em um nível que exige verificação, o fluxo de desafio começa:
 
-1. Primeiro, o autor é solicitado a autenticar via **OAuth** (GitHub, Google, Twitter e outros provedores compatíveis).
-2. Se o OAuth sozinho for insuficiente (nível 3), um **substituto CAPTCHA** desenvolvido pela Cloudflare Turnstile será apresentado.
-3. A identidade OAuth é usada exclusivamente para verificação – ela **nunca é compartilhada** com a comunidade ou outros usuários.
+1. Primeiro o autor é convidado a se autenticar via **OAuth** (GitHub, Google, Twitter e outros provedores suportados).
+2. Se o OAuth sozinho for insuficiente (nível 3), é apresentado um **CAPTCHA de fallback** baseado no Cloudflare Turnstile.
+3. A identidade OAuth é usada apenas para verificação -- ela **nunca é compartilhada** com a comunidade nem com outros usuários.
 
-## Terminais de API
+## Endpoints da API
 
 ### `POST /evaluate`
 
-Envie uma publicação para avaliação de risco. Retorna a pontuação de risco calculada e o nível de desafio necessário.
+Envia uma publicação para avaliação de risco. Retorna a pontuação de risco calculada e o nível de desafio exigido.
 
 ### `POST /challenge/verify`
 
-Envie o resultado de um desafio concluído (token OAuth, solução CAPTCHA ou ambos) para verificação.
+Envia o resultado de um desafio concluído (token OAuth, solução de CAPTCHA ou ambos) para verificação.
 
 ### `GET /iframe/:sessionId`
 
-Retorna uma página HTML incorporável que renderiza a UI de desafio apropriada para a sessão determinada.
+Retorna uma página HTML incorporável que renderiza a interface de desafio adequada para a sessão informada.
 
 ## Limitação de taxa
 
-Os limites de taxas são aplicados dinamicamente com base na idade e reputação do autor. Autores mais novos ou de menor reputação enfrentam limites mais rígidos, enquanto autores estabelecidos desfrutam de limites mais generosos. Isso evita inundações de spam sem penalizar os participantes confiáveis.
+Os limites de taxa são aplicados dinamicamente conforme a idade e a reputação do autor. Autores mais novos ou de reputação mais baixa enfrentam limites mais rígidos, enquanto autores estabelecidos contam com limiares mais generosos. Isso evita enxurradas de spam sem penalizar participantes confiáveis.
 
 ## Indexador de rede em segundo plano
 
-O servidor executa um indexador em segundo plano que rastreia continuamente a rede para construir e manter dados de reputação do autor. Esses dados alimentam diretamente o pipeline de pontuação de risco, permitindo que o sistema reconheça participantes repetidos de boa-fé em todas as comunidades.
+O servidor executa um indexador em segundo plano que rastreia a rede continuamente para construir e manter os dados de reputação dos autores. Esses dados alimentam diretamente o pipeline de pontuação de risco, o que permite ao sistema reconhecer participantes recorrentes de boa-fé em várias comunidades.
 
 ## Privacidade
 
-O Spam Blocker foi projetado pensando na privacidade:
+O Spam Blocker foi projetado com a privacidade em mente:
 
-- As identidades OAuth são usadas apenas para verificação de desafio e **nunca são divulgadas** às comunidades.
-- Os endereços IP são resolvidos para **somente códigos de país**; IPs brutos não são armazenados ou compartilhados.
+- As identidades OAuth são usadas apenas para a verificação de desafios e **nunca são reveladas** às comunidades.
+- Os endereços IP são resolvidos **somente para códigos de país**; os IPs brutos não são armazenados nem compartilhados.
 
 ## Banco de dados
 
-O servidor usa **SQLite** (via `better-sqlite3`) para persistência local de dados de reputação, estado de sessão e configuração.
+O servidor usa **SQLite** (via `better-sqlite3`) para a persistência local dos dados de reputação, do estado das sessões e da configuração.

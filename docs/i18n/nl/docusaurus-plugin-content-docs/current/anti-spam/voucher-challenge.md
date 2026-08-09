@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Anti-spam-uitdaging die publicatie achter de unieke vouchercodes houdt die worden verspreid door community-eigenaren.
+description: Antispam-challenge die publiceren afschermt achter unieke vouchercodes die community-eigenaren uitdelen.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Voucher Challenge is een antispammechanisme dat de publicatie van inhoud achter unieke vouchercodes achterlaat. In plaats van te vertrouwen op geautomatiseerde detectie, verschuift het vertrouwen naar de community-eigenaar, die handmatig codes distribueert naar mensen die zij vertrouwen.
+Voucher Challenge schermt het publiceren van inhoud af achter unieke vouchercodes die de eigenaar van de community uitdeelt. In plaats van te leunen op geautomatiseerde scores verschuift het vertrouwen naar een handmatig uitnodigingsproces, waarbij bekende mensen een code krijgen via een kanaal dat de eigenaar zelf beheert.
 
-**Broncode:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Broncode en actuele README:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **npm-pakket:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Installatie
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Hoe het werkt
 
-1. Een community-eigenaar genereert een of meer unieke vouchercodes.
-2. De eigenaar distribueert deze codes naar vertrouwde auteurs via een kanaal naar keuze (direct bericht, e-mail, persoonlijk, enz.).
-3. Wanneer een auteur probeert te publiceren, vraagt het uitdagingssysteem hem om een vouchercode.
-4. De code wordt gevalideerd - als deze echt is en nog niet is gebruikt, wordt de publicatie geaccepteerd.
+1. De eigenaar van een community genereert een of meer unieke vouchercodes.
+2. De eigenaar deelt die codes uit aan vertrouwde auteurs via een kanaal naar keuze (direct bericht, e-mail, persoonlijk, enzovoort).
+3. Wanneer een auteur probeert te publiceren, vraagt het challengesysteem om een vouchercode.
+4. De code wordt gevalideerd -- is hij echt en nog niet gebruikt, dan wordt de publicatie geaccepteerd.
 
-Elke vouchercode is gekoppeld aan een specifieke auteur zodra deze is ingewisseld, waardoor hergebruik door anderen wordt voorkomen.
+Elke vouchercode wordt na inwisseling aan één specifieke auteur gekoppeld, zodat anderen hem niet opnieuw kunnen gebruiken.
 
-## Wanneer moet u het gebruiken
+## Actuele pakketdocumentatie
 
-Voucher Challenge is het meest geschikt voor:
+Deze pagina is bewust een overzicht en geen gekopieerde installatiehandleiding. De README van het pakket is de bron van waarheid voor de actuele namen van challenges, voorbeelden met de Bitsocial CLI, registratie in pkc-js, ondersteunde opties en het gedrag bij inwisselen:
 
-- **Community's die alleen op uitnodiging toegankelijk zijn** waar het lidmaatschap opzettelijk is beperkt.
-- **Gecontroleerde ruimtes** waar de eigenaar elke deelnemer persoonlijk controleert.
-- **Omgevingen met een hoog vertrouwensgehalte** waar geautomatiseerde spamscores niet nodig of onwenselijk zijn.
+- [README van Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Omdat het handmatige distributie van code vereist, is het niet schaalbaar naar grote open communities [Spam Blocker](./spam-blocker.md) of [EVM Contract Call Challenge](./evm-contract-call.md) in plaats daarvan.
+Gebruik bij voorkeur de upstream README wanneer je een live community configureert, omdat voucheropties en installatiestappen met dat pakket meeversioneren en niet met deze website.
 
-## Integratie
+## Wanneer je het gebruikt
 
-Voucher Challenge sluit aan op dezelfde uitdagingsinterface die wordt gebruikt door andere anti-spampakketten in het Bitsocial Community-eigenaren, schakelt deze in via hun community-instellingen, en de uitdaging wordt automatisch aan auteurs gepresenteerd wanneer ze proberen te posten.
+Voucher Challenge past het best bij:
+
+- **Community's op uitnodiging** waar het lidmaatschap bewust beperkt blijft.
+- **Zorgvuldig samengestelde ruimtes** waar de eigenaar elke deelnemer persoonlijk beoordeelt.
+- **Omgevingen met veel onderling vertrouwen** waar geautomatiseerde spamscores overbodig of ongewenst zijn.
+
+Omdat codes handmatig verspreid moeten worden, schaalt het niet naar grote, open community's. Overweeg voor die situaties [Spam Blocker](./spam-blocker.md) of [EVM Contract Call Challenge](./evm-contract-call.md).

@@ -1,15 +1,15 @@
 ---
-title: BSO Resolver
-description: 使用 ENS TXT 记录将 .bso 域名解析为公钥，并具有内置缓存和跨平台支持。
+title: BSO 解析器
+description: 通过 Bitsocial TXT 记录将 .bso 域名解析为公钥。
 sidebar_position: 1
 ---
 
-# BSO Resolver
+# BSO 解析器
 
-BSO 解析器通过读取存储在 ENS 上的 Bitsocial TXT 记录，将 `.bso` 域名转换为其相应的公钥。它提供共享的 viem 客户端、持久缓存，并可在 Node.js 和浏览器环境中工作。
+BSO 解析器通过读取 Bitsocial TXT 记录，把 `.bso` 域名转换成对应的公钥。当面向用户的 `.bso` 名称需要变成点对点协议栈能够理解的密钥材料时，Bitsocial 工具链使用的就是这个解析器包。
 
-- **GitHub**：[bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver)
-- **许可证**：仅限 GPL-2.0
+- **源代码与最新 README：** [github.com/bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver#readme)
+- **npm 包：** [`@bitsocial/bso-resolver`](https://www.npmjs.com/package/@bitsocial/bso-resolver)
 
 ## 安装
 
@@ -17,73 +17,16 @@ BSO 解析器通过读取存储在 ENS 上的 Bitsocial TXT 记录，将 `.bso` 
 npm install @bitsocial/bso-resolver
 ```
 
-## 创建解析器
+## 它处在什么位置
 
-通过将配置对象传递给构造函数来实例化解析器：
+Bitsocial 名称的用途，是为社区和作者提供人类可读的入口。解析器把这一层命名逻辑与应用代码分开，因此客户端可以先询问某个名称是否受支持，再通过该包针对具体运行时的入口去解析它。
 
-```js
-const resolver = new BsoResolver({ key, provider, dataPath });
-```
+当你要集成一个支持 Bitsocial 的客户端、命令行工具或服务，并且希望它能接受 `.bso` 名称而不只是原始公钥时，就可以使用它。
 
-| 范围       | 必需的 | 描述                                    |
-| ---------- | ------ | --------------------------------------- |
-| `key`      | 是的   | 解析器实例的标识符。                    |
-| `provider` | 是的   | 传输配置（见下文）。                    |
-| `dataPath` | 不     | SQLite 缓存文件的目录（仅限 Node.js）。 |
+## 当前包参考文档
 
-### 提供商选项
+本页有意只作为概览，而不是 API 参考的镜像。关于构造函数选项、返回类型、缓存行为、入口点、提供方示例以及受支持的关停语义，包的 README 才是权威来源：
 
-`provider` 参数接受三种格式：
+- [BSO Resolver README](https://github.com/bitsocialnet/bso-resolver#readme)
 
-- **`"viem"`** -- 使用 viem 提供的默认公共交通。
-- **HTTP(S) URL** -- 通过 JSON-RPC 端点进行连接（例如，`https://mainnet.infura.io/v3/YOUR_KEY`）。
-- **WebSocket URL** - 通过 WebSocket RPC 端点（例如 `wss://mainnet.infura.io/ws/v3/YOUR_KEY`）进行连接。
-
-## 方法
-
-### `resolve({ name, abortSignal? })`
-
-查找`.bso` 名称并返回关联的公钥。可以传递可选的`AbortSignal`来取消长时间运行的请求。
-
-### `canResolve({ name })`
-
-返回一个布尔值，指示解析器是否能够处理给定的名称。在尝试完整解决方案之前，请使用它来检查支持情况。
-
-### `destroy()`
-
-拆除解析器，关闭数据库连接并释放资源。当不再需要解析器时调用此方法。
-
-## 缓存
-
-解析的名称会自动缓存，以减少冗余的网络查找。根据运行时环境选择缓存后端：
-
-| 环境    | 后端        | 笔记                                        |
-| ------- | ----------- | ------------------------------------------- |
-| Node.js | SQLite      | 存储在`dataPath`。使用WAL模式进行并发访问。 |
-| 浏览器  | 索引数据库  | 使用本机 IndexedDB 事务。                   |
-| 倒退    | 内存中`Map` | 当 SQLite 和 IndexedDB 都不可用时使用。     |
-
-所有缓存条目都有**一小时的 TTL**，并且在过期后会自动逐出。
-
-## 与 pkc-js 集成
-
-解析器可以通过 `nameResolvers` 选项直接插入 pkc-js，从而在密钥查找期间启用透明的 `.bso` 名称解析：
-
-```js
-const pkc = new Pkc({
-  nameResolvers: [resolver],
-  // ...other options
-});
-```
-
-## 并发性
-
-解析器被设计为在并发使用下是安全的：
-
-- 单个共享 viem 客户端避免了冗余连接。
-- SQLite 以 WAL（预写日志记录）模式运行，允许并发读取而不会阻塞。
-- 浏览器缓存依赖于本机 IndexedDB 事务进行隔离。
-
-## 平台入口点
-
-该包为 Node.js 和浏览器构建提供了单独的入口点。支持`package.json` 中`exports` 字段的捆绑器将自动选择正确的一个。
+把代码复制进项目时，请优先参考上游 README，因为解析器的行为是随该包版本演进的，而不是随本网站。

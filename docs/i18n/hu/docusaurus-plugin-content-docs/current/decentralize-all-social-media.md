@@ -1,52 +1,69 @@
 ---
-title: Decentralizálja az összes közösségi médiát
-description: A Bitsocial főterv 5. fázisa és az általa megcélzott végállapot.
+title: A teljes közösségi média decentralizálása
+description: A főterv 5. fázisa, amely a Bitsocial közösségi kliensek hosszú farkának finanszírozására és megépítésére összpontosít.
 ---
 
-# Decentralizálja az összes közösségi médiát
+# A teljes közösségi média decentralizálása
 
-Ez a Bitsocial főterv által leírt végállapot: nem egy alkalmazás, hanem a Bitsocial alkalmazások ökoszisztémája, amely a közösségi média minden nagyobb kategóriájával vetekszik.
+A végállapot nem egyetlen alkalmazás, hanem kliensek, csomópontok, szolgáltatások és közösségek
+piaca, amely a platformtulajdonlást protokollszintű versenyre cseréli.
 
-## A modell
+Az 5. fázisban lép túl a Bitsocial az első, kiemelt kategóriákon, és kezdi el a lehető legtöbb
+közösségi formátum finanszírozását.
 
-A hálózat javasolt érett állapotában:
+## Mit kell még megépíteni
 
-- több nyilvános RPC-szolgáltató verseng a gazdagépprofil csomópontokért
-- a felhasználók továbbra is saját maguk tárolhatnak
-- a feed-algoritmusok opcionális szolgáltatásokká válnak a kötelező platformtörvény helyett
-- A bevételszerzés nem attól függ, hogy a bankok hajlandóak-e életben tartani a platformot
-- Az alkalmazások a termékminőség, a felfedezés és a felület kialakítása terén versenyeznek
+Az első fázisok a legnagyobb hatású kategóriákra összpontosítanak: imageboardok, fórumok, nyilvános
+RPC, Bitsocial Chain, profilcsomópontok, a 3. fázis Twitter/X-alternatívája, valamint a köréjük épülő
+szolgáltatásgazdaság.
 
-## Milyen lesz a siker
+Ezután a hálózatnak a hosszú farok felé kell terjeszkednie:
 
-A Bitsocial alkalmazásoknak képesnek kell lenniük a platformok több formátumban történő kihívásaira, nem csak egy résre:
-
-- szöveg és vita
-- képtáblák
-- fórumok
+- blogkliensek
+- közösségi finanszírozási alkalmazások
+- alkotói videó és egy hiteles [YouTube-alternatíva](https://github.com/bitsocialnet/wetube)
 - alkotói közösségek
-- rövid formátumú videó és szélesebb körű médiatermékek
+- rövid formátumú médiakísérletek
+- helyi vagy nyelvspecifikus közösségi alkalmazások
+- réspiaci kliensek, amelyek túl kicsik az első négy fázishoz
+- eszközök, amelyekkel könnyebb üzemeltetni a meglévő közösségeket
 
-Nem az a cél, hogy egy univerzális felületet erőltessünk mindenkire. Ennek célja, hogy sok alkalmazás számára hozzáférést biztosítson ugyanazokhoz a mögöttes közösségekhez, identitásokhoz és hálózatokhoz.
+Ezek közül egyes alkalmazások lehetnek nyílt forráskódúak, mások központosított kliensek. Néhányat a
+Bitsocial Forge is megépíthet, sokat viszont független fejlesztőknek kellene megépíteniük.
 
-## Miért számít itt az RPC réteg?
+## Sok fejlesztő finanszírozása
 
-Az állandóan aktív közösségek és profilok sokkal praktikusabbakká válnak, miután nyilvános RPC-piacok léteznek. E réteg nélkül az öntárolás sok felhasználó számára túlságosan súrlódó marad, különösen mobileszközökön.
+A cél az, hogy az új közösségi kliensek már azelőtt finanszírozhatók legyenek, hogy platformszintű
+ismertségre tettek volna szert.
 
-## Miért számít itt a hálózati réteg?
+Ebbe beleférhet közvetlen befektetés, támogatás, közösségi finanszírozás, sikeres
+Bitsocial-szolgáltatások bevétele vagy decentralizált támogatási program, amelyben a tágabb
+Bitsocial-közösség segít eldönteni, mely fejlesztők kapjanak támogatást.
 
-Ha a tartalom bevételszerzését a szokásos banki vagy platformnyomás meg tudja szakítani, akkor az ökoszisztéma törékeny marad. A Bitsocial Chain az a gazdasági réteg, amely hitelesebbé teszi a hosszú távú versenyt.
+A lényeg a sokszínűség. A hálózatnak sok próbálkozást kell finanszíroznia, nem pedig egyetlen
+hivatalos alkalmazásra várnia, amely minden kategóriát lefed.
 
-## Az alaptét
+## Hogyan néz ki a siker
 
-A nagy tét az, hogy a közösségi média cserélhető rétegekre bontható:
+A Bitsocial akkor sikeres, ha a közösségi média cserélhető rétegekre bontható:
 
 - protokoll
 - közösségek
 - identitás
-- hosting
+- tárhely
 - felfedezés
+- moderáció
 - bevételszerzés
-- alkalmazásokat
+- alkalmazások
 
-Ha ezek a rétegek cserélhetők, egyetlen vállalatnak sem kell birtokolnia a teljes közösségi gráfot ahhoz, hogy a termék működjön.
+Amint ezek a rétegek cserélhetővé válnak, egyetlen cégnek sem kell birtokolnia a teljes közösségi
+gráfot ahhoz, hogy a termék működjön.
+
+## Az alaptét
+
+Egy érett Bitsocial-ökoszisztémában nyilvános RPC-k, saját üzemeltetésű csomópontok,
+feedalgoritmus-piacok, médiatárhelyek, felfedezőszolgáltatások, nyílt forráskódú kliensek,
+kereskedelmi kliensek és közösségi finanszírozású kísérletek élnek egymás mellett.
+
+A közösségi média végre megtalálja az egyensúlyát: teljesen decentralizált, peer-to-peer közösségi
+hálózat, amelyet senki sem birtokol; ez a Bitsocial.

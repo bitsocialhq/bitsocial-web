@@ -1,56 +1,93 @@
 ---
 title: Bitsocial Chain
-description: Faza 4 a planului general, care acoperă stratul de lanț de aplicații partajat propus pentru aplicațiile Bitsocial.
+description: Faza 2 a planului general, care acoperă stratul economic propus de tip appchain Ethereum L2 pentru aplicațiile Bitsocial.
 ---
 
 # Bitsocial Chain
 
-Rețeaua Bitsocial este numele folosit în planul principal pentru stratul de lanț de aplicații partajat care ar sta sub aplicațiile Bitsocial.
+Bitsocial Chain este stratul economic propus de tip appchain Ethereum L2 pentru aplicațiile
+Bitsocial. Site-ul dedicat lanțului este în prezent [chain.bitsocial.net](https://chain.bitsocial.net).
 
-Ideea nu este de a înlocui stratul social peer-to-peer. Este de a oferi primitivele economice și de coordonare comune de care vor avea nevoie aplicațiile sociale dacă vor concura cu platformele existente la scară.
+Stratul social peer-to-peer permite comunităților, identităților și conținutului să existe în afara
+bazei de date a unei platforme centrale. Bitsocial Chain urmează să adauge primitivele comune de
+denumire, monetizare și plată care fac aceste aplicații mai greu de sufocat financiar.
 
-## Ce înseamnă putere
+## Ce urmează să susțină
 
-- domenii Bitsocial descentralizate, cum ar fi `.bso`
+- domenii Bitsocial descentralizate, precum `.bso`
+- premii și bacșișuri
+- căi durabile de monetizare
 - lichiditate partajată între aplicații
-- șine durabile de monetizare
-- structuri financiare care sunt mai greu de sufocat pentru bănci sau platforme
-- efecte de rețea care nu depind de o companie care deține întregul stack
+- structuri financiare mai greu de blocat de către bănci sau platforme
+- efecte de rețea care nu depind de o singură companie care deține întreaga stivă
+
+Scopul nu este să punem pe primul plan mecanica tokenurilor. Scopul este ca aplicațiile sociale utile
+să devină mai durabile, mai ușor de finanțat și mai puțin dependente de furnizori centralizați de
+plăți sau de denumire.
+
+## Dovada de concept actuală
+
+Prima dovadă de concept Bitsocial Chain se concentrează pe numele native `.bso`. Ea arată că un
+registru de nume poate fi derivat din istoricul Ethereum L1 fără a plasa conținut social pe lanț:
+
+- utilizatorii trimit intenții de înregistrare, actualizare, transfer și revocare prin tranzacții
+  Ethereum L1 obișnuite
+- oricine poate rula nodul de derivare și poate reconstrui aceeași stare a registrului `.bso`
+- un resolver asociază un nume `.bso` cheii publice Bitsocial pe care clienții o folosesc deja prin
+  protocolul peer-to-peer
+- postările, voturile, moderarea, fluxurile și conținutul comunităților rămân în afara lanțului și
+  peer-to-peer
+
+Această dovadă de concept nu este o lansare în producție la nivel Stage 2. Nu are încă sistem de
+dovezi, joc de contestare, cod auditat, implementare live, prețuri finale sau guvernanță finală.
+Poziția sa pe termen lung este transparentă în mod implicit și compatibilă cu confidențialitatea prin
+construcție: lanțul de bază este public, în timp ce viitoarele bacșișuri, plăți, premii și
+lichiditate ar trebui să evite legăturile permanente impuse între identitatea socială și istoricul
+portofelului.
 
 ## De ce contează
 
-Descentralizarea comunităților și identităților este necesară, dar nu este suficientă descentralizarea tuturor rețelelor sociale.
+Descentralizarea comunităților și a identităților este necesară, dar nu este suficientă pentru a
+descentraliza toate rețelele sociale.
 
-Dacă nivelul economic depinde în continuare de câteva șine centralizate, atunci aplicațiile rămân ușor de presat, deplatform sau de foame din punct de vedere financiar. Bitsocial Chain este răspunsul propus la acel al doilea strat de dependență.
+Dacă aplicațiile sociale depind în continuare de câteva căi economice centralizate, ele rămân ușor de
+presat, de exclus de pe platforme sau de sufocat financiar. Bitsocial Chain este răspunsul propus
+pentru acest al doilea strat de dependență.
 
-## Relația cu restul Bitsocial
+## Relația cu aplicațiile
 
-Rețeaua Bitsocial este propusă ca infrastructură partajată pentru aplicațiile Bitsocial, nu ca produs cu care utilizatorii interacționează direct în fiecare zi.
+Bitsocial Chain ar trebui să stea sub aplicațiile Bitsocial, nu să le înlocuiască.
 
-Rezultatul pentru public ar fi:
+Rezultatul vizibil pentru public ar trebui să fie:
 
 - comunitățile rămân peer-to-peer
 - aplicațiile rămân diferențiate
-- monetizarea și denumirea devin mai durabile
-- valoarea se poate muta în ecosistem fără a recrea un proprietar de platformă centralizată
+- utilizatorii primesc funcții practice de denumire și de monetizare
+- creatorii și comunitățile pot primi sprijin din orice client
+- valoarea poate circula în ecosistem fără a recrea un proprietar centralizat de platformă
 
-## De ce aceasta se află în Faza 4
+## De ce vine atât de devreme
 
-Planul general plasează acest lucru după punctele de dovadă anterioare la nivel de aplicație:
+Planul general actual plasează Bitsocial Chain imediat după primele categorii de pătrundere:
+imageboard-uri, forumuri și stratul RPC public care face aceste aplicații practice pentru mai mulți
+utilizatori.
 
-1. descentralizați imaginile
-2. lansează Bitsocial RPC
-3. descentralizarea forumurilor
-4. lansează Bitsocial Chain
-
-Această secvență are sens, deoarece un strat de coordonare la nivel de ecosistem este mai util odată ce aplicațiile reale și comportamentul real al utilizatorilor există deja în rețea.
+Momentul contează, pentru că aplicațiile sociale au nevoie de efecte de rețea puternice. Dacă
+denumirea, sprijinul, premiile, bacșișurile și monetizarea ajung prea târziu, concurenții
+centralizați își păstrează cel mai mare avantaj prea mult timp.
 
 ## Principii de proiectare
 
-Pentru că Bitsocial Chain este încă infrastructură propusă, nu un produs deja lansat, planul actual ar trebui să rămână disciplinat în câteva privințe:
+Pentru că Bitsocial Chain este încă infrastructură propusă, nu un produs lansat, planul ar trebui să
+rămână disciplinat:
 
-- Mai întâi aplicațiile și comunitățile. Stratul de rețea ar trebui să urmeze utilizarea reală din aplicațiile Bitsocial, nu să iasă în față cu funcții financiare speculative.
-- Contribuția reală înaintea hype-ului. Dacă Bitsocial va adăuga mai târziu active la nivel de comunitate, creator sau client, acestea ar trebui să recompenseze participarea și construcția pe termen lung, nu lansările imitatoare sau tranzacționarea pe termen scurt.
-- Curatarea este permisă. Aplicațiile Bitsocial pot modela clasamentele, setările implicite, descoperirea și ritmul lansării pentru a favoriza comunități durabile în locul unui comportament de tip cazinou.
-- O lansare graduală este sănătoasă. Este rezonabil să amâni funcțiile financiare native appchainului până când ecosistemul are suficienți utilizatori, instrumente de moderare și claritate de produs pentru a le susține în siguranță.
-- Mecanismele exacte rămân deschise. Această pagină explică rolul Bitsocial Chain, nu o promisiune fixă despre lansatoare de tokenuri, formule de taxe sau tokenomics-ul final.
+- Mai întâi aplicațiile și comunitățile. Stratul de rețea ar trebui să întărească produsele sociale
+  reale.
+- Mai întâi funcțiile practice. Numele, premiile, bacșișurile și plățile sunt mai ușor de explicat
+  decât o arhitectură financiară abstractă.
+- Contribuția reală înaintea hype-ului. Primitivele economice ar trebui să răsplătească participarea,
+  construirea și sprijinul acordat comunității.
+- Curatoria este permisă. Aplicațiile pot modela clasamentele, setările implicite și descoperirea
+  pentru a favoriza comunitățile durabile.
+- Mecanismele exacte rămân deschise. Această pagină explică rolul Bitsocial Chain, nu o promisiune
+  fixă despre economia finală.

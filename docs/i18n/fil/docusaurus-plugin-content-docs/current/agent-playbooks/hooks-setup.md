@@ -1,34 +1,37 @@
-# Setup ng Agent Hooks
+# Pag-setup ng Agent Hooks
 
-Kung sinusuportahan ng iyong AI coding assistant ang mga lifecycle hook, i-configure ang mga ito para sa repo na ito.
+Kung sinusuportahan ng iyong AI coding assistant ang mga lifecycle hook, i-configure ang mga ito para sa repong ito.
 
-## Inirerekomendang Hooks
+## Mga Inirerekomendang Hook
 
-| Hook            | Utos                                       | Layunin                                                                                                                                                                                                                            |
-| --------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Awtomatikong i-format ang mga file pagkatapos mag-edit ng AI                                                                                                                                                                       |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Patakbuhin ang `corepack yarn install` kapag nagbago ang `package.json`                                                                                                                                                            |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Putulin ang mga lipas na ref at tanggalin ang pinagsamang pansamantalang mga sangay ng gawain                                                                                                                                      |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Hard-gate build, lint, typecheck, at mga pagsusuri sa format; panatilihing nagbibigay-kaalaman ang `yarn npm audit` at patakbuhin ang `yarn knip` nang hiwalay bilang isang advisory audit kapag nagbago ang mga dependency/import |
+| Hook            | Utos                                          | Layunin                                                                                                                                                                                                                                            |
+| --------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Awtomatikong i-format ang mga file pagkatapos ng mga pag-edit ng AI                                                                                                                                                                                |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Patakbuhin ang `corepack yarn install` kapag nagbago ang `package.json`                                                                                                                                                                            |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Kapag nagdagdag ang isang diff ng mga primitive na `useEffect`/memo sa `about/src/`, paalalahanan ang ahente na muling pag-isipan ito gamit ang mga React review skill                                                                             |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Alisin ang mga lipas na ref at burahin ang mga naisamang pansamantalang task branch                                                                                                                                                                |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Muling i-scan ang kasalukuyang diff para sa mga bagong React effect/memo sa `about/src/` bago ang panghuling verify gate                                                                                                                           |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Hard-gate na targeted build verification, lint, typecheck, at mga format check; panatilihing pang-impormasyon lamang ang `yarn npm audit` at patakbuhin nang hiwalay ang `yarn knip` bilang advisory audit kapag nagbago ang mga dependency/import |
 
 ## Bakit
 
 - Pare-parehong pag-format
-- Nananatiling naka-sync ang Lockfile
-- Ang mga isyu sa pagbuo/lint/type ay maagang nahuli
-- Pagpapakita ng seguridad sa pamamagitan ng `yarn npm audit`
-- Maaaring suriin ang dependency/import drift gamit ang `yarn knip` nang hindi ito ginagawang maingay na global stop hook
-- Isang shared hook na pagpapatupad para sa Codex at Cursor
-- Ang mga pansamantalang sangay ng gawain ay mananatiling nakahanay sa worktree workflow ng repo
+- Nananatiling naka-sync ang lockfile
+- Tahasang nasusuri muli ang mga bagong dagdag na `useEffect`/memo sa about site bago matapos ang ahente
+- Maagang nahuhuli ang mga isyu sa build/lint/type na nauugnay sa workspace nang hindi pinipilit ang buong multi-locale docs build sa bawat gawain
+- Nakikita ang mga isyu sa seguridad sa pamamagitan ng `yarn npm audit`
+- Masusuri ang dependency/import drift gamit ang `yarn knip` nang hindi ito ginagawang maingay na global stop hook
+- Iisang nakabahaging implementasyon ng hook para sa Codex at Cursor
+- Nananatiling nakahanay ang mga pansamantalang task branch sa worktree workflow ng repo
 
 ## Mga Halimbawang Hook Script
 
-### Format Hook
+### Hook ng Pag-format
 
 ```bash
 #!/bin/bash
-# Awtomatikong i-format ang mga JS/TS file pagkatapos ng mga pag-edit ng AI
-# Tumatanggap ang Hook ng JSON sa pamamagitan ng stdin na may file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### I-verify ang Hook
+### Hook ng Pag-verify
 
 ```bash
 #!/bin/bash
-# Patakbuhin ang build, lint, typecheck, format check, at security audit kapag natapos na ang ahente
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Bilang default, ang `scripts/agent-hooks/verify.sh` ay lumalabas na hindi zero kapag nabigo ang isang kinakailangang pagsusuri. Itakda lang ang `AGENT_VERIFY_MODE=advisory` kapag sinadya mong kailangan ng signal mula sa isang sirang puno nang hindi nakaharang sa hook. Panatilihin ang `yarn knip` sa labas ng hard gate maliban kung tahasang nagpasya ang repo na mabigo sa mga isyu sa advisory import/dependency.
+Bilang default, lumalabas ang `scripts/agent-hooks/verify.sh` nang hindi zero kapag nabigo ang isang kinakailangang pagsusuri. Itakda ang `AGENT_VERIFY_MODE=advisory` lamang kapag sinadya mong kailangan ng signal mula sa sirang puno nang hindi hinaharangan ang hook. Panatilihin ang `yarn knip` sa labas ng hard gate maliban kung tahasang magpasya ang repo na mabigo dahil sa mga advisory na isyu sa import/dependency.
 
-### Pag-install ng sinulid na Hook
+Hindi pinapalitan ng mga lifecycle hook ang manwal na pag-verify sa browser. Para sa mga pagbabago sa UI o sa hitsura, patakbuhin pa rin ang mga pagsusuri ng `playwright-cli` sa `chrome`, `firefox`, at `webkit`, kasama ang isang daloy sa mobile viewport sa bawat engine kapag nagbago ang responsiveness o ang gawi sa touch.
+
+### Hook ng Yarn Install
 
 ```bash
 #!/bin/bash
-# Patakbuhin ang corepack yarn install kapag binago ang package.json
-# Tumatanggap ang Hook ng JSON sa pamamagitan ng stdin na may file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-I-configure ang hook wiring ayon sa iyong agent tool docs (`hooks.json`, katumbas, atbp.).
+I-configure ang wiring ng hook ayon sa dokumentasyon ng iyong agent tool (`hooks.json`, katumbas nito, atbp.).
 
-Sa repo na ito, dapat manatili ang `.codex/hooks/*.sh` at `.cursor/hooks/*.sh` bilang mga manipis na wrapper na nagde-delegate sa mga nakabahaging pagpapatupad sa ilalim ng `scripts/agent-hooks/`.
+Sa repong ito, dapat manatiling manipis na wrapper ang `.codex/hooks/*.sh` at `.cursor/hooks/*.sh` na nagde-delegate sa mga nakabahaging implementasyon sa ilalim ng `scripts/agent-hooks/`.

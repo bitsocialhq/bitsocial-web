@@ -1,78 +1,68 @@
 ---
-title: CLI
-description: Giao diện dòng lệnh để chạy nút Bitsocial, tạo cộng đồng và quản lý các hoạt động giao thức.
+title: Bitsocial CLI
+description: Giao diện dòng lệnh để chạy một nút Bitsocial, tạo cộng đồng và quản lý các thao tác giao thức.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-:::warning Đặt tên kế thừa
-Gói này hiện đang sử dụng các quy ước đặt tên cũ được kế thừa từ phần phụ thuộc ngược dòng của nó. Các tham chiếu đến "plebbit" trong lệnh, đầu ra và cấu hình sẽ được chuyển sang "bitsocial" trong bản phát hành trong tương lai. Chức năng không bị ảnh hưởng.
-:::
+`bitsocial-cli` là công cụ dòng lệnh để làm việc với phần phụ trợ giao thức Bitsocial. Nó cho phép bạn chạy một daemon P2P cục bộ, tạo và cấu hình cộng đồng, và đăng nội dung -- tất cả từ cửa sổ dòng lệnh.
 
-`bitsocial-cli` là một công cụ dòng lệnh để tương tác với phần phụ trợ giao thức Bitsocial. Nó cho phép bạn chạy daemon P2P cục bộ, tạo và định cấu hình cộng đồng cũng như xuất bản nội dung -- tất cả đều từ thiết bị đầu cuối.
-
-Nó được xây dựng dựa trên `plebbit-js` và được [5chan](/apps/5chan/) và [Seedit](/apps/seedit/) sử dụng để tạo cộng đồng và quản lý nút.
+Công cụ này được xây dựng trên lớp máy khách giao thức Bitsocial dùng chung, và được [5chan](/apps/5chan/) cùng [Seedit](/apps/seedit/) sử dụng để tạo cộng đồng và quản lý nút.
 
 ## Cài đặt
 
-Các tệp nhị phân dựng sẵn có sẵn cho Windows, macOS và Linux. Tải xuống bản phát hành mới nhất cho nền tảng của bạn từ GitHub:
+Có sẵn các tệp nhị phân dựng trước cho Windows, macOS và Linux. Hãy tải bản phát hành mới nhất cho nền tảng của bạn từ GitHub:
 
-**[Tải xuống từ Bản phát hành GitHub](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Tải xuống từ GitHub Releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Sau khi tải xuống, hãy tạo tệp nhị phân có thể thực thi được (macOS/Linux):
+Sau khi tải về, hãy cấp quyền thực thi cho tệp nhị phân (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
-## Chạy Daemon
+## Chạy daemon
 
-Việc sử dụng CLI phổ biến nhất là chạy nút Bitsocial. Daemon khởi động lớp mạng P2P và hiển thị API cục bộ mà máy khách có thể kết nối.
+Cách dùng CLI phổ biến nhất là chạy một nút Bitsocial. Daemon khởi động lớp mạng P2P và mở một API cục bộ để các máy khách kết nối tới.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-Trong lần khởi chạy đầu tiên, daemon sẽ xuất ra các liên kết đến **WebUI**, một giao diện đồ họa dựa trên trình duyệt để quản lý nút, cộng đồng và cài đặt của bạn. Điều này hữu ích nếu bạn thích GUI hơn các lệnh đầu cuối.
+Trong lần khởi chạy đầu tiên, daemon in ra các liên kết tới **WebUI**, một giao diện đồ họa chạy trên trình duyệt để quản lý nút, cộng đồng và cài đặt của bạn. Điều này hữu ích nếu bạn thích giao diện đồ họa hơn là các lệnh trong cửa sổ dòng lệnh.
 
-## Các lệnh chính
+## Các thao tác chính
 
-| Lệnh                | Mô tả                                                |
-| ------------------- | ---------------------------------------------------- |
-| `daemon`            | Bắt đầu nút P2P Bitsocial                            |
-| `create subplebbit` | Tạo một cộng đồng mới                                |
-| `subplebbit edit`   | Cập nhật cài đặt cộng đồng (tiêu đề, mô tả, quy tắc) |
-| `subplebbit list`   | Liệt kê các cộng đồng được lưu trữ trên nút này      |
-| `subplebbit start`  | Bắt đầu phục vụ một cộng đồng cụ thể                 |
-| `subplebbit stop`   | Ngừng phục vụ một cộng đồng cụ thể                   |
+| Thao tác                 | Mô tả                                                |
+| ------------------------ | ---------------------------------------------------- |
+| Khởi động daemon         | Chạy nút P2P của Bitsocial                           |
+| Tạo cộng đồng            | Tạo một cộng đồng mới                                |
+| Chỉnh sửa cộng đồng      | Cập nhật cài đặt cộng đồng (tiêu đề, mô tả, quy tắc) |
+| Liệt kê cộng đồng cục bộ | Liệt kê các cộng đồng được lưu trữ trên nút này      |
+| Khởi động một cộng đồng  | Bắt đầu phục vụ một cộng đồng cụ thể                 |
+| Dừng một cộng đồng       | Ngừng phục vụ một cộng đồng cụ thể                   |
 
-Chạy bất kỳ lệnh nào với `--help` để xem các tùy chọn và cờ có sẵn:
+Chạy CLI với `--help` để xem tên lệnh và cờ hiện có trong bản phát hành bạn đã cài:
 
 ```bash
-bitsocial-cli daemon --help
-bitsocial-cli create subplebbit --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Quy trình làm việc điển hình
 
-Quy trình thiết lập chung để lưu trữ một cộng đồng mới:
+Một quy trình thiết lập thường gặp khi lưu trữ một cộng đồng mới:
 
 ```bash
-# 1. Khởi động trình nền
-bitsocial-cli daemon
+# 1. Start the daemon
+bitsocial daemon
 
-# 2. Trong một thiết bị đầu cuối khác, tạo một cộng đồng
-bitsocial-cli create subplebbit
-
-# 3. Cấu hình cộng đồng
-bitsocial-cli subplebbit edit <address> --title "My Community" --description "A decentralized forum"
-
-# 4. Bắt đầu phục vụ nó
-bitsocial-cli subplebbit start <address>
+# 2. In another terminal, inspect the available community-management commands
+bitsocial --help
 ```
 
-Cộng đồng hiện đang hoạt động trên mạng Bitsocial và có thể truy cập được từ bất kỳ ứng dụng khách tương thích nào.
+Từ đó, hãy dùng các lệnh quản lý cộng đồng của bản phát hành đã cài để tạo, cấu hình và bắt đầu phục vụ một cộng đồng. Sau khi khởi động, cộng đồng sẽ hoạt động trên mạng Bitsocial và có thể truy cập từ các máy khách tương thích.
 
 ## Liên kết
 

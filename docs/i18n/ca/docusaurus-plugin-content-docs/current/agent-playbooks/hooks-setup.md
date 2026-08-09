@@ -1,34 +1,37 @@
-# Configuració de ganxos d'agent
+# Configuració dels hooks d'agent
 
-Si el vostre assistent de codificació d'IA admet ganxos de cicle de vida, configureu-los per a aquest dipòsit.
+Si el vostre assistent de programació amb IA admet hooks de cicle de vida, configureu-los per a aquest repositori.
 
-## Ganxos recomanats
+## Hooks recomanats
 
-| Ganxo           | Comandament                                | Finalitat                                                                                                                                                                                                                 |
-| --------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Formateu automàticament els fitxers després de les edicions d'AI                                                                                                                                                          |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Executeu `corepack yarn install` quan canviï `package.json`                                                                                                                                                               |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Elimina les refs obsoletes i elimina les branques de tasques temporals integrades                                                                                                                                         |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Comprovacions de construcció, pelusa, tipus i format de la porta dura; mantenir `yarn npm audit` informatiu i executar `yarn knip` per separat com a auditoria d'assessorament quan canvien les dependències/importacions |
+| Hook            | Ordre                                         | Finalitat                                                                                                                                                                                                                        |
+| --------------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Formata automàticament els fitxers després de les edicions de la IA                                                                                                                                                              |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Executa `corepack yarn install` quan canvia `package.json`                                                                                                                                                                       |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Quan un diff afegeix primitives `useEffect`/memo a `about/src/`, recorda a l'agent que ho reconsideri amb les skills de revisió de React                                                                                         |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Esporga les referències obsoletes i suprimeix les branques temporals de tasca ja integrades                                                                                                                                      |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Torna a analitzar el diff actual per buscar efectes/memos nous de React a `about/src/` abans de la barrera de verificació final                                                                                                  |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Barrera estricta de verificació de compilació dirigida, lint, comprovació de tipus i format; manté `yarn npm audit` com a informatiu i executa `yarn knip` a part com a auditoria consultiva quan canvien dependències o imports |
 
 ## Per què
 
 - Format coherent
-- El fitxer de bloqueig es manté sincronitzat
-- S'han detectat problemes de construcció/pelusa/tip d'hora
+- El lockfile es manté sincronitzat
+- Les noves incorporacions de `useEffect`/memo al lloc about reben una segona revisió explícita abans que l'agent acabi
+- Els problemes de compilació, lint o tipus rellevants per a l'espai de treball es detecten aviat sense forçar la compilació completa multiidioma de la documentació a cada tasca
 - Visibilitat de seguretat mitjançant `yarn npm audit`
-- La deriva de dependència/importació es pot comprovar amb `yarn knip` sense convertir-la en un ganxo d'aturada global sorollós
-- Una implementació de ganxo compartida tant per a Codex com per a Cursor
-- Les branques de tasques temporals es mantenen alineades amb el flux de treball de l'arbre de treball del repo
+- La desviació de dependències i imports es pot comprovar amb `yarn knip` sense convertir-lo en un hook de parada global i sorollós
+- Una única implementació de hook compartida per a Codex i Cursor
+- Les branques temporals de tasca es mantenen alineades amb el flux de treball de worktrees del repositori
 
-## Exemple de scripts de ganxo
+## Exemples de scripts de hook
 
-### Format Ganxo
+### Hook de format
 
 ```bash
 #!/bin/bash
-# Formateu automàticament els fitxers JS/TS després de les edicions d'AI
-# Hook rep JSON mitjançant stdin amb file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Verifiqueu el ganxo
+### Hook de verificació
 
 ```bash
 #!/bin/bash
-# Executeu la compilació, la pelusa, la comprovació de tipus, la comprovació de format i l'auditoria de seguretat quan acabi l'agent
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Per defecte, `scripts/agent-hooks/verify.sh` surt diferent de zero quan falla una comprovació necessària. Configureu `AGENT_VERIFY_MODE=advisory` només quan necessiteu intencionadament el senyal d'un arbre trencat sense bloquejar el ganxo. Manteniu `yarn knip` fora de la porta dura tret que el repo decideixi explícitament fallar en problemes d'importació/dependència d'assessorament.
+Per defecte, `scripts/agent-hooks/verify.sh` surt amb un codi diferent de zero quan falla una comprovació obligatòria. Establiu `AGENT_VERIFY_MODE=advisory` només quan necessiteu intencionadament obtenir senyal d'un arbre trencat sense bloquejar el hook. Mantingueu `yarn knip` fora de la barrera estricta tret que el repositori decideixi explícitament fallar davant de problemes consultius d'imports o de dependències.
 
-### Ganxo d'instal·lació de fil
+Els hooks de cicle de vida no substitueixen la verificació manual al navegador. Per a canvis d'interfície o visuals, executeu igualment comprovacions amb `playwright-cli` a `chrome`, `firefox` i `webkit`, i afegiu-hi un flux amb finestra mòbil a cada motor quan hagi canviat la responsivitat o el comportament tàctil.
+
+### Hook d'instal·lació de Yarn
 
 ```bash
 #!/bin/bash
-# Executeu corepack yarn install quan es canviï package.json
-# Hook rep JSON mitjançant stdin amb file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Configureu el cablejat del ganxo segons els documents de l'eina de l'agent (`hooks.json`, equivalent, etc.).
+Configureu la connexió dels hooks segons la documentació de la vostra eina d'agent (`hooks.json`, equivalent, etc.).
 
-En aquest repo, `.codex/hooks/*.sh` i `.cursor/hooks/*.sh` haurien de romandre com a embolcalls prims que deleguen a les implementacions compartides sota `scripts/agent-hooks/`.
+En aquest repositori, `.codex/hooks/*.sh` i `.cursor/hooks/*.sh` han de continuar sent embolcalls prims que deleguen a les implementacions compartides sota `scripts/agent-hooks/`.

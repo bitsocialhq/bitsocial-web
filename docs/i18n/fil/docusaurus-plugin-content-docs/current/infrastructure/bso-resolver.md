@@ -1,15 +1,15 @@
 ---
 title: BSO Resolver
-description: Lutasin ang .bso domain name sa mga pampublikong key gamit ang ENS TXT record, na may built-in na caching at cross-platform na suporta.
+description: I-resolve ang mga .bso domain name tungo sa mga public key sa pamamagitan ng mga Bitsocial TXT record.
 sidebar_position: 1
 ---
 
 # BSO Resolver
 
-Isinasalin ng BSO Resolver ang `.bso` domain name sa kanilang kaukulang mga pampublikong key sa pamamagitan ng pagbabasa ng mga tala ng Bitsocial TXT na nakaimbak sa ENS. Nagbibigay ito ng shared viem client, patuloy na pag-cache, at gumagana sa parehong Node.js at mga kapaligiran ng browser.
+Isinasalin ng BSO Resolver ang mga `.bso` domain name tungo sa katumbas nilang public key sa pamamagitan ng pagbabasa ng mga Bitsocial TXT record. Ito ang resolver package na ginagamit ng mga kasangkapan ng Bitsocial kapag kailangang maging key material na nauunawaan ng peer-to-peer stack ang isang `.bso` name na nakikita ng user.
 
-- **GitHub**: [bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver)
-- **Lisensya**: GPL-2.0-lamang
+- **Source code at kasalukuyang README:** [github.com/bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver#readme)
+- **npm package:** [`@bitsocial/bso-resolver`](https://www.npmjs.com/package/@bitsocial/bso-resolver)
 
 ## Pag-install
 
@@ -17,73 +17,16 @@ Isinasalin ng BSO Resolver ang `.bso` domain name sa kanilang kaukulang mga pamp
 npm install @bitsocial/bso-resolver
 ```
 
-## Paglikha ng isang Resolver
+## Saan Ito Naaangkop
 
-I-instantiate ang resolver sa pamamagitan ng pagpasa ng configuration object sa constructor:
+Nilayon ang mga pangalan sa Bitsocial bilang nababasa-ng-tao na pasukan para sa mga komunidad at may-akda. Pinananatili ng resolver na hiwalay sa application code ang naming layer na iyon, kaya matatanong ng mga client kung suportado ba ang isang pangalan at pagkatapos ay maire-resolve ito sa pamamagitan ng runtime-specific na entry point ng package.
 
-```js
-const resolver = new BsoResolver({ key, provider, dataPath });
-```
+Gamitin ito kapag nag-i-integrate ka ng isang Bitsocial-aware na client, command-line tool, o serbisyo na kailangang tumanggap ng mga `.bso` name at hindi lamang ng hilaw na public key.
 
-| Parameter  | Kinakailangan | Paglalarawan                                         |
-| ---------- | ------------- | ---------------------------------------------------- |
-| `key`      | Oo            | Identifier para sa instance ng solver.               |
-| `provider` | Oo            | Configuration ng transportasyon (tingnan sa ibaba).  |
-| `dataPath` | Hindi         | Direktoryo para sa SQLite cache file (Node.js lang). |
+## Kasalukuyang Reference ng Package
 
-### Mga Opsyon sa Provider
+Sadyang pangkalahatang-tanaw lamang ang pahinang ito, hindi isang sinalaming API reference. Ang README ng package ang pinagmumulan ng katotohanan para sa mga opsyon ng constructor, return type, gawi sa caching, entry point, halimbawa ng provider, at suportadong shutdown semantics:
 
-Ang parameter na `provider` ay tumatanggap ng tatlong format:
+- [BSO Resolver README](https://github.com/bitsocialnet/bso-resolver#readme)
 
-- **`"viem"`** -- Gumagamit ng default na pampublikong sasakyang ibinibigay ng viem.
-- **HTTP(S) URL** -- Kumokonekta sa pamamagitan ng JSON-RPC endpoint (hal., `https://mainnet.infura.io/v3/YOUR_KEY`).
-- **WebSocket URL** -- Kumokonekta sa pamamagitan ng WebSocket RPC endpoint (hal., `wss://mainnet.infura.io/ws/v3/YOUR_KEY`).
-
-## Pamamaraan
-
-### `resolve({ name, abortSignal? })`
-
-Naghahanap ng pangalan ng `.bso` at ibinabalik ang nauugnay na pampublikong key. Maaaring ipasa ang isang opsyonal na `AbortSignal` upang kanselahin ang mga matagal nang kahilingan.
-
-### `canResolve({ name })`
-
-Nagbabalik ng boolean na nagsasaad kung kaya ng solver na pangasiwaan ang ibinigay na pangalan. Gamitin ito upang suriin ang suporta bago subukan ang isang buong resolusyon.
-
-### `destroy()`
-
-Pinihit ang solver, pagsasara ng mga koneksyon sa database at pagpapalabas ng mga mapagkukunan. Tawagan ito kapag hindi na kailangan ang solver.
-
-## Pag-cache
-
-Awtomatikong naka-cache ang mga nalutas na pangalan upang mabawasan ang mga paulit-ulit na paghahanap sa network. Ang caching backend ay pinili batay sa runtime environment:
-
-| Kapaligiran | Backend               | Mga Tala                                                                           |
-| ----------- | --------------------- | ---------------------------------------------------------------------------------- |
-| Node.js     | SQLite                | Naka-imbak sa `dataPath`. Gumagamit ng WAL mode para sa sabay-sabay na pag-access. |
-| Browser     | IndexedDB             | Gumagamit ng mga katutubong transaksyon ng IndexedDB.                              |
-| Fallback    | Nasa memorya na `Map` | Ginagamit kapag hindi available ang SQLite o IndexedDB.                            |
-
-Ang lahat ng mga entry sa cache ay may **isang oras na TTL** at awtomatikong pinaalis pagkatapos mag-expire.
-
-## Pagsasama sa pkc-js
-
-Maaaring direktang isaksak ang solver sa pkc-js sa pamamagitan ng opsyong `nameResolvers`, na nagpapagana ng transparent na `.bso` na resolution ng pangalan sa panahon ng mga key lookup:
-
-```js
-const pkc = new Pkc({
-  nameResolvers: [resolver],
-  // ...other options
-});
-```
-
-## Concurrency
-
-Ang solver ay idinisenyo upang maging ligtas sa ilalim ng sabay-sabay na paggamit:
-
-- Ang isang nakabahaging kliyente ng viem ay umiiwas sa mga paulit-ulit na koneksyon.
-- Gumagana ang SQLite sa mode na WAL (Write-Ahead Logging), na nagpapahintulot sa mga sabay-sabay na pagbabasa nang hindi nakaharang.
-- Ang pag-cache ng browser ay umaasa sa mga katutubong transaksyon ng IndexedDB para sa paghihiwalay.
-
-## Mga Puntos sa Pagpasok sa Platform
-
-Nagpapadala ang package ng magkakahiwalay na entry point para sa Node.js at mga build ng browser. Ang mga bundler na sumusuporta sa field na `exports` sa `package.json` ay awtomatikong pipili ng tama.
+Mas mainam na sumangguni sa upstream na README kapag kumokopya ng code papunta sa isang proyekto, dahil naka-version ang gawi ng resolver kasama ng package na iyon at hindi kasama ng website na ito.

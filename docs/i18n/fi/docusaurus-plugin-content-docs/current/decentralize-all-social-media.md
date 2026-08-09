@@ -1,52 +1,69 @@
 ---
-title: Hajauttaa kaikki sosiaalinen media
-description: Bitsocial-yleissuunnitelman vaihe 5 ja lopputila, johon se tähtää.
+title: Hajauta kaikki sosiaalinen media
+description: Yleissuunnitelman vaihe 5, joka keskittyy Bitsocialin sosiaalisten asiakassovellusten pitkän hännän rahoittamiseen ja rakentamiseen.
 ---
 
-# Hajauttaa kaikki sosiaalinen media
+# Hajauta kaikki sosiaalinen media
 
-Tämä on Bitsocial-yleissuunnitelman kuvaama lopputila: ei yksi sovellus, vaan Bitsocial-sovellusten ekosysteemi, joka voi kilpailla kaikkien sosiaalisen median tärkeimpien kategorioiden kanssa.
+Lopputila ei ole yksi sovellus. Se on asiakassovellusten, solmujen, palveluiden ja yhteisöjen
+muodostama markkina, joka korvaa alustan omistajuuden protokollan ympärillä käytävällä kilpailulla.
 
-## Malli
+Vaiheessa 5 Bitsocial laajenee ensimmäisten painopisteluokkien ulkopuolelle ja alkaa rahoittaa niin
+monta sosiaalisen median muotoa kuin suinkin mahdollista.
 
-Verkon ehdotetussa kypsässä tilassa:
+## Mitä on vielä rakennettava
 
-- useat julkiset RPC-palveluntarjoajat kilpailevat isäntäprofiilisolmuista
-- käyttäjät voivat silti isännöidä itse
-- syötealgoritmeista tulee valinnaisia palveluita pakollisen alustalain sijaan
-- kaupallistaminen ei riipu siitä, ovatko pankit halukkaita pitämään alustan hengissä
-- sovellukset kilpailevat tuotteiden laadusta, löytämisestä ja käyttöliittymäsuunnittelusta
+Ensimmäiset vaiheet keskittyvät vaikuttavuudeltaan suurimpiin luokkiin: kuvalautoihin, foorumeihin,
+julkiseen RPC:hen, Bitsocial Chainiin, profiilisolmuihin, vaiheen 3 Twitter/X-vaihtoehtoon ja niiden
+ympärille syntyvään palvelutalouteen.
 
-## Miltä menestys näyttäisi
+Sen jälkeen verkon pitää laajentua pitkään häntään:
 
-Bitsocial-sovellusten pitäisi pystyä haastamaan alustoja eri muodoissa, ei vain yhdessä markkinaraossa:
+- blogisovelluksiin
+- joukkorahoitussovelluksiin
+- sisällöntekijöiden videopalveluihin ja uskottavaan [YouTube-vaihtoehtoon](https://github.com/bitsocialnet/wetube)
+- sisällöntekijäyhteisöihin
+- lyhytmuotoisen median kokeiluihin
+- paikallisiin tai kielikohtaisiin sosiaalisiin sovelluksiin
+- kapean alan asiakassovelluksiin, jotka ovat liian pieniä neljälle ensimmäiselle vaiheelle
+- työkaluihin, jotka helpottavat olemassa olevien yhteisöjen ylläpitoa
 
-- tekstiä ja keskustelua
-- kuvataulut
-- foorumeilla
-- luojayhteisöt
-- lyhytmuotoisia videoita ja laajempia mediatuotteita
+Osa näistä sovelluksista voi olla avointa lähdekoodia. Osa voi olla keskitettyjä asiakassovelluksia.
+Osan voi rakentaa Bitsocial Forge, ja monien pitäisi syntyä itsenäisten kehittäjien käsissä.
 
-Tavoitteena ei ole pakottaa yhtä universaalia käyttöliittymää kaikille. Sen tarkoituksena on antaa monille sovelluksille pääsy samoihin taustalla oleviin yhteisöihin, identiteeteihin ja verkkoon.
+## Monen rakentajan rahoittaminen
 
-## Miksi RPC-kerroksella on merkitystä
+Tavoitteena on tehdä uusista sosiaalisista asiakassovelluksista rahoituskelpoisia jo ennen kuin
+niillä on alustan mittakaavan käyttäjäkunta.
 
-Aina käytössä olevat yhteisöt ja profiilit tulevat paljon käytännöllisemmiksi, kun julkiset RPC-markkinat ovat olemassa. Ilman tätä kerrosta itseisännöinti on liian kovaa monille käyttäjille, etenkin mobiililaitteilla.
+Se voi tarkoittaa suoria sijoituksia, apurahoja, yhteisörahoitusta, menestyvien Bitsocial-palveluiden
+tuottoja tai hajautettuja apurahaohjelmia, joissa laajempi Bitsocial-yhteisö on mukana päättämässä,
+ketkä kehittäjät saavat tukea.
 
-## Miksi verkkokerroksella on tässä väliä
+Olennaista on moninaisuus. Verkon pitää rahoittaa monta yritystä sen sijaan, että se odottaisi yhden
+virallisen sovelluksen kattavan jokaisen luokan.
 
-Jos sisällön kaupallistaminen voidaan katkaista tavallisella pankki- tai alustapaineella, ekosysteemi pysyy hauraana. Bitsocial Chainia ehdotetaan taloudelliseksi kerrokseksi, joka tekee pitkän aikavälin kilpailusta uskottavampaa.
+## Miltä onnistuminen näyttää
 
-## Peruspanos
+Bitsocial onnistuu, kun sosiaalinen media voidaan pilkkoa korvattaviin kerroksiin:
 
-Suuri veto on, että sosiaalinen media voidaan jakaa vaihdettaviin kerroksiin:
-
-- protokollaa
-- yhteisöjä
+- protokolla
+- yhteisöt
 - identiteetti
 - isännöinti
-- löytö
-- kaupallistaminen
-- sovelluksia
+- löydettävyys
+- moderointi
+- ansainta
+- sovellukset
 
-Kun nämä tasot ovat vaihdettavissa, yhdenkään yrityksen ei tarvitse omistaa koko sosiaalista kuvaajaa, jotta tuote toimisi.
+Kun nuo kerrokset ovat korvattavissa, yhdenkään yrityksen ei tarvitse omistaa koko sosiaalista
+graafia, jotta tuote toimisi.
+
+## Keskeinen veto
+
+Kypsässä Bitsocial-ekosysteemissä on julkisia RPC-palveluita, itse ylläpidettyjä solmuja,
+syötealgoritmien markkinat, median isännöijiä, löytämispalveluita, avoimen lähdekoodin
+asiakassovelluksia, kaupallisia asiakassovelluksia ja yhteisörahoitteisia kokeiluja.
+
+Sosiaalinen media löytää vihdoin tasapainonsa: täysin hajautettu, vertaisverkkoon perustuva
+sosiaalinen verkosto, jota kukaan ei omista; Bitsocial.
