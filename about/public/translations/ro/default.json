@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un apel la acțiune",
+    "title": "Un apel la acțiune.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Starea finală nu este o singură aplicație. Este o piață de clienți, noduri, servicii și comunități care pot înlocui proprietatea platformei cu competiția de protocol.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Întrebări?",
+    "title": "Întrebări frecvente",
     "supporting": "Fiecare secțiune a acestui site răspunde la una. Dă clic pe o întrebare ca să ajungi la ea.",
     "navLabel": "Întrebări la care răspunde această pagină",
     "answeredIn": "Răspuns în secțiunea",

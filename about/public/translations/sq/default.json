@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Një Thirrje për Veprim",
+    "title": "Një thirrje për veprim.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Gjendja përfundimtare nuk është një aplikacion. Është një treg i klientëve, nyjeve, shërbimeve dhe komuniteteve që mund të zëvendësojnë pronësinë e platformës me konkurrencën e protokolleve.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "Pyetje të shpeshta",
-    "title": "Pyetje?",
+    "title": "Pyetje të shpeshta",
     "supporting": "Çdo seksion i kësaj faqeje i përgjigjet njërës prej tyre. Kliko një pyetje për të kaluar te seksioni përkatës.",
     "navLabel": "Pyetjet që marrin përgjigje në këtë faqe",
     "answeredIn": "Përgjigjja gjendet te seksioni",

@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Wezwanie do działania",
+    "title": "Wezwanie do działania.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Stan końcowy nie jest jedną aplikacją. Jest to rynek klientów, węzłów, usług i społeczności, który może zastąpić własność platformy konkurencją protokołów.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "Najczęstsze pytania",
-    "title": "Masz pytania?",
+    "title": "Często zadawane pytania",
     "supporting": "Każda sekcja tej strony odpowiada na jedno z nich. Kliknij pytanie, aby przejść do odpowiedzi.",
     "navLabel": "Pytania, na które odpowiada ta strona",
     "answeredIn": "Odpowiedź w sekcji",

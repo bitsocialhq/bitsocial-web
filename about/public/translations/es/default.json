@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un llamado a la acción",
+    "title": "Un llamado a la acción.",
     "logoAlt": "Logotipo",
     "easterEggAlt": "Bob Esponja",
     "epilogue": "El estado final no es una sola aplicación. Es un mercado de clientes, nodos, servicios y comunidades que pueden reemplazar la propiedad de la plataforma con competencia de protocolos.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "¿Preguntas?",
+    "title": "Preguntas frecuentes",
     "supporting": "Cada sección de este sitio responde a una. Haz clic en una pregunta para ir a ella.",
     "navLabel": "Preguntas respondidas en esta página",
     "answeredIn": "Respuesta en la sección",

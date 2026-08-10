@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un appel à l'action",
+    "title": "Un appel à l'action.",
     "logoAlt": "Logo",
     "easterEggAlt": "Bob l'éponge",
     "epilogue": "L’état final n’est pas une seule application. Il s’agit d’un marché de clients, de nœuds, de services et de communautés qui peuvent remplacer la propriété des plateformes par la concurrence des protocoles.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Des questions ?",
+    "title": "Questions fréquentes",
     "supporting": "Chaque section de ce site répond à l'une d'elles. Cliquez sur une question pour y accéder.",
     "navLabel": "Questions auxquelles cette page répond",
     "answeredIn": "Réponse dans la section",

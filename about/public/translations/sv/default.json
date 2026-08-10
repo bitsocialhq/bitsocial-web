@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "En uppmaning till handling",
+    "title": "En uppmaning till handling.",
     "logoAlt": "Logotyp",
     "easterEggAlt": "Svampbob",
     "epilogue": "Sluttillståndet är inte en app. Det är en marknad av kunder, noder, tjänster och gemenskaper som kan ersätta plattformsägande med protokollkonkurrens.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Frågor?",
+    "title": "Vanliga frågor",
     "supporting": "Varje avsnitt på den här sidan svarar på en av dem. Klicka på en fråga för att hoppa dit.",
     "navLabel": "Frågor som besvaras på den här sidan",
     "answeredIn": "Besvaras i avsnittet",

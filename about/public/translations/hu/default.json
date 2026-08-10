@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Felhívás a cselekvésre",
+    "title": "Cselekvésre szólítás.",
     "logoAlt": "Logó",
     "easterEggAlt": "Spongyabob",
     "epilogue": "A végállapot nem egy alkalmazás. Ez egy olyan ügyfelek, csomópontok, szolgáltatások és közösségek piaca, amelyek a platform tulajdonjogát protokollversenyre cserélhetik.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "GYIK",
-    "title": "Kérdések?",
+    "title": "Gyakran ismételt kérdések",
     "supporting": "Az oldal minden szakasza egy-egy kérdésre válaszol. Kattints egy kérdésre, és odaugrasz.",
     "navLabel": "Ezen az oldalon megválaszolt kérdések",
     "answeredIn": "Megválaszolva ebben a szakaszban:",

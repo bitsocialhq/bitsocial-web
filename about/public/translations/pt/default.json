@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Um apelo à ação",
+    "title": "Um chamado à ação.",
     "logoAlt": "Logotipo",
     "easterEggAlt": "Bob Esponja",
     "epilogue": "O estado final não é um aplicativo. É um mercado de clientes, nós, serviços e comunidades que podem substituir a propriedade da plataforma pela competição de protocolos.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Dúvidas?",
+    "title": "Perguntas frequentes",
     "supporting": "Cada seção deste site responde a uma delas. Clique em uma pergunta para ir até ela.",
     "navLabel": "Perguntas respondidas nesta página",
     "answeredIn": "Resposta na seção",

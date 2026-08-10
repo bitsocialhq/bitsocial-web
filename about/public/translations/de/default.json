@@ -382,7 +382,7 @@
     }
   },
   "masterPlan": {
-    "title": "Ein Aufruf zum Handeln",
+    "title": "Ein Aufruf zum Handeln.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Der Endzustand ist nicht eine App. Es handelt sich um einen Markt aus Kunden, Knoten, Diensten und Communities, der Plattformeigentum durch Protokollwettbewerb ersetzen kann.",
@@ -795,7 +795,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Fragen?",
+    "title": "Häufig gestellte Fragen",
     "supporting": "Jeder Abschnitt dieser Website beantwortet eine davon. Klick auf eine Frage, um dorthin zu springen.",
     "navLabel": "Auf dieser Seite beantwortete Fragen",
     "answeredIn": "Beantwortet im Abschnitt",
