@@ -21,49 +21,40 @@ type FaqId =
  * anchor ids they scroll to, and `sectionLabel` reuses the destination's own eyebrow string so the
  * row label matches what the reader lands on and no new label needs translating.
  */
-const FAQ_I18N: Record<FaqId, { hint: string; question: string; sectionLabel: string }> = {
+const FAQ_I18N: Record<FaqId, { question: string; sectionLabel: string }> = {
   problem: {
-    hint: "faq.items.problem.hint",
     question: "faq.items.problem.question",
     sectionLabel: "problem.sectionLabel",
   },
   "core-features": {
-    hint: "faq.items.core-features.hint",
     question: "faq.items.core-features.question",
     sectionLabel: "features.sectionLabel",
   },
   "browser-peer": {
-    hint: "faq.items.browser-peer.hint",
     question: "faq.items.browser-peer.question",
     sectionLabel: "browserPeer.sectionLabel",
   },
   decentralized: {
-    hint: "faq.items.decentralized.hint",
     question: "faq.items.decentralized.question",
     sectionLabel: "sanctuary.sectionLabel",
   },
   "arbitrary-challenges": {
-    hint: "faq.items.arbitrary-challenges.hint",
     question: "faq.items.arbitrary-challenges.question",
     sectionLabel: "arbitraryChallenges.sectionLabel",
   },
   "text-only-protocol": {
-    hint: "faq.items.text-only-protocol.hint",
     question: "faq.items.text-only-protocol.question",
     sectionLabel: "textOnlyProtocol.sectionLabel",
   },
   "adoption-thesis": {
-    hint: "faq.items.adoption-thesis.hint",
     question: "faq.items.adoption-thesis.question",
     sectionLabel: "adoptionThesis.sectionLabel",
   },
   "master-plan": {
-    hint: "faq.items.master-plan.hint",
     question: "faq.items.master-plan.question",
     sectionLabel: "masterPlan.sectionLabel",
   },
   "mailing-list": {
-    hint: "faq.items.mailing-list.hint",
     question: "faq.items.mailing-list.question",
     // The newsletter section renders no eyebrow, so `mailingList` has no `sectionLabel` to reuse.
     sectionLabel: "nav.newsletter",
@@ -192,27 +183,24 @@ export default function Faq() {
                   <a
                     href={`#${id}`}
                     onClick={(event) => handleQuestionClick(event, id)}
-                    className="group flex items-start gap-4 rounded-2xl px-5 py-4 md:gap-5 md:px-7 md:py-5"
+                    className="group flex items-center gap-3.5 rounded-2xl px-4 py-3 md:gap-5 md:px-6 md:py-3.5"
                   >
                     {/* Reading order comes from the <ol>, so the painted ordinal is decoration. */}
                     <span
                       aria-hidden="true"
-                      className="shrink-0 pt-0.5 font-display text-xs font-semibold tabular-nums text-muted-foreground/45 transition-colors duration-300 group-hover:text-blue-glow group-focus-visible:text-blue-glow motion-reduce:transition-none md:pt-1 md:text-sm"
+                      className="shrink-0 font-display text-xs font-semibold tabular-nums text-muted-foreground/45 transition-colors duration-300 group-hover:text-blue-glow group-focus-visible:text-blue-glow motion-reduce:transition-none md:text-sm"
                     >
                       {String(index + 1).padStart(2, "0")}
                     </span>
 
-                    <span className="flex min-w-0 flex-1 flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                      <span className="min-w-0 md:flex-1">
-                        <span className="block font-display text-base font-semibold text-balance text-foreground/85 transition-colors duration-300 group-hover:text-foreground group-focus-visible:text-foreground motion-reduce:transition-none md:text-lg">
-                          {t(keys.question)}
-                        </span>
-                        <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
-                          {t(keys.hint)}
-                        </span>
+                    <span className="flex min-w-0 flex-1 flex-col gap-1 md:flex-row md:items-center md:justify-between md:gap-6">
+                      <span className="min-w-0 font-display text-sm font-semibold text-balance text-foreground/85 transition-colors duration-300 group-hover:text-foreground group-focus-visible:text-foreground motion-reduce:transition-none md:text-base">
+                        {t(keys.question)}
                       </span>
 
-                      <span className="flex shrink-0 items-center gap-1.5 font-display text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground/65 transition-colors duration-300 group-hover:text-blue-glow group-focus-visible:text-blue-glow motion-reduce:transition-none md:w-40 md:justify-end md:pt-1 md:text-end">
+                      {/* `whitespace-nowrap` and no fixed width: a wrapped label would strand the
+                          vertically centred arrow at the far left of the box. */}
+                      <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap font-display text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground/65 transition-colors duration-300 group-hover:text-blue-glow group-focus-visible:text-blue-glow motion-reduce:transition-none">
                         <ArrowUp
                           className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                           aria-hidden="true"

@@ -542,46 +542,37 @@
     "sectionLabel": "Master Plan"
   },
   "faq": {
-    "sectionLabel": "Questions",
-    "title": "The answers are above.",
-    "supporting": "Nothing here expands. The page you just scrolled is the answer, so each question jumps back up to the section that already answered it.",
+    "sectionLabel": "FAQ",
+    "title": "Questions?",
+    "supporting": "Every section of this site answers one. Click a question to jump to it.",
     "navLabel": "Questions answered on this page",
     "answeredIn": "Answered in",
     "items": {
       "problem": {
-        "hint": "A company's database says so. Nothing there is yours.",
-        "question": "Who owns my account right now?"
+        "question": "What problem does Bitsocial solve?"
       },
       "core-features": {
-        "hint": "One network, many apps, no company in the middle.",
-        "question": "What am I actually joining?"
+        "question": "What is Bitsocial? How does it work?"
       },
       "browser-peer": {
-        "hint": "Publishing from a browser only became reliable in 2026.",
         "question": "Why hasn't someone built this already?"
       },
       "decentralized": {
-        "hint": "They exist. Each one still keeps a server somewhere.",
-        "question": "Aren't there decentralized networks already?"
+        "question": "Aren't there decentralized social networks already?"
       },
       "arbitrary-challenges": {
-        "hint": "Each node sets its own challenge, and can swap it.",
         "question": "With no servers, what stops spam?"
       },
       "text-only-protocol": {
-        "hint": "Communities moderate. Apps moderate too.",
-        "question": "If nobody can ban anyone, what about illegal content?"
+        "question": "What about illegal content?"
       },
       "adoption-thesis": {
-        "hint": "It never goes down. You keep what you earn.",
-        "question": "Why would I actually switch?"
+        "question": "Why would people switch to Bitsocial?"
       },
       "master-plan": {
-        "hint": "Five phases. The first one is ongoing.",
-        "question": "What's the plan from here?"
+        "question": "What's the plan from here? How can I help?"
       },
       "mailing-list": {
-        "hint": "Milestones and new apps. Low frequency.",
         "question": "How do I follow along?"
       }
     }
