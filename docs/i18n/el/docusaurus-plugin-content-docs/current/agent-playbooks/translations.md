@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Άλλες χρήσιμες εντολές
 
 ```bash
-# Αντιγράψτε ένα κλειδί από τα Αγγλικά σε όλες τις γλώσσες (στεγνή εκτέλεση και μετά γράψτε)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Διαγράψτε ένα κλειδί από όλες τις γλώσσες
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Έλεγχος για αχρησιμοποίητα κλειδιά μετάφρασης
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

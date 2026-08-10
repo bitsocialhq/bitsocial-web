@@ -1,24 +1,15 @@
 ---
 title: EVM Contract Call Challenge
-description: Provocare anti-spam care verifică condițiile în lanț apelând un contract inteligent EVM.
+description: Provocare anti-spam care verifică condiții on-chain prin apelarea unui contract inteligent EVM.
 sidebar_position: 4
 ---
 
 # EVM Contract Call Challenge
 
-:::warning Denumire moștenită
-Acest pachet a fost publicat inițial în domeniul de aplicare `@plebbit`. A fost redenumit în `@bitsocial/evm-contract-challenge`. Referințele la vechiul nume pot apărea în continuare în documentația sau bazele de coduri mai vechi.
-:::
+EVM Contract Call Challenge verifică starea on-chain a unui autor înainte de a permite o publicare. Proprietarii de comunități pot cere ca un portofel sau o identitate rezolvată să îndeplinească o condiție de contract inteligent verificată doar prin citire — de exemplu deținerea unui sold minim de tokenuri — înainte de a putea posta.
 
-EVM Contract Call Challenge este un mecanism anti-spam care verifică condițiile în lanț înainte de a permite o publicare. Extras inițial din `plebbit-js` ca pachet autonom, acesta permite proprietarilor de comunități să solicite autorilor să îndeplinească criterii definite de contracte inteligente -- de exemplu, să dețină un sold minim de simboluri -- pentru a posta.
-
-**Cod sursă:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Cerințe
-
-- **Node.js** >= 22
-- **Numai ESM** -- acest pachet nu include versiuni CommonJS.
-- **Dependență de peertime de execuție:** `@plebbit/plebbit-js` (migrează la `@pkc/pkc-js`)
+- **Cod sursă și README actual:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Pachet npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Instalare
 
@@ -26,34 +17,26 @@ EVM Contract Call Challenge este un mecanism anti-spam care verifică condițiil
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Opțiuni de configurare
+## Unde se potrivește
 
-| Opțiune       | Tip      | Descriere                                                                             |
-| ------------- | -------- | ------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | Lanțul de interogat (de ex. `matic`, `avax`).                                         |
-| `address`     | `string` | The smart contract address to call.                                                   |
-| `abi`         | `string` | The ABI fragment for the function being called.                                       |
-| `condition`   | `string` | A comparison expression evaluated against the contract return value (e.g., `> 1000`). |
-| `error`       | `string` | The error message shown to authors who do not meet the condition.                     |
+Folosește această provocare pentru comunitățile în care participarea ar trebui să depindă de un semnal EVM extern: deținerea de tokenuri, deținerea de NFT-uri, scoruri de tip proof-of-personhood, apartenența la un organism de guvernanță sau o altă condiție care poate fi citită dintr-un contract.
 
-## Exemplu
+Odată configurată, provocarea este automată din perspectiva autorului. Verifică sursele eligibile de portofel sau de identitate, apelează metoda de contract configurată și compară valoarea returnată cu condiția stabilită de comunitate.
 
-A community owner who wants to restrict posting to authors holding more than 1,000 of a particular ERC-20 token would configure the challenge with:
+## Referința actuală a pachetului
 
-- `chainTicker`: `"eth"`
-- `address`: the token contract adresa
-- `abi`: ABI pentru `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Această pagină este intenționat o prezentare generală, nu o copie a referinței de configurare. README-ul pachetului este sursa de adevăr pentru numele provocărilor, exemplele de Bitsocial CLI, înregistrarea în pkc-js, valorile implicite ale opțiunilor, exemplele de ABI, comportamentul RPC și sursele de portofel acceptate:
 
-Când un autor încearcă să publice, provocarea apelează `balanceOf` cu adresa autorului și verifică dacă valoarea returnată îndeplinește condiția, se configurează mesajul de eroare returnate.
+- [README-ul EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Când să-l utilizați
+Preferă README-ul din amonte atunci când configurezi o comunitate activă, deoarece opțiunile de contract și exemplele sunt versionate împreună cu acel pachet, nu cu acest site.
+
+## Când să o folosești
 
 EVM Contract Call Challenge este ideală pentru:
 
-- **comunități cu jetoane** care restricționează postarea la deținătorii de jetoane.
-- **acces cu acces NFT** acolo unde este necesară deținerea unui anumit NFT.
-- ** participarea limitată la guvernanța ken/>** deținători.
+- **Comunități restricționate prin tokenuri**, care limitează postarea la deținătorii de tokenuri.
+- **Acces restricționat prin NFT**, unde este necesară deținerea unui anumit NFT.
+- **Spații de guvernanță DAO**, unde participarea este limitată la deținătorii tokenului de guvernanță.
 
-Pentru comunitățile care nu se bazează pe identitatea în lanț, luați în considerare [Spam Blocker](./spam-blocker.md) sau [Voucher Challenge](./voucher-challenge.md).
+Pentru comunitățile care nu se bazează pe identitate on-chain, ia în calcul în schimb [Spam Blocker](./spam-blocker.md) sau [Voucher Challenge](./voucher-challenge.md).

@@ -1,39 +1,44 @@
 ---
 title: 5chan
-description: Una imageboard serverless e decentralizzata costruita sul protocollo Bitsocial in cui chiunque può creare e possedere bacheche.
+description: Un imageboard serverless e decentralizzato, costruito sul protocollo Bitsocial, in cui chiunque può creare e possedere board.
 sidebar_position: 1
 ---
 
 # 5chan
 
-5chan è un imageboard serverless, adminless e completamente decentralizzato che funziona sul protocollo Bitsocial. Segue la struttura familiare delle directory dell'imageboard introducendo la proprietà decentralizzata: chiunque può creare una bacheca e più bacheche possono competere per lo stesso spazio nella directory attraverso un meccanismo di voto.
+5chan è un imageboard serverless, senza amministrazione e completamente decentralizzato, che gira sul protocollo Bitsocial. Mantiene la familiare struttura a directory degli imageboard, introducendo però la proprietà decentralizzata: chiunque può creare una board, e più board possono competere per lo stesso slot di directory attraverso un meccanismo di voto.
 
 ## Download
 
 | Piattaforma | Collegamento                         |
 | ----------- | ------------------------------------ |
-| Rete        | [5chan.app](ZXQPLACEholder0ZXQ       |
-| Scrivania   | Disponibile per Mac, Windows e Linux |
-| Cellulare   | Disponibile per Android              |
+| Web         | [5chan.app](https://5chan.app)       |
+| Desktop     | Disponibile per Mac, Windows e Linux |
+| Mobile      | Disponibile per Android              |
 
-## Come funzionano le schede
+## Come funzionano le board
 
-5chan organizza i contenuti in schede utilizzando un layout di directory classico (ad esempio, `/b/`, ZXQPLACEholder1ZXQ). A differenza delle imageboard tradizionali in cui un amministratore centrale controlla ogni scheda, 5chan consente a qualsiasi utente di creare e possedere completamente la propria scheda. Quando più consigli di amministrazione prendono di mira lo stesso spazio nella directory, competono per quella posizione attraverso il voto.
+5chan organizza i contenuti in board seguendo il classico schema a directory (ad esempio `/b/`, `/g/`). A differenza degli imageboard tradizionali, dove un amministratore centrale controlla ogni board, 5chan permette a qualsiasi utente di creare e possedere interamente la propria board. Quando più board puntano allo stesso slot di directory, competono per quella posizione tramite il voto.
 
-### Creazione di una tavola
+### Creare una board
 
-Per creare una nuova scheda, è necessario eseguire `bitsocial-cli` come nodo peer-to-peer. Ciò garantisce che la tua scheda sia ospitata in modo decentralizzato senza fare affidamento su alcun server centrale.
+Per creare una nuova board devi eseguire `bitsocial-cli` come nodo peer-to-peer. In questo modo la tua board è ospitata in maniera decentralizzata, senza dipendere da alcun server centrale.
 
-### Assegnazioni di directory
+### Assegnazione delle directory
 
-Le assegnazioni degli slot di directory (quale scheda appare in quale percorso) sono attualmente gestite tramite richieste pull GitHub al file `5chan-directories.json`. Si tratta di un processo temporaneo: le versioni future supporteranno la creazione di bacheche in-app e la votazione basata su pubsub per gestire automaticamente le assegnazioni delle directory.
+L'assegnazione degli slot di directory (quale board compare in quale percorso) è gestita al momento tramite pull request su GitHub al file `5chan-directories.json`. È una procedura temporanea: le versioni future supporteranno la creazione di board dall'app e il voto tramite pubsub, così da gestire automaticamente le assegnazioni delle directory.
 
-## Interni
+## Funzionamento interno
 
-Sotto il cofano, 5chan utilizza il livello client del protocollo Bitsocial condiviso per le sue interazioni di rete. L'app Web su 5chan.app può anche eseguire un nodo Helia nel browser quando il P2P del browser è abilitato da Impostazioni avanzate, in modo che i lettori possano caricare da peer senza un gateway IPFS centralizzato. Vedi la sezione P2P del browser nelle note sul protocollo peer-to-peer.
+Sotto il cofano, 5chan usa il livello client condiviso del protocollo Bitsocial per le sue
+interazioni di rete. La web app su 5chan.app esegue per impostazione predefinita un nodo Helia nel
+browser, quindi una normale scheda entra nella rete come peer: carica le board dagli altri peer e
+pubblica tramite pubsub, senza alcun gateway IPFS centralizzato nel percorso dei contenuti. Vedi
+[Peer-to-peer nel browser](/browser-p2p/) per capire che cosa comporta e che cosa un nodo nel
+browser ancora non riesce a fare.
 
-## Collegamenti
+## Link
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
-- **Telegramma**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licenza**: solo GPL-2.0
+- **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
+- **Licenza**: GPL-2.0-only

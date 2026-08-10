@@ -11,17 +11,17 @@ Para se të redaktoni, kontrolloni historinë e git për kodin përkatës. Kontr
 1. Skanoni titujt e kryerjes së fundit (vetëm titujt) për skedarin/zonën:
 
 ```bash
-# Titujt e kryerjes së fundit për një skedar specifik
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Titujt e kryerjes së fundit për një gamë të caktuar linjash
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspektoni vetëm detyrat përkatëse me dallime të shtrira:
 
 ```bash
-# Shfaq mesazh commit + ndryshim për një skedar
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

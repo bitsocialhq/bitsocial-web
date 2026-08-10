@@ -152,6 +152,8 @@ RPC ציבורי היא שכבת השירות שיכולה להפוך את Bitso
 - RPC לא אמור להפוך למשמורת קבועה
 - יחסי הבעלים צריכים להישאר קשורים למפתחות, לא למסד הנתונים של ספק אחד
 
+השירות הראשון שנבנה על המודל הזה הוא Forge RPC של [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), המבוסס על תכנון הפרוטוקול [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## מה Bitsocial זה לא
 
 Bitsocial היא לא רשת חברתית בלוקצ'יין. מדיה חברתית לא צריכה כל פוסט כדי להפוך לעסקה בפנקס עולמי אחד.

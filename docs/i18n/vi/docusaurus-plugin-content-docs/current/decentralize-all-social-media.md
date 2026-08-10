@@ -1,52 +1,56 @@
 ---
-title: Phân cấp tất cả các phương tiện truyền thông xã hội
-description: Giai đoạn 5 của kế hoạch tổng thể Bitsocial và trạng thái cuối mà nó hướng tới.
+title: Phi tập trung hóa toàn bộ mạng xã hội
+description: Giai đoạn 5 của kế hoạch tổng thể, tập trung vào việc cấp vốn và xây dựng phần đuôi dài của các ứng dụng khách xã hội Bitsocial.
 ---
 
-# Phân cấp tất cả các phương tiện truyền thông xã hội
+# Phi tập trung hóa toàn bộ mạng xã hội
 
-Đây là trạng thái cuối được mô tả trong kế hoạch tổng thể của Bitsocial: không phải một ứng dụng mà là một hệ sinh thái gồm các ứng dụng Bitsocial có thể cạnh tranh với mọi danh mục truyền thông xã hội chính.
+Trạng thái cuối không phải là một ứng dụng duy nhất. Đó là một thị trường gồm các ứng dụng khách, nút, dịch vụ và cộng đồng, có thể thay thế quyền sở hữu nền tảng bằng sự cạnh tranh trên cùng một giao thức.
 
-## mô hình
+Giai đoạn 5 là lúc Bitsocial vượt ra ngoài những nhóm ưu tiên đầu tiên và bắt đầu cấp vốn cho càng nhiều định dạng xã hội càng tốt.
 
-Ở trạng thái trưởng thành được đề xuất của mạng:
+## Những gì vẫn còn cần được xây dựng
 
-- nhiều nhà cung cấp RPC công cộng cạnh tranh để lưu trữ các nút hồ sơ máy chủ
-- người dùng vẫn có thể tự lưu trữ
-- thuật toán nguồn cấp dữ liệu trở thành dịch vụ tùy chọn thay vì luật nền tảng bắt buộc
-- khả năng kiếm tiền không phụ thuộc vào việc các ngân hàng sẵn sàng duy trì nền tảng này
-- các ứng dụng cạnh tranh về chất lượng sản phẩm, khả năng khám phá và thiết kế giao diện
+Các giai đoạn đầu tập trung vào những nhóm có đòn bẩy lớn nhất: bảng hình ảnh, diễn đàn, RPC công khai, Bitsocial Chain, nút hồ sơ, giải pháp thay thế Twitter/X ở Giai đoạn 3, và nền kinh tế dịch vụ xoay quanh chúng.
 
-## Thành công sẽ như thế nào
+Sau đó, mạng lưới nên mở rộng sang phần đuôi dài:
 
-Các ứng dụng Bitsocial phải có khả năng thách thức các nền tảng ở nhiều định dạng, không chỉ trong một phân khúc:
+- ứng dụng khách viết blog
+- ứng dụng gọi vốn cộng đồng
+- video của nhà sáng tạo và một [giải pháp thay thế YouTube](https://github.com/bitsocialnet/wetube) đủ sức thuyết phục
+- cộng đồng nhà sáng tạo
+- các thử nghiệm với nội dung dạng ngắn
+- ứng dụng xã hội theo địa phương hoặc theo ngôn ngữ
+- những ứng dụng khách ngách quá nhỏ so với bốn giai đoạn đầu
+- công cụ giúp vận hành các cộng đồng sẵn có dễ dàng hơn
 
-- văn bản và thảo luận
-- bảng hình ảnh
-- diễn đàn
-- cộng đồng người sáng tạo
-- video dạng ngắn và các sản phẩm truyền thông rộng hơn
+Một số ứng dụng trong đó có thể là mã nguồn mở. Một số có thể là ứng dụng khách tập trung. Một số có thể do Bitsocial Forge dựng nên, và nhiều ứng dụng nên do các nhà phát triển độc lập dựng nên.
 
-Mục tiêu không phải là ép buộc tất cả mọi người phải có một giao diện chung. Mục đích là cung cấp cho nhiều ứng dụng quyền truy cập vào cùng cộng đồng, danh tính và mạng cơ bản.
+## Cấp vốn cho nhiều người xây dựng
 
-## Tại sao lớp RPC lại quan trọng ở đây
+Mục tiêu là làm cho các ứng dụng khách xã hội mới có thể gọi được vốn trước khi chúng đã có sức hút ở quy mô nền tảng.
 
-Các cộng đồng và hồ sơ luôn hoạt động sẽ trở nên thiết thực hơn nhiều khi thị trường RPC công khai tồn tại. Nếu không có lớp đó, việc tự lưu trữ vẫn còn quá phức tạp đối với nhiều người dùng, đặc biệt là trên thiết bị di động.
+Điều đó có thể bao gồm đầu tư trực tiếp, các khoản tài trợ, vốn từ cộng đồng, doanh thu từ những dịch vụ Bitsocial thành công, hoặc các chương trình tài trợ phi tập trung nơi cộng đồng Bitsocial rộng hơn cùng góp phần quyết định nhà phát triển nào nên được hỗ trợ.
 
-## Tại sao lớp mạng lại quan trọng ở đây
+Điều quan trọng là tính đa nguyên. Mạng lưới nên cấp vốn cho nhiều nỗ lực khác nhau, thay vì chờ một ứng dụng chính thức bao trùm mọi nhóm.
 
-Nếu khả năng kiếm tiền từ nội dung có thể bị cắt đứt bởi áp lực nền tảng hoặc ngân hàng thông thường, thì hệ sinh thái vẫn rất mong manh. Mạng xã hội Bit được đề xuất là lớp kinh tế giúp cạnh tranh lâu dài trở nên đáng tin cậy hơn.
+## Thành công trông như thế nào
 
-## Đặt cược cốt lõi
-
-Đặt cược lớn là phương tiện truyền thông xã hội có thể được chia thành các lớp có thể thay thế được:
+Bitsocial thành công khi mạng xã hội có thể được tách thành những lớp có thể thay thế được:
 
 - giao thức
 - cộng đồng
 - danh tính
 - lưu trữ
 - khám phá
-- kiếm tiền
+- kiểm duyệt
+- cách kiếm tiền
 - ứng dụng
 
-Khi các lớp đó có thể thay thế được, không một công ty nào phải sở hữu toàn bộ biểu đồ xã hội để sản phẩm hoạt động.
+Một khi các lớp đó có thể thay thế được, không công ty nào còn phải sở hữu toàn bộ đồ thị xã hội thì sản phẩm mới chạy được.
+
+## Ván cược cốt lõi
+
+Một hệ sinh thái Bitsocial trưởng thành nên có các RPC công khai, nút tự vận hành, thị trường thuật toán nguồn cấp dữ liệu, dịch vụ lưu trữ đa phương tiện, dịch vụ khám phá, ứng dụng khách mã nguồn mở, ứng dụng khách thương mại và những thử nghiệm do cộng đồng cấp vốn.
+
+Mạng xã hội cuối cùng cũng tìm được điểm cân bằng của mình: một mạng xã hội ngang hàng, phi tập trung hoàn toàn, không thuộc về ai cả; Bitsocial.

@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Anti-Spam-Herausforderung, die die Veröffentlichung hinter eindeutigen Gutscheincodes, die von Community-Eigentümern verteilt werden, verhindert.
+description: Anti-Spam-Prüfung, die das Veröffentlichen an eindeutige Gutscheincodes bindet, die von den Betreibern einer Community verteilt werden.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Voucher Challenge ist ein Anti-Spam-Mechanismus, der die Veröffentlichung von Inhalten hinter eindeutigen Gutscheincodes schützt. Anstatt sich auf die automatische Erkennung zu verlassen, verlagert es das Vertrauen auf den Community-Eigentümer, der Codes manuell an vertrauenswürdige Personen verteilt.
+Voucher Challenge bindet die Veröffentlichung von Inhalten an eindeutige Gutscheincodes, die der Betreiber einer Community verteilt. Statt auf automatische Bewertung zu setzen, verlagert sie das Vertrauen auf einen manuellen Einladungsablauf, bei dem bekannte Personen ihre Codes über einen Kanal erhalten, den der Betreiber kontrolliert.
 
-**Quellcode:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Quellcode und aktuelle README:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **npm-Paket:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
 
-## Wie es funktioniert
+## Installation
 
-1. Ein Community-Eigentümer generiert einen oder mehrere eindeutige Gutscheincodes.
-2. Der Eigentümer verteilt diese Codes über einen Kanal seiner Wahl (Direktnachricht, E-Mail, persönlich usw.) an vertrauenswürdige Autoren.
-3. Wenn ein Autor versucht, etwas zu veröffentlichen, fordert das Challenge-System ihn zur Eingabe eines Gutscheincodes auf.
-4. Der Code wird validiert – wenn er echt ist und noch nicht verwendet wurde, wird die Veröffentlichung akzeptiert.
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
-Jeder Gutscheincode ist nach der Einlösung an einen bestimmten Autor gebunden und verhindert so eine Wiederverwendung durch andere.
+## So funktioniert es
 
-## Wann sollte man es verwenden?
+1. Der Betreiber einer Community erzeugt einen oder mehrere eindeutige Gutscheincodes.
+2. Er verteilt diese Codes über einen Kanal seiner Wahl an vertrauenswürdige Autoren (Direktnachricht, E-Mail, persönlich usw.).
+3. Versucht ein Autor zu veröffentlichen, fragt das System nach einem Gutscheincode.
+4. Der Code wird geprüft. Ist er echt und noch nicht eingelöst, wird die Veröffentlichung angenommen.
 
-Die Gutschein-Challenge eignet sich am besten für:
+Jeder Gutscheincode ist nach dem Einlösen an einen bestimmten Autor gebunden, sodass andere ihn nicht erneut verwenden können.
 
-- **Communitys, die nur auf Einladung zugänglich sind**, in denen die Mitgliedschaft absichtlich eingeschränkt ist.
-- **Kuratierte Räume**, in denen der Eigentümer jeden Teilnehmer persönlich überprüft.
-- **High-trust environments** where automated spam scoring is unnecessary or undesirable.
+## Aktuelle Paketreferenz
 
-Da es eine manuelle Codeverteilung erfordert, lässt es sich nicht auf große offene Communities skalieren. Erwägen Sie für diese Szenarien stattdessen [Spam Blocker](./spam-blocker.md) oder [EVM Contract Call Challenge](./evm-contract-call.md).
+Diese Seite ist bewusst eine Übersicht und keine gespiegelte Einrichtungsanleitung. Die README des Pakets ist die maßgebliche Quelle für aktuelle Namen der Prüfungen, Beispiele für die Bitsocial CLI, die Registrierung in pkc-js, unterstützte Optionen und das Verhalten beim Einlösen:
 
-## Integration
+- [README von Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Voucher Challenge lässt sich an dieselbe Challenge-Schnittstelle anschließen, die auch von anderen Anti-Spam-Paketen im Bitsocial-Ökosystem verwendet wird. Community-Eigentümer aktivieren es über ihre Community-Einstellungen und die Herausforderung wird den Autoren automatisch angezeigt, wenn sie versuchen, Beiträge zu veröffentlichen.
+Halten Sie sich beim Einrichten einer produktiven Community lieber an die README im Upstream, denn Gutscheinoptionen und Installationsabläufe werden mit diesem Paket versioniert und nicht mit dieser Website.
+
+## Wann Sie sie einsetzen sollten
+
+Voucher Challenge passt am besten zu:
+
+- **Communities nur mit Einladung**, in denen die Mitgliedschaft bewusst beschränkt ist.
+- **Kuratierten Räumen**, in denen der Betreiber jeden Teilnehmer persönlich prüft.
+- **Umgebungen mit hohem Vertrauen**, in denen eine automatische Spam-Bewertung unnötig oder unerwünscht ist.
+
+Da die Codes von Hand verteilt werden müssen, skaliert das Verfahren nicht auf große, offene Communities. Für solche Fälle kommen [Spam Blocker](./spam-blocker.md) oder [EVM Contract Call Challenge](./evm-contract-call.md) infrage.

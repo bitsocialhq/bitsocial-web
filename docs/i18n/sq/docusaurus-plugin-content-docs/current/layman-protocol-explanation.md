@@ -152,6 +152,8 @@ Dallimi ka rëndësi:
 - RPC nuk duhet të bëhet kujdestari i përhershëm
 - marrëdhënia e pronarit duhet të mbetet e lidhur me çelësat, jo me bazën e të dhënave të një ofruesi
 
+Shërbimi i parë i ndërtuar mbi këtë model është Forge RPC nga [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), i cili bazohet në dizajnin e protokollit [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Çfarë nuk është Bitsocial
 
 Bitsocial nuk është një rrjet social blockchain. Mediat sociale nuk kanë nevojë për çdo postim për t'u bërë një transaksion në një libër global.

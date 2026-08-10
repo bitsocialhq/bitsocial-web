@@ -1,43 +1,44 @@
 ---
 title: 5chan
-description: Ett serverlöst, decentraliserat bildkort byggt på Bitsocial-protokollet där vem som helst kan skapa och äga kort.
+description: En serverlös, decentraliserad imageboard byggd på Bitsocial-protokollet där vem som helst kan skapa och äga boards.
 sidebar_position: 1
 ---
 
-:::warning[Äldre namngivning]
-Detta projekts kodbas använder fortfarande det äldre "plebbit"-namnet från före Bitsocial-omvarumärket. Paketnamn, API-referenser och viss intern terminologi kommer att uppdateras i en framtida version. Funktionen som beskrivs här är aktuell — endast namngivningen är föråldrad.
-:::
-
 # 5chan
 
-5chan är ett serverlöst, adminlöst och helt decentraliserat bildkort som körs på Bitsocial-protokollet. Den följer den välbekanta imageboard-katalogstrukturen samtidigt som den introducerar decentraliserat ägande - vem som helst kan skapa en styrelse, och flera styrelser kan tävla om samma katalogplats genom en omröstningsmekanism.
+5chan är en serverlös, adminlös och fullständigt decentraliserad imageboard som körs på Bitsocial-protokollet. Den följer den välbekanta katalogstrukturen från imageboards men inför decentraliserat ägande — vem som helst kan skapa en board, och flera boards kan konkurrera om samma katalogplats genom en röstningsmekanism.
 
 ## Nedladdningar
 
 | Plattform | Länk                                   |
 | --------- | -------------------------------------- |
 | Webb      | [5chan.app](https://5chan.app)         |
-| Desktop   | Tillgänglig för Mac, Windows och Linux |
+| Dator     | Tillgänglig för Mac, Windows och Linux |
 | Mobil     | Tillgänglig för Android                |
 
-## Hur styrelser fungerar
+## Så fungerar boards
 
-5chan organiserar innehåll i anslagstavlor med en klassisk kataloglayout (t.ex. `/b/`, `/g/`). Till skillnad från traditionella imageboards där en central administratör kontrollerar varje board, tillåter 5chan alla användare att skapa och helt äga sin egen board. När flera styrelser riktar sig mot samma katalogplats, konkurrerar de om den positionen genom att rösta.
+5chan organiserar innehåll i boards med en klassisk kataloglayout (t.ex. `/b/`, `/g/`). Till skillnad från traditionella imageboards där en central administratör styr varje board kan vilken användare som helst skapa och fullt ut äga sin egen board på 5chan. När flera boards siktar på samma katalogplats konkurrerar de om den positionen genom röstning.
 
-### Att skapa en tavla
+### Skapa en board
 
-För att skapa ett nytt kort måste du köra `bitsocial-cli` som en peer-to-peer-nod. Detta säkerställer att ditt kort är värd på ett decentraliserat sätt utan att förlita sig på någon central server.
+För att skapa en ny board behöver du köra `bitsocial-cli` som en peer-to-peer-nod. Det säkerställer att din board hostas decentraliserat utan att förlita sig på någon central server.
 
-### Kataloguppdrag
+### Katalogtilldelningar
 
-Katalogplatstilldelningar (vilket kort visas på vilken sökväg) hanteras för närvarande genom GitHub pull-förfrågningar till `5chan-directories.json`-filen. Detta är en tillfällig process – framtida utgåvor kommer att stödja skapande av tavlor i appar och pubsub-baserad röstning för att hantera katalogtilldelningar automatiskt.
+Tilldelningen av katalogplatser (vilken board som visas på vilken sökväg) hanteras för närvarande genom pull requests på GitHub till filen `5chan-directories.json`. Det är en tillfällig process — kommande versioner kommer att stödja skapande av boards direkt i appen och pubsub-baserad röstning som sköter katalogtilldelningarna automatiskt.
 
-## Interner
+## Interna detaljer
 
-Under huven använder 5chan det delade Bitsocial-protokollklientlagret för sina nätverksinteraktioner. Webbappen på 5chan.app kan också köra en Helia-nod i webbläsaren när webbläsaren P2P är aktiverad från avancerade inställningar, så att läsare kan ladda från peers utan en centraliserad IPFS-gateway. Se avsnittet om webbläsarens P2P i peer-to-peer-protokollanteckningarna.
+Under huven använder 5chan det delade klientlagret för Bitsocial-protokollet för sina
+nätverksinteraktioner. Webbappen på 5chan.app kör som standard en Helia-nod i webbläsaren, så en
+vanlig flik ansluter till nätverket som en peer: den läser in boards från andra peers och publicerar
+över pubsub, utan någon centraliserad IPFS-gateway i innehållets väg. Se
+[Peer-to-peer i webbläsaren](/browser-p2p/) för vad det innebär och vad en webbläsarnod fortfarande
+inte kan göra.
 
 ## Länkar
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licens**: Endast GPL-2.0
+- **Licens**: GPL-2.0-only

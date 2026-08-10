@@ -11,17 +11,17 @@ Avant de modifier, vérifiez l'historique git pour le code concerné. Les contri
 1. Analysez les titres de commit récents (titres uniquement) pour le fichier/la zone :
 
 ```bash
-# Titres de commit récents pour un fichier spécifique
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Titres de validation récents pour une plage de lignes spécifique
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspectez uniquement les commits pertinents avec des différences étendues :
 
 ```bash
-# Afficher le message de validation + diff pour un fichier
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

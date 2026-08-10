@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Sfida anti-spam che blocca la pubblicazione dietro codici voucher univoci distribuiti dai proprietari della comunità.
+description: Sfida anti-spam che subordina la pubblicazione a codici voucher univoci distribuiti da chi possiede la comunità.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Voucher Challenge è un meccanismo anti-spam che blocca la pubblicazione di contenuti dietro codici voucher univoci. Invece di fare affidamento sul rilevamento automatico, trasferisce la fiducia al proprietario della comunità, che distribuisce manualmente i codici alle persone di cui si fida.
+Voucher Challenge subordina la pubblicazione dei contenuti a codici voucher univoci distribuiti da chi possiede la comunità. Invece di affidarsi a un punteggio automatico, sposta la fiducia su un flusso di inviti manuale, in cui persone conosciute ricevono i codici attraverso un canale controllato dal proprietario.
 
-**Codice sorgente:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Codice sorgente e README aggiornato:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Pacchetto npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Installazione
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Come funziona
 
-1. Un proprietario della comunità genera uno o più codici voucher univoci.
-2. Il proprietario distribuisce tali codici agli autori fidati attraverso un canale di sua scelta (messaggio diretto, email, di persona, ecc.).
-3. Quando un autore tenta di pubblicare, il sistema di sfida gli richiede un codice voucher.
-4. Il codice viene convalidato: se è autentico e non è già stato utilizzato, la pubblicazione viene accettata.
+1. Chi possiede la comunità genera uno o più codici voucher univoci.
+2. Il proprietario distribuisce quei codici agli autori fidati attraverso il canale che preferisce (messaggio diretto, email, di persona e così via).
+3. Quando un autore prova a pubblicare, il sistema di sfida gli chiede un codice voucher.
+4. Il codice viene convalidato -- se è autentico e non è già stato usato, la pubblicazione viene accettata.
 
-Ogni codice voucher è legato a un autore specifico una volta riscattato, impedendone il riutilizzo da parte di altri.
+Una volta riscattato, ogni codice voucher resta legato a un autore specifico e non può essere riutilizzato da altri.
 
-## Quando utilizzarlo
+## Riferimento al pacchetto attuale
 
-La sfida voucher è la più adatta per:
+Questa pagina è volutamente una panoramica, non una guida di configurazione replicata. Il README del pacchetto è la fonte di verità per i nomi attuali delle sfide, gli esempi con la CLI di Bitsocial, la registrazione in pkc-js, le opzioni supportate e il comportamento del riscatto:
 
-- **Comunità solo su invito** in cui l'appartenenza è intenzionalmente limitata.
-- **Spazi curati** in cui il proprietario controlla personalmente ogni partecipante.
-- **Ambienti ad alta fiducia** in cui il punteggio automatico dello spam non è necessario o indesiderabile.
+- [README di Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Poiché richiede la distribuzione manuale del codice, non è adattabile a grandi comunità aperte. Per questi scenari, considera [Spam Blocker](./spam-blocker.md) o [EVM Contract Call Challenge](./evm-contract-call.md).
+Quando configuri una comunità in produzione, preferisci il README upstream, perché le opzioni dei voucher e le procedure di installazione sono versionate insieme a quel pacchetto e non a questo sito.
 
-## Integrazione
+## Quando usarla
 
-Voucher Challenge si collega alla stessa interfaccia di sfida utilizzata da altri pacchetti anti-spam nell'ecosistema Bitsocial. I proprietari della comunità lo abilitano attraverso le impostazioni della loro comunità e la sfida viene presentata automaticamente agli autori quando tentano di pubblicare.
+Voucher Challenge è particolarmente adatta a:
+
+- **Comunità su invito**, dove l'appartenenza è volutamente ristretta.
+- **Spazi curati**, dove il proprietario valuta personalmente ogni partecipante.
+- **Ambienti ad alta fiducia**, dove un punteggio anti-spam automatico è superfluo o indesiderato.
+
+Poiché richiede la distribuzione manuale dei codici, non scala a grandi comunità aperte. Per quegli scenari, valuta invece [Spam Blocker](./spam-blocker.md) o [EVM Contract Call Challenge](./evm-contract-call.md).

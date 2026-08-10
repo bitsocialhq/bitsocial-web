@@ -7,6 +7,6 @@
 - అంశం: F001
 - సారాంశం: దీన్ని సెషన్ సారాంశంతో భర్తీ చేయండి.
 - ఫైల్‌లు: `path/to/file`
-- ధృవీకరణ: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- ధృవీకరణ: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - బ్లాకర్స్: ఏదీ లేదు
 - తదుపరి: తదుపరి ఉత్తమ ఫాలో-అప్‌తో దీన్ని భర్తీ చేయండి.

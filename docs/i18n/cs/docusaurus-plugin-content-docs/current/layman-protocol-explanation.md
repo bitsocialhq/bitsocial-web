@@ -152,6 +152,8 @@ Na rozlišení záleží:
 - RPC by se nemělo stát trvalou vazbou
 - vztah vlastníka by měl zůstat vázán na klíče, nikoli na databázi jednoho poskytovatele
 
+První službou postavenou na tomto modelu je Forge RPC od [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), která vychází z návrhu protokolu [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Co Bitsocial není
 
 Bitsocial není blockchainová sociální síť. Sociální média nepotřebují, aby se každý příspěvek stal transakcí v jedné globální účetní knize.

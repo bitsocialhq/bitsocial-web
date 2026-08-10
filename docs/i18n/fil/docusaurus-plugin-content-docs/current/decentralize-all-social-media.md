@@ -1,52 +1,71 @@
 ---
-title: I-desentralisa ang Lahat ng Social Media
-description: Phase 5 ng Bitsocial master plan at ang end-state na nilalayon nito.
+title: Idesentralisa ang Lahat ng Social Media
+description: Ika-5 yugto ng master plan, nakatuon sa pagpopondo at pagbuo ng long tail ng mga social client ng Bitsocial.
 ---
 
-# I-desentralisa ang Lahat ng Social Media
+# Idesentralisa ang Lahat ng Social Media
 
-Ito ang end-state na inilalarawan ng master plan ng Bitsocial: hindi isang app, ngunit isang ecosystem ng Bitsocial app na maaaring kalabanin ang bawat pangunahing kategorya ng social media.
+Ang huling kalagayan ay hindi iisang app. Ito ay isang merkado ng mga client, node, serbisyo, at
+komunidad na kayang palitan ang pagmamay-ari ng platform ng kumpetisyon sa antas ng protocol.
 
-## Ang modelo
+Sa Yugto 5 lumalampas ang Bitsocial sa mga unang prayoridad na kategorya at nagsisimulang pondohan
+ang kasindaming social format hangga't maaari.
 
-Sa iminungkahing mature na estado ng network:
+## Ano pa ang kailangang buuin
 
-- maraming pampublikong RPC provider ang nakikipagkumpitensya upang mag-host ng mga profile node
-- ang mga gumagamit ay maaari pa ring mag-self-host
-- nagiging mga opsyonal na serbisyo ang mga feed algorithm sa halip na mandatoryong batas ng platform
-- hindi nakadepende ang monetization sa mga bangko na handang panatilihing buhay ang platform
-- nakikipagkumpitensya ang mga app sa kalidad ng produkto, pagtuklas, at disenyo ng interface
+Nakatuon ang mga unang yugto sa mga kategoryang may pinakamalaking bisa: mga imageboard, forum,
+pampublikong RPC, Bitsocial Chain, profile node, ang alternatibo sa Twitter/X sa Yugto 3, at ang
+ekonomiya ng serbisyo sa paligid ng mga ito.
 
-## Ano ang magiging hitsura ng tagumpay
+Pagkatapos noon, dapat lumawak ang network patungo sa long tail:
 
-Ang mga bitsocial app ay dapat na hamunin ang mga platform sa iba't ibang mga format, hindi lamang sa isang angkop na lugar:
+- mga client para sa blogging
+- mga app para sa crowdfunding
+- video para sa mga creator at isang kapani-paniwalang [alternatibo sa YouTube](https://github.com/bitsocialnet/wetube)
+- mga komunidad ng creator
+- mga eksperimento sa short-form na media
+- mga social app na panlokal o partikular sa isang wika
+- mga niche na client na masyadong maliit para sa unang apat na yugto
+- mga kasangkapang nagpapadali sa pagpapatakbo ng mga umiiral na komunidad
 
-- teksto at talakayan
-- mga imageboard
-- mga forum
-- mga komunidad ng tagalikha
-- short-form na video at mas malawak na mga produkto ng media
+Ang ilan sa mga app na ito ay maaaring open source. Ang ilan ay maaaring sentralisadong client. Ang
+ilan ay maaaring buuin ng Bitsocial Forge, at marami ang dapat buuin ng mga independiyenteng
+developer.
 
-Ang layunin ay hindi upang pilitin ang isang unibersal na interface sa lahat. Ito ay upang bigyan ang maraming app ng access sa parehong pinagbabatayan na komunidad, pagkakakilanlan, at network.
+## Pagpopondo sa maraming developer
 
-## Bakit mahalaga ang layer ng RPC dito
+Layunin na mapondohan ang mga bagong social client bago pa man sila magkaroon ng traksyong kasinlaki
+ng isang platform.
 
-Ang palaging-on na mga komunidad at profile ay nagiging mas praktikal kapag umiiral na ang mga pampublikong merkado ng RPC. Kung wala ang layer na iyon, ang self-hosting ay nananatiling masyadong mataas ang friction para sa maraming user, lalo na sa mobile.
+Maaaring kabilang dito ang direktang pamumuhunan, mga grant, pondo mula sa komunidad, kita mula sa
+matagumpay na mga serbisyo ng Bitsocial, o mga desentralisadong programa ng grant kung saan
+tumutulong ang mas malawak na komunidad ng Bitsocial na magpasya kung aling mga developer ang dapat
+suportahan.
 
-## Bakit mahalaga ang layer ng network dito
+Ang mahalagang bahagi ay ang pluralismo. Dapat pondohan ng network ang maraming pagsubok, hindi
+maghintay sa iisang opisyal na app na sasaklaw sa bawat kategorya.
 
-Kung ang monetization ng content ay maaaring putulin ng ordinaryong pagbabangko o presyon ng platform, mananatiling marupok ang ecosystem. Ang Bitsocial Chain ay iminungkahi bilang economic layer na ginagawang mas kapani-paniwala ang pangmatagalang kompetisyon.
+## Ano ang hitsura ng tagumpay
 
-## Ang pangunahing taya
-
-Ang malaking taya ay ang social media ay maaaring hatiin sa maaaring palitan na mga layer:
+Nagtatagumpay ang Bitsocial kapag ang social media ay mahahati-hati sa mga layer na mapapalitan:
 
 - protocol
-- komunidad
+- mga komunidad
 - pagkakakilanlan
-- pagho-host
+- hosting
 - pagtuklas
-- monetization
-- apps
+- moderation
+- monetisasyon
+- mga app
 
-Kapag napapalitan na ang mga layer na iyon, walang iisang kumpanya ang kailangang magmay-ari ng buong social graph para gumana ang produkto.
+Kapag mapapalitan na ang mga layer na iyon, hindi na kailangang pagmay-ari ng iisang kumpanya ang
+buong social graph para gumana ang produkto.
+
+## Ang pangunahing pusta
+
+Ang isang mature na ecosystem ng Bitsocial ay dapat maglaman ng mga pampublikong RPC, self-hosted na
+node, merkado ng feed algorithm, media host, serbisyo sa pagtuklas, open-source na client,
+komersyal na client, at mga eksperimentong pinondohan ng komunidad.
+
+Sa wakas ay natatagpuan ng social media ang balanse nito: isang ganap na desentralisado at
+peer-to-peer na social network na walang nagmamay-ari; Bitsocial.

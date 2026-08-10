@@ -1,16 +1,16 @@
 # Sorpreses conegudes
 
-Aquest fitxer fa un seguiment dels punts de confusió específics del repositori que van provocar errors de l'agent.
+Aquest fitxer fa el seguiment dels punts de confusió específics d'aquest repositori que han provocat errors dels agents.
 
 ## Criteris d'entrada
 
-Afegiu una entrada només si totes són certes:
+Afegiu una entrada només si es compleix tot això:
 
-- És específic d'aquest repositori (no consells genèrics).
-- És probable que es repeteixi per als futurs agents.
+- És específic d'aquest repositori (no és un consell genèric).
+- És probable que es repeteixi per a futurs agents.
 - Té una mitigació concreta que es pot seguir.
 
-Si no esteu segurs, pregunteu al desenvolupador abans d'afegir una entrada.
+Si teniu dubtes, pregunteu-ho al desenvolupador abans d'afegir una entrada.
 
 ## Plantilla d'entrada
 
@@ -28,92 +28,172 @@ Si no esteu segurs, pregunteu al desenvolupador abans d'afegir una entrada.
 
 ## Entrades
 
-### Portless canvia l'URL de l'aplicació local canònica
+### Els dominis de producció de les aplicacions a Vercel poden tornar a desplegaments de master de Git
 
-- **Data:** 18-03-2026
-- **Observat per:** Codex
-- **Context:** verificació del navegador i fluxos de fum
-- **El que va ser sorprenent:** L'URL local predeterminat no és el port habitual de Vite. El repo espera que `https://bitsocial.localhost` a través de Portless, de manera que comprovar `localhost:3000` o `localhost:5173` pot afectar l'aplicació equivocada o res de res.
-- **Impacte:** Les comprovacions del navegador poden fallar o validar l'objectiu equivocat fins i tot quan el servidor de desenvolupament està en bon estat.
-- **Mitigació:** utilitzeu primer `https://bitsocial.localhost`. Ometeu-lo només amb `PORTLESS=0 corepack yarn start` quan necessiteu explícitament un port Vite directe.
+- **Data:** 2026-04-28
+- **Observat per:** Tommaso + Codex
+- **Context:** verificació dels miralls de les aplicacions Seedit i 5chan al directori d'aplicacions de Bitsocial Web.
+- **Què va sorprendre:** els projectes `seedit` i `5chan` de Vercel tenien `gitProviderOptions.createDeployments = "enabled"`, de manera que les pujades a `master` de GitHub es promocionaven als dominis de producció encara que la política del repositori espera que els miralls de producció serveixin només artefactes de versió.
+- **Impacte:** les insígnies de mirall verificat del directori d'aplicacions poden esdevenir falses perquè els dominis de producció serveixen el darrer commit de desenvolupament en lloc del ZIP de la versió publicada a GitHub, el hash de l'`index.html` de la qual queda registrat a `about/src/lib/apps-data.ts`.
+- **Mitigació:** abans d'afegir o actualitzar metadades de verificació de miralls, comproveu el projecte de Vercel amb `vercel api /v9/projects/<project-id>` i confirmeu que `gitProviderOptions.createDeployments = "disabled"`. Desplegueu el contingut del ZIP de la versió amb `vercel deploy --prebuilt --prod` i feu servir `seedit-omega.vercel.app` o `5chan-omega.vercel.app` per als desplegaments de desenvolupament.
 - **Estat:** confirmat
 
-### Els ganxos de Commitizen bloquegen les confirmacions no interactives
+### Portless 0.11 reutilitza l'estat de proxy antic tret que el llançador forci HTTPS
 
-- **Data:** 18-03-2026
-- **Observat per:** Codex
-- **Context:** fluxos de treball de confirmació impulsats per agents
-- **El que va ser sorprenent:** `git commit` activa Commitizen a través de Husky i espera l'entrada interactiva de TTY, que penja intèrprets d'agents no interactius.
-- **Impacte:** els agents poden aturar-se indefinidament durant el que hauria de ser un compromís normal.
-- **Mitigació:** utilitzeu `git commit --no-verify -m "message"` per a les confirmacions creades per l'agent. Els humans encara poden utilitzar `corepack yarn commit` o `corepack yarn exec cz`.
+- **Data:** 2026-04-28
+- **Observat per:** Tommaso + Codex
+- **Context:** migració del flux habitual de `yarn start` des de l'antic URL de proxy `http://bitsocial.localhost:1355` cap a `https://bitsocial.localhost`.
+- **Què va sorprendre:** fins i tot amb `portless@0.11.1` instal·lat, Portless reutilitzava el proxy HTTP existent `~/.portless/proxy.port = 1355` i imprimia l'URL antic amb `:1355`.
+- **Impacte:** actualitzar les versions dels paquets i la documentació no n'hi ha prou; `yarn start` encara pot anunciar i utilitzar l'URL antic quan un col·laborador té estat antic de Portless en execució.
+- **Mitigació:** feu que els scripts d'inici arrenquin explícitament el proxy HTTPS de Portless al port `443` abans de registrar les rutes de l'aplicació, perquè el flux d'execució s'allunyi de l'estat `1355` persistit en lloc d'heretar-lo.
 - **Estat:** confirmat
 
-### Corepack és necessari per evitar Yarn classic
+### Portless canvia l'URL canònic de l'aplicació local
 
-- **Data:** 19-03-2026
+- **Data:** 2026-03-18
+- **Observat per:** Codex
+- **Context:** verificació al navegador i fluxos de comprovació ràpida
+- **Què va sorprendre:** l'URL local per defecte no és el port habitual de Vite. El repositori espera `https://bitsocial.localhost` a través de Portless, de manera que comprovar `localhost:3000` o `localhost:5173` pot apuntar a l'aplicació equivocada o directament a res.
+- **Impacte:** les comprovacions al navegador poden fallar o validar l'objectiu equivocat encara que el servidor de desenvolupament funcioni bé.
+- **Mitigació:** proveu `https://bitsocial.localhost` en primer lloc. Ometeu-lo amb `PORTLESS=0 corepack yarn start` només quan necessiteu explícitament un port de Vite directe.
+- **Estat:** confirmat
+
+### Els hooks de Commitizen bloquegen els commits no interactius
+
+- **Data:** 2026-03-18
+- **Observat per:** Codex
+- **Context:** fluxos de treball de commits impulsats per agents
+- **Què va sorprendre:** `git commit` activa Commitizen a través de Husky i espera entrada interactiva de TTY, cosa que penja els shells no interactius dels agents.
+- **Impacte:** els agents es poden encallar indefinidament durant el que hauria de ser un commit normal.
+- **Mitigació:** feu servir `git commit --no-verify -m "message"` per als commits creats per agents. Les persones encara poden fer servir `corepack yarn commit` o `corepack yarn exec cz`.
+- **Estat:** confirmat
+
+### Cal Corepack per evitar Yarn classic
+
+- **Data:** 2026-03-19
 - **Observat per:** Codex
 - **Context:** migració del gestor de paquets a Yarn 4
-- **El que va ser sorprenent:** La màquina encara té una instal·lació clàssica global de Yarn a `PATH`, de manera que executar `yarn` normal es pot resoldre a v1 en lloc de la versió fixada de Yarn 4.
-- **Impacte:** Els desenvolupadors poden evitar accidentalment la fixació del gestor de paquets del repositori i obtenir un comportament d'instal·lació diferent o una sortida del fitxer de bloqueig.
-- **Mitigació:** utilitzeu `corepack yarn ...` per a les ordres de l'intèrpret d'ordres o executeu primer `corepack enable`, de manera que `yarn` es resolgui a la versió de Yarn 4 fixada.
+- **Què va sorprendre:** la màquina encara té una instal·lació global de Yarn classic al `PATH`, de manera que executar `yarn` a seques es pot resoldre a la v1 en lloc de la versió fixada de Yarn 4.
+- **Impacte:** els desenvolupadors es poden saltar accidentalment la fixació del gestor de paquets del repositori i obtenir un comportament d'instal·lació o un lockfile diferents.
+- **Mitigació:** feu servir `corepack yarn ...` per a les ordres de shell, o executeu abans `corepack enable` perquè `yarn` a seques es resolgui a la versió fixada de Yarn 4.
 - **Estat:** confirmat
 
-### S'ha solucionat que els noms d'aplicacions sense port xoquen entre els arbres de treball de Bitsocial Web
+### Els noms fixos d'aplicació de Portless xoquen entre worktrees de Bitsocial Web
 
-- **Data:** 30-03-2026
+- **Data:** 2026-03-30
 - **Observat per:** Codex
-- **Context:** S'està iniciant `yarn start` en un arbre de treball de Bitsocial Web mentre un altre arbre de treball ja funcionava a través de Portless
-- **El que va ser sorprenent:** L'ús del nom literal de l'aplicació Portless `bitsocial` a cada arbre de treball fa que la ruta xoqui, fins i tot quan els ports de suport són diferents, de manera que el segon procés falla perquè `bitsocial.localhost` ja està registrat.
-- **Impacte:** Les branques web paral·leles de Bitsocial es poden bloquejar entre elles tot i que Portless està pensat per permetre-les coexistir de manera segura.
-- **Mitigació:** Mantingueu l'inici sense port darrere de `scripts/start-dev.mjs`, que ara utilitza una ruta `*.bitsocial.localhost` amb àmbit de branca fora del cas canònic i torna a una ruta amb àmbit de branca quan el nom `bitsocial.localhost` nu està ocupat.
+- **Context:** execució de `yarn start` en un worktree de Bitsocial Web mentre un altre worktree ja servia a través de Portless
+- **Què va sorprendre:** fer servir el nom literal d'aplicació de Portless `bitsocial` a tots els worktrees fa que la ruta mateixa xoqui, encara que els ports subjacents siguin diferents, de manera que el segon procés falla perquè `bitsocial.localhost` ja està registrat.
+- **Impacte:** les branques paral·leles de Bitsocial Web es poden bloquejar entre elles tot i que Portless està pensat perquè puguin coexistir sense problemes.
+- **Mitigació:** mantingueu l'arrencada de Portless darrere de `scripts/start-dev.mjs`, que ara fa servir una ruta `*.bitsocial.localhost` amb àmbit de branca fora del cas canònic i recorre a una ruta amb àmbit de branca quan el nom `bitsocial.localhost` sense prefix ja està ocupat.
 - **Estat:** confirmat
 
-### La previsualització de documents s'utilitza per codificar el port 3001
+### La previsualització de la documentació codificava el port 3001 de manera fixa
 
-- **Data:** 30-03-2026
+- **Data:** 2026-03-30
 - **Observat per:** Codex
-- **Context:** executant `yarn start` juntament amb altres repositoris i agents locals
-- **El que va ser sorprenent:** L'ordre root dev va executar l'espai de treball de documents amb `docusaurus start --port 3001`, de manera que tota la sessió de desenvolupament va fallar sempre que un altre procés ja posseïa `3001`, tot i que l'aplicació principal ja utilitzava Portless.
-- **Impacte:** `yarn start` podria matar el procés web immediatament després d'arrencar-se, interrompent el treball local no relacionat amb una col·lisió amb el port de documents.
-- **Mitigació:** Mantingueu l'inici de documents darrere de `yarn start:docs`, que ara utilitza Portless plus `scripts/start-docs.mjs` per respectar un port lliure injectat o tornar al següent port disponible quan s'executa directament.
+- **Context:** execució de `yarn start` juntament amb altres repositoris i agents locals
+- **Què va sorprendre:** l'ordre de desenvolupament de l'arrel executava l'espai de treball de la documentació amb `docusaurus start --port 3001`, de manera que tota la sessió de desenvolupament fallava sempre que un altre procés ja ocupava el `3001`, encara que l'aplicació principal ja fes servir Portless.
+- **Impacte:** `yarn start` podia matar el procés web just després d'arrencar i interrompia feina local no relacionada per una col·lisió al port de la documentació.
+- **Mitigació:** mantingueu l'arrencada de la documentació darrere de `yarn start:docs`, que ara fa servir Portless més `scripts/start-docs.mjs` per respectar un port lliure injectat o recórrer al següent port disponible quan s'executa directament.
 - **Estat:** confirmat
 
-### Documents corregits El nom d'amfitrió sense port estava codificat en dur
+### El nom d'amfitrió de Portless per a la documentació estava codificat de manera fixa
 
 - **Data:** 2026-04-03
 - **Observat per:** Codex
-- **Context:** Execució de `yarn start` en un arbre de treball secundari de Bitsocial Web mentre un altre arbre de treball ja publicava documents mitjançant Portless
-- **El que va ser sorprenent:** `start:docs` encara registrava el nom d'amfitrió `docs.bitsocial.localhost` literal, de manera que `yarn start` podria fallar tot i que l'aplicació sobre ja sabia com evitar col·lisions de ruta sense port per al seu propi nom d'amfitrió.
-- **Impacte:** Els arbres de treball paral·lels no van poder utilitzar de manera fiable l'ordre de desenvolupament de l'arrel perquè primer es va sortir del procés de documents i després `concurrently` va acabar amb la resta de la sessió.
-- **Mitigació:** Mantingueu l'inici de documents darrere de `scripts/start-docs.mjs`, que ara deriva el mateix nom d'amfitrió Portless amb àmbit de branca que l'aplicació sobre i injecta l'URL públic compartit a l'objectiu del proxy de desenvolupament `/docs`.
+- **Context:** execució de `yarn start` en un worktree secundari de Bitsocial Web mentre un altre worktree ja servia la documentació a través de Portless
+- **Què va sorprendre:** `start:docs` encara registrava el nom d'amfitrió literal `docs.bitsocial.localhost`, de manera que `yarn start` podia fallar tot i que l'aplicació about ja sabia com evitar les col·lisions de rutes de Portless per al seu propi nom d'amfitrió.
+- **Impacte:** els worktrees paral·lels no podien fer servir de manera fiable l'ordre de desenvolupament de l'arrel perquè el procés de la documentació sortia primer i llavors `concurrently` matava la resta de la sessió.
+- **Mitigació:** mantingueu l'arrencada de la documentació darrere de `scripts/start-docs.mjs`, que ara deriva el mateix nom d'amfitrió de Portless amb àmbit de branca que l'aplicació about i injecta aquest URL públic compartit a l'objectiu del proxy de desenvolupament de `/docs`.
 - **Estat:** confirmat
 
-### Els shells de l'arbre de treball poden perdre la versió del node fixada del repo
+### Els shells dels worktrees poden no agafar la versió de Node fixada al repositori
 
 - **Data:** 2026-04-03
 - **Observat per:** Codex
-- **Context:** Execució de `yarn start` en arbres de treball de Git com ara `.claude/worktrees/*` o comprovacions de l'arbre de treball dels germans
-- **El que va ser sorprenent:** Algunes intèrprets d'arbre de treball van resoldre `node` i `yarn node` al node Homebrew `25.2.1` tot i que els pins de repo `22.12.0` a `.nvmrc`, de manera que els `.nvmrc`Q s'executaven en silenci, de manera que els `.nvmrc`Q s'executen en silenci. el temps d'execució incorrecte.
-- **Impacte:** El comportament del servidor de desenvolupament pot derivar entre la caixa principal i els arbres de treball, fent que els errors siguin difícils de reproduir i violant la cadena d'eines del Node 22 esperada del repo.
-- **Mitigació:** Mantingueu els llançadors de desenvolupadors darrere de `scripts/start-dev.mjs` i `scripts/start-docs.mjs`, que ara es tornen a executar sota el binari del node `.nvmrc` quan l'intèrpret d'ordres actual es troba a la versió incorrecta. La configuració del Shell encara hauria de preferir `nvm use`.
+- **Context:** execució de `yarn start` en worktrees de Git com ara `.claude/worktrees/*` o en còpies de worktrees germans
+- **Què va sorprendre:** alguns shells de worktree resolien `node` i `yarn node` cap al Node `25.2.1` de Homebrew tot i que el repositori fixa `22.12.0` a `.nvmrc`, de manera que `yarn start` podia executar en silenci els llançadors de desenvolupament amb el runtime equivocat.
+- **Impacte:** el comportament del servidor de desenvolupament pot divergir entre la còpia principal i els worktrees, cosa que fa que els errors siguin difícils de reproduir i incompleix la cadena d'eines de Node 22 que el repositori dona per descomptada.
+- **Mitigació:** mantingueu els llançadors de desenvolupament darrere de `scripts/start-dev.mjs` i `scripts/start-docs.mjs`, que ara es tornen a executar amb el binari de Node de `.nvmrc` quan el shell actual té la versió equivocada. La configuració del shell hauria de continuar prioritzant `nvm use`.
 - **Estat:** confirmat
 
-### Les restes de `docs-site/` poden amagar la font de documents que falten després del refactor
+### Les restes de `docs-site/` poden amagar que falta codi font de documentació després de la refactorització
 
-- **Data:** 01-04-2026
+- **Data:** 2026-04-01
 - **Observat per:** Codex
-- **Context:** neteja de monorepo posterior a la fusió després de moure el projecte Docusaurus de `docs-site/` a `docs/`
-- **El que va ser sorprenent:** L'antiga carpeta `docs-site/` pot romandre al disc amb fitxers obsolets però importants com `i18n/`, fins i tot després que el dipòsit de seguiment es mogués a `docs/`. Això fa que el refactor sembli duplicat localment i pot amagar el fet que les traduccions de documents amb seguiment no s'han mogut realment a `docs/`.
-- **Impacte:** els agents poden suprimir la carpeta antiga com a "brossa" i perdre accidentalment l'única còpia local de les traduccions de documents, o continuar editant scripts que encara apunten al camí `docs-site/` mort.
-- **Mitigació:** Tracteu `docs/` com l'únic projecte de documents canònics. Abans de suprimir les restes de `docs-site/` locals, restaureu la font de seguiment com `docs/i18n/` i actualitzeu els scripts i els ganxos per deixar de fer referència a `docs-site`.
+- **Context:** neteja del monorepo posterior a la fusió, després de moure el projecte de Docusaurus de `docs-site/` a `docs/`
+- **Què va sorprendre:** la carpeta antiga `docs-site/` pot quedar-se al disc amb fitxers obsolets però importants com ara `i18n/`, fins i tot després que el repositori versionat s'hagi mogut a `docs/`. Això fa que la refactorització sembli duplicada en local i pot amagar que les traduccions de la documentació versionades no s'havien mogut realment a `docs/`.
+- **Impacte:** els agents poden suprimir la carpeta antiga com si fos “brossa” i perdre accidentalment l'única còpia local de les traduccions de la documentació, o bé continuar editant scripts que encara apunten al camí mort `docs-site/`.
+- **Mitigació:** tracteu `docs/` com l'únic projecte de documentació canònic. Abans de suprimir cap resta local de `docs-site/`, restaureu el codi font versionat com ara `docs/i18n/` i actualitzeu els scripts i els hooks perquè deixin de fer referència a `docs-site`.
 - **Estat:** confirmat
 
-### La previsualització de documents multilocal pot augmentar la memòria RAM durant la verificació
+### La previsualització multiidioma de la documentació pot disparar la RAM durant la verificació
 
-- **Data:** 01-04-2026
+- **Data:** 2026-04-01
 - **Observat per:** Codex
-- **Context:** S'estan corregint docs i18n, l'encaminament local i el comportament de Pagefind amb `yarn start:docs` més Playwright
-- **El que va ser sorprenent:** El mode de previsualització de documents predeterminat ara fa una compilació completa de documents multilocal i la indexació de Pagefind abans de publicar-lo, i mantenir aquest procés viu juntament amb diverses sessions de Playwright o Chrome pot consumir molta més memòria RAM que un bucle de desenvolupament de Vite o Docusaurus d'un sol local.
-- **Impacte:** La màquina pot quedar limitada per la memòria, les sessions del navegador poden fallar i les execucions interrompudes poden deixar servidors de documents obsolets o navegadors sense cap que segueixen consumint memòria.
-- **Mitigació:** per a treballs de documents que no necessiten verificació de la ruta local o de Pagefind, preferiu `DOCS_START_MODE=live yarn start:docs`. Utilitzeu només la previsualització multilocal predeterminada quan necessiteu validar rutes traduïdes o Pagefind. Manteniu una única sessió de Playwright, tanqueu les antigues sessions del navegador abans d'obrir-ne de noves i atureu el servidor de documents després de la verificació si ja no el necessiteu.
+- **Context:** correcció de la i18n de la documentació, l'encaminament per idioma i el comportament de Pagefind amb `yarn start:docs` més Playwright
+- **Què va sorprendre:** el mode de previsualització per defecte de la documentació ara fa una compilació completa multiidioma més la indexació de Pagefind abans de servir res, i mantenir aquest procés viu juntament amb diverses sessions de Playwright o de Chrome pot consumir molta més RAM que un bucle de desenvolupament normal de Vite o de Docusaurus amb un sol idioma.
+- **Impacte:** la màquina es pot quedar sense memòria, les sessions de navegador poden petar i les execucions interrompudes poden deixar enrere servidors de documentació obsolets o navegadors sense interfície que continuen consumint memòria.
+- **Mitigació:** per a feina de documentació que no necessiti verificar rutes per idioma ni Pagefind, prioritzeu `DOCS_START_MODE=live yarn start:docs`. Feu servir la previsualització multiidioma per defecte només quan hàgiu de validar rutes traduïdes o Pagefind. Mantingueu una única sessió de Playwright, tanqueu les sessions de navegador antigues abans d'obrir-ne de noves i atureu el servidor de documentació després de la verificació si ja no el necessiteu.
+- **Estat:** confirmat
+
+### `translate-docs.py` pot deixar idiomes de la documentació traduïts a mitges o amb enllaços trencats
+
+- **Data:** 2026-04-06
+- **Observat per:** Codex
+- **Context:** correcció de les rutes i el contingut localitzats de la documentació després que `yarn start:docs` servís pàgines de detall en anglès o no aconseguís generar la sortida per idioma
+- **Què va sorprendre:** el procés de traducció de la documentació tenia dos modes de fallada específics del repositori alhora: `scripts/translate-docs.py` només extreia un subconjunt petit dels missatges de `DocsHome` quan les crides `tr(...)` feien servir formes que no sabia analitzar, i el markdown traduït sota `docs/i18n/**` podia contenir slugs traduïts automàticament o artefactes `ZXQPLACEHOLDER` dins dels destins dels enllaços.
+- **Impacte:** les pàgines d'inici localitzades poden recórrer silenciosament a l'anglès, les pàgines de detall localitzades poden semblar sense traduir i un `yarn docs:build` complet pot fallar per enllaços trencats en un idioma encara que la documentació d'origen sigui vàlida.
+- **Mitigació:** després de canviar les traduccions de la documentació o de regenerar els fitxers d'idioma, executeu sempre `yarn docs:build` des de l'arrel del repositori, cerqueu `ZXQPLACEHOLDER` al markdown de `docs/i18n/**` i comproveu que els enllaços traduïts continuen apuntant als slugs canònics de la documentació, com ara `/apps/5chan/`, en lloc de camins d'URL traduïts. Si ha canviat el text de `DocsHome`, confirmeu que `scripts/translate-docs.py` encara extreu tots els missatges `docs.home.*`.
+- **Estat:** confirmat
+
+### Les comprovacions sense JS del lloc about han de fer servir la ruta de Portless, no una previsualització SSR independent
+
+- **Data:** 2026-04-12
+- **Observat per:** Codex
+- **Context:** verificació del suport sense JS del lloc `about/` des d'un worktree de branca
+- **Què va sorprendre:** una previsualització SSR independent pot semblar correcta mentre la ruta real de Portless amb àmbit de branca encara serveix l'embolcall d'aplicació equivocat o un procés antic. En aquest repositori, el contracte local real és el nom d'amfitrió de Portless que dona `yarn start`, no un servidor de previsualització improvisat.
+- **Impacte:** els agents poden afirmar per error que el suport sense JS funciona, o passar per alt regressions que només apareixen a `*.bitsocial.localhost`.
+- **Mitigació:** per a la verificació al navegador d'`about/`, engegueu sempre el servidor local real amb `yarn start` o `yarn start:about` i proveu primer l'URL de Portless amb àmbit de branca. Si un nom d'amfitrió de Portless sembla obsolet, inspeccioneu i atureu el procés antic abans de tornar a provar.
+- **Estat:** confirmat
+
+### `chain/` era invisible per a `yarn build:verify` i `yarn doctor`
+
+- **Data:** 2026-07-05
+- **Observat per:** Codex
+- **Context:** verificació d'un diff que només tocava chain/ després que l'espai de treball `chain/` (aplicació de Vite independent per a `chain.bitsocial.net`) s'afegís al monorepo.
+- **Què va sorprendre:** `scripts/verify-build.mjs` només reconeixia els prefixos de camí `about/`, `docs/` i `stats/`, de manera que un diff que només tocava chain/ imprimia «No targeted build checks matched the current diff» i no executava cap compilació, encara que `build:chain` ja existia al `package.json` de l'arrel. A banda d'això, `yarn doctor` estava codificat de manera fixa com a `react-doctor about -y`, de manera que els canvis de React sota `chain/src` no rebien cap cobertura de React Doctor.
+- **Impacte:** els agents que verificaven canvis de chain havien de saber que calia cridar `yarn build:chain` directament en lloc de confiar en `yarn build:verify`, i els problemes de React a `chain/src` (efectes, hooks, codi mort) passaven desapercebuts per a `yarn doctor`.
+- **Mitigació:** `scripts/verify-build.mjs` ara té una branca `chain/` que replica la d'`about/`, i `doctor` / `doctor:verbose` ara executen `react-doctor --project about,chain -y` en una sola invocació. `doctor:score` continua sent només per a `about` perquè `--score` no imprimeix res, i sense avisar, quan es combina amb `--project` per a més d'un projecte; feu servir `yarn react-doctor --project about,chain --verbose -y` (o `--json`) si cal una puntuació de chain.
+- **Estat:** confirmat
+
+### El P2P al navegador funciona sobre WebSockets segurs; pkc-js denega WebRTC i WebTransport per defecte
+
+- **Data:** 2026-08-02
+- **Observat per:** Claude
+- **Context:** redacció de text per a la pàgina d'entrada i per a la documentació sobre com funciona el P2P al navegador de Bitsocial
+- **Què va sorprendre:** `@pkcprotocol/pkc-js` inclou un filtre de connexions per defecte que rebutja els intents de connexió per WebRTC i WebTransport al navegador: `dist/browser/helia/dial-transport-filter.js` exporta `DENIED_DIAL_TRANSPORTS_BY_DEFAULT = ["webrtc", "webrtc-direct", "webtransport"]`. El comentari del codi font en dona el motiu: al navegador, aquests transports afegeixen camins d'establiment de connexió llargs i que sovint fallen (STUN/ICE, rotació de certhash) que alenteixen les càrregues, mentre que WebSocket és directe i fiable. Tots els peers actius del panell d'estat P2P del blog mostren «Secure WebSocket». El filtre viu a `node_modules`, de manera que res del repositori no en dona cap pista.
+- **Impacte:** és molt fàcil escriure text públic tècnicament versemblant però fals; per exemple, atribuir a l'arribada de WebTransport al Baseline dels navegadors el març de 2026 el fet que el P2P al navegador de Bitsocial sigui possible. Aquesta afirmació va arribar a la pàgina d'entrada, a la taula comparativa i a dues pàgines de documentació abans que el desenvolupador se n'adonés. Les afirmacions errònies sobre l'arquitectura en pàgines públiques les revisa exactament el públic desenvolupador al qual s'adreça el lloc.
+- **Mitigació:** no deduïu mai quins transports utilitza Bitsocial a partir del que libp2p o la plataforma del navegador admeten en principi. Consulteu `node_modules/@pkcprotocol/pkc-js/dist/browser/helia/dial-transport-filter.js` per veure la llista de denegació actual, confirmeu que no hi ha cap substitució de `connectionGater` sota `about/src/` i llegiu les etiquetes de transport en directe al panell «P2P status» del blog abans de fer cap afirmació pública. El canvi upstream que realment va desbloquejar la publicació des del navegador va ser la correcció del seqno monotònic de gossipsub a `@libp2p/gossipsub` 15.0.21 (maig de 2026); pkc-js actualment inclou la 16.0.4.
+- **Estat:** confirmat
+
+### Els enllaços relatius `./page.md` des d'una pàgina de documentació sense traduir trenquen totes les compilacions localitzades
+
+- **Data:** 2026-08-02
+- **Observat per:** Claude
+- **Context:** addició d'una pàgina nova només en anglès, `docs/browser-p2p.md`, que enllaçava amb documentació existent mitjançant `./peer-to-peer-protocol.md` i `./apps/5chan.md`
+- **Què va sorprendre:** cada idioma sota `docs/i18n/<lang>/docusaurus-plugin-content-docs/current/` replica l'arbre de la documentació. Una pàgina nova que no hi sigui es continua renderitzant en tots els idiomes gràcies a la reserva en anglès, però els seus enllaços de markdown relatius ja no es resolen: Docusaurus genera `/ar/browser-p2p/peer-to-peer-protocol.md/` i fa fallar la compilació amb «Docusaurus found broken links!». El punt clau és que `yarn build:verify` i `yarn docs:build:verify` només compilen `en` i passen sense cap problema; només ho revela un `yarn docs:build` complet, que s'atura al primer idioma per ordre alfabètic (`ar`).
+- **Impacte:** un canvi a la documentació pot superar totes les comprovacions locals ràpides i, tot i així, trencar la compilació multiidioma de producció. A més, la fallada sembla no tenir cap relació amb el canvi, perquè l'error anomena un camí d'idioma que l'autor no ha tocat mai.
+- **Mitigació:** a qualsevol pàgina de documentació que no estigui replicada a `docs/i18n/**`, feu servir enllaços relatius a l'arrel (`/peer-to-peer-protocol/`, `/apps/5chan/`) en lloc d'enllaços relatius `.md`; Docusaurus hi afegeix el prefix de l'idioma automàticament. `docs/build-your-own-client.md` n'és l'exemple existent. Executeu un `yarn docs:build` complet, no només `build:verify`, abans de lliurar cap canvi que afegeixi o enllaci una pàgina de documentació.
+- **Estat:** confirmat
+
+### `update-translations.js` s'ha d'executar des d'`about/`, i les execucions concurrents perden claus en silenci
+
+- **Data:** 2026-08-02
+- **Observat per:** Claude
+- **Context:** aplicació de 26 claus d'i18next traduïdes als 36 idiomes mitjançant la skill `translate`
+- **Què va sorprendre:** dos paranys diferents al mateix script. Primer, `scripts/update-translations.js` resol el seu objectiu com a `path.join(process.cwd(), "public", "translations")`, però aquest repositori manté les traduccions a `about/public/translations`. Executar l'ordre documentada des de l'arrel del repositori falla a cada invocació amb «Translations directory not found»: `docs/agent-playbooks/translations.md` mostra `node scripts/update-translations.js ...`, cosa que es llegeix com una ordre per executar des de l'arrel del repositori. Segon, cada invocació és una lectura-modificació-escriptura sobre els 36 fitxers d'idioma, de manera que dues invocacions simultànies s'esclafen mútuament i una clau desapareix sense cap error. La skill `translate` indica explícitament que es generin fins a 4 subagents concurrents, i cadascun cridaria l'script.
+- **Impacte:** la forma des de l'arrel del repositori falla de manera sorollosa i malbarata una passada sencera. El problema de concurrència falla en silenci: desapareixen claus d'idiomes arbitraris i el diff continua semblant plausible.
+- **Mitigació:** executeu-lo com a `cd about && node ../scripts/update-translations.js --key <key> --map <abs-path> --write`. No deixeu mai que els subagents traductors escriguin fitxers d'idioma de manera concurrent: feu que només emetin fitxers JSON de diccionari i després apliqueu totes les claus de manera seriada des de l'agent pare. Un cop aplicades, verifiqueu programàticament que cada clau existeix als 35 idiomes que no són l'anglès i que cap valor no és idèntic byte a byte a l'original en anglès.
 - **Estat:** confirmat

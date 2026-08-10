@@ -1,19 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Generador de captcha autònom basat en imatges amb caràcters, dimensions i colors configurables.
+description: Repte de captcha autònom basat en imatges per a comunitats de Bitsocial.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-Captcha Canvas Challenge és un generador de captcha d'imatges autònom. Representa el text aleatori en un llenç HTML i retorna la imatge resultant, que les comunitats poden presentar als autors com un repte de correu brossa.
+Captcha Canvas Challenge és un paquet autònom de captcha d'imatge per a comunitats de Bitsocial. Dibuixa text aleatori sobre un llenç i permet que una comunitat demani als autors que resolguin la imatge abans d'acceptar una publicació.
 
-**Codi font:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Requisits
-
-- **Node.js** >= 22
-- **Només per ESM**: aquest paquet no inclou compilacions CommonJS.
+- **Codi font i README actual:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **Paquet npm:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Instal·lació
 
@@ -21,19 +17,16 @@ Captcha Canvas Challenge és un generador de captcha d'imatges autònom. Represe
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Opcions de configuració
+## On encaixa
 
-| Opció        | Tipus    | Per defecte | Descripció                                                      |
-| ------------ | -------- | ----------- | --------------------------------------------------------------- |
-| `characters` | `number` | `6`         | Nombre de caràcters aleatoris representats a la imatge captcha. |
-| `height`     | `number` | `100`       | Alçada de la imatge generada en píxels.                         |
-| `width`      | `number` | `300`       | Amplada de la imatge generada en píxels.                        |
-| `colors`     | `string` | `#32cf7e`   | Color primari utilitzat per al text captcha.                    |
+Els reptes de captcha són útils quan una comunitat vol una barrera interactiva senzilla per a una resistència al correu brossa de risc baix. Aquest paquet és deliberadament acotat: proporciona la implementació del repte, mentre que la comunitat o el node de Bitsocial decideixen quan i com presentar-lo.
 
-## Com funciona
+Per a una protecció més sòlida, combineu-lo amb sistemes de moderació o de puntuació de risc més amplis, en lloc de tractar un captcha com una estratègia anti-spam completa.
 
-1. El generador tria una cadena aleatòria de la longitud configurada.
-2. La cadena es representa en un llenç amb soroll visual per resistir l'OCR.
-3. La imatge resultant (i la resposta esperada) es retorna perquè l'aplicació de trucada pugui presentar el repte i després verificar la resposta.
+## Referència actual del paquet
 
-Com que el paquet és un generador d'imatges pur, no gestiona la gestió de la xarxa ni la sessió per si sol. Està pensat per integrar-se en un flux de desafiaments més gran -- per exemple, com un dels tipus de desafiament admesos per [Bloquejador de correu brossa](./spam-blocker.md).
+Aquesta pàgina és deliberadament una visió general, i no una còpia de la guia de configuració. El README del paquet és la font de veritat per als noms de repte actuals, els exemples de registre, els exemples de CLI, les opcions admeses, els requisits i les notes de seguretat:
+
+- [README de Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Consulteu preferentment el README original quan configureu una comunitat en producció, perquè les opcions del paquet i els fluxos d'instal·lació es versionen amb aquest paquet i no amb aquest lloc web.

@@ -152,6 +152,8 @@ La distinció importa:
 - RPC no hauria de convertir-se en custòdia permanent
 - la relació del propietari hauria de romandre lligada a les claus, no a la base de dades d'un proveïdor
 
+El primer servei creat sobre aquest model és Forge RPC de [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), que es basa en el disseny del protocol [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## El que no és Bitsocial
 
 Bitsocial no és una xarxa social blockchain. Les xarxes socials no necessiten que cada publicació es converteixi en una transacció en un registre global.

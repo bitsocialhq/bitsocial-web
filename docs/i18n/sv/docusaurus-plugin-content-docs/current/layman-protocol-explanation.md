@@ -152,6 +152,8 @@ Distinktionen spelar roll:
 - RPC ska inte bli permanent vårdnad
 - Ägarförhållandet bör förbli knutet till nycklar, inte till en leverantörs databas
 
+Den första tjänsten som bygger på den här modellen är Forge RPC från [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), som bygger vidare på protokolldesignen [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Vad Bitsocial inte är
 
 Bitsocial är inte ett socialt blockchain-nätverk. Sociala medier behöver inte varje inlägg för att bli en transaktion i en global reskontra.

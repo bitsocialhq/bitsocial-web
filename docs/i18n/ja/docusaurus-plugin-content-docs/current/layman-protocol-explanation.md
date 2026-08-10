@@ -152,6 +152,8 @@ Bitsocial がさまざまなアプリ スタイルをサポートできるのは
 - RPC は永久保管施設になってはなりません
 - 所有者の関係は、1 つのプロバイダーのデータベースではなく、キーに関連付けられたままである必要があります。
 
+このモデルに基づいて構築された最初のサービスは、[Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) の Forge RPC で、[Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) プロトコル設計を基盤としています。
+
 ## Bitsocial ではないもの
 
 Bitsocial はブロックチェーン ソーシャル ネットワークではありません。ソーシャル メディアでは、すべての投稿が 1 つのグローバル台帳のトランザクションになる必要はありません。

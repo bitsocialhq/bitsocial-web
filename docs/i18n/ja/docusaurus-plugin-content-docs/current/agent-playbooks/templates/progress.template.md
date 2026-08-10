@@ -7,6 +7,6 @@
 - 項目: F001
 - 概要: これをセッションの概要に置き換えます。
 - ファイル: `path/to/file`
-- 検証: `corepack yarn build`、 `corepack yarn lint`、`corepack yarn typecheck`
+- 検証: `corepack yarn build:verify`、 `corepack yarn lint`、`corepack yarn typecheck`
 - ブロッカー: なし
 - 次: これを次に最適なフォローアップに置き換えます。

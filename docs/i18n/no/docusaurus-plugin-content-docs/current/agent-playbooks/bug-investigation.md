@@ -11,17 +11,17 @@ Før du redigerer, sjekk git-historikken for den relevante koden. Tidligere bidr
 1. Skann nylige forpliktelsestitler (bare titler) for filen/området:
 
 ```bash
-# Nylige commit-titler for en bestemt fil
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Nylige commit-titler for et spesifikt linjeområde
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspiser bare relevante commits med scoped diff:
 
 ```bash
-# Vis commit melding + diff for én fil
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

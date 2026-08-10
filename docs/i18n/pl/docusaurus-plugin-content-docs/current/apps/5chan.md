@@ -1,39 +1,43 @@
 ---
-title: 5kan
-description: Bezserwerowa, zdecentralizowana tablica graficzna zbudowana w oparciu o protokół Bitsocial, na której każdy może tworzyć i posiadać tablice.
+title: 5chan
+description: Bezserwerowy, zdecentralizowany imageboard zbudowany na protokole Bitsocial, na którym każdy może tworzyć własne boardy i być ich właścicielem.
 sidebar_position: 1
 ---
 
-# 5kan
+# 5chan
 
-5chan to bezserwerowa, pozbawiona administratora i w pełni zdecentralizowana tablica graficzna działająca na protokole Bitsocial. Jest zgodny ze znaną strukturą katalogów imageboard, wprowadzając jednocześnie zdecentralizowaną własność — każdy może utworzyć tablicę, a wiele tablic może konkurować o to samo miejsce w katalogu poprzez mechanizm głosowania.
+5chan to bezserwerowy, pozbawiony administratorów i w pełni zdecentralizowany imageboard działający na protokole Bitsocial. Zachowuje znajomą strukturę katalogów znaną z imageboardów, wprowadzając przy tym zdecentralizowaną własność — każdy może utworzyć board, a wiele boardów może rywalizować o to samo miejsce w katalogu w drodze głosowania.
 
 ## Pliki do pobrania
 
-| Platforma | Link                                         |
-| --------- | -------------------------------------------- |
-| Sieć      | [5chan.app](https://5chan.app)               |
-| Pulpit    | Dostępne dla komputerów Mac, Windows i Linux |
-| Komórka   | Dostępne dla Androida                        |
+| Platforma    | Link                                |
+| ------------ | ----------------------------------- |
+| Przeglądarka | [5chan.app](https://5chan.app)      |
+| Komputer     | Dostępny na Maca, Windows i Linuksa |
+| Telefon      | Dostępny na Androida                |
 
-## Jak działają tablice
+## Jak działają boardy
 
-5chan organizuje zawartość na tablicach przy użyciu klasycznego układu katalogów (np. `/b/`, `/g/`). W przeciwieństwie do tradycyjnych tablic graficznych, w których każdą tablicę kontroluje centralny administrator, 5chan umożliwia każdemu użytkownikowi utworzenie własnej tablicy i pełne jej posiadanie. Kiedy wiele zarządów celuje w to samo miejsce w katalogu, rywalizują o to miejsce w drodze głosowania.
+5chan porządkuje treści w boardy z użyciem klasycznego układu katalogów (np. `/b/`, `/g/`). W odróżnieniu od tradycyjnych imageboardów, gdzie centralny administrator kontroluje każdy board, 5chan pozwala dowolnemu użytkownikowi utworzyć własny board i w pełni go posiadać. Kiedy wiele boardów celuje w to samo miejsce w katalogu, rywalizują o tę pozycję w głosowaniu.
 
-### Tworzenie tablicy
+### Tworzenie boardu
 
-Aby utworzyć nową tablicę, musisz uruchomić `bitsocial-cli` jako węzeł peer-to-peer. Dzięki temu Twoja tablica będzie hostowana w sposób zdecentralizowany, bez polegania na jakimkolwiek serwerze centralnym.
+Aby utworzyć nowy board, musisz uruchomić `bitsocial-cli` jako węzeł peer-to-peer. Dzięki temu twój board jest hostowany w sposób zdecentralizowany, bez polegania na jakimkolwiek centralnym serwerze.
 
-### Przydziały katalogów
+### Przypisania miejsc w katalogu
 
-Przypisaniami miejsc katalogowych (która płyta pojawia się w której ścieżce) zarządza się obecnie za pomocą żądań ściągnięcia GitHub do pliku `5chan-directories.json`. Jest to proces tymczasowy — przyszłe wersje będą obsługiwać tworzenie tablic w aplikacji i głosowanie w oparciu o pubsub w celu automatycznego przypisywania katalogów.
+Przypisania miejsc w katalogu (który board pojawia się pod którą ścieżką) są obecnie zarządzane przez pull requesty na GitHubie do pliku `5chan-directories.json`. To rozwiązanie tymczasowe — przyszłe wydania będą obsługiwać tworzenie boardów w aplikacji oraz głosowanie oparte na pubsub, które będzie automatycznie zarządzać przypisaniami w katalogu.
 
-## Elementy wewnętrzne
+## Jak to działa od środka
 
-Pod maską 5chan wykorzystuje współdzieloną warstwę klienta protokołu Bitsocial do interakcji sieciowych. Aplikacja internetowa pod adresem 5chan.app może również uruchomić węzeł Helia w przeglądarce, gdy w przeglądarce włączona jest funkcja P2P w Ustawieniach zaawansowanych, dzięki czemu czytelnicy mogą ładować z urządzeń równorzędnych bez scentralizowanej bramy IPFS. Zobacz sekcję P2P przeglądarki w uwagach do protokołu peer-to-peer.
+Pod spodem 5chan korzysta ze wspólnej warstwy klienckiej protokołu Bitsocial do komunikacji sieciowej.
+Aplikacja webowa pod adresem 5chan.app domyślnie uruchamia węzeł Helia w przeglądarce, więc zwykła
+karta dołącza do sieci jako peer: wczytuje boardy od innych peerów i publikuje przez pubsub, bez
+scentralizowanej bramy IPFS na ścieżce treści. Zobacz [Peer-to-peer w przeglądarce](/browser-p2p/),
+aby dowiedzieć się, co się z tym wiąże i czego węzeł w przeglądarce nadal nie potrafi.
 
-## Spinki do mankietów
+## Linki
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licencja**: tylko GPL-2.0
+- **Licencja**: GPL-2.0-only

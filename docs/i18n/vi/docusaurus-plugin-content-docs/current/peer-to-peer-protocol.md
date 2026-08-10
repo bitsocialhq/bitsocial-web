@@ -1,44 +1,91 @@
 ---
 title: Giao thức ngang hàng
-description: Cách Bitsocial sử dụng IPFS/libp2p, địa chỉ khóa công khai, pubsub ngang hàng và các nút P2P của trình duyệt để cung cấp phương tiện truyền thông xã hội không có máy chủ.
+description: Cách Bitsocial dùng IPFS/libp2p, định địa chỉ bằng khóa công khai, pubsub ngang hàng và các node P2P trong trình duyệt để tạo ra mạng xã hội không cần máy chủ.
 ---
 
 # Giao thức ngang hàng
 
-Bitsocial không sử dụng blockchain, máy chủ liên kết hoặc chương trình phụ trợ tập trung. Thay vào đó, nó kết hợp hai ý tưởng — **địa chỉ dựa trên khóa công khai** và **pubsub ngang hàng** — để cho phép mọi người lưu trữ một cộng đồng từ phần cứng tiêu dùng trong khi người dùng đọc và đăng bài mà không cần tài khoản trên bất kỳ dịch vụ nào do công ty kiểm soát.
+Bitsocial không dùng blockchain, máy chủ liên hợp hay backend tập trung. Thay vào đó, nó dựa trên
+bộ công cụ IPFS/libp2p để kết hợp hai ý tưởng: **định địa chỉ bằng khóa công khai** và **pubsub
+ngang hàng**. Cùng nhau, chúng cho phép bất kỳ ai vận hành một cộng đồng bằng phần cứng phổ thông,
+còn người dùng thì đọc và đăng bài mà không cần tài khoản trên bất kỳ dịch vụ nào do một công ty
+kiểm soát.
 
-Để có hướng dẫn ít kỹ thuật hơn, hãy đọc [Giải thích đầy đủ về giao thức Bitsocial](./layman-protocol-explanation.md).
+Nếu bạn muốn một bài giải thích ít kỹ thuật hơn, hãy đọc
+[Giải thích đầy đủ giao thức Bitsocial cho người không chuyên](./layman-protocol-explanation.md).
 
-## Hai vấn đề
+## Bitsocial có dùng IPFS không?
+
+Có. Các node Bitsocial dùng những thành phần cơ bản của IPFS/libp2p cho lớp ngang hàng: bản ghi
+cộng đồng được định địa chỉ bằng khóa công khai, việc truyền nội dung giữa các peer, và pubsub
+gossipsub cho tin nhắn thời gian thực. Khi tài liệu này nói “pubsub”, đó là pubsub của IPFS/libp2p,
+không phải một message broker tập trung riêng biệt.
+
+Hiện tại, giao thức mô tả việc khám phá thông qua các router HTTP, vì client Bitsocial truy vấn
+endpoint của router để lấy địa chỉ của các peer cung cấp nội dung, thay vì phải dựa vào DHT — vốn
+không thân thiện với trình duyệt — cho mọi lượt tra cứu. Router chỉ trả về peer; lưu lượng truyền
+nội dung và pubsub vẫn đi qua mạng ngang hàng.
+
+## Hai bài toán
 
 Một mạng xã hội phi tập trung phải trả lời hai câu hỏi:
 
-1. **Dữ liệu** — làm cách nào bạn lưu trữ và phân phối nội dung xã hội của thế giới mà không có cơ sở dữ liệu trung tâm?
-2. **Spam** — làm cách nào để ngăn chặn hành vi lạm dụng trong khi vẫn đảm bảo mạng được sử dụng miễn phí?
+1. **Dữ liệu** — làm sao lưu trữ và phân phối toàn bộ nội dung xã hội của thế giới mà không cần một
+   cơ sở dữ liệu trung tâm?
+2. **Spam** — làm sao ngăn chặn lạm dụng mà vẫn giữ cho mạng được dùng miễn phí?
 
-Bitsocial giải quyết vấn đề dữ liệu bằng cách bỏ qua hoàn toàn blockchain: phương tiện truyền thông xã hội không cần đặt hàng giao dịch toàn cầu hoặc tính khả dụng vĩnh viễn của mỗi bài đăng cũ. Nó giải quyết vấn đề thư rác bằng cách cho phép mỗi cộng đồng thực hiện thử thách chống thư rác riêng trên mạng ngang hàng.
+Bitsocial giải bài toán dữ liệu bằng cách bỏ hẳn blockchain: mạng xã hội không cần thứ tự giao dịch
+toàn cục, cũng không cần mọi bài đăng cũ luôn sẵn sàng vĩnh viễn. Nó giải bài toán spam bằng cách để
+mỗi cộng đồng tự chạy thử thách chống spam của riêng mình trên mạng ngang hàng.
 
-Để biết mô hình khám phá phía trên lớp mạng này, hãy xem [Khám phá nội dung](./content-discovery.md).
+Về mô hình khám phá nằm trên lớp mạng này, xem [Khám phá nội dung](./content-discovery.md).
 
 ---
 
-## Địa chỉ dựa trên khóa công khai
+## Định địa chỉ bằng khóa công khai {#public-key-based-addressing}
 
-Trong BitTorrent, hàm băm của tệp sẽ trở thành địa chỉ của tệp đó (_địa chỉ dựa trên nội dung_). Bitsocial sử dụng ý tưởng tương tự với khóa chung: hàm băm của khóa chung của cộng đồng sẽ trở thành địa chỉ mạng của cộng đồng đó.
+Trong BitTorrent, hash của một tệp trở thành địa chỉ của tệp đó (_định địa chỉ dựa trên nội dung_).
+Bitsocial dùng ý tưởng tương tự nhưng với khóa công khai: hash khóa công khai của một cộng đồng trở
+thành địa chỉ mạng của cộng đồng đó.
 
 ```mermaid
 graph LR
     K["🔑 Community keypair"] --> H["#️⃣ Hash of public key"]
-    H --> A["📍 Network address"]
-    A --> D["🌐 DHT lookup"]
-    D --> C["📄 Latest community content"]
+    H --> D["🌐 HTTP router(s) lookup of hash"]
+    D --> P["🔌 Provider peer addresses"]
+    P --> C["📄 Latest community content from peers"]
 ```
 
-Bất kỳ thiết bị ngang hàng nào trên mạng đều có thể thực hiện truy vấn DHT (bảng băm phân tán) cho địa chỉ đó và truy xuất trạng thái mới nhất của cộng đồng. Mỗi lần nội dung được cập nhật, số phiên bản của nó sẽ tăng lên. Mạng chỉ giữ phiên bản mới nhất - không cần phải lưu giữ mọi trạng thái lịch sử, đó là điều làm cho phương pháp này nhẹ hơn so với blockchain.
+Bất kỳ peer nào trên mạng cũng có thể hỏi một **router HTTP** về địa chỉ đó: router trả lời bằng
+danh sách địa chỉ mạng của những peer đang cung cấp hash của cộng đồng, rồi client kết nối trực tiếp
+tới các peer đó để lấy trạng thái mới nhất của cộng đồng. Mỗi lần nội dung được cập nhật, số phiên
+bản của nó tăng lên. Mạng chỉ giữ lại phiên bản mới nhất — không cần bảo tồn mọi trạng thái trong
+quá khứ, và đó chính là điều làm cho cách tiếp cận này nhẹ hơn hẳn so với blockchain.
 
-### Những gì được lưu trữ tại địa chỉ
+> **Một router HTTP thực sự nắm giữ những gì.** Router HTTP là một chỉ mục mỏng. Với mỗi địa chỉ nội
+> dung mà nó biết, nó chỉ lưu địa chỉ mạng của những peer đã tự công bố mình là nhà cung cấp (cặp
+> IP/cổng, multiaddr của libp2p, đại loại vậy). Nó **không** lưu nội dung của cộng đồng, siêu dữ
+> liệu, văn bản bài đăng, danh sách thành viên, hay thậm chí nhãn dễ đọc của thứ nằm ở địa chỉ đó;
+> nó chỉ trả lời câu hỏi “những peer nào tuyên bố là có hash này?”. Nhờ vậy, router rẻ để vận hành,
+> dễ thay thế và không chịu trách nhiệm về những gì người dùng đăng tải — tương tự tracker của
+> BitTorrent nhưng không có siêu dữ liệu torrent: tracker ánh xạ infohash sang peer, còn router HTTP
+> chỉ ánh xạ một địa chỉ nội dung sang địa chỉ của các peer cung cấp.
+>
+> Để dự phòng, client truy vấn **nhiều router HTTP song song** và hợp nhất các danh sách nhà cung
+> cấp nhận về. Ai cũng có thể vận hành một router, và việc thay thế hay bổ sung router chỉ là một
+> thay đổi cấu hình, không kèm di trú dữ liệu.
+>
+> Bitsocial dùng router HTTP thay vì DHT vì chạy một DHT ở quy mô cần thiết cho khám phá nội dung
+> rất tốn kém, nhất là trên thiết bị di động. DHT cũng không hoạt động trong trình duyệt, vì trình
+> duyệt không thể tham gia trực tiếp vào DHT của libp2p. Router HTTP chạy rẻ trên hạ tầng HTTP phổ
+> thông và hoạt động tốt như nhau từ điện thoại hay từ trình duyệt.
 
-Địa chỉ cộng đồng không chứa nội dung bài đăng đầy đủ trực tiếp. Thay vào đó, nó lưu trữ một danh sách các mã định danh nội dung - các hàm băm trỏ đến dữ liệu thực tế. Sau đó, khách hàng sẽ tìm nạp từng phần nội dung thông qua DHT hoặc tra cứu theo kiểu theo dõi.
+### Những gì được lưu tại địa chỉ
+
+Địa chỉ cộng đồng không chứa trực tiếp toàn bộ nội dung bài đăng. Thay vào đó, nó lưu một danh sách
+định danh nội dung — các hash trỏ tới dữ liệu thật. Sau đó client lấy từng phần nội dung trực tiếp
+từ những peer mà router HTTP trả về. Bản thân các router không bao giờ nhìn thấy hay lưu trữ nội
+dung.
 
 ```mermaid
 graph TD
@@ -49,73 +96,88 @@ graph TD
     P --> P3["📝 Post 3 content"]
 ```
 
-Ít nhất một thiết bị ngang hàng luôn có dữ liệu: nút của nhà điều hành cộng đồng. Nếu cộng đồng phổ biến thì nhiều đồng nghiệp khác cũng sẽ có cộng đồng đó và tải sẽ tự phân phối, giống như cách tải xuống các torrent phổ biến sẽ nhanh hơn.
+Luôn có ít nhất một peer giữ dữ liệu: node của người vận hành cộng đồng. Nếu cộng đồng đông người,
+nhiều peer khác cũng sẽ có dữ liệu và tải trọng tự phân tán, giống như cách các torrent phổ biến tải
+về nhanh hơn.
 
 ---
 
 ## Pubsub ngang hàng
 
-Pubsub (xuất bản-đăng ký) là một mẫu nhắn tin trong đó các đồng nghiệp đăng ký một chủ đề và nhận mọi tin nhắn được xuất bản về chủ đề đó. Bitsocial sử dụng mạng pubsub ngang hàng - bất kỳ ai cũng có thể xuất bản, bất kỳ ai cũng có thể đăng ký và không có nhà môi giới tin nhắn trung tâm.
+Pubsub (publish-subscribe, xuất bản – đăng ký) là một mô hình nhắn tin trong đó các peer đăng ký một
+chủ đề và nhận mọi thông điệp được xuất bản vào chủ đề đó. Bitsocial dùng một mạng pubsub ngang hàng
+— ai cũng có thể xuất bản, ai cũng có thể đăng ký, và không có message broker trung tâm.
 
-Để xuất bản một bài đăng lên cộng đồng, người dùng xuất bản một tin nhắn có chủ đề bằng khóa chung của cộng đồng. Nút của nhà điều hành cộng đồng sẽ chọn nó, xác thực nó và — nếu nó vượt qua thử thách chống thư rác — sẽ đưa nó vào bản cập nhật nội dung tiếp theo.
-
----
-
-## Chống thư rác: thách thức đối với pubsub
-
-Mạng pubsub mở dễ bị tấn công bởi lũ thư rác. Bitsocial giải quyết vấn đề này bằng cách yêu cầu nhà xuất bản hoàn thành **thử thách** trước khi nội dung của họ được chấp nhận.
-
-Hệ thống thử thách rất linh hoạt: mỗi nhà điều hành cộng đồng định cấu hình chính sách của riêng họ. Các tùy chọn bao gồm:
-
-| Loại thử thách         | Nó hoạt động như thế nào                                      |
-| ---------------------- | ------------------------------------------------------------- |
-| **Hình ảnh xác thực**  | Câu đố trực quan hoặc tương tác được trình bày trong ứng dụng |
-| **Giới hạn tỷ lệ**     | Giới hạn bài đăng trên mỗi khoảng thời gian cho mỗi danh tính |
-| **Cổng mã thông báo**  | Yêu cầu bằng chứng về số dư của một mã thông báo cụ thể       |
-| **Thanh toán**         | Yêu cầu một khoản thanh toán nhỏ cho mỗi bài viết             |
-| **Danh sách cho phép** | Chỉ những danh tính được phê duyệt trước mới có thể đăng      |
-| **Mã tùy chỉnh**       | Bất kỳ chính sách nào có thể thể hiện bằng mã                 |
-
-Các thiết bị ngang hàng chuyển tiếp quá nhiều lần thử thách không thành công sẽ bị chặn khỏi chủ đề pubsub, điều này ngăn chặn các cuộc tấn công từ chối dịch vụ trên lớp mạng.
+Để đăng một bài vào cộng đồng, người dùng xuất bản một thông điệp có chủ đề chính là khóa công khai
+của cộng đồng. Node của người vận hành cộng đồng nhận thông điệp đó, kiểm tra tính hợp lệ, và — nếu
+nó vượt qua thử thách chống spam — đưa nó vào lần cập nhật nội dung tiếp theo.
 
 ---
 
-## Vòng đời: đọc cộng đồng
+## Chống spam: thử thách qua pubsub
 
-Đây là điều xảy ra khi người dùng mở ứng dụng và xem các bài đăng mới nhất của cộng đồng.
+Một mạng pubsub mở rất dễ bị spam tràn ngập. Bitsocial xử lý điều này bằng cách yêu cầu người đăng
+phải hoàn thành một **thử thách** trước khi nội dung của họ được chấp nhận.
+
+Hệ thống thử thách rất linh hoạt: mỗi người vận hành cộng đồng tự cấu hình chính sách riêng. Một số
+lựa chọn:
+
+| Loại thử thách         | Cách hoạt động                                                    |
+| ---------------------- | ----------------------------------------------------------------- |
+| **Captcha**            | Câu đố hình ảnh hoặc tương tác hiển thị ngay trong ứng dụng       |
+| **Giới hạn tần suất**  | Giới hạn số bài đăng của mỗi danh tính trong một khoảng thời gian |
+| **Cổng token**         | Yêu cầu bằng chứng nắm giữ số dư của một token cụ thể             |
+| **Thanh toán**         | Yêu cầu một khoản thanh toán nhỏ cho mỗi bài đăng                 |
+| **Danh sách cho phép** | Chỉ những danh tính được duyệt trước mới đăng được                |
+| **Mã tùy chỉnh**       | Bất kỳ chính sách nào diễn đạt được bằng mã                       |
+
+Những peer chuyển tiếp quá nhiều lượt thử thách thất bại sẽ bị chặn khỏi chủ đề pubsub, qua đó ngăn
+các cuộc tấn công từ chối dịch vụ ở lớp mạng.
+
+---
+
+## Vòng đời: đọc một cộng đồng
+
+Đây là những gì diễn ra khi người dùng mở ứng dụng và xem các bài đăng mới nhất của một cộng đồng.
 
 ```mermaid
 sequenceDiagram
     participant User as 👤 User app
-    participant DHT as 🌐 DHT network
+    participant Routers as 🌐 HTTP routers
     participant Node as 🖥️ Community node
 
-    User->>DHT: Query community address
-    Note over DHT: Distributed lookup<br/>across network peers
-    DHT-->>User: Return latest content pointers + metadata
+    User->>Routers: Query community address (in parallel)
+    Note over Routers: Each router returns<br/>peer addresses only, never content
+    Routers-->>User: Return provider peer addresses
 
-    User->>DHT: Fetch post content by hash
-    DHT-->>User: Return post data
+    User->>Node: Connect to peer, fetch latest pointers + metadata
+    Node-->>User: Return latest content pointers + metadata
+
+    User->>Node: Fetch post content by hash
+    Node-->>User: Return post data
     Note over User: Render posts in<br/>familiar social UI
 
     Note over User,Node: Multiple community queries<br/>run concurrently
 ```
 
-**Từng bước:**
+**Từng bước một:**
 
-1. Người dùng mở ứng dụng và nhìn thấy giao diện xã hội.
-2. Máy khách tham gia mạng ngang hàng và thực hiện truy vấn DHT cho từng cộng đồng mà người dùng
-   theo sau. Mỗi truy vấn mất vài giây nhưng chạy đồng thời.
-3. Mỗi truy vấn trả về con trỏ nội dung và siêu dữ liệu mới nhất của cộng đồng (tiêu đề, mô tả,
-   danh sách người điều hành, cấu hình thử thách).
-4. Máy khách tìm nạp nội dung bài đăng thực tế bằng cách sử dụng các con trỏ đó, sau đó hiển thị mọi thứ trong một
-   giao diện xã hội quen thuộc.
+1. Người dùng mở ứng dụng và thấy một giao diện mạng xã hội.
+2. Client truy vấn song song nhiều router HTTP cho từng cộng đồng mà người dùng theo dõi; mỗi router
+   chỉ trả về địa chỉ peer, không bao giờ trả về nội dung. Độ trễ truy vấn phụ thuộc vào điều kiện
+   mạng và tải của router; trong điều kiện độ trễ thấp thông thường, các truy vấn thường trả kết quả
+   trong khoảng một giây và chạy đồng thời với nhau.
+3. Khi đã có địa chỉ peer, client kết nối tới những peer đó và lấy về các con trỏ nội dung mới nhất
+   cùng siêu dữ liệu của cộng đồng (tiêu đề, mô tả, danh sách người kiểm duyệt, cấu hình thử thách).
+4. Client dùng các con trỏ đó để lấy nội dung bài đăng thật, rồi hiển thị mọi thứ trong một giao diện
+   mạng xã hội quen thuộc.
 
 ---
 
-## Vòng đời: xuất bản một bài viết
+## Vòng đời: đăng một bài viết
 
-Việc xuất bản bao gồm một cái bắt tay phản hồi-thách thức qua pubsub trước khi bài đăng được chấp nhận.
+Việc đăng bài đi kèm một lượt bắt tay thử thách – phản hồi qua pubsub trước khi bài viết được chấp
+nhận.
 
 ```mermaid
 sequenceDiagram
@@ -147,26 +209,27 @@ sequenceDiagram
     Note over User,Node: Other readers receive<br/>the update within minutes
 ```
 
-**Từng bước:**
+**Từng bước một:**
 
-1. Ứng dụng sẽ tạo một cặp khóa cho người dùng nếu họ chưa có.
+1. Ứng dụng tạo một cặp khóa cho người dùng nếu họ chưa có.
 2. Người dùng viết một bài đăng cho một cộng đồng.
-3. Khách hàng tham gia chủ đề pubsub cho cộng đồng đó (được khóa bằng khóa chung của cộng đồng).
-4. Khách hàng yêu cầu một thử thách qua pubsub.
-5. Nút của nhà điều hành cộng đồng sẽ gửi lại một thử thách (ví dụ: hình ảnh xác thực).
+3. Client tham gia chủ đề pubsub của cộng đồng đó (chủ đề được đặt theo khóa công khai của cộng
+   đồng).
+4. Client yêu cầu một thử thách qua pubsub.
+5. Node của người vận hành cộng đồng gửi lại một thử thách (ví dụ một captcha).
 6. Người dùng hoàn thành thử thách.
-7. Khách hàng gửi bài đăng cùng với câu trả lời thử thách qua pubsub.
-8. Nút của nhà điều hành cộng đồng xác nhận câu trả lời. Nếu đúng thì bài viết được chấp nhận.
-9. Nút phát kết quả qua pubsub để các mạng ngang hàng biết tiếp tục chuyển tiếp
-   tin nhắn từ người dùng này.
-10. Nút cập nhật nội dung của cộng đồng tại địa chỉ khóa công khai của nó.
-11. Trong vòng vài phút, mọi độc giả trong cộng đồng đều nhận được bản cập nhật.
+7. Client gửi bài đăng kèm câu trả lời thử thách qua pubsub.
+8. Node của người vận hành cộng đồng kiểm tra câu trả lời. Nếu đúng, bài đăng được chấp nhận.
+9. Node phát kết quả qua pubsub để các peer trong mạng biết rằng nên tiếp tục chuyển tiếp thông điệp
+   từ người dùng này.
+10. Node cập nhật nội dung của cộng đồng tại địa chỉ khóa công khai của cộng đồng.
+11. Trong vòng vài phút, mọi người đọc của cộng đồng đều nhận được bản cập nhật.
 
 ---
 
-## Tổng quan về kiến ​​trúc
+## Tổng quan kiến trúc
 
-Toàn bộ hệ thống có ba lớp hoạt động cùng nhau:
+Toàn bộ hệ thống gồm ba lớp phối hợp với nhau:
 
 ```mermaid
 graph TB
@@ -183,103 +246,177 @@ graph TB
     end
 
     subgraph Network ["Network layer"]
-        DHT["🗂️ DHT<br/>(content discovery)"]
+        Router["🛰️ HTTP router<br/>(content discovery)"]
         GS["💬 Gossipsub<br/>(real-time messaging)"]
         TR["📦 Content transfer<br/>(data exchange)"]
     end
 
     A1 & A2 & A3 --> PK & PS & CH
-    PK --> DHT
+    PK --> Router
     PS --> GS
     CH --> GS
     PK --> TR
 ```
 
-| Lớp           | Vai trò                                                                                                                           |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| **Ứng dụng**  | Giao diện người dùng. Nhiều ứng dụng có thể tồn tại, mỗi ứng dụng có thiết kế riêng, tất cả đều có chung cộng đồng và danh tính.  |
-| **Giao thức** | Xác định cách giải quyết các cộng đồng, cách xuất bản bài đăng và cách ngăn chặn thư rác.                                         |
-| **Mạng**      | Cơ sở hạ tầng ngang hàng cơ bản: DHT để khám phá, tin đồn để nhắn tin theo thời gian thực và truyền nội dung để trao đổi dữ liệu. |
+| Lớp           | Vai trò                                                                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ứng dụng**  | Giao diện người dùng. Có thể tồn tại nhiều ứng dụng, mỗi ứng dụng một thiết kế riêng, tất cả dùng chung các cộng đồng và danh tính.     |
+| **Giao thức** | Xác định cách định địa chỉ cộng đồng, cách xuất bản bài đăng và cách ngăn spam.                                                         |
+| **Mạng**      | Hạ tầng ngang hàng bên dưới: router HTTP để khám phá, gossipsub để nhắn tin thời gian thực, và truyền tải nội dung để trao đổi dữ liệu. |
 
 ---
 
-## Quyền riêng tư: hủy liên kết tác giả khỏi địa chỉ IP
+## Quyền riêng tư: tách tác giả khỏi địa chỉ IP
 
-Khi người dùng xuất bản một bài đăng, nội dung sẽ được **mã hóa bằng khóa chung của nhà điều hành cộng đồng** trước khi nó vào mạng pubsub. Điều này có nghĩa là mặc dù người quan sát mạng có thể thấy rằng một mạng ngang hàng đã xuất bản _thứ gì đó_, nhưng họ không thể xác định:
+Khi người dùng đăng một bài viết, nội dung được **mã hóa bằng khóa công khai của người vận hành cộng
+đồng** trước khi đi vào mạng pubsub. Nghĩa là dù người quan sát mạng có thể thấy rằng một peer vừa
+xuất bản _thứ gì đó_, họ vẫn không xác định được:
 
 - nội dung nói gì
 - danh tính tác giả nào đã xuất bản nó
 
-Điều này tương tự như cách BitTorrent giúp bạn có thể khám phá IP nào tạo torrent chứ không phải ai là người tạo ra nó. Lớp mã hóa bổ sung thêm một đảm bảo quyền riêng tư bổ sung trên đường cơ sở đó.
+Điều này tương tự cách BitTorrent cho phép biết những IP nào đang seed một torrent nhưng không cho
+biết ai là người tạo ra nó. Lớp mã hóa bổ sung thêm một bảo đảm riêng tư nữa lên trên mức cơ bản đó.
 
 ---
 
-## Trình duyệt ngang hàng
+## Ngang hàng trong trình duyệt
 
-Trình duyệt P2P hiện có sẵn trong ứng dụng khách Bitsocial. Một ứng dụng trình duyệt có thể chạy [nút Helia](https://helia.io/), sử dụng cùng ngăn xếp ứng dụng khách giao thức Bitsocial như các ứng dụng khác và tìm nạp nội dung từ các ứng dụng ngang hàng thay vì yêu cầu cổng IPFS tập trung phân phát nội dung đó. Trình duyệt cũng có thể tham gia trực tiếp vào pubsub, vì vậy việc đăng bài không cần nhà cung cấp pubsub thuộc sở hữu nền tảng trong đường dẫn vui vẻ.
+P2P trong trình duyệt giờ đã khả thi với các client Bitsocial. Một ứng dụng chạy trong trình duyệt có
+thể vận hành một node [Helia](https://helia.io/), dùng chung bộ client giao thức Bitsocial như các
+ứng dụng khác, và lấy nội dung từ các peer thay vì nhờ một gateway IPFS tập trung phục vụ. Trình
+duyệt cũng có thể tham gia pubsub trực tiếp, nên trong luồng thuận lợi, việc đăng bài không cần đến
+một nhà cung cấp pubsub thuộc sở hữu của nền tảng.
 
-Đây là cột mốc quan trọng cho việc phân phối web: một trang web HTTPS bình thường có thể mở ra một ứng dụng xã hội P2P trực tiếp. Người dùng không cần cài đặt ứng dụng dành cho máy tính để bàn trước khi có thể đọc từ mạng và nhà điều hành ứng dụng không cần chạy một cổng trung tâm trở thành điểm kiểm duyệt hoặc kiểm duyệt cho mọi người dùng trình duyệt.
+Đây là cột mốc quan trọng cho việc phân phối trên web: một website HTTPS bình thường có thể mở ra
+thành một client mạng xã hội P2P đang chạy thật. Người dùng không cần cài ứng dụng máy tính trước khi
+đọc được nội dung từ mạng, còn người vận hành ứng dụng không cần chạy một gateway trung tâm — thứ sẽ
+trở thành điểm nghẽn kiểm duyệt và quản lý nội dung cho mọi người dùng trình duyệt.
 
-Đường dẫn trình duyệt có các giới hạn khác với nút máy tính để bàn hoặc máy chủ:
+Đường đi qua trình duyệt có những giới hạn khác với node trên máy tính hay máy chủ:
 
-- một nút trình duyệt thường không thể chấp nhận các kết nối gửi đến tùy ý từ internet công cộng
-- nó có thể tải, xác thực, lưu vào bộ nhớ đệm và xuất bản dữ liệu khi ứng dụng đang mở
-- nó không nên được coi là nơi lưu trữ lâu dài cho dữ liệu của cộng đồng
-- lưu trữ cộng đồng đầy đủ vẫn được xử lý tốt nhất bởi ứng dụng dành cho máy tính để bàn, `bitsocial-cli` hoặc ứng dụng khác
-  nút luôn bật
+- node trong trình duyệt thường không nhận được các kết nối vào tùy ý từ internet công cộng
+- nó có thể tải, kiểm tra tính hợp lệ, lưu đệm và xuất bản dữ liệu khi ứng dụng đang mở
+- không nên coi nó là nơi lưu trữ lâu dài cho dữ liệu của một cộng đồng
+- việc lưu trữ trọn vẹn một cộng đồng vẫn nên do ứng dụng máy tính, `bitsocial-cli`, hoặc một node
+  luôn bật khác đảm nhiệm
 
-Bộ định tuyến HTTP vẫn đóng vai trò quan trọng đối với việc khám phá nội dung: chúng trả về địa chỉ của nhà cung cấp cho hàm băm cộng đồng. Chúng không phải là cổng IPFS vì chúng không phục vụ nội dung. Sau khi khám phá, trình duyệt khách sẽ kết nối với các máy ngang hàng và tìm nạp dữ liệu thông qua ngăn xếp P2P.
+Router HTTP vẫn quan trọng cho việc khám phá nội dung: chúng trả về địa chỉ của các nhà cung cấp cho
+hash của một cộng đồng. Chúng không phải gateway IPFS, vì chúng không phục vụ chính nội dung đó. Sau
+bước khám phá, client trong trình duyệt kết nối tới các peer và lấy dữ liệu qua tầng P2P.
 
-5chan hiển thị điều này dưới dạng công tắc Cài đặt nâng cao chọn tham gia trong ứng dụng web 5chan.app thông thường. Ngăn xếp trình duyệt `pkc-js` mới nhất đã trở nên đủ ổn định để thử nghiệm công khai sau khi hoạt động tương tác libp2p/gossipsub ngược dòng xử lý việc gửi tin nhắn giữa các đồng nghiệp Helia và Kubo. Cài đặt này giữ cho trình duyệt P2P được kiểm soát trong khi nó được thử nghiệm trong thế giới thực nhiều hơn; một khi nó có đủ độ tin cậy trong sản xuất, nó có thể trở thành đường dẫn web mặc định.
+P2P trong trình duyệt hiện là đường đi mặc định trên web, không còn là thử nghiệm nằm sau một công
+tắc. 5chan chạy P2P thuần trong trình duyệt theo mặc định tại 5chan.app, và blog Bitsocial trên
+bitsocial.net cũng vậy. Các peer trong trình duyệt kết nối qua WebSockets bảo mật; `pkc-js` mặc định
+từ chối các lượt kết nối WebRTC và WebTransport vì quá trình thiết lập kết nối của chúng chậm và
+thiếu tin cậy trong trình duyệt. Thay đổi ở thượng nguồn giúp việc đăng bài từ trình duyệt trở nên
+thực dụng vào năm 2026 là bản sửa lỗi số thứ tự thông điệp của gossipsub trong `@libp2p/gossipsub`
+15.0.21, thứ đã chấm dứt việc các peer Kubo loại bỏ thông điệp do node JavaScript xuất bản.
 
-## Dự phòng cổng
+Để có bức tranh đầy đủ, bao gồm cả những gì node trong trình duyệt vẫn chưa làm được, xem
+[Ngang hàng trong trình duyệt](/browser-p2p/).
 
-Quyền truy cập trình duyệt được hỗ trợ bằng cổng vẫn hữu ích như một phương án dự phòng về khả năng tương thích và triển khai. Cổng có thể chuyển tiếp dữ liệu giữa mạng P2P và ứng dụng khách trình duyệt khi trình duyệt không thể tham gia trực tiếp vào mạng hoặc khi ứng dụng cố tình chọn đường dẫn cũ hơn. Những cổng này:
+## Phương án dự phòng qua gateway {#gateway-fallback}
 
-- có thể được điều hành bởi bất cứ ai
-- không yêu cầu tài khoản người dùng hoặc thanh toán
-- không giành được quyền giám hộ đối với danh tính hoặc cộng đồng người dùng
-- có thể hoán đổi mà không mất dữ liệu
+Truy cập từ trình duyệt qua gateway vẫn hữu ích như một phương án dự phòng cho tương thích và triển
+khai dần. Gateway có thể chuyển tiếp dữ liệu giữa mạng P2P và client trong trình duyệt khi trình
+duyệt không thể tham gia mạng trực tiếp, hoặc khi ứng dụng chủ động chọn đường đi cũ. Những gateway
+này:
 
-Kiến trúc mục tiêu trước tiên là trình duyệt P2P, với các cổng là một dự phòng tùy chọn thay vì nút thắt cổ chai mặc định.
+- ai cũng có thể vận hành
+- không đòi hỏi tài khoản người dùng hay thanh toán
+- không nắm quyền quản lý danh tính người dùng hay cộng đồng
+- có thể thay thế mà không mất dữ liệu
+
+Kiến trúc hướng tới là ưu tiên P2P trong trình duyệt, còn gateway chỉ là phương án dự phòng tùy chọn
+chứ không phải nút thắt mặc định.
 
 ---
 
-## Tại sao không phải là blockchain?
+## Tại sao không dùng blockchain?
 
-Blockchain giải quyết vấn đề chi tiêu gấp đôi: họ cần biết chính xác thứ tự của mọi giao dịch để ngăn ai đó chi tiêu cùng một đồng xu hai lần.
+Blockchain giải bài toán chi tiêu hai lần: chúng cần biết chính xác thứ tự của mọi giao dịch để ngăn
+ai đó tiêu cùng một đồng coin hai lần.
 
-Phương tiện truyền thông xã hội không có vấn đề chi tiêu gấp đôi. Sẽ không có vấn đề gì nếu bài đăng A được xuất bản một phần nghìn giây trước bài đăng B và các bài đăng cũ không cần phải có sẵn vĩnh viễn trên mỗi nút.
+Mạng xã hội không có bài toán chi tiêu hai lần. Việc bài A được đăng trước bài B một phần nghìn giây
+chẳng quan trọng, và những bài đăng cũ cũng không cần luôn sẵn sàng vĩnh viễn trên mọi node.
 
-Bằng cách bỏ qua blockchain, Bitsocial tránh được:
+Nhờ bỏ qua blockchain, Bitsocial tránh được:
 
 - **phí gas** — đăng bài miễn phí
-- **giới hạn thông lượng** — không có kích thước khối hoặc tắc nghẽn thời gian khối
-- **sung dung lượng lưu trữ** — các nút chỉ giữ những gì chúng cần
-- **chi phí đồng thuận** — không cần người khai thác, người xác nhận hoặc đặt cược
+- **giới hạn thông lượng** — không có nút thắt về kích thước khối hay thời gian tạo khối
+- **phình dữ liệu lưu trữ** — mỗi node chỉ giữ những gì nó cần
+- **chi phí đồng thuận** — không cần thợ đào, validator hay staking
 
-Sự đánh đổi là Bitsocial không đảm bảo tính sẵn có vĩnh viễn của nội dung cũ. Nhưng đối với mạng xã hội, đó là một sự cân bằng có thể chấp nhận được: nút của nhà điều hành cộng đồng giữ dữ liệu, nội dung phổ biến lan truyền trên nhiều mạng ngang hàng và các bài đăng rất cũ tự nhiên mờ đi - giống như cách chúng làm trên mọi nền tảng xã hội.
+Đánh đổi là Bitsocial không bảo đảm nội dung cũ luôn sẵn sàng vĩnh viễn. Nhưng với mạng xã hội, đó là
+đánh đổi chấp nhận được: node của người vận hành cộng đồng giữ dữ liệu, nội dung phổ biến lan ra
+nhiều peer, và những bài rất cũ tự nhiên phai dần — đúng như trên mọi nền tảng xã hội khác.
 
-## Tại sao không liên đoàn?
+## Tại sao không dùng mô hình liên hợp?
 
-Các mạng liên kết (như email hoặc nền tảng dựa trên ActPub) cải thiện khả năng tập trung hóa nhưng vẫn có những hạn chế về cấu trúc:
+Các mạng liên hợp (như email hay những nền tảng dựa trên ActivityPub) khá hơn mô hình tập trung
+nhưng vẫn còn những hạn chế mang tính cấu trúc:
 
-- **Phụ thuộc máy chủ** — mỗi cộng đồng cần một máy chủ có miền, TLS và hoạt động liên tục
-  BẢO TRÌ
-- **Sự tin cậy của quản trị viên** — quản trị viên máy chủ có toàn quyền kiểm soát tài khoản và nội dung người dùng
-- **Phân mảnh** — di chuyển giữa các máy chủ thường đồng nghĩa với việc mất người theo dõi, lịch sử hoặc danh tính
-- **Chi phí** — ai đó phải trả tiền cho việc lưu trữ, điều này tạo ra áp lực cho việc hợp nhất
+- **Phụ thuộc máy chủ** — mỗi cộng đồng cần một máy chủ với tên miền, TLS và công việc bảo trì liên
+  tục
+- **Niềm tin vào quản trị viên** — quản trị viên máy chủ toàn quyền kiểm soát tài khoản và nội dung
+  của người dùng
+- **Phân mảnh** — chuyển giữa các máy chủ thường đồng nghĩa với mất người theo dõi, lịch sử hoặc danh
+  tính
+- **Chi phí** — ai đó phải trả tiền lưu trữ, và điều này tạo sức ép dồn về phía hợp nhất
 
-Cách tiếp cận ngang hàng của Bitsocial loại bỏ hoàn toàn máy chủ khỏi phương trình. Nút cộng đồng có thể chạy trên máy tính xách tay, Raspberry Pi hoặc VPS giá rẻ. Nhà điều hành kiểm soát chính sách kiểm duyệt nhưng không thể nắm bắt danh tính người dùng vì danh tính được kiểm soát bởi cặp khóa chứ không phải do máy chủ cấp.
+Cách tiếp cận ngang hàng của Bitsocial loại bỏ hoàn toàn máy chủ khỏi phương trình. Một node cộng
+đồng có thể chạy trên laptop, Raspberry Pi hay một VPS giá rẻ. Người vận hành kiểm soát chính sách
+kiểm duyệt nhưng không thể chiếm đoạt danh tính người dùng, vì danh tính do cặp khóa kiểm soát chứ
+không phải do máy chủ cấp.
+
+## Còn Nostr thì sao?
+
+Nostr không thuộc hẳn nhóm nào trong hai nhóm trên. Nó không phải mô hình liên hợp kiểu ActivityPub,
+vì người dùng không được các instance cấp tài khoản và danh tính không gắn với một máy chủ. Nó cũng
+không phải mạng xã hội blockchain, vì không có chuỗi, đồng thuận, gas hay thứ tự giao dịch toàn cục.
+
+Mô tả sát hơn thì Nostr là **mạng xã hội dựa trên relay**. Trong giao thức nền
+([NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md)), người dùng giữ cặp khóa, ký các
+sự kiện và xuất bản chúng lên những relay WebSocket. Client đăng ký với relay kèm bộ lọc, lấy về các
+sự kiện khớp và tự xác minh chữ ký cục bộ. Người dùng cũng có thể xuất bản siêu dữ liệu danh sách
+relay ([NIP-65](https://github.com/nostr-protocol/nips/blob/master/65.md)) để cho client biết họ
+thường ghi vào những relay nào và ưa dùng relay nào để đọc các lượt nhắc tên.
+
+Điều đó khiến Nostr gần với Bitsocial hơn so với các hệ thống liên hợp hay blockchain ở một điểm quan
+trọng: danh tính mang tính mật mã và có thể mang theo. Khác biệt chính nằm ở lớp dữ liệu. Trong
+Nostr, relay là lớp lưu trữ và phân phối thông thường. Trong Bitsocial, router HTTP chỉ giúp client
+tìm ra các peer. Router không lưu bài đăng, hồ sơ, siêu dữ liệu cộng đồng hay trạng thái kiểm duyệt;
+chúng trả về địa chỉ của các peer cung cấp, rồi client tự lấy nội dung từ các peer.
+
+Cộng đồng cũng cho thấy khác biệt tương tự. Nostr có các mô hình tùy chọn cho
+[nhóm dựa trên relay](https://github.com/nostr-protocol/nips/blob/master/29.md) và
+[cộng đồng do người kiểm duyệt phê duyệt](https://github.com/nostr-protocol/nips/blob/master/72.md),
+nhưng chúng vẫn phụ thuộc vào chính sách của relay, trạng thái nhóm lưu trên relay, hoặc lựa chọn của
+client về việc công nhận phê duyệt nào. Bitsocial coi cộng đồng là đối tượng mật mã hạng nhất: node
+của người vận hành kiểm tra bài đăng, chạy chính sách thử thách của cộng đồng và xuất bản trạng thái
+mới nhất đã được chấp nhận vào mạng ngang hàng.
+
+| Câu hỏi                       | Nostr                                                                                                         | Bitsocial                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Phân loại                     | Giao thức dựa trên relay                                                                                      | Mạng cộng đồng ngang hàng                                                        |
+| Danh tính                     | Khóa công khai của người dùng                                                                                 | Cặp khóa của người dùng và của cộng đồng                                         |
+| Đường đi dữ liệu              | Sự kiện đã ký được xuất bản lên relay                                                                         | Địa chỉ khóa công khai phân giải ra peer; nội dung được lấy từ peer              |
+| Ai giữ cho nó luôn trực tuyến | Các relay do người dùng và client chọn                                                                        | Node của chủ cộng đồng cùng các seeder hỗ trợ                                    |
+| Cộng đồng                     | Nhóm dựa trên relay hoặc cộng đồng do người kiểm duyệt phê duyệt, đều là tùy chọn                             | Đối tượng cộng đồng hạng nhất, kiểm duyệt do người vận hành kiểm soát            |
+| Chống spam                    | Chính sách relay, xác thực, thanh toán, proof-of-work, bộ lọc phía client hoặc phê duyệt của người kiểm duyệt | Logic thử thách do cộng đồng tự định nghĩa, áp dụng trước khi nội dung được nhận |
+| Đánh đổi chính                | Danh tính mang theo được, nhưng khả năng sẵn sàng và chính sách phụ thuộc relay                               | Ít phụ thuộc relay hơn, nhưng nội dung cũ không được bảo đảm mãi mãi             |
 
 ---
 
-## Bản tóm tắt
+## Tóm tắt
 
-Bitsocial được xây dựng trên hai nguyên tắc cơ bản: đánh địa chỉ dựa trên khóa công khai để khám phá nội dung và pubsub ngang hàng để liên lạc theo thời gian thực. Họ cùng nhau tạo ra một mạng xã hội nơi:
+Bitsocial được xây trên hai thành phần cơ bản: định địa chỉ bằng khóa công khai để khám phá nội dung,
+và pubsub ngang hàng để liên lạc thời gian thực. Kết hợp lại, chúng tạo ra một mạng xã hội trong đó:
 
-- cộng đồng được xác định bằng khóa mật mã, không phải tên miền
-- nội dung lan truyền khắp các thiết bị ngang hàng như một torrent, không được cung cấp từ một cơ sở dữ liệu duy nhất
-- Khả năng chống thư rác là cục bộ của mỗi cộng đồng, không bị áp đặt bởi một nền tảng
-- người dùng sở hữu danh tính của họ thông qua cặp khóa chứ không phải thông qua tài khoản có thể thu hồi
-- toàn bộ hệ thống chạy mà không cần máy chủ, chuỗi khối hoặc phí nền tảng
+- cộng đồng được định danh bằng khóa mật mã, không phải bằng tên miền
+- nội dung lan truyền giữa các peer như một torrent, chứ không được phục vụ từ một cơ sở dữ liệu duy
+  nhất
+- khả năng chống spam thuộc về từng cộng đồng, không do một nền tảng áp đặt
+- người dùng sở hữu danh tính của mình qua cặp khóa, không qua những tài khoản có thể bị thu hồi
+- toàn bộ hệ thống vận hành mà không cần máy chủ, blockchain hay phí nền tảng

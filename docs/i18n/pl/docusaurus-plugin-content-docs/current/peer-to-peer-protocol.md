@@ -1,44 +1,92 @@
 ---
 title: Protokół peer-to-peer
-description: Jak Bitsocial wykorzystuje IPFS/libp2p, adresowanie klucza publicznego, pubsub peer-to-peer i węzły P2P przeglądarki, aby dostarczać media społecznościowe bez serwera.
+description: Jak Bitsocial wykorzystuje IPFS/libp2p, adresowanie oparte na kluczu publicznym, pubsub peer-to-peer i węzły P2P w przeglądarce, aby dostarczać media społecznościowe bez serwerów.
 ---
 
 # Protokół peer-to-peer
 
-Bitsocial nie korzysta z blockchainu, serwera federacyjnego ani scentralizowanego backendu. Zamiast tego łączy w sobie dwa pomysły — **adresowanie oparte na kluczu publicznym** i **pubsub peer-to-peer** — aby umożliwić każdemu hostowanie społeczności na sprzęcie konsumenckim, podczas gdy użytkownicy czytają i publikują posty bez konta w jakiejkolwiek usłudze kontrolowanej przez firmę.
+Bitsocial nie korzysta z blockchaina, serwera federacyjnego ani scentralizowanego backendu. Zamiast
+tego wykorzystuje stos IPFS/libp2p, aby połączyć dwa pomysły: **adresowanie oparte na kluczu
+publicznym** i **pubsub peer-to-peer**. Razem pozwalają one każdemu hostować społeczność na zwykłym
+sprzęcie domowym, podczas gdy użytkownicy czytają i publikują bez zakładania kont w jakiejkolwiek
+usłudze kontrolowanej przez firmę.
 
-Aby zapoznać się z mniej technicznym przewodnikiem, przeczytaj [Kompletne wyjaśnienie protokołu Bitsocial dla laika](./layman-protocol-explanation.md).
+Mniej techniczne omówienie znajdziesz w tekście
+[Kompletne wyjaśnienie protokołu Bitsocial dla laika](./layman-protocol-explanation.md).
+
+## Czy Bitsocial używa IPFS?
+
+Tak. Węzły Bitsocial wykorzystują w warstwie peer-to-peer prymitywy IPFS/libp2p: rekordy
+społeczności adresowane kluczem publicznym, przesyłanie treści między peerami oraz pubsub gossipsub
+do wiadomości w czasie rzeczywistym. Kiedy ta dokumentacja mówi „pubsub”, chodzi o pubsub
+IPFS/libp2p, a nie o osobnego, scentralizowanego brokera wiadomości.
+
+Protokół opisuje obecnie odkrywanie przez routery HTTP, ponieważ klienci Bitsocial pytają o adresy
+peerów-dostawców końcówki routerów, zamiast przy każdym wyszukiwaniu polegać na nieprzyjaznym
+przeglądarkom DHT. Routery zwracają wyłącznie peery; transfer treści i ruch pubsub nadal
+przechodzą przez sieć peer-to-peer.
 
 ## Dwa problemy
 
 Zdecentralizowana sieć społecznościowa musi odpowiedzieć na dwa pytania:
 
-1. **Dane** — jak przechowywać i udostępniać treści społecznościowe z całego świata bez centralnej bazy danych?
-2. **Spam** — jak zapobiegać nadużyciom, zachowując jednocześnie swobodę korzystania z sieci?
+1. **Dane** — jak przechowywać i udostępniać treści społecznościowe całego świata bez centralnej bazy danych?
+2. **Spam** — jak zapobiegać nadużyciom, zachowując bezpłatny dostęp do sieci?
 
-Bitsocial rozwiązuje problem danych, całkowicie pomijając blockchain: media społecznościowe nie wymagają globalnego porządkowania transakcji ani stałej dostępności każdego starego postu. Rozwiązuje problem spamu, umożliwiając każdej społeczności prowadzenie własnego wyzwania antyspamowego w sieci peer-to-peer.
+Bitsocial rozwiązuje problem danych, całkowicie pomijając blockchain: media społecznościowe nie
+potrzebują globalnego porządkowania transakcji ani trwałej dostępności każdego starego posta.
+Problem spamu rozwiązuje, pozwalając każdej społeczności prowadzić własne wyzwanie antyspamowe w
+sieci peer-to-peer.
 
-Model odkrywania nad tą warstwą sieci opisuje [Odkrywanie treści](./content-discovery.md).
+Model odkrywania treści ponad tą warstwą sieciową opisuje [Odkrywanie treści](./content-discovery.md).
 
 ---
 
-## Adresowanie oparte na kluczu publicznym
+## Adresowanie oparte na kluczu publicznym {#public-key-based-addressing}
 
-W BitTorrent skrót pliku staje się jego adresem (_adresowanie oparte na treści_). Bitsocial używa podobnego pomysłu w przypadku kluczy publicznych: skrót klucza publicznego społeczności staje się jej adresem sieciowym.
+W BitTorrencie adresem pliku staje się jego hash (_adresowanie oparte na treści_). Bitsocial stosuje
+podobny pomysł do kluczy publicznych: adresem sieciowym społeczności staje się hash jej klucza
+publicznego.
 
 ```mermaid
 graph LR
     K["🔑 Community keypair"] --> H["#️⃣ Hash of public key"]
-    H --> A["📍 Network address"]
-    A --> D["🌐 DHT lookup"]
-    D --> C["📄 Latest community content"]
+    H --> D["🌐 HTTP router(s) lookup of hash"]
+    D --> P["🔌 Provider peer addresses"]
+    P --> C["📄 Latest community content from peers"]
 ```
 
-Każdy element równorzędny w sieci może wykonać zapytanie DHT (rozproszona tabela skrótów) dla tego adresu i pobrać najnowszy stan społeczności. Za każdym razem, gdy treść jest aktualizowana, numer jej wersji wzrasta. Sieć przechowuje tylko najnowszą wersję — nie ma potrzeby zachowywania każdego stanu historycznego, co sprawia, że ​​to podejście jest lekkie w porównaniu z blockchainem.
+Każdy peer w sieci może zapytać o ten adres **router HTTP**: router odpowiada listą adresów
+sieciowych peerów, które aktualnie udostępniają hash danej społeczności, a klient łączy się z nimi
+bezpośrednio, aby pobrać jej najnowszy stan. Przy każdej aktualizacji treści rośnie numer jej
+wersji. Sieć przechowuje wyłącznie najnowszą wersję — nie trzeba zachowywać każdego stanu
+historycznego i właśnie to czyni to podejście lekkim w porównaniu z blockchainem.
 
-### Co zostaje zapisane pod adresem
+> **Co naprawdę przechowuje router HTTP.** Router HTTP to cienki indeks. Dla każdego znanego mu
+> adresu treści przechowuje jedynie adresy sieciowe peerów, które zgłosiły się jako dostawcy (pary
+> IP/port, multiadresy libp2p i tym podobne). **Nie** przechowuje treści społeczności, jej
+> metadanych, tekstu postów, listy członków ani nawet czytelnej dla człowieka nazwy tego, co znajduje
+> się pod danym adresem; odpowiada tylko na pytanie „które peery twierdzą, że mają ten hash?”. Dzięki
+> temu routery są tanie w utrzymaniu, łatwe do podmiany i nie odpowiadają za to, co publikują
+> użytkownicy — podobnie jak tracker BitTorrent, ale bez metadanych torrenta: tracker mapuje
+> infohashe na peery, a router HTTP mapuje wyłącznie adres treści na adresy peerów-dostawców.
+>
+> Dla redundancji klient odpytuje **kilka routerów HTTP równolegle** i scala otrzymane listy
+> dostawców. Router może uruchomić każdy, a wymiana lub dodanie routerów to zmiana konfiguracji, bez
+> migracji danych.
+>
+> Bitsocial używa routerów HTTP zamiast DHT, ponieważ utrzymanie DHT w skali potrzebnej do
+> odkrywania treści jest kosztowne, zwłaszcza na urządzeniach mobilnych. DHT nie działa też w
+> przeglądarce, bo przeglądarki nie mogą bezpośrednio dołączyć do DHT libp2p. Router HTTP działa
+> tanio na standardowej infrastrukturze HTTP i sprawdza się równie dobrze na telefonie, jak i w
+> przeglądarce.
 
-Adres społeczności nie zawiera bezpośrednio pełnej treści posta. Zamiast tego przechowuje listę identyfikatorów treści — skrótów wskazujących rzeczywiste dane. Następnie klient pobiera każdy fragment treści za pomocą wyszukiwania DHT lub modułu śledzącego.
+### Co jest przechowywane pod adresem
+
+Adres społeczności nie zawiera bezpośrednio pełnej treści postów. Zamiast tego przechowuje listę
+identyfikatorów treści — hashy wskazujących właściwe dane. Klient pobiera następnie każdy fragment
+treści bezpośrednio od peerów zwróconych przez routery HTTP. Same routery nigdy nie widzą treści ani
+jej nie przechowują.
 
 ```mermaid
 graph TD
@@ -49,53 +97,65 @@ graph TD
     P --> P3["📝 Post 3 content"]
 ```
 
-Przynajmniej jeden peer zawsze ma dane: węzeł operatora społeczności. Jeśli społeczność jest popularna, będzie ją mieć także wielu innych użytkowników, a obciążenie rozłoży się samoczynnie, w ten sam sposób, w jaki pobieranie popularnych torrentów jest szybsze.
+Co najmniej jeden peer zawsze ma dane: węzeł operatora społeczności. Jeśli społeczność jest
+popularna, będzie je miało także wiele innych peerów, a obciążenie rozłoży się samo — tak samo jak
+popularne torrenty pobierają się szybciej.
 
 ---
 
-## Pubsub typu peer-to-peer
+## Pubsub peer-to-peer
 
-Pubsub (publish-subscribe) to wzorzec przesyłania wiadomości, w którym współpracownicy subskrybują temat i otrzymują każdą wiadomość opublikowaną w tym temacie. Bitsocial korzysta z sieci pubsub typu peer-to-peer — każdy może publikować, każdy może subskrybować i nie ma centralnego brokera wiadomości.
+Pubsub (publish-subscribe) to wzorzec komunikacji, w którym peery subskrybują temat i otrzymują
+każdą wiadomość opublikowaną w tym temacie. Bitsocial korzysta z sieci pubsub peer-to-peer — każdy
+może publikować, każdy może subskrybować i nie ma centralnego brokera wiadomości.
 
-Aby opublikować post w społeczności, użytkownik publikuje wiadomość, której temat jest równy kluczowi publicznemu społeczności. Węzeł operatora społeczności odbiera go, sprawdza poprawność i – jeśli przejdzie pomyślnie test antyspamowy – uwzględnia go w następnej aktualizacji zawartości.
+Aby opublikować post w społeczności, użytkownik wysyła wiadomość, której temat odpowiada kluczowi
+publicznemu tej społeczności. Węzeł operatora społeczności ją odbiera, weryfikuje i — jeśli przejdzie
+wyzwanie antyspamowe — dołącza ją do kolejnej aktualizacji treści.
 
 ---
 
-## Ochrona przed spamem: wyzwania dotyczące pubsub
+## Ochrona przed spamem: wyzwania przez pubsub
 
-Otwarta sieć pubsub jest podatna na zalew spamu. Bitsocial rozwiązuje ten problem, wymagając od wydawców ukończenia **wyzwania** przed zaakceptowaniem ich treści.
+Otwarta sieć pubsub jest podatna na zalew spamu. Bitsocial rozwiązuje to, wymagając od publikujących
+ukończenia **wyzwania**, zanim ich treść zostanie przyjęta.
 
-System wyzwań jest elastyczny: każdy operator społecznościowy konfiguruje własną politykę. Opcje obejmują:
+System wyzwań jest elastyczny: każdy operator społeczności konfiguruje własną politykę. Do wyboru
+są między innymi:
 
-| Rodzaj wyzwania            | Jak to działa                                                 |
-| -------------------------- | ------------------------------------------------------------- |
-| **Captcha**                | Wizualna lub interaktywna łamigłówka prezentowana w aplikacji |
-| **Ograniczenie szybkości** | Limit postów na okno czasowe na tożsamość                     |
-| **Żetonowa brama**         | Wymagaj dowodu salda określonego tokena                       |
-| **Płatność**               | Wymagaj niewielkiej płatności za post                         |
-| **Lista dozwolonych**      | Tylko wstępnie zatwierdzone tożsamości mogą publikować        |
-| **Kod niestandardowy**     | Dowolna polityka wyrażona w kodzie                            |
+| Rodzaj wyzwania       | Jak działa                                                  |
+| --------------------- | ----------------------------------------------------------- |
+| **Captcha**           | Wizualna lub interaktywna łamigłówka pokazywana w aplikacji |
+| **Limit tempa**       | Ograniczenie liczby postów na tożsamość w oknie czasowym    |
+| **Bramka tokenowa**   | Wymóg udowodnienia salda określonego tokena                 |
+| **Płatność**          | Wymóg niewielkiej opłaty za post                            |
+| **Lista dozwolonych** | Publikować mogą tylko wcześniej zatwierdzone tożsamości     |
+| **Własny kod**        | Dowolna polityka dająca się wyrazić w kodzie                |
 
-Elementy równorzędne, które przekazują zbyt wiele nieudanych prób wyzwania, są blokowane w temacie pubsub, co zapobiega atakom typu „odmowa usługi” w warstwie sieciowej.
+Peery, które przekazują zbyt wiele nieudanych prób wyzwania, są blokowane w temacie pubsub, co
+zapobiega atakom typu odmowa usługi na warstwę sieciową.
 
 ---
 
 ## Cykl życia: czytanie społeczności
 
-Dzieje się tak, gdy użytkownik otwiera aplikację i przegląda najnowsze posty społeczności.
+Oto co dzieje się, gdy użytkownik otwiera aplikację i przegląda najnowsze posty społeczności.
 
 ```mermaid
 sequenceDiagram
     participant User as 👤 User app
-    participant DHT as 🌐 DHT network
+    participant Routers as 🌐 HTTP routers
     participant Node as 🖥️ Community node
 
-    User->>DHT: Query community address
-    Note over DHT: Distributed lookup<br/>across network peers
-    DHT-->>User: Return latest content pointers + metadata
+    User->>Routers: Query community address (in parallel)
+    Note over Routers: Each router returns<br/>peer addresses only, never content
+    Routers-->>User: Return provider peer addresses
 
-    User->>DHT: Fetch post content by hash
-    DHT-->>User: Return post data
+    User->>Node: Connect to peer, fetch latest pointers + metadata
+    Node-->>User: Return latest content pointers + metadata
+
+    User->>Node: Fetch post content by hash
+    Node-->>User: Return post data
     Note over User: Render posts in<br/>familiar social UI
 
     Note over User,Node: Multiple community queries<br/>run concurrently
@@ -104,18 +164,20 @@ sequenceDiagram
 **Krok po kroku:**
 
 1. Użytkownik otwiera aplikację i widzi interfejs społecznościowy.
-2. Klient przyłącza się do sieci peer-to-peer i wysyła zapytanie DHT do każdej społeczności będącej użytkownikiem
-   następuje. Zapytania trwają kilka sekund, ale są uruchamiane jednocześnie.
-3. Każde zapytanie zwraca najnowsze wskaźniki zawartości społeczności i metadane (tytuł, opis,
-   lista moderatorów, konfiguracja wyzwania).
-4. Klient pobiera rzeczywistą treść postu za pomocą tych wskaźników, a następnie renderuje wszystko w pliku a
-   znany interfejs społecznościowy.
+2. Klient odpytuje równolegle kilka routerów HTTP dla każdej społeczności obserwowanej przez
+   użytkownika; każdy router zwraca wyłącznie adresy peerów, nigdy treść. Czas odpowiedzi zależy od
+   warunków sieciowych i obciążenia routerów; w typowych warunkach niskich opóźnień zapytania zwykle
+   wracają w około sekundę i wykonują się równolegle.
+3. Gdy klient ma już adresy peerów, łączy się z nimi i pobiera najnowsze wskaźniki treści oraz
+   metadane społeczności (tytuł, opis, listę moderatorów, konfigurację wyzwania).
+4. Na podstawie tych wskaźników klient pobiera właściwą treść postów, a następnie renderuje wszystko
+   w znajomym interfejsie społecznościowym.
 
 ---
 
-## Cykl życia: publikacja postu
+## Cykl życia: publikowanie posta
 
-Publikowanie obejmuje uścisk dłoni w odpowiedzi na wyzwanie w pubsub przed zaakceptowaniem postu.
+Publikowanie wymaga wymiany wyzwanie-odpowiedź przez pubsub, zanim post zostanie przyjęty.
 
 ```mermaid
 sequenceDiagram
@@ -149,24 +211,24 @@ sequenceDiagram
 
 **Krok po kroku:**
 
-1. Aplikacja generuje parę kluczy dla użytkownika, jeśli jeszcze jej nie posiada.
+1. Aplikacja generuje dla użytkownika parę kluczy, jeśli jeszcze jej nie ma.
 2. Użytkownik pisze post dla społeczności.
-3. Klient przyłącza się do tematu pubsub dla tej społeczności (kluczem publicznym społeczności).
-4. Klient prosi o wyzwanie poprzez pubsub.
-5. Węzeł operatora społeczności odsyła wezwanie (na przykład captcha).
-6. Użytkownik kończy wyzwanie.
-7. Klient przesyła post wraz z odpowiedzią na wyzwanie za pośrednictwem pubsub.
-8. Węzeł operatora społeczności sprawdza odpowiedź. Jeżeli jest poprawny, post zostaje zaakceptowany.
-9. Węzeł rozgłasza wynik poprzez pubsub, aby uczestnicy sieci wiedzieli, że mogą kontynuować przekazywanie
+3. Klient dołącza do tematu pubsub tej społeczności (powiązanego z jej kluczem publicznym).
+4. Klient prosi przez pubsub o wyzwanie.
+5. Węzeł operatora społeczności odsyła wyzwanie (na przykład captcha).
+6. Użytkownik rozwiązuje wyzwanie.
+7. Klient przesyła przez pubsub post razem z odpowiedzią na wyzwanie.
+8. Węzeł operatora społeczności weryfikuje odpowiedź. Jeśli jest poprawna, post zostaje przyjęty.
+9. Węzeł rozgłasza wynik przez pubsub, aby peery w sieci wiedziały, że mają dalej przekazywać
    wiadomości od tego użytkownika.
-10. Węzeł aktualizuje zawartość społeczności pod adresem klucza publicznego.
-11. W ciągu kilku minut każdy czytelnik społeczności otrzyma aktualizację.
+10. Węzeł aktualizuje treść społeczności pod jej adresem opartym na kluczu publicznym.
+11. W ciągu kilku minut aktualizację otrzymuje każdy czytelnik społeczności.
 
 ---
 
 ## Przegląd architektury
 
-Pełny system składa się z trzech współpracujących ze sobą warstw:
+Cały system składa się z trzech współpracujących warstw:
 
 ```mermaid
 graph TB
@@ -183,103 +245,181 @@ graph TB
     end
 
     subgraph Network ["Network layer"]
-        DHT["🗂️ DHT<br/>(content discovery)"]
+        Router["🛰️ HTTP router<br/>(content discovery)"]
         GS["💬 Gossipsub<br/>(real-time messaging)"]
         TR["📦 Content transfer<br/>(data exchange)"]
     end
 
     A1 & A2 & A3 --> PK & PS & CH
-    PK --> DHT
+    PK --> Router
     PS --> GS
     CH --> GS
     PK --> TR
 ```
 
-| Warstwa       | Rola                                                                                                                                                      |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Aplikacja** | Interfejs użytkownika. Może istnieć wiele aplikacji, każda z własnym projektem, wszystkie współdzielące te same społeczności i tożsamości.                |
-| **Protokół**  | Określa sposób zwracania się do społeczności, sposobu publikowania postów i zapobiegania spamowi.                                                         |
-| **Sieć**      | Podstawowa infrastruktura peer-to-peer: DHT do wykrywania, plotki do przesyłania wiadomości w czasie rzeczywistym i przesyłanie treści do wymiany danych. |
+| Warstwa       | Rola                                                                                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Aplikacja** | Interfejs użytkownika. Aplikacji może być wiele, każda z własnym wyglądem, a wszystkie korzystają z tych samych społeczności i tożsamości.                   |
+| **Protokół**  | Określa, jak adresowane są społeczności, jak publikuje się posty i jak zapobiega się spamowi.                                                                |
+| **Sieć**      | Leżąca u podstaw infrastruktura peer-to-peer: routery HTTP do odkrywania, gossipsub do wiadomości w czasie rzeczywistym i transfer treści do wymiany danych. |
 
 ---
 
-## Prywatność: odłączanie autorów od adresów IP
+## Prywatność: rozdzielenie autorów i adresów IP
 
-Kiedy użytkownik publikuje post, jego treść jest **szyfrowana kluczem publicznym operatora społeczności** zanim trafi do sieci pubsub. Oznacza to, że chociaż obserwatorzy sieci mogą zobaczyć, że inny użytkownik opublikował _coś_, nie mogą określić:
+Gdy użytkownik publikuje post, jego treść jest **szyfrowana kluczem publicznym operatora
+społeczności**, zanim trafi do sieci pubsub. Oznacza to, że obserwatorzy sieci widzą wprawdzie, że
+dany peer coś opublikował, ale nie są w stanie ustalić:
 
-- co mówi treść
-- która tożsamość autora go opublikowała
+- co zawiera ta treść
+- która tożsamość autora ją opublikowała
 
-Przypomina to sposób, w jaki BitTorrent umożliwia odkrycie, które adresy IP wysyłają torrent, ale nie to, kto go pierwotnie stworzył. Warstwa szyfrowania zapewnia dodatkową gwarancję prywatności oprócz tej wartości bazowej.
+Przypomina to sposób, w jaki BitTorrent pozwala ustalić, które adresy IP seedują torrent, ale nie
+kto go pierwotnie stworzył. Warstwa szyfrowania dokłada do tego poziomu bazowego dodatkową gwarancję
+prywatności.
 
 ---
 
-## Przeglądarka peer-to-peer
+## Peer-to-peer w przeglądarce
 
-Przeglądarka P2P jest teraz możliwa w klientach Bitsocial. Aplikacja przeglądarkowa może uruchomić węzeł [Helia](https://helia.io/), używać tego samego stosu klienta protokołu Bitsocial co inne aplikacje i pobierać treści od równorzędnych użytkowników, zamiast prosić scentralizowaną bramę IPFS o jej obsłużenie. Przeglądarka może również bezpośrednio uczestniczyć w pubsub, więc publikowanie nie wymaga obecności dostawcy pubsub będącego własnością platformy na szczęśliwej ścieżce.
+P2P w przeglądarce jest już możliwe w klientach Bitsocial. Aplikacja przeglądarkowa może uruchomić
+węzeł [Helia](https://helia.io/), używać tego samego stosu klienckiego protokołu Bitsocial co
+pozostałe aplikacje i pobierać treści od peerów, zamiast prosić o ich udostępnienie scentralizowaną
+bramę IPFS. Przeglądarka może też bezpośrednio uczestniczyć w pubsubie, więc w podstawowym
+scenariuszu publikowanie nie wymaga dostawcy pubsuba należącego do platformy.
 
-Jest to ważny kamień milowy w dystrybucji internetowej: zwykła witryna internetowa HTTPS może otworzyć się na działającym kliencie społecznościowym P2P. Użytkownicy nie muszą instalować aplikacji komputerowej, zanim będą mogli czytać z sieci, a operator aplikacji nie musi uruchamiać centralnej bramy, która staje się wąskim punktem cenzury lub moderacji dla każdego użytkownika przeglądarki.
+To ważny kamień milowy dla dystrybucji przez WWW: zwykła witryna HTTPS może otworzyć się jako
+działający klient społecznościowy P2P. Użytkownicy nie muszą instalować aplikacji desktopowej, żeby
+czytać z sieci, a operator aplikacji nie musi utrzymywać centralnej bramy, która dla każdego
+użytkownika przeglądarki staje się wąskim gardłem cenzury lub moderacji.
 
-Ścieżka przeglądarki ma inne ograniczenia niż węzeł pulpitu lub serwera:
+Ścieżka przeglądarkowa ma inne ograniczenia niż węzeł desktopowy czy serwerowy:
 
-- węzeł przeglądarki zwykle nie może akceptować dowolnych połączeń przychodzących z publicznego Internetu
-- może ładować, sprawdzać, buforować i publikować dane, gdy aplikacja jest otwarta
-- nie należy go traktować jako długotrwałego hosta danych społeczności
-- pełny hosting społecznościowy nadal najlepiej obsługuje aplikacja komputerowa `bitsocial-cli` lub inna
-  węzeł zawsze włączony
+- węzeł w przeglądarce zwykle nie może przyjmować dowolnych połączeń przychodzących z publicznego internetu
+- może wczytywać, weryfikować, buforować i publikować dane, dopóki aplikacja jest otwarta
+- nie należy traktować go jako długowiecznego hosta danych społeczności
+- pełny hosting społeczności nadal najlepiej realizuje aplikacja desktopowa, `bitsocial-cli` lub inny
+  stale działający węzeł
 
-Routery HTTP nadal mają znaczenie w wykrywaniu treści: zwracają adresy dostawców dla skrótu społeczności. Nie są bramami IPFS, ponieważ nie obsługują samej treści. Po wykryciu klient przeglądarki łączy się z urządzeniami równorzędnymi i pobiera dane za pośrednictwem stosu P2P.
+Routery HTTP wciąż mają znaczenie dla odkrywania treści: zwracają adresy dostawców dla hasha
+społeczności. Nie są bramami IPFS, ponieważ same nie serwują treści. Po odkryciu klient w
+przeglądarce łączy się z peerami i pobiera dane przez stos P2P.
 
-5chan udostępnia to jako opcjonalny przełącznik ustawień zaawansowanych w zwykłej aplikacji internetowej 5chan.app. Najnowszy stos przeglądarki `pkc-js` stał się wystarczająco stabilny, aby można było go publicznie przetestować po tym, jak wcześniejsza praca interoperacyjna libp2p/gossipsub zajęła się dostarczaniem komunikatów pomiędzy urządzeniami równorzędnymi Helia i Kubo. To ustawienie utrzymuje kontrolę nad P2P w przeglądarce, podczas gdy jest poddawana większej liczbie testów w świecie rzeczywistym; gdy uzyska wystarczającą pewność produkcji, może stać się domyślną ścieżką internetową.
+P2P w przeglądarce jest teraz domyślną ścieżką webową, a nie eksperymentem ukrytym za przełącznikiem.
+5chan domyślnie działa w czystym trybie P2P w przeglądarce pod adresem 5chan.app, a blog Bitsocial na
+bitsocial.net robi to samo. Peery w przeglądarce łączą się przez bezpieczne WebSockets; `pkc-js`
+domyślnie odrzuca połączenia WebRTC i WebTransport, ponieważ ich ścieżki nawiązywania połączenia są w
+przeglądarce wolne i zawodne. Zmianą po stronie upstreamu, dzięki której publikowanie z przeglądarki
+stało się w 2026 roku praktyczne, była poprawka numerów sekwencyjnych gossipsub w
+`@libp2p/gossipsub` 15.0.21 — sprawiła ona, że peery Kubo przestały odrzucać wiadomości publikowane
+przez węzły JavaScript.
 
-## Powrót do bramy
+Pełny obraz, w tym to, czego węzeł w przeglądarce nadal nie potrafi, znajdziesz w tekście
+[Peer-to-peer w przeglądarce](/browser-p2p/).
 
-Dostęp do przeglądarki wspieranej przez bramę jest nadal przydatny jako zabezpieczenie w zakresie zgodności i wdrażania awaryjnego. Brama może przekazywać dane pomiędzy siecią P2P a klientem przeglądarki, gdy przeglądarka nie może bezpośrednio połączyć się z siecią lub gdy aplikacja celowo wybiera starszą ścieżkę. Te bramy:
+## Awaryjne wykorzystanie bramy {#gateway-fallback}
 
-- może być prowadzony przez każdego
+Dostęp z przeglądarki oparty na bramie jest nadal przydatny jako rozwiązanie zgodnościowe i awaryjne
+na czas wdrażania. Brama może przekazywać dane między siecią P2P a klientem w przeglądarce, gdy
+przeglądarka nie może dołączyć do sieci bezpośrednio albo gdy aplikacja świadomie wybiera starszą
+ścieżkę. Takie bramy:
+
+- może uruchomić każdy
 - nie wymagają kont użytkowników ani płatności
-- nie przejmuj kontroli nad tożsamościami użytkowników ani społecznościami
+- nie przejmują kontroli nad tożsamościami użytkowników ani społecznościami
 - można wymienić bez utraty danych
 
-Docelowa architektura to przede wszystkim P2P w przeglądarce, z bramami jako opcjonalnym rozwiązaniem awaryjnym, a nie domyślnym wąskim gardłem.
+Docelowa architektura stawia w pierwszej kolejności na P2P w przeglądarce, a bramy traktuje jako
+opcjonalne rozwiązanie awaryjne, a nie domyślne wąskie gardło.
 
 ---
 
 ## Dlaczego nie blockchain?
 
-Blockchainy rozwiązują problem podwójnych wydatków: muszą znać dokładną kolejność każdej transakcji, aby zapobiec dwukrotnemu wydaniu tej samej monety.
+Blockchainy rozwiązują problem podwójnego wydatkowania: muszą znać dokładną kolejność każdej
+transakcji, żeby nikt nie wydał tej samej monety dwa razy.
 
-W mediach społecznościowych nie ma problemu podwójnych wydatków. Nie ma znaczenia, czy post A został opublikowany milisekundę przed postem B, a stare posty nie muszą być stale dostępne w każdym węźle.
+W mediach społecznościowych problem podwójnego wydatkowania nie istnieje. Nie ma znaczenia, czy post
+A został opublikowany milisekundę przed postem B, a stare posty nie muszą być trwale dostępne na
+każdym węźle.
 
 Pomijając blockchain, Bitsocial unika:
 
-- **opłaty za gaz** — wysłanie jest bezpłatne
-- **limity przepustowości** — brak wąskich gardeł związanych z rozmiarem bloku i czasem bloku
-- **rozdęcie pamięci** — węzły przechowują tylko to, czego potrzebują
-- **narzut konsensusu** — nie są wymagane żadne górniki, walidatory ani stakowanie
+- **opłat za gaz** — publikowanie jest darmowe
+- **limitów przepustowości** — brak wąskiego gardła w postaci rozmiaru bloku czy czasu bloku
+- **rozrostu danych** — węzły trzymają tylko to, czego potrzebują
+- **narzutu konsensusu** — nie są potrzebni górnicy, walidatorzy ani staking
 
-Kompromis polega na tym, że Bitsocial nie gwarantuje stałej dostępności starych treści. Jednak w przypadku mediów społecznościowych jest to akceptowalny kompromis: węzeł operatora społeczności przechowuje dane, popularne treści rozprzestrzeniają się wśród wielu użytkowników, a bardzo stare posty w naturalny sposób blakną – tak samo jak na każdej platformie społecznościowej.
+Kompromisem jest to, że Bitsocial nie gwarantuje trwałej dostępności starych treści. Dla mediów
+społecznościowych to jednak akceptowalny kompromis: dane trzyma węzeł operatora społeczności,
+popularne treści rozchodzą się po wielu peerach, a bardzo stare posty naturalnie zanikają — tak samo
+jak na każdej platformie społecznościowej.
 
 ## Dlaczego nie federacja?
 
-Sieci stowarzyszone (takie jak platformy e-mail lub platformy oparte na ActivityPub) poprawiają się pod względem centralizacji, ale nadal mają ograniczenia strukturalne:
+Sieci federacyjne (jak poczta e-mail czy platformy oparte na ActivityPub) są krokiem naprzód wobec
+centralizacji, ale wciąż mają ograniczenia strukturalne:
 
-- **Zależność od serwera** — każda społeczność potrzebuje serwera z domeną, TLS i działającym
-  konserwacja
-- **Zaufanie administratora** — administrator serwera ma pełną kontrolę nad kontami użytkowników i treścią
-- **Fragmentacja** — przemieszczanie się między serwerami często oznacza utratę obserwujących, historii lub tożsamości
-- **Koszt** — ktoś musi zapłacić za hosting, co stwarza presję na konsolidację
+- **Zależność od serwera** — każda społeczność potrzebuje serwera z domeną, TLS-em i bieżącym
+  utrzymaniem
+- **Zaufanie do administratora** — administrator serwera ma pełną kontrolę nad kontami i treściami użytkowników
+- **Fragmentacja** — przenosiny między serwerami często oznaczają utratę obserwujących, historii lub tożsamości
+- **Koszt** — ktoś musi płacić za hosting, co wywołuje presję na konsolidację
 
-Podejście peer-to-peer firmy Bitsocial całkowicie eliminuje serwer z równania. Węzeł społecznościowy może działać na laptopie, Raspberry Pi lub tanim VPS. Operator kontroluje politykę moderacji, ale nie może przejąć tożsamości użytkowników, ponieważ tożsamości są kontrolowane na podstawie par kluczy, a nie nadawane przez serwer.
+Podejście peer-to-peer Bitsocial całkowicie usuwa serwer z równania. Węzeł społeczności może działać
+na laptopie, Raspberry Pi albo tanim VPS. Operator kontroluje politykę moderacji, ale nie może
+przejąć tożsamości użytkowników, bo są one kontrolowane parą kluczy, a nie przyznawane przez serwer.
+
+## A co z Nostr?
+
+Nostr nie mieści się dobrze w żadnej z tych kategorii. To nie jest federacja w stylu ActivityPub, bo
+instancje nie wydają użytkownikom kont, a tożsamość nie jest przywiązana do jednego serwera. To nie
+są też blockchainowe media społecznościowe, bo nie ma tu łańcucha, konsensusu, gazu ani globalnej
+kolejności transakcji.
+
+Nostr lepiej opisać jako **media społecznościowe oparte na przekaźnikach**. W bazowym protokole
+([NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md)) użytkownicy trzymają pary
+kluczy, podpisują zdarzenia i publikują je do przekaźników WebSocket. Klienci subskrybują
+przekaźniki z filtrami, pobierają pasujące zdarzenia i lokalnie weryfikują podpisy. Użytkownicy mogą
+też publikować metadane z listą przekaźników
+([NIP-65](https://github.com/nostr-protocol/nips/blob/master/65.md)), które mówią klientom, do
+których przekaźników zwykle piszą i z których wolą czytać wzmianki.
+
+Pod jednym ważnym względem stawia to Nostr bliżej Bitsocial niż systemów federacyjnych czy
+blockchainowych: tożsamość jest kryptograficzna i przenośna. Główna różnica leży w warstwie danych. W
+Nostr przekaźniki są zwyczajną warstwą przechowywania i dostarczania. W Bitsocial routery HTTP
+jedynie pomagają klientom znaleźć peery. Routery nie przechowują postów, profili, metadanych
+społeczności ani stanu moderacji; zwracają adresy peerów-dostawców, a treść klienci pobierają już od
+peerów.
+
+Ten sam podział widać w społecznościach. Nostr ma opcjonalne wzorce dla
+[grup opartych na przekaźnikach](https://github.com/nostr-protocol/nips/blob/master/29.md) i
+[społeczności zatwierdzanych przez moderatorów](https://github.com/nostr-protocol/nips/blob/master/72.md),
+ale i one zależą od polityki przekaźnika, stanu grupy trzymanego na przekaźniku albo od tego, które
+zatwierdzenia klient zdecyduje się respektować. Bitsocial traktuje społeczności jako pełnoprawne
+obiekty kryptograficzne, których węzeł operatora weryfikuje posty, prowadzi politykę wyzwań
+społeczności i publikuje najnowszy przyjęty stan do sieci peer-to-peer.
+
+| Pytanie                  | Nostr                                                                                                         | Bitsocial                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Kategoria                | Protokół oparty na przekaźnikach                                                                              | Sieć społeczności peer-to-peer                                                     |
+| Tożsamość                | Klucz publiczny użytkownika                                                                                   | Pary kluczy użytkownika i społeczności                                             |
+| Ścieżka danych           | Podpisane zdarzenia publikowane do przekaźników                                                               | Adres oparty na kluczu publicznym wskazuje peery; treść pobierana od peerów        |
+| Kto utrzymuje dostępność | Przekaźniki wybrane przez użytkowników i klientów                                                             | Węzeł właściciela społeczności plus pomocnicze węzły seedujące                     |
+| Społeczności             | Opcjonalne grupy na przekaźnikach lub społeczności zatwierdzane przez moderatorów                             | Pełnoprawne obiekty społeczności z moderacją kontrolowaną przez operatora          |
+| Ochrona przed spamem     | Polityka przekaźnika, uwierzytelnianie, płatność, proof-of-work, filtry klienta lub zatwierdzenia moderatorów | Logika wyzwań zdefiniowana przez społeczność przed przyjęciem treści               |
+| Główny kompromis         | Przenośna tożsamość, ale dostępność i polityka zależne od przekaźników                                        | Mniejsza zależność od przekaźników, ale stare treści nie są gwarantowane na zawsze |
 
 ---
 
-## Streszczenie
+## Podsumowanie
 
-Bitsocial opiera się na dwóch elementach: adresowaniu opartym na kluczu publicznym do odkrywania treści i pubsub peer-to-peer do komunikacji w czasie rzeczywistym. Razem tworzą sieć społecznościową, w której:
+Bitsocial opiera się na dwóch prymitywach: adresowaniu opartym na kluczu publicznym do odkrywania
+treści i pubsubie peer-to-peer do komunikacji w czasie rzeczywistym. Razem tworzą sieć
+społecznościową, w której:
 
-- społeczności są identyfikowane za pomocą kluczy kryptograficznych, a nie nazw domen
-- treść rozprzestrzenia się między urządzeniami równorzędnymi jak torrent, a nie jest dostarczana z jednej bazy danych
-- Odporność na spam jest lokalna dla każdej społeczności i nie jest narzucona przez platformę
-- użytkownicy posiadają swoją tożsamość poprzez pary kluczy, a nie poprzez odwołalne konta
-- cały system działa bez serwerów, łańcuchów bloków i opłat za platformę
+- społeczności są identyfikowane kluczami kryptograficznymi, a nie nazwami domen
+- treści rozchodzą się po peerach jak torrent, zamiast być serwowane z jednej bazy danych
+- odporność na spam jest lokalna dla każdej społeczności, a nie narzucona przez platformę
+- użytkownicy posiadają swoje tożsamości dzięki parom kluczy, a nie dzięki odwoływalnym kontom
+- cały system działa bez serwerów, blockchainów i opłat platformowych

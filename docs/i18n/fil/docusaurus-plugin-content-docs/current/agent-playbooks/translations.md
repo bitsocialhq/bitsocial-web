@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Iba pang Mga Kapaki-pakinabang na Utos
 
 ```bash
-# Kopyahin ang isang susi mula sa Ingles sa lahat ng mga wika (dry run pagkatapos ay magsulat)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Magtanggal ng susi sa lahat ng wika
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Pag-audit para sa mga hindi nagamit na translation key
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

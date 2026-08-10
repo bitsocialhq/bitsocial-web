@@ -1,39 +1,44 @@
 ---
 title: 5chan
-description: Imageboard terdesentralisasi tanpa server yang dibangun di atas protokol Bitsocial tempat siapa pun dapat membuat dan memiliki papan.
+description: Imageboard terdesentralisasi tanpa server yang dibangun di atas protokol Bitsocial, tempat siapa pun bisa membuat dan memiliki papannya sendiri.
 sidebar_position: 1
 ---
 
 # 5chan
 
-5chan adalah imageboard tanpa server, tanpa admin, dan sepenuhnya terdesentralisasi yang berjalan pada protokol Bitsocial. Ini mengikuti struktur direktori imageboard yang sudah dikenal sambil memperkenalkan kepemilikan terdesentralisasi — siapa pun dapat membuat papan, dan beberapa papan dapat bersaing untuk mendapatkan slot direktori yang sama melalui mekanisme pemungutan suara.
+5chan adalah imageboard tanpa server, tanpa admin, dan sepenuhnya terdesentralisasi yang berjalan di atas protokol Bitsocial. 5chan mengikuti struktur direktori imageboard yang sudah dikenal sekaligus memperkenalkan kepemilikan yang terdesentralisasi — siapa pun dapat membuat papan, dan beberapa papan dapat memperebutkan slot direktori yang sama melalui mekanisme pemungutan suara.
 
 ## Unduhan
 
-| Peron    | Tautan                                 |
+| Platform | Tautan                                 |
 | -------- | -------------------------------------- |
-| jaringan | [5chan.aplikasi](https://5chan.app)    |
+| Web      | [5chan.app](https://5chan.app)         |
 | Desktop  | Tersedia untuk Mac, Windows, dan Linux |
 | Seluler  | Tersedia untuk Android                 |
 
 ## Cara kerja papan
 
-5chan mengatur konten ke dalam papan menggunakan tata letak direktori klasik (misalnya, `/b/`, `/g/`). Tidak seperti papan gambar tradisional di mana admin pusat mengontrol setiap papan, 5chan memungkinkan setiap pengguna membuat dan memiliki papan mereka sendiri sepenuhnya. Ketika beberapa dewan menargetkan slot direktori yang sama, mereka bersaing untuk mendapatkan posisi tersebut melalui pemungutan suara.
+5chan menata konten ke dalam papan menggunakan tata letak direktori klasik (misalnya `/b/`, `/g/`). Berbeda dengan imageboard tradisional yang setiap papannya dikendalikan oleh admin pusat, 5chan memungkinkan setiap pengguna membuat dan sepenuhnya memiliki papannya sendiri. Ketika beberapa papan mengincar slot direktori yang sama, mereka memperebutkan posisi itu lewat pemungutan suara.
 
 ### Membuat papan
 
-Untuk membuat papan baru, Anda perlu menjalankan `bitsocial-cli` sebagai node peer-to-peer. Hal ini memastikan forum Anda dihosting secara terdesentralisasi tanpa bergantung pada server pusat mana pun.
+Untuk membuat papan baru, Anda perlu menjalankan `bitsocial-cli` sebagai node peer-to-peer. Dengan begitu papan Anda dihosting secara terdesentralisasi tanpa bergantung pada server pusat mana pun.
 
-### Tugas direktori
+### Penetapan direktori
 
-Penetapan slot direktori (papan mana yang muncul di jalur mana) saat ini dikelola melalui permintaan penarikan GitHub ke file `5chan-directories.json`. Ini adalah proses sementara — rilis mendatang akan mendukung pembuatan papan dalam aplikasi dan pemungutan suara berbasis pubsub untuk menangani penetapan direktori secara otomatis.
+Penetapan slot direktori (papan mana yang muncul di jalur mana) saat ini dikelola melalui pull request GitHub ke berkas `5chan-directories.json`. Ini proses sementara — rilis mendatang akan mendukung pembuatan papan langsung di dalam aplikasi serta pemungutan suara berbasis pubsub untuk menangani penetapan direktori secara otomatis.
 
-## Internal
+## Cara kerja internal
 
-Di balik terpalnya, 5chan menggunakan lapisan klien protokol Bitsocial bersama untuk interaksi jaringannya. Aplikasi web di 5chan.app juga dapat menjalankan node Helia di browser ketika P2P browser diaktifkan dari Pengaturan Lanjutan, sehingga pembaca dapat memuat dari rekan-rekan tanpa gateway IPFS terpusat. Lihat bagian P2P browser di catatan protokol peer-to-peer.
+Di balik layar, 5chan memakai lapisan klien protokol Bitsocial bersama untuk seluruh interaksi
+jaringannya. Aplikasi web di 5chan.app secara bawaan menjalankan node Helia di dalam browser, sehingga
+satu tab biasa pun ikut bergabung ke jaringan sebagai peer: tab itu memuat papan dari peer lain dan
+memublikasikan lewat pubsub, tanpa gateway IPFS terpusat di jalur kontennya. Lihat
+[Peer-to-Peer di Browser](/browser-p2p/) untuk mengetahui apa saja yang tercakup di dalamnya dan apa
+yang masih belum bisa dilakukan node browser.
 
 ## Tautan
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Lisensi**: Khusus GPL-2.0
+- **Lisensi**: GPL-2.0-only

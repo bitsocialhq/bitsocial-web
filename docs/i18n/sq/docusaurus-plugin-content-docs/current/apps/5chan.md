@@ -1,20 +1,16 @@
 ---
 title: 5chan
-description: Një tabelë imazhi pa server dhe e decentralizuar e ndërtuar në protokollin Bitsocial ku çdokush mund të krijojë dhe të zotërojë tabela.
+description: Një imageboard pa server dhe i decentralizuar, i ndërtuar mbi protokollin Bitsocial, ku kushdo mund të krijojë dhe të zotërojë borde.
 sidebar_position: 1
 ---
 
-:::warning[Emërtimi i trashëguar]
-Baza e kodeve të këtij projekti ende përdor emërtimin e trashëguar "plebbit" përpara riemërtimit Bitsocial. Emrat e paketave, referencat e API-së dhe disa terminologji të brendshme do të përditësohen në një version të ardhshëm. Funksionaliteti i përshkruar këtu është aktual - vetëm emërtimi është i vjetëruar.
-:::
-
 # 5chan
 
-5chan është një tabelë imazhi pa server, pa administrim dhe plotësisht e decentralizuar që funksionon në protokollin Bitsocial. Ai ndjek strukturën e njohur të drejtorisë së imazhit ndërsa prezanton pronësinë e decentralizuar – çdokush mund të krijojë një tabelë dhe borde të shumta mund të konkurrojnë për të njëjtin vend të drejtorisë përmes një mekanizmi votimi.
+5chan është një imageboard pa server, pa administrator dhe plotësisht i decentralizuar, që funksionon mbi protokollin Bitsocial. Ai ndjek strukturën e njohur të drejtorive të imageboard-eve, duke sjellë njëkohësisht pronësi të decentralizuar — kushdo mund të krijojë një bord dhe disa borde mund të konkurrojnë për të njëjtin vend drejtorie përmes një mekanizmi votimi.
 
 ## Shkarkimet
 
-| Platforma | Lidhje                                    |
+| Platforma | Lidhja                                    |
 | --------- | ----------------------------------------- |
 | Web       | [5chan.app](https://5chan.app)            |
 | Desktop   | Në dispozicion për Mac, Windows dhe Linux |
@@ -22,22 +18,27 @@ Baza e kodeve të këtij projekti ende përdor emërtimin e trashëguar "plebbit
 
 ## Si funksionojnë bordet
 
-5chan organizon përmbajtjen në tabela duke përdorur një paraqitje klasike të drejtorive (p.sh., `/b/`, `/g/`). Ndryshe nga tabelat tradicionale të imazheve ku një administrator qendror kontrollon çdo tabelë, 5chan lejon çdo përdorues të krijojë dhe të zotërojë plotësisht bordin e tij. Kur bordet e shumta synojnë të njëjtin vend të drejtorisë, ata konkurrojnë për atë pozicion përmes votimit.
+5chan e organizon përmbajtjen në borde duke përdorur një strukturë klasike drejtorish (p.sh. `/b/`, `/g/`). Ndryshe nga imageboard-et tradicionale, ku një administrator qendror kontrollon çdo bord, 5chan i lejon çdo përdoruesi të krijojë dhe të zotërojë plotësisht bordin e vet. Kur disa borde synojnë të njëjtin vend drejtorie, ato konkurrojnë për atë pozicion përmes votimit.
 
 ### Krijimi i një bordi
 
-Për të krijuar një tabelë të re, duhet të ekzekutoni `bitsocial-cli` si një nyje peer-to-peer. Kjo siguron që bordi juaj të organizohet në një mënyrë të decentralizuar pa u mbështetur në ndonjë server qendror.
+Për të krijuar një bord të ri, duhet të ekzekutoni `bitsocial-cli` si nyje peer-to-peer. Kjo siguron që bordi juaj të strehohet në mënyrë të decentralizuar, pa u mbështetur në asnjë server qendror.
 
-### Detyrat e drejtorisë
+### Caktimet e drejtorive
 
-Caktimet e sloteve të drejtorisë (cila tabelë shfaqet në cilën shteg) menaxhohen aktualisht përmes kërkesave për tërheqje të GitHub në skedarin `5chan-directories.json`. Ky është një proces i përkohshëm - publikimet e ardhshme do të mbështesin krijimin e bordit brenda aplikacionit dhe votimin e bazuar në pub-e për të trajtuar automatikisht detyrat e drejtorive.
+Caktimi i vendeve në drejtori (cili bord shfaqet në cilin shteg) menaxhohet aktualisht përmes pull request-eve në GitHub te skedari `5chan-directories.json`. Ky është një proces i përkohshëm — versionet e ardhshme do të mbështesin krijimin e bordeve brenda aplikacionit dhe votimin me pubsub, që caktimet e drejtorive të bëhen automatikisht.
 
-## Të brendshmet
+## Nga brenda
 
-Nën kapuçin, 5chan përdor shtresën e përbashkët të klientit të protokollit Bitsocial për ndërveprimet e tij në rrjet. Aplikacioni ueb në 5chan.app mund të ekzekutojë gjithashtu një nyje Helia në shfletues kur shfletuesi P2P aktivizohet nga Cilësimet e Avancuara, kështu që lexuesit mund të ngarkojnë nga kolegët pa një portë të centralizuar IPFS. Shihni seksionin P2P të shfletuesit në shënimet e protokollit peer-to-peer.
+Nën kapak, 5chan përdor shtresën e përbashkët të klientit të protokollit Bitsocial për ndërveprimet e
+tij në rrjet. Aplikacioni web në 5chan.app niset si parazgjedhje me një nyje Helia në shfletues, kështu
+që një skedë e zakonshme bashkohet me rrjetin si nyje e barabartë: ngarkon borde nga nyje të tjera dhe
+publikon përmes pubsub, pa asnjë portë të centralizuar IPFS në rrugën e përmbajtjes. Shihni
+[Peer-to-Peer në shfletues](/browser-p2p/) për të parë se çfarë përfshin kjo dhe çfarë ende nuk mund
+të bëjë një nyje në shfletues.
 
 ## Lidhjet
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licenca**: GPL-2.0-vetëm
+- **Licenca**: GPL-2.0-only

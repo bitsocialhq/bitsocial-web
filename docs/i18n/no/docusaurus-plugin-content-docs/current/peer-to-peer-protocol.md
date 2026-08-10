@@ -1,44 +1,93 @@
 ---
-title: Peer-to-Peer-protokoll
-description: Hvordan Bitsocial bruker IPFS/libp2p, adressering med offentlig nøkkel, peer-to-peer pubsub og nettleser P2P-noder for å levere serverløse sosiale medier.
+title: Peer-to-peer-protokoll
+description: Hvordan Bitsocial bruker IPFS/libp2p, adressering basert på offentlig nøkkel, peer-to-peer-pubsub og P2P-noder i nettleseren for å levere serverløse sosiale medier.
 ---
 
-# Peer-to-Peer-protokoll
+# Peer-to-peer-protokoll
 
-Bitsocial bruker ikke en blokkjede, en føderasjonsserver eller en sentralisert backend. I stedet kombinerer den to ideer – **offentlig nøkkelbasert adressering** og **node-til-node pubsub** – for å la hvem som helst være vert for et fellesskap fra forbrukermaskinvare mens brukere leser og legger ut uten kontoer på noen bedriftskontrollert tjeneste.
+Bitsocial bruker verken blokkjede, føderasjonsserver eller en sentralisert backend. I stedet brukes
+IPFS/libp2p-stacken til å kombinere to ideer: **adressering basert på offentlig nøkkel** og
+**peer-to-peer-pubsub**. Sammen lar de hvem som helst drifte et fellesskap fra vanlig
+forbrukermaskinvare, mens brukerne leser og publiserer uten kontoer hos noen selskapskontrollert
+tjeneste.
 
-For en mindre teknisk gjennomgang, les [En fullstendig lekmannsforklaring av Bitsocial-protokollen](./layman-protocol-explanation.md).
+For en mindre teknisk gjennomgang kan du lese
+[En fullstendig lekmannsforklaring av Bitsocial-protokollen](./layman-protocol-explanation.md).
+
+## Bruker Bitsocial IPFS?
+
+Ja. Bitsocial-noder bruker primitiver fra IPFS/libp2p til peer-to-peer-laget: fellesskapsoppføringer
+adressert med offentlig nøkkel, innholdsoverføring mellom peers og gossipsub-pubsub for
+sanntidsmeldinger. Når denne dokumentasjonen sier «pubsub», menes IPFS/libp2p-pubsub, ikke en egen
+sentralisert meldingsmegler.
+
+Protokollen beskriver i dag oppdagelse gjennom HTTP-rutere fordi Bitsocial-klienter spør
+ruter-endepunkter om adressene til peers som leverer innholdet, i stedet for å basere hvert oppslag
+på en DHT som fungerer dårlig i nettleseren. Rutere returnerer bare peers; innholdsoverføring og
+pubsub-trafikk går fortsatt gjennom peer-to-peer-nettverket.
 
 ## De to problemene
 
 Et desentralisert sosialt nettverk må svare på to spørsmål:
 
-1. **Data** — hvordan lagrer og serverer du verdens sosiale innhold uten en sentral database?
-2. **Spam** — hvordan forhindrer du misbruk mens du holder nettverket fritt å bruke?
+1. **Data** — hvordan lagrer og leverer man verdens sosiale innhold uten en sentral database?
+2. **Spam** — hvordan hindrer man misbruk samtidig som nettverket er gratis å bruke?
 
-Bitsocial løser dataproblemet ved å hoppe over blokkjeden helt: sosiale medier trenger ikke global transaksjonsbestilling eller permanent tilgjengelighet for alle gamle innlegg. Det løser spam-problemet ved å la hvert fellesskap kjøre sin egen anti-spam-utfordring over peer-to-peer-nettverket.
+Bitsocial løser dataproblemet ved å droppe blokkjeden fullstendig: sosiale medier trenger verken
+global transaksjonsrekkefølge eller permanent tilgjengelighet for hvert eneste gamle innlegg.
+Spamproblemet løses ved å la hvert fellesskap kjøre sin egen anti-spam-utfordring over
+peer-to-peer-nettverket.
 
-For funnmodellen over dette nettverkslaget, se [Oppdagelse av innhold](./content-discovery.md).
+For oppdagelsesmodellen som ligger over dette nettverkslaget, se
+[Oppdagelse av innhold](./content-discovery.md).
 
 ---
 
-## Offentlig nøkkelbasert adressering
+## Adressering basert på offentlig nøkkel {#public-key-based-addressing}
 
-I BitTorrent blir en fils hash adresse (_innholdsbasert adressering_). Bitsocial bruker en lignende idé med offentlige nøkler: hashen til fellesskapets offentlige nøkkel blir nettverksadressen.
+I BitTorrent blir hashen til en fil selve adressen til filen (_innholdsbasert adressering_).
+Bitsocial bruker en lignende idé med offentlige nøkler: hashen til et fellesskaps offentlige nøkkel
+blir nettverksadressen.
 
 ```mermaid
 graph LR
     K["🔑 Community keypair"] --> H["#️⃣ Hash of public key"]
-    H --> A["📍 Network address"]
-    A --> D["🌐 DHT lookup"]
-    D --> C["📄 Latest community content"]
+    H --> D["🌐 HTTP router(s) lookup of hash"]
+    D --> P["🔌 Provider peer addresses"]
+    P --> C["📄 Latest community content from peers"]
 ```
 
-Enhver peer på nettverket kan utføre en DHT (distribuert hash-tabell)-spørring for den adressen og hente fellesskapets siste status. Hver gang innholdet oppdateres, øker versjonsnummeret. Nettverket beholder bare den nyeste versjonen - det er ikke nødvendig å bevare enhver historisk tilstand, noe som gjør denne tilnærmingen lett sammenlignet med en blokkjede.
+Enhver peer i nettverket kan spørre en **HTTP-ruter** om den adressen: ruteren svarer med en liste
+over nettverksadressene til de peerne som akkurat nå leverer hashen til fellesskapet, og klienten
+kobler seg direkte til dem for å hente fellesskapets nyeste tilstand. Hver gang innholdet
+oppdateres, øker versjonsnummeret. Nettverket beholder bare den nyeste versjonen — det er ikke
+nødvendig å ta vare på hver historiske tilstand, og det er nettopp dette som gjør tilnærmingen lett
+sammenlignet med en blokkjede.
 
-### Hva lagres på adressen
+> **Hva en HTTP-ruter faktisk inneholder.** En HTTP-ruter er en tynn indeks. For hver innholdsadresse
+> den kjenner til, lagrer den bare nettverksadressene til peers som har annonsert seg selv som
+> leverandører (IP/port-par, libp2p-multiadresser og lignende). Den lagrer **ikke** fellesskapets
+> innhold, metadata, innleggstekst, medlemsliste eller engang den lesbare merkelappen for det som
+> ligger på adressen; den svarer bare på «hvilke peers hevder å ha denne hashen?». Det gjør rutere
+> billige å drifte, enkle å bytte ut og uten ansvar for det brukerne publiserer, omtrent som en
+> BitTorrent-tracker, men uten torrent-metadata: en tracker kobler infohasher til peers, mens en
+> HTTP-ruter bare kobler en innholdsadresse til adressene til de peerne som leverer den.
+>
+> For redundans spør klienten **flere HTTP-rutere parallelt** og slår sammen leverandørlistene den
+> får tilbake. Hvem som helst kan drifte en ruter, og å bytte ut eller legge til rutere er en
+> konfigurasjonsendring uten datamigrering.
+>
+> Bitsocial bruker HTTP-rutere i stedet for en DHT fordi det er dyrt å kjøre en DHT i den skalaen
+> innholdsoppdagelse krever, særlig på mobil. En DHT fungerer heller ikke i nettleseren, siden
+> nettlesere ikke kan koble seg direkte til en libp2p-DHT. En HTTP-ruter kjører billig på alminnelig
+> HTTP-infrastruktur og fungerer like godt fra en telefon som fra en nettleser.
 
-Fellesskapets adresse inneholder ikke fullstendig innleggsinnhold direkte. I stedet lagrer den en liste over innholdsidentifikatorer - hashes som peker til de faktiske dataene. Klienten henter deretter hver del av innholdet gjennom DHT- eller tracker-stil oppslag.
+### Hva som lagres på adressen
+
+Fellesskapsadressen inneholder ikke selve innleggene. I stedet lagrer den en liste med
+innholdsidentifikatorer — hasher som peker til de faktiske dataene. Klienten henter så hver del av
+innholdet direkte fra de peerne HTTP-ruterne returnerte. Ruterne selv ser aldri innholdet og lagrer
+det aldri.
 
 ```mermaid
 graph TD
@@ -49,73 +98,87 @@ graph TD
     P --> P3["📝 Post 3 content"]
 ```
 
-Minst én peer har alltid dataene: fellesskapsoperatørens node. Hvis fellesskapet er populært, vil mange andre jevnaldrende ha det også, og belastningen fordeler seg, på samme måte som populære torrenter er raskere å laste ned.
+Minst én peer har alltid dataene: noden til fellesskapets operatør. Er fellesskapet populært, vil
+mange andre peers også ha dem, og lasten fordeler seg av seg selv, på samme måte som populære
+torrenter går raskere å laste ned.
 
 ---
 
-## Peer-to-peer pubsub
+## Peer-to-peer-pubsub
 
-Pubsub (publiser-abonner) er et meldingsmønster der jevnaldrende abonnerer på et emne og mottar hver melding som er publisert til det emnet. Bitsocial bruker et peer-to-peer pubsub-nettverk - hvem som helst kan publisere, hvem som helst kan abonnere, og det er ingen sentral meldingsmegler.
+Pubsub (publish-subscribe) er et meldingsmønster der peers abonnerer på et emne og mottar hver
+melding som publiseres til det emnet. Bitsocial bruker et peer-to-peer-pubsub-nettverk — hvem som
+helst kan publisere, hvem som helst kan abonnere, og det finnes ingen sentral meldingsmegler.
 
-For å publisere et innlegg til et fellesskap, publiserer en bruker en melding hvis emne tilsvarer fellesskapets offentlige nøkkel. Fellesskapsoperatørens node plukker den opp, validerer den og – hvis den består anti-spam-utfordringen – inkluderer den i neste innholdsoppdatering.
+For å publisere et innlegg i et fellesskap publiserer brukeren en melding der emnet er fellesskapets
+offentlige nøkkel. Noden til fellesskapets operatør plukker den opp, validerer den og — hvis den
+består anti-spam-utfordringen — tar den med i neste innholdsoppdatering.
 
 ---
 
 ## Anti-spam: utfordringer over pubsub
 
-Et åpent pubsub-nettverk er sårbart for spamflommer. Bitsocial løser dette ved å kreve at utgivere fullfører en **utfordring** før innholdet deres blir akseptert.
+Et åpent pubsub-nettverk er sårbart for spamflommer. Bitsocial løser dette ved å kreve at de som
+publiserer, fullfører en **utfordring** før innholdet deres godtas.
 
-Utfordringssystemet er fleksibelt: hver fellesskapsoperatør konfigurerer sin egen policy. Alternativene inkluderer:
+Utfordringssystemet er fleksibelt: hver fellesskapsoperatør konfigurerer sine egne regler.
+Alternativene inkluderer:
 
-| Utfordringstype       | Slik fungerer det                                       |
-| --------------------- | ------------------------------------------------------- |
-| **Captcha**           | Visuelt eller interaktivt puslespill presentert i appen |
-| **Satsbegrensning**   | Begrens innlegg per tidsvindu per identitet             |
-| **Token gate**        | Krev bevis på balanse for et spesifikt token            |
-| **Betaling**          | Krev en liten betaling per post                         |
-| **Tillatelsesliste**  | Bare forhåndsgodkjente identiteter kan legge inn        |
-| **Egendefinert kode** | Enhver policy som kan uttrykkes i kode                  |
+| Type utfordring      | Slik fungerer den                                  |
+| -------------------- | -------------------------------------------------- |
+| **Captcha**          | Visuell eller interaktiv oppgave som vises i appen |
+| **Ratebegrensning**  | Begrens antall innlegg per tidsvindu per identitet |
+| **Token-port**       | Krev bevis på beholdning av et bestemt token       |
+| **Betaling**         | Krev en liten betaling per innlegg                 |
+| **Tillatelsesliste** | Bare forhåndsgodkjente identiteter kan publisere   |
+| **Egen kode**        | Enhver regel som kan uttrykkes i kode              |
 
-Peers som videresender for mange mislykkede utfordringsforsøk, blir blokkert fra pubsub-emnet, noe som forhindrer tjenestenektangrep på nettverkslaget.
+Peers som videreformidler for mange mislykkede utfordringsforsøk, blir blokkert fra pubsub-emnet, og
+det hindrer tjenestenektangrep på nettverkslaget.
 
 ---
 
 ## Livssyklus: å lese et fellesskap
 
-Dette er hva som skjer når en bruker åpner appen og ser på et fellesskaps siste innlegg.
+Dette er hva som skjer når en bruker åpner appen og ser de nyeste innleggene i et fellesskap.
 
 ```mermaid
 sequenceDiagram
     participant User as 👤 User app
-    participant DHT as 🌐 DHT network
+    participant Routers as 🌐 HTTP routers
     participant Node as 🖥️ Community node
 
-    User->>DHT: Query community address
-    Note over DHT: Distributed lookup<br/>across network peers
-    DHT-->>User: Return latest content pointers + metadata
+    User->>Routers: Query community address (in parallel)
+    Note over Routers: Each router returns<br/>peer addresses only, never content
+    Routers-->>User: Return provider peer addresses
 
-    User->>DHT: Fetch post content by hash
-    DHT-->>User: Return post data
+    User->>Node: Connect to peer, fetch latest pointers + metadata
+    Node-->>User: Return latest content pointers + metadata
+
+    User->>Node: Fetch post content by hash
+    Node-->>User: Return post data
     Note over User: Render posts in<br/>familiar social UI
 
     Note over User,Node: Multiple community queries<br/>run concurrently
 ```
 
-**Trinn for trinn:**
+**Steg for steg:**
 
 1. Brukeren åpner appen og ser et sosialt grensesnitt.
-2. Klienten blir med i peer-to-peer-nettverket og lager en DHT-spørring for hvert fellesskap brukeren
-   følger. Spørringene tar noen sekunder hver, men kjøres samtidig.
-3. Hvert søk returnerer fellesskapets siste innholdspekere og metadata (tittel, beskrivelse,
-   moderatorliste, utfordringskonfigurasjon).
-4. Klienten henter det faktiske innleggsinnholdet ved å bruke disse pekerne, og gjengir deretter alt i en
-   kjent sosialt grensesnitt.
+2. Klienten spør flere HTTP-rutere parallelt for hvert fellesskap brukeren følger; hver ruter
+   returnerer bare peer-adresser, aldri innhold. Svartiden avhenger av nettverksforholdene og
+   belastningen på ruterne; under typiske forhold med lav latens svarer forespørslene ofte innen
+   omtrent ett sekund, og de kjører samtidig.
+3. Når klienten har peer-adressene, kobler den seg til disse peerne og henter fellesskapets nyeste
+   innholdspekere og metadata (tittel, beskrivelse, moderatorliste, oppsett for utfordringen).
+4. Klienten henter selve innleggene ved hjelp av disse pekerne, og viser deretter alt i et velkjent
+   sosialt grensesnitt.
 
 ---
 
-## Livssyklus: publisere et innlegg
+## Livssyklus: å publisere et innlegg
 
-Publisering innebærer et utfordring-svar-håndtrykk over pubsub før innlegget blir akseptert.
+Publisering innebærer et utfordring-og-svar-håndtrykk over pubsub før innlegget godtas.
 
 ```mermaid
 sequenceDiagram
@@ -147,26 +210,27 @@ sequenceDiagram
     Note over User,Node: Other readers receive<br/>the update within minutes
 ```
 
-**Trinn for trinn:**
+**Steg for steg:**
 
-1. Appen genererer et nøkkelpar for brukeren hvis de ikke har et ennå.
-2. Brukeren skriver et innlegg for et fellesskap.
-3. Klienten blir med i pubsub-emnet for det fellesskapet (tastet til fellesskapets offentlige nøkkel).
+1. Appen genererer et nøkkelpar for brukeren hvis brukeren ikke har et fra før.
+2. Brukeren skriver et innlegg til et fellesskap.
+3. Klienten blir med i pubsub-emnet for det fellesskapet (knyttet til fellesskapets offentlige
+   nøkkel).
 4. Klienten ber om en utfordring over pubsub.
-5. Fellesskapsoperatørens node sender tilbake en utfordring (for eksempel en captcha).
+5. Noden til fellesskapets operatør sender tilbake en utfordring, for eksempel en captcha.
 6. Brukeren fullfører utfordringen.
-7. Klienten sender inn innlegget sammen med utfordringssvaret over pubsub.
-8. Fellesskapsoperatørens node validerer svaret. Hvis det er riktig, godtas innlegget.
-9. Noden kringkaster resultatet over pubsub slik at nettverkskolleger vet at de skal fortsette videresendingen
-   meldinger fra denne brukeren.
-10. Noden oppdaterer fellesskapets innhold til dens offentlige nøkkeladresse.
-11. I løpet av noen få minutter mottar hver leser av fellesskapet oppdateringen.
+7. Klienten sender inn innlegget sammen med svaret på utfordringen over pubsub.
+8. Noden til fellesskapets operatør validerer svaret. Er det riktig, godtas innlegget.
+9. Noden kringkaster resultatet over pubsub slik at peerne i nettverket vet at de skal fortsette å
+   videreformidle meldinger fra denne brukeren.
+10. Noden oppdaterer fellesskapets innhold på adressen som er utledet av den offentlige nøkkelen.
+11. I løpet av noen få minutter mottar alle som leser fellesskapet, oppdateringen.
 
 ---
 
-## Arkitektur oversikt
+## Arkitekturoversikt
 
-Hele systemet har tre lag som fungerer sammen:
+Hele systemet består av tre lag som virker sammen:
 
 ```mermaid
 graph TB
@@ -183,103 +247,181 @@ graph TB
     end
 
     subgraph Network ["Network layer"]
-        DHT["🗂️ DHT<br/>(content discovery)"]
+        Router["🛰️ HTTP router<br/>(content discovery)"]
         GS["💬 Gossipsub<br/>(real-time messaging)"]
         TR["📦 Content transfer<br/>(data exchange)"]
     end
 
     A1 & A2 & A3 --> PK & PS & CH
-    PK --> DHT
+    PK --> Router
     PS --> GS
     CH --> GS
     PK --> TR
 ```
 
-| Lag           | Rolle                                                                                                                                       |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **App**       | Brukergrensesnitt. Flere apper kan eksistere, hver med sitt eget design, som alle deler de samme fellesskapene og identitetene.             |
-| **Protokoll** | Definerer hvordan fellesskap adresseres, hvordan innlegg publiseres og hvordan spam forhindres.                                             |
-| **Nettverk**  | Den underliggende peer-to-peer-infrastrukturen: DHT for oppdagelse, sladder for sanntidsmeldinger og innholdsoverføring for datautveksling. |
+| Lag           | Rolle                                                                                                                                                     |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **App**       | Brukergrensesnittet. Det kan finnes flere apper, hver med sitt eget design, som alle deler de samme fellesskapene og identitetene.                        |
+| **Protokoll** | Definerer hvordan fellesskap adresseres, hvordan innlegg publiseres, og hvordan spam hindres.                                                             |
+| **Nettverk**  | Den underliggende peer-to-peer-infrastrukturen: HTTP-rutere for oppdagelse, gossipsub for sanntidsmeldinger og innholdsoverføring for utveksling av data. |
 
 ---
 
-## Personvern: koble fra forfattere fra IP-adresser
+## Personvern: å løsrive forfattere fra IP-adresser
 
-Når en bruker publiserer et innlegg, blir innholdet **kryptert med fellesskapsoperatørens offentlige nøkkel** før det kommer inn i pubsub-nettverket. Dette betyr at mens nettverksobservatører kan se at en peer publiserte _noe_, kan de ikke fastslå:
+Når en bruker publiserer et innlegg, blir innholdet **kryptert med den offentlige nøkkelen til
+fellesskapets operatør** før det går inn i pubsub-nettverket. Det betyr at selv om observatører i
+nettverket kan se at en peer har publisert _noe_, kan de ikke fastslå:
 
 - hva innholdet sier
 - hvilken forfatteridentitet som publiserte det
 
-Dette ligner på hvordan BitTorrent gjør det mulig å oppdage hvilke IP-er som setter en torrent, men ikke hvem som opprinnelig opprettet den. Krypteringslaget legger til en ekstra personverngaranti på toppen av den grunnlinjen.
+Dette ligner på hvordan BitTorrent gjør det mulig å finne ut hvilke IP-adresser som deler en
+torrent, men ikke hvem som opprinnelig laget den. Krypteringslaget gir en ekstra personverngaranti
+oppå det utgangspunktet.
 
 ---
 
-## Nettleser peer-to-peer
+## Peer-to-peer i nettleseren
 
-Nettleser P2P er nå mulig i Bitsocial-klienter. En nettleserapp kan kjøre en [Helia](https://helia.io/)-node, bruke den samme Bitsocial-protokollklientstabelen som andre apper, og hente innhold fra jevnaldrende i stedet for å be en sentralisert IPFS-gateway om å betjene den. Nettleseren kan også delta i pubsub direkte, slik at publisering ikke trenger en plattformeid pubsub-leverandør i den gode banen.
+P2P i nettleseren er nå mulig i Bitsocial-klienter. En nettleserapp kan kjøre en
+[Helia](https://helia.io/)-node, bruke den samme protokollstacken for Bitsocial som andre apper, og
+hente innhold fra peers i stedet for å be en sentralisert IPFS-gateway om å levere det. Nettleseren
+kan også delta direkte i pubsub, slik at publisering ikke trenger en plattformeid pubsub-leverandør
+i normaltilfellet.
 
-Dette er den viktige milepælen for nettdistribusjon: et normalt HTTPS-nettsted kan åpnes til en live P2P sosial klient. Brukere trenger ikke å installere en desktop-app før de kan lese fra nettverket, og app-operatøren trenger ikke å kjøre en sentral gateway som blir sensur- eller modererings-chokepoint for hver nettleserbruker.
+Dette er den viktige milepælen for distribusjon på nettet: et helt vanlig HTTPS-nettsted kan åpne
+seg som en levende sosial P2P-klient. Brukerne trenger ikke installere en skrivebordsapp før de kan
+lese fra nettverket, og appoperatøren trenger ikke drifte en sentral gateway som blir flaskehalsen
+for sensur eller moderering av hver eneste nettleserbruker.
 
-Nettleserbanen har forskjellige grenser fra en skrivebords- eller servernode:
+Veien gjennom nettleseren har andre begrensninger enn en node på skrivebordet eller på en server:
 
-- en nettlesernode kan vanligvis ikke akseptere vilkårlige innkommende tilkoblinger fra det offentlige internett
-- den kan laste, validere, hurtigbufre og publisere data mens appen er åpen
-- den skal ikke behandles som den langvarige verten for et fellesskaps data
-- full fellesskapshosting håndteres fortsatt best av en skrivebordsapp, `bitsocial-cli` eller en annen
-  alltid på node
+- en nettlesernode kan vanligvis ikke ta imot vilkårlige innkommende tilkoblinger fra det åpne
+  internettet
+- den kan laste, validere, mellomlagre og publisere data mens appen er åpen
+- den bør ikke behandles som en langvarig vert for et fellesskaps data
+- full drift av et fellesskap håndteres fortsatt best av en skrivebordsapp, `bitsocial-cli` eller en
+  annen node som alltid er på
 
-HTTP-rutere har fortsatt betydning for innholdsoppdagelse: de returnerer leverandøradresser for en felleshash. De er ikke IPFS-gatewayer, fordi de ikke tjener selve innholdet. Etter oppdagelse kobler nettleserklienten seg til peers og henter dataene gjennom P2P-stakken.
+HTTP-rutere har fortsatt betydning for innholdsoppdagelse: de returnerer leverandøradresser for en
+fellesskapshash. De er ikke IPFS-gatewayer, siden de ikke leverer selve innholdet. Etter
+oppdagelsen kobler nettleserklienten seg til peers og henter dataene gjennom P2P-stacken.
 
-5chan avslører dette som en opt-in Advanced Settings-bryter i den vanlige 5chan.app-nettappen. Den siste `pkc-js` nettleserstabelen har blitt stabil nok for offentlig testing etter oppstrøms libp2p/gossipsub-interoparbeid adressert meldingslevering mellom Helia- og Kubo-kolleger. Innstillingen holder nettleseren P2P-kontrollert mens den blir mer testing i den virkelige verden; når den har nok produksjonstillit, kan den bli standard webbane.
+P2P i nettleseren er nå standardveien på nettet, ikke et eksperiment bak en bryter. 5chan kjører ren
+nettleser-P2P som standard på 5chan.app, og Bitsocial-bloggen på bitsocial.net gjør det samme.
+Nettleser-peers kobler seg opp over sikre WebSockets; `pkc-js` avviser oppkoblinger over WebRTC og
+WebTransport som standard fordi måten de etablerer forbindelser på, er treg og upålitelig i
+nettleseren. Endringen oppstrøms som gjorde publisering fra nettleseren praktisk mulig i 2026, var
+rettelsen av gossipsub-sekvensnummeret i `@libp2p/gossipsub` 15.0.21, som gjorde at Kubo-peers
+sluttet å forkaste meldinger publisert av JavaScript-noder.
 
-## Gateway fallback
+For hele bildet, inkludert hva en nettlesernode fortsatt ikke kan gjøre, se
+[Peer-to-peer i nettleseren](/browser-p2p/).
 
-Gateway-støttet nettlesertilgang er fortsatt nyttig som en kompatibilitets- og utrullingsreserve. En gateway kan videresende data mellom P2P-nettverket og en nettleserklient når en nettleser ikke kan koble seg direkte til nettverket eller når appen med vilje velger den eldre banen. Disse portene:
+## Reserveløsning med gateway {#gateway-fallback}
 
-- kan drives av hvem som helst
-- krever ikke brukerkontoer eller betalinger
-- ikke få varetekt over brukeridentiteter eller fellesskap
-- kan byttes ut uten å miste data
+Nettlesertilgang via gateway er fortsatt nyttig som reserveløsning for kompatibilitet og utrulling.
+En gateway kan videreformidle data mellom P2P-nettverket og en nettleserklient når nettleseren ikke
+kan koble seg direkte til nettverket, eller når appen bevisst velger den eldre veien. Disse
+gatewayene:
 
-Målarkitekturen er nettleseren P2P først, med gatewayer som en valgfri reserve i stedet for standard flaskehals.
+- kan driftes av hvem som helst
+- krever verken brukerkontoer eller betaling
+- får ikke råderett over brukeridentiteter eller fellesskap
+- kan byttes ut uten at data går tapt
+
+Målarkitekturen er P2P i nettleseren først, med gatewayer som et valgfritt reservealternativ i
+stedet for en flaskehals som standard.
 
 ---
 
 ## Hvorfor ikke en blokkjede?
 
-Blokkjeder løser problemet med dobbeltforbruk: de trenger å vite den nøyaktige rekkefølgen på hver transaksjon for å forhindre at noen bruker den samme mynten to ganger.
+Blokkjeder løser problemet med dobbeltbruk: de må kjenne den nøyaktige rekkefølgen på hver
+transaksjon for å hindre at noen bruker den samme mynten to ganger.
 
-Sosiale medier har ikke et problem med dobbeltforbruk. Det spiller ingen rolle om innlegg A ble publisert ett millisekund før innlegg B, og gamle innlegg trenger ikke å være permanent tilgjengelig på hver node.
+Sosiale medier har ikke noe problem med dobbeltbruk. Det spiller ingen rolle om innlegg A ble
+publisert ett millisekund før innlegg B, og gamle innlegg trenger ikke være permanent tilgjengelige
+på hver eneste node.
 
-Ved å hoppe over blokkjeden unngår Bitsocial:
+Ved å droppe blokkjeden unngår Bitsocial:
 
-- **gassavgifter** — innlegging er gratis
-- **gjennomstrømningsgrenser** — ingen blokkstørrelse eller blokkeringstidsflaskehals
-- **oppblåst lagring** — noder beholder bare det de trenger
-- **konsensusoverhead** — ingen gruvearbeidere, validatorer eller innsats kreves
+- **gassavgifter** — det er gratis å publisere
+- **kapasitetsgrenser** — ingen flaskehals i blokkstørrelse eller blokktid
+- **lagringsvekst** — noder beholder bare det de trenger
+- **kostnader ved konsensus** — verken utvinnere, validatorer eller staking kreves
 
-Avveiningen er at Bitsocial ikke garanterer permanent tilgjengelighet av gammelt innhold. Men for sosiale medier er det en akseptabel avveining: Fellesskapsoperatørens node holder dataene, populært innhold spres over mange jevnaldrende, og veldig gamle innlegg blekner naturlig – på samme måte som de gjør på alle sosiale plattformer.
+Avveiningen er at Bitsocial ikke garanterer at gammelt innhold alltid er tilgjengelig. Men for
+sosiale medier er det en akseptabel avveining: noden til fellesskapets operatør har dataene,
+populært innhold sprer seg til mange peers, og svært gamle innlegg blekner naturlig — akkurat som de
+gjør på enhver sosial plattform.
 
-## Hvorfor ikke forbund?
+## Hvorfor ikke føderasjon?
 
-Federerte nettverk (som e-post eller ActivityPub-baserte plattformer) forbedrer sentraliseringen, men har fortsatt strukturelle begrensninger:
+Fødererte nettverk (som e-post eller ActivityPub-baserte plattformer) er et framskritt fra
+sentralisering, men har fortsatt strukturelle begrensninger:
 
-- **Tjeneravhengighet** – hvert fellesskap trenger en server med et domene, TLS og pågående
-  vedlikehold
-- **Administratortillit** — serveradministratoren har full kontroll over brukerkontoer og innhold
-- **Fragmentering** — flytting mellom servere betyr ofte å miste følgere, historikk eller identitet
-- **Kostnad** — noen må betale for hosting, noe som skaper press mot konsolidering
+- **Serveravhengighet** — hvert fellesskap trenger en server med domene, TLS og løpende vedlikehold
+- **Tillit til administrator** — serveradministratoren har full kontroll over brukerkontoer og
+  innhold
+- **Fragmentering** — å flytte mellom servere betyr ofte å miste følgere, historikk eller identitet
+- **Kostnad** — noen må betale for driften, og det skaper press mot konsolidering
 
-Bitsocials peer-to-peer-tilnærming fjerner serveren helt fra ligningen. En fellesskapsnode kan kjøres på en bærbar datamaskin, en Raspberry Pi eller en billig VPS. Operatøren kontrollerer modereringspolicy, men kan ikke gripe brukeridentiteter, fordi identiteter er nøkkelpar-kontrollert, ikke server-tildelt.
+Bitsocials peer-to-peer-tilnærming fjerner serveren fra likningen helt. En fellesskapsnode kan kjøre
+på en bærbar PC, en Raspberry Pi eller en billig VPS. Operatøren styrer modereringsreglene, men kan
+ikke beslaglegge brukeridentiteter, fordi identiteter styres av nøkkelpar og ikke tildeles av en
+server.
+
+## Hva med Nostr?
+
+Nostr passer ikke rent inn i noen av kategoriene. Det er ikke føderasjon av ActivityPub-typen, for
+brukerne får ikke kontoer tildelt av instanser, og identiteten er ikke knyttet til én server. Det er
+heller ikke sosiale medier på blokkjede, for det finnes verken kjede, konsensus, gass eller global
+transaksjonsrekkefølge.
+
+Nostr beskrives bedre som **relébaserte sosiale medier**. I basisprotokollen
+([NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md)) har brukerne nøkkelpar,
+signerer hendelser og publiserer hendelsene til WebSocket-reléer. Klienter abonnerer på reléer med
+filtre, henter hendelsene som passer, og verifiserer signaturene lokalt. Brukere kan også publisere
+metadata med relélister ([NIP-65](https://github.com/nostr-protocol/nips/blob/master/65.md)) som
+forteller klientene hvilke reléer de vanligvis skriver til, og hvilke reléer de foretrekker når de
+leser omtaler av seg selv.
+
+Det plasserer Nostr nærmere Bitsocial enn både fødererte systemer og blokkjedesystemer på ett
+viktig punkt: identiteten er kryptografisk og flyttbar. Hovedforskjellen ligger i datalaget. I
+Nostr er reléene det normale laget for lagring og levering. I Bitsocial hjelper HTTP-rutere bare
+klientene med å finne peers. Ruterne lagrer verken innlegg, profiler, fellesskapsmetadata eller
+modereringstilstand; de returnerer adressene til peers som leverer innholdet, og deretter henter
+klientene innholdet fra disse peerne.
+
+Fellesskap viser den samme forskjellen. Nostr har valgfrie mønstre for
+[relébaserte grupper](https://github.com/nostr-protocol/nips/blob/master/29.md) og
+[fellesskap med moderatorgodkjenning](https://github.com/nostr-protocol/nips/blob/master/72.md), men
+de avhenger fortsatt av relépolicy, gruppetilstand lagret på reléet, eller klientens valg av hvilke
+godkjenninger den skal respektere. Bitsocial behandler fellesskap som førsteklasses kryptografiske
+objekter, der operatørnoden validerer innlegg, kjører fellesskapets regler for utfordringer og
+publiserer den nyeste godkjente tilstanden ut i peer-to-peer-nettverket.
+
+| Spørsmål                     | Nostr                                                                                       | Bitsocial                                                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Kategori                     | Relébasert protokoll                                                                        | Peer-to-peer-nettverk av fellesskap                                                  |
+| Identitet                    | Brukerens offentlige nøkkel                                                                 | Nøkkelpar for både bruker og fellesskap                                              |
+| Datavei                      | Signerte hendelser publisert til reléer                                                     | Adressen fra den offentlige nøkkelen løses opp til peers; innholdet hentes fra peers |
+| Hvem holder det tilgjengelig | Reléer valgt av brukere og klienter                                                         | Noden til fellesskapets eier pluss seedere som hjelper til                           |
+| Fellesskap                   | Valgfrie relébaserte grupper eller fellesskap med moderatorgodkjenning                      | Fellesskap som førsteklasses objekter med moderering styrt av operatøren             |
+| Anti-spam                    | Relépolicy, autentisering, betaling, proof-of-work, klientfiltre eller moderatorgodkjenning | Utfordringslogikk definert av fellesskapet før innlegget tas med                     |
+| Viktigste avveining          | Flyttbar identitet, men tilgjengelighet og regler avhenger av reléene                       | Mindre avhengighet av reléer, men gammelt innhold er ikke garantert for alltid       |
 
 ---
 
-## Sammendrag
+## Oppsummering
 
-Bitsocial er bygget på to primitiver: offentlig-nøkkel-basert adressering for innholdsoppdagelse, og peer-to-peer pubsub for sanntidskommunikasjon. Sammen produserer de et sosialt nettverk der:
+Bitsocial er bygget på to primitiver: adressering basert på offentlig nøkkel for innholdsoppdagelse,
+og peer-to-peer-pubsub for sanntidskommunikasjon. Sammen gir de et sosialt nettverk der:
 
-- fellesskap identifiseres av kryptografiske nøkler, ikke domenenavn
-- innhold spres over jevnaldrende som en torrent, ikke servert fra en enkelt database
-- spam-motstand er lokal for hvert fellesskap, ikke pålagt av en plattform
-- brukere eier identiteten sin gjennom nøkkelpar, ikke gjennom gjenkallbare kontoer
+- fellesskap identifiseres av kryptografiske nøkler, ikke av domenenavn
+- innhold sprer seg mellom peers som en torrent, i stedet for å leveres fra én enkelt database
+- spammotstand er lokal for hvert fellesskap, ikke pålagt av en plattform
+- brukerne eier identitetene sine gjennom nøkkelpar, ikke gjennom kontoer som kan trekkes tilbake
 - hele systemet kjører uten servere, blokkjeder eller plattformavgifter

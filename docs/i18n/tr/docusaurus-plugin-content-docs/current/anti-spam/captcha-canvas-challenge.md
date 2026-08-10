@@ -1,24 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Yapılandırılabilir karakterlere, boyutlara ve renklere sahip bağımsız görüntü tabanlı captcha oluşturucu.
+description: Bitsocial toplulukları için bağımsız, görsel tabanlı captcha doğrulaması.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-:::warning Eski Adlandırma
-Bu paket ilk olarak `@plebbit` kapsamı altında yayımlandı. `@bitsocial/captcha-canvas-challenge` olarak yeniden adlandırıldı. Eski isme yapılan atıflar eski belgelerde veya kod tabanlarında görünmeye devam edebilir.
-:::
+Captcha Canvas Challenge, Bitsocial toplulukları için bağımsız bir görsel captcha paketidir. Rastgele üretilen metni bir canvas üzerine çizer ve topluluğun, bir yayın kabul edilmeden önce yazarlardan görseli çözmesini istemesine olanak tanır.
 
-Captcha Canvas Challenge, orijinal olarak `plebbit-js`'dan çıkarılan bağımsız bir görüntü captcha oluşturucusudur. Rastgele metni bir HTML tuvali üzerine işler ve toplulukların yazarlara spam mücadelesi olarak sunabileceği sonuçtaki görüntüyü döndürür.
-
-**Kaynak kodu:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Gereksinimler
-
-- **Node.js** >= 22
-- **Yalnızca ESM** -- bu paket CommonJS yapılarını göndermez.
-- **Çalışma zamanı eş bağımlılığı:** `@plebbit/plebbit-js` (`@pkc/pkc-js`'ya geçiş)
+- **Kaynak kodu ve güncel README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **npm paketi:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Kurulum
 
@@ -26,19 +17,16 @@ Captcha Canvas Challenge, orijinal olarak `plebbit-js`'dan çıkarılan bağıms
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Yapılandırma Seçenekleri
+## Nereye Oturur
 
-| Seçenek      | Tür      | Varsayılan | Açıklama                                                        |
-| ------------ | -------- | ---------- | --------------------------------------------------------------- |
-| `characters` | `number` | `6`        | Captcha görüntüsünde oluşturulan rastgele karakterlerin sayısı. |
-| `height`     | `number` | `100`      | Oluşturulan görüntünün piksel cinsinden yüksekliği.             |
-| `width`      | `number` | `300`      | Oluşturulan görüntünün piksel cinsinden genişliği.              |
-| `colors`     | `string` | `#32cf7e`  | Captcha metni için kullanılan ana renk.                         |
+Captcha doğrulamaları, bir topluluk düşük riskli spam direnci için basit ve etkileşimli bir kapı istediğinde işe yarar. Bu paket bilinçli olarak dar kapsamlıdır: doğrulamanın kendisini sağlar, bunun ne zaman ve nasıl sunulacağına ise topluluk veya Bitsocial düğümü karar verir.
 
-## Nasıl Çalışır?
+Daha güçlü koruma için, bir captcha'yı eksiksiz bir anti-spam stratejisi gibi görmek yerine onu daha kapsamlı moderasyon ya da risk puanlama sistemleriyle birlikte kullanın.
 
-1. Jeneratör, yapılandırılmış uzunluktaki rastgele bir dizeyi seçer.
-2. Dizi, OCR'ye direnmek için görsel gürültü içeren bir tuval üzerine işlenir.
-3. Ortaya çıkan görüntü (ve beklenen yanıt), çağıran uygulamanın sorgulamayı sunabilmesi ve daha sonra yanıtı doğrulayabilmesi için döndürülür.
+## Güncel Paket Referansı
 
-Paket saf bir görüntü oluşturucu olduğundan ağ oluşturma veya oturum yönetimini tek başına gerçekleştirmez. Daha büyük bir sorgulama akışına entegre edilmesi amaçlanmaktadır (örneğin, [Spam Blocker](./spam-blocker.md) tarafından desteklenen sorgulama türlerinden biri olarak.
+Bu sayfa bilinçli olarak bir genel bakıştır; birebir yansıtılmış bir kurulum kılavuzu değildir. Güncel doğrulama adları, kayıt örnekleri, CLI örnekleri, desteklenen seçenekler, gereksinimler ve güvenlik notları için kaynak, paketin README dosyasıdır:
+
+- [Captcha Canvas Challenge README](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Canlı bir topluluğu yapılandırırken yukarı akıştaki README'yi tercih edin; çünkü paket seçenekleri ve kurulum akışları bu web sitesiyle değil, o paketle birlikte sürümlenir.

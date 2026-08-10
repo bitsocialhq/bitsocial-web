@@ -11,17 +11,17 @@ Prima di modificare, controlla la cronologia git per il codice pertinente. I con
 1. Scansiona i titoli dei commit recenti (solo titoli) per il file/l'area:
 
 ```bash
-# Titoli di commit recenti per un file specifico
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Titoli di commit recenti per un intervallo di linee specifico
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Ispeziona solo i commit rilevanti con differenze con ambito:
 
 ```bash
-# Mostra messaggio di commit + diff per un file
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

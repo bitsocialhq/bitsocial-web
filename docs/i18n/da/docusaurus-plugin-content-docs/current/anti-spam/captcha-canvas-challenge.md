@@ -1,19 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Standalone billedbaseret captcha-generator med konfigurerbare tegn, dimensioner og farver.
+description: Selvstændig billedbaseret captcha-udfordring til Bitsocial-fællesskaber.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-Captcha Canvas Challenge er en selvstændig billedcaptcha-generator. Den gengiver randomiseret tekst på et HTML-lærred og returnerer det resulterende billede, som fællesskaber kan præsentere for forfattere som en spam-udfordring.
+Captcha Canvas Challenge er en selvstændig pakke med billed-captcha til Bitsocial-fællesskaber. Den tegner tilfældigt genereret tekst på et canvas og lader et fællesskab bede forfattere om at løse billedet, før en publikation accepteres.
 
-**Kildekode:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Krav
-
-- **Node.js** >= 22
-- **Kun ESM** -- denne pakke sender ikke CommonJS builds.
+- **Kildekode og aktuel README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **npm-pakke:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Installation
 
@@ -21,19 +17,16 @@ Captcha Canvas Challenge er en selvstændig billedcaptcha-generator. Den gengive
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Konfigurationsmuligheder
+## Hvor den passer ind
 
-| Mulighed     | Skriv    | Standard  | Beskrivelse                                        |
-| ------------ | -------- | --------- | -------------------------------------------------- |
-| `characters` | `number` | `6`       | Antal tilfældige tegn gengivet i captcha-billedet. |
-| `height`     | `number` | `100`     | Højden af ​​det genererede billede i pixels.       |
-| `width`      | `number` | `300`     | Bredden af ​​det genererede billede i pixels.      |
-| `colors`     | `string` | `#32cf7e` | Primærfarve brugt til captcha-teksten.             |
+Captcha-udfordringer er nyttige, når et fællesskab vil have en enkel interaktiv barriere mod spam i situationer med lav risiko. Denne pakke er bevidst snæver: den leverer selve udfordringen, mens fællesskabet eller Bitsocial-noden bestemmer, hvornår og hvordan den skal vises.
 
-## Hvordan det virker
+Vil du have stærkere beskyttelse, så kombinér den med bredere moderering eller risikoscoring i stedet for at betragte en captcha som en komplet anti-spam-strategi.
 
-1. Generatoren vælger en tilfældig streng med den konfigurerede længde.
-2. Strengen gengives på et lærred med visuel støj for at modstå OCR.
-3. Det resulterende billede (og det forventede svar) returneres, så den kaldende applikation kan præsentere udfordringen og senere bekræfte svaret.
+## Aktuel pakkedokumentation
 
-Fordi pakken er en ren billedgenerator, håndterer den ikke netværk eller sessionsstyring alene. Det er beregnet til at blive integreret i et større udfordringsflow -- for eksempel som en af ​​udfordringstyperne, der understøttes af [Spam-blokering](./spam-blocker.md).
+Denne side er bevidst et overblik og ikke en spejlet opsætningsguide. Pakkens README er kilden til sandhed om aktuelle udfordringsnavne, registreringseksempler, CLI-eksempler, understøttede indstillinger, krav og sikkerhedsnoter:
+
+- [README for Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Brug den opstrøms README, når du konfigurerer et fællesskab i drift, fordi pakkens indstillinger og installationsforløb versioneres sammen med pakken og ikke med dette websted.

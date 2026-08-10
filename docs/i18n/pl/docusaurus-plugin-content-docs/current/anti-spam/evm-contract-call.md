@@ -1,19 +1,15 @@
 ---
-title: Wyzwanie wywołania kontraktu EVM
-description: Wyzwanie antyspamowe, które weryfikuje warunki w łańcuchu poprzez wywołanie inteligentnego kontraktu EVM.
+title: EVM Contract Call Challenge
+description: Wyzwanie antyspamowe, które sprawdza warunki on-chain, wywołując smart kontrakt EVM.
 sidebar_position: 4
 ---
 
-# Wyzwanie wywołania kontraktu EVM
+# EVM Contract Call Challenge
 
-EVM Contract Call Challenge to mechanizm antyspamowy, który weryfikuje warunki w łańcuchu przed zezwoleniem na publikację. Dzięki temu właściciele społeczności mogą wymagać od autorów spełnienia kryteriów określonych w inteligentnych kontraktach – na przykład posiadania minimalnego salda tokenów – aby móc publikować.
+EVM Contract Call Challenge weryfikuje stan autora on-chain, zanim pozwoli mu opublikować treść. Właściciele społeczności mogą wymagać, aby portfel lub rozwiązana tożsamość spełniały warunek odczytywany ze smart kontraktu — na przykład posiadanie minimalnego salda tokenów — zanim pojawi się wpis.
 
-**Kod źródłowy:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Wymagania
-
-- **Node.js** >= 22
-- **Tylko ESM** — ten pakiet nie zawiera kompilacji CommonJS.
+- **Kod źródłowy i aktualny README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Pakiet npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Instalacja
 
@@ -21,34 +17,26 @@ EVM Contract Call Challenge to mechanizm antyspamowy, który weryfikuje warunki 
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Opcje konfiguracji
+## Gdzie się sprawdza
 
-| Opcja         | Wpisz    | Opis                                                                                     |
-| ------------- | -------- | ---------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | Łańcuch do zapytania (np. `eth`, `matic`, `avax`).                                       |
-| `address`     | `string` | Adres inteligentnej umowy, pod który należy zadzwonić.                                   |
-| `abi`         | `string` | Fragment ABI wywoływanej funkcji.                                                        |
-| `condition`   | `string` | Wyrażenie porównawcze oceniane na podstawie wartości zwracanej kontraktu (np. `> 1000`). |
-| `error`       | `string` | Komunikat o błędzie wyświetlany autorom, którzy nie spełniają warunku.                   |
+Użyj tego wyzwania w społecznościach, w których udział ma zależeć od zewnętrznego sygnału z EVM: posiadania tokenów, posiadania NFT, wyniku proof-of-personhood, członkostwa w organie zarządzającym albo innego warunku dającego się odczytać z kontraktu.
 
-## Przykład
+Po skonfigurowaniu wyzwanie jest z perspektywy autora automatyczne. Sprawdza kwalifikujące się portfele lub źródła tożsamości, wywołuje wskazaną metodę kontraktu i porównuje zwróconą wartość z warunkiem ustalonym przez społeczność.
 
-Właściciel społeczności, który chce ograniczyć publikowanie do autorów posiadających ponad 1000 danego tokena ERC-20, mógłby skonfigurować wyzwanie w następujący sposób:
+## Aktualna dokumentacja pakietu
 
-- `chainTicker`: `"eth"`
-- `address`: adres kontraktu tokena
-- `abi`: ABI dla `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Ta strona jest z założenia przeglądem, a nie kopią dokumentacji konfiguracji. Źródłem prawdy o nazwach wyzwań, przykładach dla Bitsocial CLI, rejestracji w pkc-js, domyślnych wartościach opcji, przykładach ABI, zachowaniu RPC i obsługiwanych źródłach portfeli jest README pakietu:
 
-Gdy autor próbuje opublikować, wyzwanie wywołuje `balanceOf` z adresem autora i sprawdza, czy zwrócona wartość spełnia warunek. Jeśli tak, publikacja będzie kontynuowana; w przeciwnym razie zwracany jest skonfigurowany komunikat o błędzie.
+- [README EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+
+Konfigurując działającą społeczność, kieruj się README z repozytorium źródłowego, ponieważ opcje kontraktu i przykłady są wersjonowane razem z tym pakietem, a nie z tą stroną.
 
 ## Kiedy go używać
 
-Wyzwanie wywołania kontraktu EVM jest idealne dla:
+EVM Contract Call Challenge sprawdza się idealnie w przypadku:
 
 - **Społeczności z bramką tokenową**, które ograniczają publikowanie do posiadaczy tokenów.
-- **Dostęp bramkowany NFT**, gdzie wymagane jest posiadanie określonego NFT.
-- **Przestrzenie zarządzania DAO**, w których udział jest ograniczony do posiadaczy tokenów zarządzania.
+- **Dostępu opartego na NFT**, gdy wymagane jest posiadanie konkretnego NFT.
+- **Przestrzeni zarządzania DAO**, w których udział jest ograniczony do posiadaczy tokenów zarządczych.
 
-W przypadku społeczności, które nie polegają na tożsamości w łańcuchu, rozważ zamiast tego opcję [Spam Blocker](./spam-blocker.md) lub [Voucher Challenge](./voucher-challenge.md).
+W społecznościach, które nie opierają się na tożsamości on-chain, rozważ zamiast tego [Spam Blocker](./spam-blocker.md) lub [Voucher Challenge](./voucher-challenge.md).

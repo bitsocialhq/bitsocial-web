@@ -1,69 +1,69 @@
 ---
-title: CLI
-description: Commandoregelinterface voor het uitvoeren van een Bitsocial-knooppunt, het creëren van communities en het beheren van protocolbewerkingen.
+title: Bitsocial CLI
+description: Commandoregelinterface om een Bitsocial-node te draaien, communities aan te maken en protocolhandelingen te beheren.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-De `bitsocial-cli` is een opdrachtregelprogramma voor interactie met de backend van het Bitsocial-protocol. Hiermee kunt u een lokale P2P-daemon uitvoeren, communities maken en configureren en inhoud publiceren - allemaal vanaf de terminal.
+De `bitsocial-cli` is een commandoregeltool om met de protocolbackend van Bitsocial te werken. Je draait er een lokale P2P-daemon mee, maakt communities aan en configureert ze, en publiceert inhoud -- allemaal vanuit de terminal.
 
-Het is gebouwd bovenop de gedeelde clientlaag van het Bitsocial-protocol en wordt gebruikt door [5kan](/apps/5chan/) en [Zaad](/apps/seedit/) voor het creëren van community's en knooppuntbeheer.
+De tool is gebouwd op de gedeelde clientlaag van het Bitsocial-protocol en wordt door [5chan](/apps/5chan/) en [Seedit](/apps/seedit/) gebruikt om communities aan te maken en nodes te beheren.
 
 ## Installatie
 
-Vooraf gebouwde binaire bestanden zijn beschikbaar voor Windows, macOS en Linux. Download de nieuwste release voor uw platform vanaf GitHub:
+Er zijn kant-en-klare binaries voor Windows, macOS en Linux. Download de nieuwste release voor jouw platform van GitHub:
 
-**[Downloaden van GitHub-releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Downloaden via GitHub Releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Maak na het downloaden het binaire bestand uitvoerbaar (macOS/Linux):
-
-```bash
-chmod +x bitsocial-cli
-```
-
-## Het uitvoeren van de Daemon
-
-Het meest voorkomende gebruik van de CLI is het uitvoeren van een Bitsocial-knooppunt. De daemon start de P2P-netwerklaag en stelt een lokale API beschikbaar waarmee clients verbinding kunnen maken.
+Maak de binary na het downloaden uitvoerbaar (macOS/Linux):
 
 ```bash
-bitsocial-cli daemon
+chmod +x bitsocial
 ```
 
-Bij de eerste keer opstarten voert de daemon links uit naar de **WebUI**, een browsergebaseerde grafische interface voor het beheren van uw knooppunt, communities en instellingen. Dit is handig als u de voorkeur geeft aan een GUI boven terminalopdrachten.
+## De daemon draaien
 
-## Belangrijkste acties
-
-| Actie                       | Beschrijving                                                   |
-| --------------------------- | -------------------------------------------------------------- |
-| Start de daemon             | Start het Bitsocial P2P-knooppunt                              |
-| Creëer een community        | Creëer een nieuwe community                                    |
-| Een community bewerken      | Community-instellingen bijwerken (titel, beschrijving, regels) |
-| Lijst lokale gemeenschappen | Geef community's weer die op dit knooppunt worden gehost       |
-| Start een community         | Begin met het bedienen van een specifieke gemeenschap          |
-| Stop een gemeenschap        | Stop met het bedienen van een specifieke community             |
-
-Voer de CLI uit met `--help` om de huidige opdrachtnamen en vlaggen te zien die worden weergegeven door uw geïnstalleerde release:
+De CLI wordt het vaakst gebruikt om een Bitsocial-node te draaien. De daemon start de P2P-netwerklaag en biedt een lokale API waarmee clients verbinding kunnen maken.
 
 ```bash
-bitsocial-cli --help
-bitsocial-cli daemon --help
+bitsocial daemon
 ```
 
-## Typische workflow
+Bij de eerste start toont de daemon links naar de **WebUI**, een grafische interface in de browser om je node, communities en instellingen te beheren. Handig als je liever een GUI gebruikt dan terminalcommando's.
 
-Een algemene installatiestroom voor het hosten van een nieuwe community:
+## Belangrijkste handelingen
+
+| Handeling                | Beschrijving                                                   |
+| ------------------------ | -------------------------------------------------------------- |
+| De daemon starten        | De P2P-node van Bitsocial starten                              |
+| Een community aanmaken   | Een nieuwe community aanmaken                                  |
+| Een community bewerken   | Community-instellingen bijwerken (titel, beschrijving, regels) |
+| Lokale communities tonen | De communities tonen die op deze node worden gehost            |
+| Een community starten    | Een specifieke community gaan bedienen                         |
+| Een community stoppen    | Een specifieke community niet langer bedienen                  |
+
+Voer de CLI uit met `--help` om de commandonamen en vlaggen te zien die jouw geïnstalleerde release aanbiedt:
+
+```bash
+bitsocial --help
+bitsocial daemon --help
+```
+
+## Typische werkwijze
+
+Een gebruikelijke opzet voor het hosten van een nieuwe community:
 
 ```bash
 # 1. Start the daemon
-bitsocial-cli daemon
+bitsocial daemon
 
 # 2. In another terminal, inspect the available community-management commands
-bitsocial-cli --help
+bitsocial --help
 ```
 
-Van daaruit gebruikt u de communitybeheeropdrachten van de geïnstalleerde release om een community te maken, te configureren en te bedienen. Eenmaal gestart, is de community live op het Bitsocial-netwerk en toegankelijk via compatibele klanten.
+Gebruik van daaruit de community-beheercommando's van je geïnstalleerde release om een community aan te maken, te configureren en te gaan bedienen. Zodra de community draait, is die live op het Bitsocial-netwerk en bereikbaar vanuit compatibele clients.
 
-## Koppelingen
+## Links
 
 - **GitHub:** [bitsocialnet/bitsocial-cli](https://github.com/bitsocialnet/bitsocial-cli)

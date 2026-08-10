@@ -11,17 +11,17 @@
 1. فائل/ایریا کے لیے حالیہ کمٹ ٹائٹلز (صرف ٹائٹلز) اسکین کریں:
 
 ```bash
-# کسی مخصوص فائل کے لیے حالیہ کمٹ ٹائٹلز
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# ایک مخصوص لائن رینج کے لیے حالیہ کمٹ ٹائٹلز
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. دائرہ کار کے فرق کے ساتھ صرف متعلقہ کمٹ کا معائنہ کریں:
 
 ```bash
-# ایک فائل کے لیے کمٹ میسج + ڈیف دکھائیں۔
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

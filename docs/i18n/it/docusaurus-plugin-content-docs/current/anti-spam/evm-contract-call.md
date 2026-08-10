@@ -1,19 +1,15 @@
 ---
-title: Sfida per chiamate di contratti EVM
-description: Sfida anti-spam che verifica le condizioni on-chain richiamando uno smart contract EVM.
+title: EVM Contract Call Challenge
+description: Sfida anti-spam che verifica condizioni on-chain chiamando uno smart contract EVM.
 sidebar_position: 4
 ---
 
-# Sfida per chiamate di contratti EVM
+# EVM Contract Call Challenge
 
-EVM Contract Call Challenge è un meccanismo anti-spam che verifica le condizioni on-chain prima di consentire una pubblicazione. Consente ai proprietari della comunità di richiedere agli autori di soddisfare i criteri definiti dallo smart contract, ad esempio il mantenimento di un saldo minimo di token, per poter pubblicare.
+EVM Contract Call Challenge verifica lo stato on-chain di un autore prima di consentire una pubblicazione. Chi possiede una comunità può richiedere che un wallet o un'identità risolta soddisfi una condizione di sola lettura su uno smart contract, ad esempio il possesso di un saldo minimo di token, prima di poter pubblicare.
 
-**Codice sorgente:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Requisiti
-
-- **Node.js** >= 22
-- **Solo ESM**: questo pacchetto non include build CommonJS.
+- **Codice sorgente e README aggiornato:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Pacchetto npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Installazione
 
@@ -21,34 +17,26 @@ EVM Contract Call Challenge è un meccanismo anti-spam che verifica le condizion
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Opzioni di configurazione
+## Dove si colloca
 
-| Opzione            | Digitare           | Descrizione                                                                                              |
-| ------------------ | ------------------ | -------------------------------------------------------------------------------------------------------- |
-| ZXQPLACEholder0ZXQ | ZXQPLACEholder1ZXQ | La catena da interrogare (ad esempio, ZXQPLACEholder2ZXQ, ZXQPLACEholder3ZXQ, ZXQPLACEholder4ZXQ).       |
-| ZXQPLACEholder0ZXQ | ZXQPLACEholder1ZXQ | L'indirizzo del contratto intelligente da chiamare.                                                      |
-| ZXQPLACEholder0ZXQ | ZXQPLACEholder1ZXQ | Il frammento ABI per la funzione chiamata.                                                               |
-| ZXQPLACEholder0ZXQ | ZXQPLACEholder1ZXQ | Un'espressione di confronto valutata rispetto al valore restituito dal contratto (ad esempio, `> 1000`). |
-| ZXQPLACEholder0ZXQ | ZXQPLACEholder1ZXQ | Il messaggio di errore mostrato agli autori che non soddisfano la condizione.                            |
+Usa questa sfida nelle comunità in cui la partecipazione deve dipendere da un segnale EVM esterno: possesso di token, possesso di NFT, punteggi di proof-of-personhood, appartenenza a un organo di governance o un'altra condizione leggibile da un contratto.
 
-## Esempio
+Dal punto di vista dell'autore, una volta configurata la sfida è automatica. Controlla le fonti di wallet o identità ammesse, chiama il metodo del contratto configurato e confronta il valore restituito con la condizione della comunità.
 
-Un proprietario di comunità che desidera limitare la pubblicazione agli autori che detengono più di 1.000 token ERC-20 particolari configurerebbe la sfida con:
+## Riferimento al pacchetto attuale
 
-- ZXQPLACEholder0ZXQ: ZXQPLACEholder1ZXQ
-- `address`: l'indirizzo del contratto del token
-- ZXQPLACEholder0ZXQ: l'ABI per ZXQPLACEholder1ZXQ
-- ZXQPLACEholder0ZXQ: ZXQPLACEholder1ZXQ
-- ZXQPLACEholder0ZXQ: ZXQPLACEholder1ZXQ
+Questa pagina è volutamente una panoramica, non un riferimento di configurazione replicato. Il README del pacchetto è la fonte di verità per i nomi delle sfide, gli esempi con la CLI di Bitsocial, la registrazione in pkc-js, i valori predefiniti delle opzioni, gli esempi di ABI, il comportamento dell'RPC e le fonti di wallet supportate:
 
-Quando un autore tenta di pubblicare, la sfida chiama `balanceOf` con l'indirizzo dell'autore e controlla se il valore restituito soddisfa la condizione. In tal caso la pubblicazione procede; in caso contrario viene restituito il messaggio di errore configurato.
+- [README di EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Quando usarlo
+Quando configuri una comunità in produzione, preferisci il README upstream, perché le opzioni dei contratti e gli esempi sono versionati insieme a quel pacchetto e non a questo sito.
 
-EVM Contract Call Challenge è l'ideale per:
+## Quando usarla
 
-- **Comunità controllate da token** che limitano la pubblicazione ai possessori di token.
-- **Accesso controllato da NFT** dove è richiesta la proprietà di un NFT specifico.
-- **Spazi di governance DAO** in cui la partecipazione è limitata ai titolari di token di governance.
+EVM Contract Call Challenge è ideale per:
 
-Per le comunità che non fanno affidamento sull'identità sulla catena, considera invece [Spam Blocker](./spam-blocker.md) o [Voucher Challenge](./voucher-challenge.md).
+- **Comunità con accesso legato ai token**, che riservano la pubblicazione a chi detiene un token.
+- **Accesso legato agli NFT**, dove è richiesto il possesso di un NFT specifico.
+- **Spazi di governance DAO**, dove la partecipazione è riservata a chi detiene il token di governance.
+
+Per le comunità che non si basano sull'identità on-chain, valuta invece [Spam Blocker](./spam-blocker.md) o [Voucher Challenge](./voucher-challenge.md).

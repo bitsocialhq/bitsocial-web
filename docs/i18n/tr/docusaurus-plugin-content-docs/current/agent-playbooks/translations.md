@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Diğer Yararlı Komutlar
 
 ```bash
-# Bir anahtarı İngilizce'den tüm dillere kopyalayın (kuru çalıştırma ve ardından yazma)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Tüm dillerden bir anahtarı silin
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Kullanılmayan çeviri anahtarlarının denetimi
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

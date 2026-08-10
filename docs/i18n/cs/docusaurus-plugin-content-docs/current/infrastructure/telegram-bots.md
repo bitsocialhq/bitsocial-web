@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Vyživujte roboty, kteří monitorují seznamy komunity Bitsocial a přeposílají příspěvky na kanály Telegram.
-sidebar_position: 3
+title: Boti pro Telegram
+description: Feedoví boti, kteří sledují seznamy komunit Bitsocial a přeposílají příspěvky do kanálů na Telegramu.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Boti pro Telegram
 
-Roboti Bitsocial Telegram monitorují seznamy klientských komunit na síti Bitsocial a automaticky přeposílají nové příspěvky do kanálů Telegramu. Každá přeposlaná zpráva obsahuje vložená tlačítka, která odkazují zpět na původní příspěvek na 5chan a Seedit.
+Boti Bitsocial pro Telegram sledují klientské seznamy komunit v síti Bitsocial a automaticky přeposílají nové příspěvky do kanálů na Telegramu. Každá přeposlaná zpráva obsahuje vložená tlačítka, která vedou zpět na původní příspěvek na 5chan a Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
-## Dostupné roboty
+## Dostupní boti
 
-| Bot                 | Stav      | Popis                                                                      |
-| ------------------- | --------- | -------------------------------------------------------------------------- |
-| **5kanálový kanál** | Aktivní   | Monitoruje všechny 5chan adresáře a přeposílá nové příspěvky do telegramu. |
-| **Seedit Feed**     | Plánováno | Poskytne stejnou funkcionalitu komunitám Seedit.                           |
+| Bot             | Stav      | Popis                                                                  |
+| --------------- | --------- | ---------------------------------------------------------------------- |
+| **5chan Feed**  | Aktivní   | Sleduje všechny adresáře 5chan a přeposílá nové příspěvky na Telegram. |
+| **Seedit Feed** | Plánováno | Nabídne stejnou funkci pro komunity na Seeditu.                        |
 
 ## Nastavení
 
 ### Předpoklady
 
 - Node.js
-- Příze
-- Token telegramového bota (vytvořte jej prostřednictvím [BotFather](https://t.me/BotFather))
+- Yarn
+- Token bota pro Telegram (vytvoříte ho přes [BotFather](https://t.me/BotFather))
 
 ### Instalace
 
-Klonujte úložiště a nainstalujte závislosti:
+Naklonujte repozitář a nainstalujte závislosti:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -37,15 +37,15 @@ yarn install
 
 ### Konfigurace
 
-Vytvořte soubor `.env` v kořenovém adresáři projektu pomocí tokenu bota:
+V kořeni projektu vytvořte soubor `.env` s tokenem svého bota:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Běh
+### Spuštění
 
-Spusťte robota po konfiguraci prostředí:
+Po nastavení prostředí bota spusťte:
 
 ```bash
 yarn start
@@ -53,9 +53,9 @@ yarn start
 
 ## Formát příspěvku
 
-Když robot předá příspěvek do Telegramu, obsahuje dvě vložená tlačítka:
+Když bot přeposílá příspěvek na Telegram, přidá k němu dvě vložená tlačítka:
 
-- **View on 5chan** – Otevře příspěvek ve webovém klientovi 5chan.
-- **Zobrazit na Seedit** – Otevře příspěvek ve webovém klientovi Seedit.
+- **Zobrazit na 5chan** – otevře příspěvek ve webovém klientu 5chan.
+- **Zobrazit na Seedit** – otevře příspěvek ve webovém klientu Seedit.
 
-To umožňuje předplatitelům Telegramu přejít přímo na celé diskusní vlákno na libovolném klientovi, který preferují.
+Odběratelé na Telegramu tak mohou přejít rovnou na celé diskusní vlákno v tom klientu, který jim vyhovuje víc.

@@ -1,16 +1,12 @@
 ---
 title: 5chan
-description: O placă de imagini descentralizată, fără server, construită pe protocolul Bitsocial, unde oricine poate crea și deține panouri.
+description: Un imageboard descentralizat și fără server, construit pe protocolul Bitsocial, unde oricine poate crea și deține board-uri.
 sidebar_position: 1
 ---
 
-:::warning[Denumire moștenită]
-Baza de cod a acestui proiect încă folosește denumirea moștenită „plebbit” dinainte de rebrand-ul Bitsocial. Numele pachetelor, referințele API și o anumită terminologie internă vor fi actualizate într-o versiune viitoare. Funcționalitatea descrisă aici este actuală - doar denumirea este depășită.
-:::
-
 # 5chan
 
-5chan este o placă de imagini fără server, fără administrator și complet descentralizată, care rulează pe protocolul Bitsocial. Urmează structura familiară a directoarelor imaginilor în timp ce introduce proprietatea descentralizată - oricine poate crea un tablou, iar mai multe forumuri pot concura pentru același slot de director printr-un mecanism de vot.
+5chan este un imageboard fără server, fără administrator și complet descentralizat, care rulează pe protocolul Bitsocial. Păstrează structura familiară de directoare a imageboard-urilor, introducând în același timp proprietatea descentralizată — oricine poate crea un board, iar mai multe board-uri pot concura pentru același slot de director printr-un mecanism de vot.
 
 ## Descărcări
 
@@ -20,24 +16,28 @@ Baza de cod a acestui proiect încă folosește denumirea moștenită „plebbit
 | Desktop   | Disponibil pentru Mac, Windows și Linux |
 | Mobil     | Disponibil pentru Android               |
 
-## Cum funcționează plăcile
+## Cum funcționează board-urile
 
-5chan organizează conținutul în panouri folosind un aspect clasic de director (de exemplu, `/b/`, `/g/`). Spre deosebire de panourile de imagine tradiționale în care un administrator central controlează fiecare panou, 5chan permite oricărui utilizator să-și creeze și să dețină pe deplin propria placă. Când mai multe consilii vizează același slot de director, ele concurează pentru acea poziție prin vot.
+5chan organizează conținutul în board-uri, folosind o structură clasică de directoare (de exemplu, `/b/`, `/g/`). Spre deosebire de imageboard-urile tradiționale, unde un administrator central controlează fiecare board, 5chan permite oricărui utilizator să creeze și să dețină în întregime propriul board. Când mai multe board-uri vizează același slot de director, concurează pentru acea poziție prin vot.
 
-### Crearea unei table
+### Crearea unui board
 
-Pentru a crea o nouă placă, trebuie să rulați `bitsocial-cli` ca nod peer-to-peer. Acest lucru vă asigură că placa dumneavoastră este găzduită într-un mod descentralizat, fără a vă baza pe niciun server central.
+Pentru a crea un board nou, trebuie să rulezi `bitsocial-cli` ca nod peer-to-peer. Astfel, board-ul tău este găzduit în mod descentralizat, fără să depindă de vreun server central.
 
-### Atribuții de director
+### Atribuirea directoarelor
 
-Atribuțiile de slot de director (care placă apare la ce cale) sunt gestionate în prezent prin solicitări de extragere GitHub către fișierul `5chan-directories.json`. Acesta este un proces temporar — versiunile viitoare vor sprijini crearea de forumuri în aplicație și votul bazat pe pubsub pentru a gestiona automat atribuirile directoarelor.
+Atribuirea sloturilor de director (care board apare la ce cale) este gestionată în prezent prin pull request-uri pe GitHub către fișierul `5chan-directories.json`. Este un proces temporar — versiunile viitoare vor permite crearea board-urilor direct în aplicație și vot prin pubsub, astfel încât atribuirea directoarelor să se facă automat.
 
-## Interne
+## Funcționare internă
 
-Sub capotă, 5chan folosește stratul de client al protocolului Bitsocial partajat pentru interacțiunile sale în rețea. Aplicația web de la 5chan.app poate rula și un nod Helia în browser atunci când browserul P2P este activat din Setări avansate, astfel încât cititorii să poată încărca de la colegi fără un gateway IPFS centralizat. Consultați secțiunea P2P a browserului din notele protocolului peer-to-peer.
+În spate, 5chan folosește stratul de client comun al protocolului Bitsocial pentru interacțiunile sale de rețea.
+Aplicația web de la 5chan.app rulează implicit un nod Helia în browser, așa că o filă obișnuită se alătură
+rețelei ca peer: încarcă board-uri de la alți peers și publică prin pubsub, fără niciun gateway IPFS
+centralizat pe traseul conținutului. Vezi [Peer-to-peer în browser](/browser-p2p/) pentru ce presupune
+asta și ce nu poate face încă un nod din browser.
 
 ## Legături
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
-- **Telegramă**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licență**: numai GPL-2.0
+- **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
+- **Licență**: GPL-2.0-only

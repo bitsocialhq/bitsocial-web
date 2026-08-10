@@ -1,97 +1,93 @@
 ---
 title: React Hooks
-description: Biblioteca de ganchos React para construção de aplicativos sociais descentralizados no protocolo Bitsocial.
+description: Biblioteca de hooks React para criar aplicações sociais descentralizadas no protocolo Bitsocial.
 sidebar_position: 1
 ---
 
 # React Hooks
 
-:::warning Nomenclatura herdada
-Este pacote atualmente usa convenções de nomenclatura herdadas de seu fork upstream. Referências a “plebbit” em código, APIs e configuração serão migradas para “bitsocial” em uma versão futura. A funcionalidade não é afetada.
-:::
+O pacote `bitsocial-react-hooks` oferece uma API de hooks React familiar para interagir com o protocolo Bitsocial. Ele cuida da busca de feeds, comentários e perfis de autores, do gerenciamento de contas, da publicação de conteúdo e da inscrição em comunidades -- tudo sem depender de um servidor central.
 
-O pacote `bitsocial-react-hooks` fornece uma API familiar de ganchos React para interagir com o protocolo Bitsocial. Ele lida com a busca de feeds, comentários e perfis de autores, gerenciando contas, publicando conteúdo e assinando comunidades – tudo sem depender de um servidor central.
-
-Esta biblioteca é a interface principal usada pelo [5chan](/apps/5chan/) e outros aplicativos clientes Bitsocial.
+Esta biblioteca é a interface principal usada pelo [5chan](/apps/5chan/) e por outras aplicações cliente do Bitsocial.
 
 :::note
-`bitsocial-react-hooks` é um fork temporário de `plebbit/plebbit-react-hooks` mantido para desenvolvimento auxiliado por IA. Ele é consumido diretamente do GitHub, em vez de publicado no npm.
+O `bitsocial-react-hooks` é consumido hoje diretamente do GitHub, em vez de publicado no npm.
 :::
 
 ## Instalação
 
-Como o pacote ainda não está no npm, instale-o diretamente do GitHub, fixando-o em um hash de commit específico:
+Como o pacote ainda não está no npm, instale-o diretamente do GitHub, fixando um hash de commit específico:
 
 ```bash
 yarn add https://github.com/bitsocialnet/bitsocial-react-hooks.git#<commit-hash>
 ```
 
-Substitua `<commit-hash>` pelo commit que você deseja atingir.
+Substitua `<commit-hash>` pelo commit que você quer usar.
 
 ## Visão geral da API
 
-Os ganchos são organizados em categorias funcionais. Abaixo está um resumo dos ganchos mais comumente usados ​​em cada categoria. Para assinaturas completas, parâmetros e tipos de retorno, consulte a [referência completa da API no GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks).
+Os hooks estão organizados em categorias funcionais. Abaixo está um resumo dos hooks mais usados em cada categoria. Para assinaturas completas, parâmetros e tipos de retorno, consulte a [referência completa da API no GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks).
 
 ### Contas
 
-Gerencie contas, identidades e configurações de usuários locais.
+Gerencie contas de usuário locais, identidade e configurações.
 
-- `useAccount(accountName?)` – retorna o objeto de conta ativo (ou nomeado)
-- `useAccounts()` – retorna todas as contas armazenadas localmente
-- `useAccountComments(options?)` – retorna comentários publicados pela conta ativa
+- `useAccount(accountName?)` -- retorna o objeto da conta ativa (ou da conta indicada)
+- `useAccounts()` -- retorna todas as contas armazenadas localmente
+- `useAccountComments(options?)` -- retorna os comentários publicados pela conta ativa
 
 ### Comentários
 
-Busque e interaja com comentários e tópicos individuais.
+Busque comentários e discussões individuais e interaja com eles.
 
-- `useComment(commentCid?)` – busca um único comentário por seu CID
-- `useComments(commentCids?)` – busca vários comentários em lote
-- `useEditedComment(comment?)` – retorna a última versão editada de um comentário
+- `useComment(commentCid?)` -- busca um único comentário pelo CID
+- `useComments(commentCids?)` -- busca vários comentários em lote
+- `useEditedComment(comment?)` -- retorna a versão editada mais recente de um comentário
 
 ### Comunidades
 
-Recuperar metadados e configurações da comunidade.
+Obtenha metadados e configurações de comunidades.
 
-- `useSubplebbit(subplebbitAddress?)` – busca uma comunidade por endereço
-- `useSubplebbits(subplebbitAddresses?)` – busca múltiplas comunidades
-- `useSubplebbitStats(subplebbitAddress?)` – retorna contagens de assinantes e postagens
+- Hook de consulta de uma única comunidade -- busca uma comunidade pelo endereço
+- Hook de consulta de várias comunidades -- busca várias comunidades
+- Hook de estatísticas da comunidade -- retorna a contagem de inscritos e de publicações
 
 ### Autores
 
-Procure perfis de autores e metadados.
+Consulte perfis e metadados de autores.
 
-- `useAuthor(authorAddress?)` – busca um perfil de autor
-- `useAuthorComments(options?)` – retorna comentários de um autor específico
-- `useResolvedAuthorAddress(authorAddress?)` – resolve um endereço legível por humanos (por exemplo, ENS) para seu endereço de protocolo
+- `useAuthor(authorAddress?)` -- busca o perfil de um autor
+- `useAuthorComments(options?)` -- retorna os comentários de um autor específico
+- `useResolvedAuthorAddress(authorAddress?)` -- resolve um endereço legível por pessoas (por exemplo, ENS) para o endereço de protocolo correspondente
 
 ### Feeds
 
-Assine e paginar feeds de conteúdo.
+Inscreva-se em feeds de conteúdo e pagine-os.
 
-- `useFeed(options?)` – retorna um feed paginado de postagens de uma ou mais comunidades
-- `useBufferedFeeds(feedOptions?)` – pré-armazena vários feeds para renderização mais rápida
-- `useAuthorFeed(authorAddress?)` – retorna um feed de postagens de um autor específico
+- `useFeed(options?)` -- retorna um feed paginado de publicações de uma ou mais comunidades
+- `useBufferedFeeds(feedOptions?)` -- pré-carrega vários feeds em buffer para renderizar mais rápido
+- `useAuthorFeed(authorAddress?)` -- retorna um feed de publicações de um autor específico
 
 ### Ações
 
-Publique conteúdo e execute operações de gravação.
+Publique conteúdo e execute operações de escrita.
 
-- `usePublishComment(options?)` – publicar um novo comentário ou resposta
-- `usePublishVote(options?)` – dá um voto positivo ou negativo
-- `useSubscribe(options?)` – inscrever-se ou cancelar inscrição em uma comunidade
+- `usePublishComment(options?)` -- publica um novo comentário ou resposta
+- `usePublishVote(options?)` -- registra um voto positivo ou negativo
+- `useSubscribe(options?)` -- inscreve ou cancela a inscrição em uma comunidade
 
 ### Estados e RPC
 
-Monitore o estado da conexão e interaja com um daemon Bitsocial remoto.
+Acompanhe o estado da conexão e interaja com um daemon Bitsocial remoto.
 
-- `useClientsStates(options?)` – retorna o estado da conexão de clientes IPFS/pubsub
-- `usePlebbitRpcSettings()` – retorna a configuração atual do daemon RPC
+- `useClientsStates(options?)` -- retorna o estado de conexão dos clientes IPFS/pubsub
+- Hook de configurações de RPC -- retorna a configuração atual do daemon RPC
 
 ## Desenvolvimento
 
-Para trabalhar na biblioteca de ganchos localmente:
+Para trabalhar na biblioteca de hooks localmente:
 
-**Pré-requisitos:** Node.js, Corepack habilitado, Yarn 4
+**Pré-requisitos:** Node.js, Corepack ativado, Yarn 4
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-react-hooks.git
@@ -100,9 +96,9 @@ corepack enable
 yarn install
 ```
 
-Consulte o README do repositório para comandos de teste e construção.
+Consulte o README do repositório para conhecer os comandos de teste e de build.
 
-## Ligações
+## Links
 
-- **GitHub:** [referência completa da API no GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks)
-- **Licença:** Somente GPL-2.0
+- **GitHub:** [bitsocialnet/bitsocial-react-hooks](https://github.com/bitsocialnet/bitsocial-react-hooks)
+- **Licença:** GPL-2.0-only

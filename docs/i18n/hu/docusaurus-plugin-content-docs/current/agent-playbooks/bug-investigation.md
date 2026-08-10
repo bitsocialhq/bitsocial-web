@@ -11,17 +11,17 @@ Szerkesztés előtt ellenőrizze a git előzményeit a megfelelő kódhoz. Előf
 1. A fájl/terület legutóbbi véglegesítési címeinek vizsgálata (csak a címek):
 
 ```bash
-# Legutóbbi véglegesítési címek egy adott fájlhoz
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Legutóbbi véglegesítési címek egy adott sortartományhoz
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Csak a hatókörű eltérésekkel rendelkező releváns commitokat vizsgálja meg:
 
 ```bash
-# A véglegesítési üzenet + diff megjelenítése egy fájlnál
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

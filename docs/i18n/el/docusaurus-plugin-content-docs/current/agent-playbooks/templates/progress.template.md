@@ -7,6 +7,6 @@
 - Είδος: F001
 - Περίληψη: Αντικαταστήστε το με τη σύνοψη συνεδρίας.
 - Αρχεία: `path/to/file`
-- Επαλήθευση: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Επαλήθευση: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Αναστολείς: κανένας
 - Επόμενο: Αντικαταστήστε το με την επόμενη καλύτερη παρακολούθηση.

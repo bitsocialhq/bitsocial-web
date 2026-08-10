@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Bot umpan yang memantau daftar komunitas Bitsocial dan meneruskan postingan ke saluran Telegram.
-sidebar_position: 3
+title: Bot Telegram
+description: Bot feed yang memantau daftar komunitas Bitsocial dan meneruskan postingan ke kanal Telegram.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Bot Telegram
 
-Bot Bitsocial Telegram memantau daftar komunitas klien di jaringan Bitsocial dan secara otomatis meneruskan postingan baru ke saluran Telegram. Setiap pesan yang diteruskan menyertakan tombol sebaris yang menghubungkan kembali ke postingan asli di 5chan dan Seedit.
+Bot Telegram Bitsocial memantau daftar komunitas milik klien di jaringan Bitsocial dan otomatis meneruskan postingan baru ke kanal Telegram. Setiap pesan yang diteruskan menyertakan tombol inline yang mengarah kembali ke postingan aslinya di 5chan dan Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
 ## Bot yang Tersedia
 
-| Bot                  | Status    | Keterangan                                                            |
-| -------------------- | --------- | --------------------------------------------------------------------- |
-| **Umpan 5chan**      | Aktif     | Pantau semua direktori 5chan dan teruskan postingan baru ke Telegram. |
-| **Umpan Edit Benih** | Berencana | Akan menyediakan fungsi yang sama untuk komunitas Seeedit.            |
+| Bot             | Status       | Deskripsi                                                                 |
+| --------------- | ------------ | ------------------------------------------------------------------------- |
+| **5chan Feed**  | Aktif        | Memantau semua direktori 5chan dan meneruskan postingan baru ke Telegram. |
+| **Seedit Feed** | Direncanakan | Akan menyediakan fungsi yang sama untuk komunitas Seedit.                 |
 
-## Pengaturan
+## Penyiapan
 
 ### Prasyarat
 
 - Node.js
-- Benang
-- Token bot Telegram (buat melalui [BotFather](https://t.me/BotFather))
+- Yarn
+- Token bot Telegram (buat satu lewat [BotFather](https://t.me/BotFather))
 
 ### Instalasi
 
-Kloning repositori dan instal dependensi:
+Kloning repositorinya lalu pasang dependensinya:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -37,15 +37,15 @@ yarn install
 
 ### Konfigurasi
 
-Buat file `.env` di root proyek dengan token bot Anda:
+Buat berkas `.env` di akar proyek berisi token bot Anda:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Berlari
+### Menjalankan
 
-Mulai bot setelah mengonfigurasi lingkungan Anda:
+Jalankan bot setelah lingkungan Anda dikonfigurasi:
 
 ```bash
 yarn start
@@ -53,9 +53,9 @@ yarn start
 
 ## Format Postingan
 
-Saat bot meneruskan postingan ke Telegram, ada dua tombol sebaris:
+Ketika bot meneruskan sebuah postingan ke Telegram, ada dua tombol inline yang disertakan:
 
-- **Lihat di 5chan** -- Membuka postingan di klien web 5chan.
-- **Lihat di Seedit** -- Membuka postingan di klien web Seedit.
+- **Lihat di 5chan** -- Membuka postingan tersebut di klien web 5chan.
+- **Lihat di Seedit** -- Membuka postingan tersebut di klien web Seedit.
 
-Hal ini memungkinkan pelanggan Telegram langsung beralih ke rangkaian diskusi lengkap tentang klien mana pun yang mereka sukai.
+Dengan begitu, pelanggan Telegram bisa langsung melompat ke utas diskusi lengkap pada klien mana pun yang mereka sukai.

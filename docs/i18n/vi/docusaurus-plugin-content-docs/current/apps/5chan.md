@@ -1,16 +1,12 @@
 ---
 title: 5chan
-description: Một bảng hình ảnh phi tập trung, không có máy chủ được xây dựng trên giao thức Bitsocial nơi bất kỳ ai cũng có thể tạo và sở hữu bảng.
+description: Bảng hình ảnh phi tập trung, không máy chủ, được xây dựng trên giao thức Bitsocial, nơi bất kỳ ai cũng có thể tạo và sở hữu bảng.
 sidebar_position: 1
 ---
 
-:::warning[Đặt tên kế thừa]
-Cơ sở mã của dự án này vẫn sử dụng cách đặt tên "plebbit" kế thừa từ trước khi đổi thương hiệu Bitsocial. Tên gói, tham chiếu API và một số thuật ngữ nội bộ sẽ được cập nhật trong bản phát hành sau này. Chức năng được mô tả ở đây là hiện hành — chỉ có cách đặt tên là lỗi thời.
-:::
-
 # 5chan
 
-5chan là một bảng hình ảnh không có máy chủ, không có quản trị viên và được phân quyền hoàn toàn chạy trên giao thức Bitsocial. Nó tuân theo cấu trúc thư mục bảng hình ảnh quen thuộc đồng thời giới thiệu quyền sở hữu phi tập trung — bất kỳ ai cũng có thể tạo một bảng và nhiều bảng có thể cạnh tranh để giành cùng một vị trí thư mục thông qua cơ chế bỏ phiếu.
+5chan là một bảng hình ảnh không máy chủ, không quản trị viên và phi tập trung hoàn toàn, chạy trên giao thức Bitsocial. Nó giữ nguyên cấu trúc thư mục bảng hình ảnh quen thuộc, đồng thời đưa vào quyền sở hữu phi tập trung — bất kỳ ai cũng có thể tạo một bảng, và nhiều bảng có thể cạnh tranh cùng một vị trí thư mục thông qua cơ chế bỏ phiếu.
 
 ## Tải xuống
 
@@ -20,24 +16,29 @@ Cơ sở mã của dự án này vẫn sử dụng cách đặt tên "plebbit" k
 | Máy tính để bàn    | Có sẵn cho Mac, Windows và Linux |
 | Điện thoại di động | Có sẵn cho Android               |
 
-## Bảng hoạt động như thế nào
+## Các bảng hoạt động ra sao
 
-5chan sắp xếp nội dung thành các bảng bằng cách sử dụng bố cục thư mục cổ điển (ví dụ: `/b/`, `/g/`). Không giống như bảng hình ảnh truyền thống nơi quản trị viên trung tâm kiểm soát mọi bảng, 5chan cho phép bất kỳ người dùng nào tạo và sở hữu hoàn toàn bảng của riêng họ. Khi nhiều bảng nhắm vào cùng một vị trí thư mục, chúng sẽ cạnh tranh vị trí đó thông qua biểu quyết.
+5chan sắp xếp nội dung thành các bảng theo bố cục thư mục cổ điển (ví dụ `/b/`, `/g/`). Khác với những bảng hình ảnh truyền thống nơi một quản trị viên trung tâm kiểm soát mọi bảng, 5chan cho phép bất kỳ người dùng nào tạo và sở hữu trọn vẹn bảng của riêng mình. Khi nhiều bảng cùng nhắm tới một vị trí thư mục, chúng cạnh tranh vị trí đó bằng bỏ phiếu.
 
 ### Tạo một bảng
 
-Để tạo một bảng mới, bạn cần chạy `bitsocial-cli` dưới dạng nút ngang hàng. Điều này đảm bảo bảng của bạn được lưu trữ theo cách phi tập trung mà không cần dựa vào bất kỳ máy chủ trung tâm nào.
+Để tạo một bảng mới, bạn cần chạy `bitsocial-cli` với vai trò một nút ngang hàng. Cách này bảo đảm bảng của bạn được lưu trữ theo hướng phi tập trung, không phụ thuộc vào bất kỳ máy chủ trung tâm nào.
 
-### Bài tập thư mục
+### Gán vị trí thư mục
 
-Việc gán vị trí thư mục (bảng nào xuất hiện ở đường dẫn nào) hiện được quản lý thông qua các yêu cầu kéo GitHub tới tệp `5chan-directories.json`. Đây là quy trình tạm thời — các bản phát hành trong tương lai sẽ hỗ trợ tạo bảng trong ứng dụng và bỏ phiếu dựa trên pubsub để tự động xử lý việc gán thư mục.
+Việc gán vị trí thư mục (bảng nào xuất hiện ở đường dẫn nào) hiện được quản lý qua các pull request GitHub vào tệp `5chan-directories.json`. Đây chỉ là quy trình tạm thời — các bản phát hành sau sẽ hỗ trợ tạo bảng ngay trong ứng dụng và bỏ phiếu dựa trên pubsub để tự động xử lý việc gán thư mục.
 
-## Nội bộ
+## Bên trong
 
-Về cơ bản, 5chan sử dụng lớp máy khách giao thức Bitsocial được chia sẻ cho các tương tác mạng của mình. Ứng dụng web tại 5chan.app cũng có thể chạy nút Helia trong trình duyệt khi trình duyệt P2P được bật từ Cài đặt nâng cao, do đó người đọc có thể tải từ các thiết bị ngang hàng mà không cần cổng IPFS tập trung. Xem phần P2P của trình duyệt trong ghi chú giao thức ngang hàng.
+Ở phía dưới, 5chan dùng lớp ứng dụng khách giao thức Bitsocial dùng chung cho mọi tương tác mạng.
+Ứng dụng web tại 5chan.app mặc định chạy một nút Helia ngay trong trình duyệt, nên một tab bình
+thường cũng tham gia mạng với vai trò một nút ngang hàng: nó tải các bảng từ những nút ngang hàng
+khác và xuất bản qua pubsub, không có cổng IPFS tập trung nào nằm trên đường đi của nội dung. Xem
+[Ngang hàng trên trình duyệt](/browser-p2p/) để biết điều đó kéo theo những gì và một nút trình
+duyệt vẫn chưa làm được gì.
 
 ## Liên kết
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Giấy phép**: Chỉ GPL-2.0
+- **Giấy phép**: GPL-2.0-only

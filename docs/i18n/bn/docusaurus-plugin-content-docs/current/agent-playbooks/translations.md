@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## অন্যান্য দরকারী কমান্ড
 
 ```bash
-# ইংরেজি থেকে সব ভাষায় একটি কী কপি করুন (ড্রাই রান তারপর লিখুন)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# সমস্ত ভাষা থেকে একটি কী মুছুন
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# অব্যবহৃত অনুবাদ কীগুলির জন্য নিরীক্ষা
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

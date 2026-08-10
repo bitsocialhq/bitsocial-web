@@ -11,17 +11,17 @@ Bago mag-edit, suriin ang kasaysayan ng git para sa nauugnay na code. Maaaring n
 1. I-scan ang mga kamakailang commit na pamagat (mga pamagat lamang) para sa file/lugar:
 
 ```bash
-# Mga kamakailang commit na pamagat para sa isang partikular na file
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Mga kamakailang commit na pamagat para sa isang partikular na hanay ng linya
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Siyasatin lamang ang mga nauugnay na commit na may mga saklaw na pagkakaiba:
 
 ```bash
-# Ipakita ang commit message + diff para sa isang file
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

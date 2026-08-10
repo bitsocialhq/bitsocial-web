@@ -11,17 +11,17 @@ Verwenden Sie dies, wenn ein Fehler in einer bestimmten Datei/Zeile/Codeblock ge
 1. Durchsuchen Sie die letzten Commit-Titel (nur Titel) für die Datei/den Bereich:
 
 ```bash
-# Aktuelle Commit-Titel für eine bestimmte Datei
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Aktuelle Commit-Titel für einen bestimmten Zeilenbereich
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Untersuchen Sie nur relevante Commits mit bereichsbezogenen Unterschieden:
 
 ```bash
-# Commit-Nachricht + Diff für eine Datei anzeigen
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

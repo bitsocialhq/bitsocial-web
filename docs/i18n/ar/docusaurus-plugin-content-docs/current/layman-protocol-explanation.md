@@ -152,6 +152,8 @@ The distinction matters:
 - لا ينبغي أن يصبح RPC وصاية دائمة
 - يجب أن تظل علاقة المالك مرتبطة بالمفاتيح، وليس بقاعدة بيانات موفر واحد
 
+أول خدمة مبنية على هذا النموذج هي Forge RPC من [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc)، والتي تعتمد على تصميم بروتوكول [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## ما ليس Bitsocial
 
 Bitsocial ليست شبكة اجتماعية blockchain. لا تحتاج وسائل التواصل الاجتماعي إلى أن يصبح كل منشور بمثابة معاملة في دفتر أستاذ عالمي واحد.

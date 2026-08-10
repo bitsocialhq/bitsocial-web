@@ -1,34 +1,37 @@
-# エージェント フックのセットアップ
+# エージェントフックのセットアップ
 
-AI コーディング アシスタントがライフサイクル フックをサポートしている場合は、このリポジトリに対してこれらを構成します。
+利用している AI コーディングアシスタントがライフサイクルフックに対応している場合は、このリポジトリ向けに以下を設定してください。
 
 ## 推奨フック
 
-| フック          | コマンド                                   | 目的                                                                                                                                                                                   |
-| --------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | AI 編集後のファイルの自動フォーマット                                                                                                                                                  |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | `package.json` が変更されたときに `corepack yarn install` を実行します                                                                                                                 |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | 古い参照を削除し、統合された一時タスク ブランチを削除します                                                                                                                            |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | ハードゲートビルド、lint、タイプチェック、フォーマットチェック。 `yarn npm audit` の情報を保持し、依存関係/インポートが変更された場合は、勧告監査として `yarn knip` を個別に実行します |
+| フック          | コマンド                                      | 目的                                                                                                                                                                                                               |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | AI による編集後にファイルを自動フォーマットする                                                                                                                                                                    |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | `package.json` が変更されたときに `corepack yarn install` を実行する                                                                                                                                               |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | 差分が `about/src/` に `useEffect` やメモ化プリミティブを追加したときに、React レビュー用スキルで再検討するようエージェントに促す                                                                                  |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | 古くなった参照を整理し、統合済みの一時タスクブランチを削除する                                                                                                                                                     |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | 最終検証ゲートの前に、現在の差分へ新たに追加された `about/src/` の React エフェクトやメモ化を再スキャンする                                                                                                        |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | 対象を絞ったビルド検証、lint、型チェック、フォーマットチェックをハードゲートにする。`yarn npm audit` は情報提供にとどめ、依存関係やインポートが変わったときは `yarn knip` をアドバイザリー監査として個別に実行する |
 
 ## 理由
 
-- 一貫したフォーマット
-- ロックファイルの同期を維持
-- ビルド/lint/type の問題を早期に検出
-- セキュリティの可視性`yarn npm audit`
-- 依存関係/インポート ドリフトは、ノイズの多いグローバル停止フックにならずに、`yarn knip` でチェックできます
-- Codex と Cursor の両方に 1 つの共有フック実装
-- 一時的なタスク ブランチはリポジトリのワークツリー ワークフローと連携した状態を維持します
+- フォーマットが一貫する
+- ロックファイルが同期された状態に保たれる
+- about サイトへ新たに `useEffect` やメモ化を追加した場合、エージェントが作業を終える前に明示的な再確認が入る
+- タスクのたびに多言語ドキュメントのフルビルドを強制することなく、ワークスペースに関係するビルド・lint・型の問題を早期に検出できる
+- `yarn npm audit` によってセキュリティ面を可視化できる
+- 依存関係やインポートのずれを、ノイズの多いグローバルな停止フックにすることなく `yarn knip` で確認できる
+- Codex と Cursor の両方で 1 つの共有フック実装を使える
+- 一時タスクブランチがリポジトリのワークツリーワークフローと揃った状態を保てる
 
-## フックの例スクリプト
+## フックスクリプトの例
 
-### フォーマット フック
+### フォーマットフック
 
 ```bash
 #!/bin/bash
-# AI編集後のJS/TSファイルの自動フォーマット
-# フックは file_path を含む標準入力経由で JSON を受信します
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -43,11 +46,11 @@ exit 0
 
 ```bash
 #!/bin/bash
-# エージェントの終了時にビルド、lint、タイプチェック、フォーマットチェック、セキュリティ監査を実行します。
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-デフォルトでは、必要なチェックが失敗した場合、`scripts/agent-hooks/verify.sh` はゼロ以外で終了します。 `AGENT_VERIFY_MODE=advisory` は、フックをブロックせずに壊れたツリーからの信号が意図的に必要な場合にのみ設定します。アドバイザリー インポート/依存関係の問題でリポジトリが明示的に失敗することを決定しない限り、`yarn knip` をハード ゲートに入れないでください。
+既定では、必須チェックが失敗すると `scripts/agent-hooks/verify.sh` はゼロ以外の終了コードを返します。`AGENT_VERIFY_MODE=advisory` は、フックをブロックせずに壊れたツリーからシグナルを得たいと意図的に判断した場合にのみ設定してください。リポジトリがアドバイザリーなインポート・依存関係の問題でも失敗させると明示的に決めない限り、`yarn knip` はハードゲートに含めないでください。
 
-### Yarn インストール フック
+ライフサイクルフックは手動のブラウザ検証の代わりにはなりません。UI や見た目に関わる変更では、引き続き `chrome`、`firefox`、`webkit` の各エンジンで `playwright-cli` によるチェックを実行し、レスポンシブ性やタッチ操作が変わった場合は各エンジンでモバイルビューポートのフローも確認してください。
+
+### Yarn インストールフック
 
 ```bash
 #!/bin/bash
-# package.json が変更されたときに corepack Yarn install を実行する
-# フックは file_path を含む標準入力経由で JSON を受信します
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-エージェント ツールのドキュメント (`hooks.json`、同等のものなど) に従ってフックの配線を構成します。
+フックの配線は、使用しているエージェントツールのドキュメント (`hooks.json` やそれに相当するものなど) に従って設定してください。
 
-このリポジトリでは、`.codex/hooks/*.sh` と`.cursor/hooks/*.sh` は、`scripts/agent-hooks/` の下の共有実装に委任するシン ラッパーとして維持する必要があります。
+このリポジトリでは、`.codex/hooks/*.sh` と `.cursor/hooks/*.sh` は `scripts/agent-hooks/` 配下の共有実装に処理を委譲する薄いラッパーのままにしてください。

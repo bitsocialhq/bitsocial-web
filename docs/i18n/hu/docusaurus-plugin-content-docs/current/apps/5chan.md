@@ -1,39 +1,44 @@
 ---
 title: 5chan
-description: Szerver nélküli, decentralizált képtábla, amely a Bitsocial protokollra épül, ahol bárki létrehozhat és birtokolhat táblákat.
+description: Szerver nélküli, decentralizált imageboard a Bitsocial protokollra építve, ahol bárki létrehozhat és birtokolhat táblákat.
 sidebar_position: 1
 ---
 
 # 5chan
 
-Az 5chan egy szerver nélküli, adminisztrátor nélküli és teljesen decentralizált képtábla, amely a Bitsocial protokollon fut. Követi az ismert imageboard könyvtárstruktúrát, miközben bevezeti a decentralizált tulajdonjogot – bárki létrehozhat egy táblát, és több tábla is versenyezhet ugyanarra a címtárhelyre egy szavazási mechanizmuson keresztül.
+Az 5chan egy szerver nélküli, adminisztrátor nélküli, teljesen decentralizált imageboard, amely a Bitsocial protokollon fut. Az ismerős imageboard-könyvtárszerkezetet követi, de decentralizált tulajdonlást vezet be – bárki létrehozhat táblát, és több tábla is versenghet ugyanazért a könyvtárhelyért egy szavazási mechanizmuson keresztül.
 
 ## Letöltések
 
-| Platform | Link                                         |
-| -------- | -------------------------------------------- |
-| Web      | [5chan.app](https://5chan.app)               |
-| Asztali  | Elérhető Mac, Windows és Linux rendszerekhez |
-| Mobil    | Elérhető Android                             |
+| Platform | Link                                        |
+| -------- | ------------------------------------------- |
+| Web      | [5chan.app](https://5chan.app)              |
+| Asztali  | Elérhető Mac, Windows és Linux rendszerekre |
+| Mobil    | Elérhető Androidra                          |
 
 ## Hogyan működnek a táblák
 
-Az 5chan a tartalmat táblákba rendezi klasszikus könyvtárelrendezéssel (pl. `/b/`, `/g/`). A hagyományos imageboardokkal ellentétben, ahol minden táblát központi adminisztrátor vezérel, az 5chan lehetővé teszi bármely felhasználó számára, hogy saját táblát hozzon létre és birtokoljon. Ha több tábla célozza meg ugyanazt a könyvtárhelyet, szavazással versenyeznek az adott pozícióért.
+Az 5chan klasszikus könyvtárelrendezés szerint (például `/b/`, `/g/`) rendezi táblákba a tartalmat. A hagyományos imageboardokkal ellentétben, ahol egy központi adminisztrátor felügyel minden táblát, itt bármelyik felhasználó létrehozhat saját táblát, amely teljes egészében az övé marad. Ha több tábla ugyanarra a könyvtárhelyre pályázik, szavazással versenyeznek az adott pozícióért.
 
 ### Tábla létrehozása
 
-Új tábla létrehozásához a `bitsocial-cli` programot peer-to-peer csomópontként kell futtatnia. Ez biztosítja, hogy a tábla decentralizált módon kerül elhelyezésre anélkül, hogy bármilyen központi szerverre támaszkodna.
+Új tábla létrehozásához a `bitsocial-cli` eszközt peer-to-peer csomópontként kell futtatnia. Így a tábla decentralizált módon érhető el, anélkül hogy bármilyen központi szerverre támaszkodna.
 
 ### Címtár-hozzárendelések
 
-A címtárhely-hozzárendelések (melyik kártya melyik elérési útvonalon jelenik meg) jelenleg a GitHub lekérései által kezelve a `5chan-directories.json` fájlba. Ez egy ideiglenes folyamat – a jövőbeli kiadások támogatni fogják az alkalmazáson belüli fórumon belüli létrehozást és a pub-alapú szavazást a címtár-hozzárendelések automatikus kezeléséhez.
+A könyvtárhelyek kiosztását (vagyis hogy melyik tábla melyik útvonalon jelenik meg) jelenleg a `5chan-directories.json` fájlhoz beküldött GitHub pull requestek kezelik. Ez ideiglenes megoldás – a jövőbeli kiadások támogatni fogják az alkalmazáson belüli tábla-létrehozást és a pubsub-alapú szavazást, hogy a címtár-hozzárendelések automatikusan történjenek.
 
-## Belsők
+## Belső működés
 
-A motorháztető alatt az 5chan a megosztott Bitsocial protokoll kliens réteget használja a hálózati interakciókhoz. Az 5chan.app webalkalmazása egy Helia-csomópontot is futtathat a böngészőben, ha a P2P engedélyezve van a Speciális beállításokból, így az olvasók központi IPFS-átjáró nélkül tölthetnek be társaikról. Lásd a böngésző P2P szakaszát a peer-to-peer protokoll megjegyzéseiben.
+A motorháztető alatt az 5chan a közös Bitsocial protokoll kliensrétegét használja a hálózati
+kommunikációhoz. Az 5chan.app webalkalmazása alapértelmezés szerint Helia csomópontot futtat a
+böngészőben, így egy szokásos böngészőfül peerként csatlakozik a hálózathoz: más peerektől tölti be a
+táblákat, és pubsubon keresztül publikál, központi IPFS-átjáró nélkül a tartalom útvonalában. A
+[böngészős peer-to-peer](/browser-p2p/) oldal írja le, hogy ez mivel jár, és mit nem tud továbbra sem
+egy böngészőben futó csomópont.
 
 ## Linkek
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licenc**: csak GPL-2.0
+- **Licenc**: GPL-2.0-only

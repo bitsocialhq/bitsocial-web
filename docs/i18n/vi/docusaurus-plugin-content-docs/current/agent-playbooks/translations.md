@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Các lệnh hữu ích khác
 
 ```bash
-# Sao chép một khóa từ tiếng Anh sang tất cả các ngôn ngữ (chạy khô rồi viết)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Xóa một khóa khỏi tất cả các ngôn ngữ
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Kiểm tra các khóa dịch chưa được sử dụng
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

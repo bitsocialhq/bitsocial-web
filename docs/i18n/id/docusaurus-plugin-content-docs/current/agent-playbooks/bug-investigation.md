@@ -11,17 +11,17 @@ Sebelum mengedit, periksa riwayat git untuk kode yang relevan. Kontributor sebel
 1. Pindai judul komit terbaru (hanya judul) untuk file/area:
 
 ```bash
-# Judul komit terbaru untuk file tertentu
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Judul penerapan terbaru untuk rentang baris tertentu
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Periksa hanya komitmen yang relevan dengan perbedaan cakupan:
 
 ```bash
-# Tampilkan pesan komit + perbedaan untuk satu file
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

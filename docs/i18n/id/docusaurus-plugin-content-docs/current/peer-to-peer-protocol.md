@@ -1,44 +1,93 @@
 ---
 title: Protokol Peer-to-Peer
-description: Bagaimana Bitsocial menggunakan IPFS/libp2p, pengalamatan kunci publik, pubsub peer-to-peer, dan node P2P browser untuk menghadirkan media sosial tanpa server.
+description: Bagaimana Bitsocial memakai IPFS/libp2p, pengalamatan berbasis kunci publik, pubsub peer-to-peer, dan node P2P di browser untuk menghadirkan media sosial tanpa server.
 ---
 
 # Protokol Peer-to-Peer
 
-Bitsocial tidak menggunakan blockchain, server federasi, atau backend terpusat. Sebaliknya, ini menggabungkan dua ide — **pengalamatan berbasis kunci publik** dan **pubsub peer-to-peer** — untuk memungkinkan siapa pun menghosting komunitas dari perangkat keras konsumen sementara pengguna membaca dan memposting tanpa akun di layanan yang dikendalikan perusahaan.
+Bitsocial tidak memakai blockchain, server federasi, maupun backend terpusat. Sebagai gantinya,
+Bitsocial memakai tumpukan IPFS/libp2p untuk menggabungkan dua gagasan: **pengalamatan berbasis
+kunci publik** dan **pubsub peer-to-peer**. Keduanya memungkinkan siapa pun menghosting komunitas
+dari perangkat keras konsumen, sementara pengguna membaca dan memposting tanpa akun di layanan mana
+pun yang dikendalikan perusahaan.
 
-Untuk panduan yang kurang teknis, baca [Penjelasan awam lengkap tentang protokol Bitsocial](./layman-protocol-explanation.md).
+Untuk penjelasan yang tidak terlalu teknis, baca
+[Penjelasan lengkap protokol Bitsocial untuk orang awam](./layman-protocol-explanation.md).
 
-## Kedua masalah tersebut
+## Apakah Bitsocial memakai IPFS?
 
-Jejaring sosial yang terdesentralisasi harus menjawab dua pertanyaan:
+Ya. Node Bitsocial memakai primitif IPFS/libp2p untuk lapisan peer-to-peer: catatan komunitas yang
+dialamatkan dengan kunci publik, transfer konten antarpeer, dan pubsub gossipsub untuk pesan
+real-time. Ketika dokumentasi ini menyebut "pubsub", yang dimaksud adalah pubsub IPFS/libp2p, bukan
+broker pesan terpusat yang terpisah.
 
-1. **Data** — bagaimana Anda menyimpan dan menyajikan konten sosial dunia tanpa database pusat?
-2. **Spam** — bagaimana Anda mencegah penyalahgunaan sekaligus menjaga jaringan tetap bebas digunakan?
+Saat ini protokol menjelaskan penemuan melalui router HTTP karena klien Bitsocial menanyakan
+endpoint router untuk mendapatkan alamat peer penyedia, alih-alih mengandalkan DHT yang tidak ramah
+browser untuk setiap pencarian. Router hanya mengembalikan peer; transfer konten dan lalu lintas
+pubsub tetap berjalan melalui jaringan peer-to-peer.
 
-Bitsocial memecahkan masalah data dengan melewatkan blockchain sepenuhnya: media sosial tidak memerlukan pemesanan transaksi global atau ketersediaan permanen dari setiap postingan lama. Ini memecahkan masalah spam dengan membiarkan setiap komunitas menjalankan tantangan anti-spamnya sendiri melalui jaringan peer-to-peer.
+## Dua masalah
+
+Sebuah jejaring sosial terdesentralisasi harus menjawab dua pertanyaan:
+
+1. **Data** — bagaimana menyimpan dan menyajikan konten sosial sedunia tanpa basis data pusat?
+2. **Spam** — bagaimana mencegah penyalahgunaan sambil menjaga jaringan tetap gratis dipakai?
+
+Bitsocial menyelesaikan masalah data dengan melewatkan blockchain sepenuhnya: media sosial tidak
+membutuhkan pengurutan transaksi global maupun ketersediaan permanen setiap postingan lama. Masalah
+spam diselesaikan dengan membiarkan tiap komunitas menjalankan tantangan anti-spamnya sendiri di
+atas jaringan peer-to-peer.
 
 Untuk model penemuan di atas lapisan jaringan ini, lihat [Penemuan Konten](./content-discovery.md).
 
 ---
 
-## Pengalamatan berbasis kunci publik
+## Pengalamatan berbasis kunci publik {#public-key-based-addressing}
 
-Di BitTorrent, hash file menjadi alamatnya (_pengalamatan berbasis konten_). Bitsocial menggunakan ide serupa dengan kunci publik: hash dari kunci publik komunitas menjadi alamat jaringannya.
+Di BitTorrent, hash sebuah berkas menjadi alamatnya (_pengalamatan berbasis konten_). Bitsocial
+memakai gagasan serupa dengan kunci publik: hash dari kunci publik sebuah komunitas menjadi alamat
+jaringannya.
 
 ```mermaid
 graph LR
     K["🔑 Community keypair"] --> H["#️⃣ Hash of public key"]
-    H --> A["📍 Network address"]
-    A --> D["🌐 DHT lookup"]
-    D --> C["📄 Latest community content"]
+    H --> D["🌐 HTTP router(s) lookup of hash"]
+    D --> P["🔌 Provider peer addresses"]
+    P --> C["📄 Latest community content from peers"]
 ```
 
-Setiap rekan di jaringan dapat melakukan kueri DHT (tabel hash terdistribusi) untuk alamat tersebut dan mengambil status terbaru komunitas. Setiap kali konten diperbarui, nomor versinya bertambah. Jaringan hanya menyimpan versi terbaru — tidak perlu menyimpan setiap status historis, yang membuat pendekatan ini lebih ringan dibandingkan dengan blockchain.
+Peer mana pun di jaringan dapat menanyakan sebuah **router HTTP** untuk alamat tersebut: router
+membalas dengan daftar alamat jaringan peer yang saat ini menyediakan hash komunitas itu, lalu klien
+terhubung langsung ke peer tersebut untuk mengambil status terbaru komunitas. Setiap kali konten
+diperbarui, nomor versinya bertambah. Jaringan hanya menyimpan versi terbaru — tidak perlu
+mempertahankan setiap status historis, dan justru itulah yang membuat pendekatan ini ringan
+dibandingkan blockchain.
+
+> **Apa yang sebenarnya disimpan router HTTP.** Router HTTP adalah indeks yang sangat tipis. Untuk
+> tiap alamat konten yang diketahuinya, router hanya menyimpan alamat jaringan peer yang mengumumkan
+> diri sebagai penyedia (pasangan IP/port, multiaddr libp2p, dan sejenisnya). Router **tidak**
+> menyimpan konten komunitas, metadatanya, teks postingan, daftar anggota, bahkan label yang bisa
+> dibaca manusia tentang apa yang ada di alamat itu; router hanya menjawab "peer mana yang mengaku
+> punya hash ini?". Hal ini membuat router murah dijalankan, mudah diganti, dan tidak bertanggung
+> jawab atas apa yang dipublikasikan pengguna, mirip tracker BitTorrent tetapi tanpa metadata
+> torrent: tracker memetakan infohash ke peer, sedangkan router HTTP hanya memetakan alamat konten
+> ke alamat peer penyedia.
+>
+> Demi redundansi, klien menanyakan **beberapa router HTTP secara paralel** dan menggabungkan daftar
+> penyedia yang diterimanya. Siapa pun boleh menjalankan router, dan mengganti atau menambah router
+> hanyalah perubahan konfigurasi tanpa migrasi data.
+>
+> Bitsocial memakai router HTTP alih-alih DHT karena menjalankan DHT pada skala yang dibutuhkan
+> untuk penemuan konten itu mahal, terutama bagi perangkat seluler. DHT juga tidak berfungsi di
+> browser, karena browser tidak dapat bergabung langsung ke DHT libp2p. Router HTTP berjalan murah
+> di atas infrastruktur HTTP biasa dan bekerja sama baiknya dari ponsel maupun dari browser.
 
 ### Apa yang disimpan di alamat tersebut
 
-Alamat komunitas tidak memuat konten postingan lengkap secara langsung. Sebaliknya, ia menyimpan daftar pengidentifikasi konten — hash yang menunjuk ke data sebenarnya. Klien kemudian mengambil setiap konten melalui DHT atau pencarian bergaya pelacak.
+Alamat komunitas tidak memuat konten postingan lengkap secara langsung. Yang disimpan adalah daftar
+pengenal konten — hash yang menunjuk ke data sebenarnya. Klien lalu mengambil tiap potongan konten
+langsung dari peer yang dikembalikan router HTTP. Router itu sendiri tidak pernah melihat maupun
+menyimpan kontennya.
 
 ```mermaid
 graph TD
@@ -49,53 +98,65 @@ graph TD
     P --> P3["📝 Post 3 content"]
 ```
 
-Setidaknya satu rekan selalu memiliki data: node operator komunitas. Jika komunitasnya populer, banyak rekan lain yang juga akan memilikinya dan bebannya akan didistribusikan dengan sendirinya, sama seperti torrent populer yang lebih cepat diunduh.
+Setidaknya satu peer selalu memiliki datanya: node operator komunitas. Jika komunitasnya populer,
+banyak peer lain juga akan memilikinya dan bebannya terbagi dengan sendirinya, sama seperti torrent
+populer yang lebih cepat diunduh.
 
 ---
 
-## Pubsub antar-rekan
+## Pubsub peer-to-peer
 
-Pubsub (terbitkan-berlangganan) adalah pola pesan di mana rekan-rekan berlangganan suatu topik dan menerima setiap pesan yang dipublikasikan untuk topik tersebut. Bitsocial menggunakan jaringan pubsub peer-to-peer — siapa pun dapat mempublikasikan, siapa pun dapat berlangganan, dan tidak ada perantara pesan pusat.
+Pubsub (publish-subscribe) adalah pola pesan di mana peer berlangganan sebuah topik dan menerima
+setiap pesan yang dipublikasikan ke topik itu. Bitsocial memakai jaringan pubsub peer-to-peer —
+siapa pun dapat mempublikasikan, siapa pun dapat berlangganan, dan tidak ada broker pesan pusat.
 
-Untuk memublikasikan postingan ke komunitas, pengguna memublikasikan pesan yang topiknya sama dengan kunci publik komunitas. Node operator komunitas mengambilnya, memvalidasinya, dan — jika lolos tantangan anti-spam — memasukkannya ke dalam pembaruan konten berikutnya.
-
----
-
-## Anti-spam: tantangan terhadap pubsub
-
-Jaringan pubsub terbuka rentan terhadap banjir spam. Bitsocial memecahkan masalah ini dengan mengharuskan penerbit menyelesaikan **tantangan** sebelum konten mereka diterima.
-
-Sistem tantangannya fleksibel: setiap operator komunitas mengonfigurasi kebijakannya sendiri. Pilihannya meliputi:
-
-| Jenis tantangan           | Cara kerjanya                                                         |
-| ------------------------- | --------------------------------------------------------------------- |
-| **Captcha**               | Teka-teki visual atau interaktif disajikan dalam aplikasi             |
-| **Pembatasan tarif**      | Batasi postingan per rentang waktu per identitas                      |
-| **Gerbang Token**         | Memerlukan bukti saldo token tertentu                                 |
-| **Pembayaran**            | Memerlukan pembayaran kecil per posting                               |
-| **Daftar yang diizinkan** | Hanya identitas yang telah disetujui sebelumnya yang dapat memposting |
-| **Kode khusus**           | Kebijakan apa pun yang dapat diungkapkan dalam kode                   |
-
-Rekan yang menyampaikan terlalu banyak upaya tantangan yang gagal akan diblokir dari topik pubsub, sehingga mencegah serangan penolakan layanan pada lapisan jaringan.
+Untuk mempublikasikan postingan ke sebuah komunitas, pengguna mempublikasikan pesan yang topiknya
+sama dengan kunci publik komunitas tersebut. Node operator komunitas menangkapnya, memvalidasinya,
+dan — jika lolos tantangan anti-spam — memasukkannya ke pembaruan konten berikutnya.
 
 ---
 
-## Siklus Hidup: membaca komunitas
+## Anti-spam: tantangan lewat pubsub
 
-Inilah yang terjadi ketika pengguna membuka aplikasi dan melihat postingan terbaru komunitas.
+Jaringan pubsub terbuka rentan terhadap banjir spam. Bitsocial mengatasinya dengan mewajibkan
+penerbit menyelesaikan sebuah **tantangan** sebelum kontennya diterima.
+
+Sistem tantangan ini fleksibel: tiap operator komunitas mengonfigurasi kebijakannya sendiri.
+Pilihannya antara lain:
+
+| Jenis tantangan     | Cara kerjanya                                                   |
+| ------------------- | --------------------------------------------------------------- |
+| **Captcha**         | Teka-teki visual atau interaktif yang ditampilkan di aplikasi   |
+| **Pembatasan laju** | Membatasi jumlah postingan per rentang waktu per identitas      |
+| **Gerbang token**   | Meminta bukti kepemilikan saldo token tertentu                  |
+| **Pembayaran**      | Meminta pembayaran kecil untuk tiap postingan                   |
+| **Daftar izin**     | Hanya identitas yang disetujui lebih dulu yang boleh memposting |
+| **Kode khusus**     | Kebijakan apa pun yang bisa dinyatakan dalam kode               |
+
+Peer yang meneruskan terlalu banyak percobaan tantangan yang gagal akan diblokir dari topik pubsub,
+sehingga serangan penolakan layanan di lapisan jaringan bisa dicegah.
+
+---
+
+## Siklus hidup: membaca komunitas
+
+Inilah yang terjadi saat pengguna membuka aplikasi dan melihat postingan terbaru sebuah komunitas.
 
 ```mermaid
 sequenceDiagram
     participant User as 👤 User app
-    participant DHT as 🌐 DHT network
+    participant Routers as 🌐 HTTP routers
     participant Node as 🖥️ Community node
 
-    User->>DHT: Query community address
-    Note over DHT: Distributed lookup<br/>across network peers
-    DHT-->>User: Return latest content pointers + metadata
+    User->>Routers: Query community address (in parallel)
+    Note over Routers: Each router returns<br/>peer addresses only, never content
+    Routers-->>User: Return provider peer addresses
 
-    User->>DHT: Fetch post content by hash
-    DHT-->>User: Return post data
+    User->>Node: Connect to peer, fetch latest pointers + metadata
+    Node-->>User: Return latest content pointers + metadata
+
+    User->>Node: Fetch post content by hash
+    Node-->>User: Return post data
     Note over User: Render posts in<br/>familiar social UI
 
     Note over User,Node: Multiple community queries<br/>run concurrently
@@ -104,18 +165,20 @@ sequenceDiagram
 **Langkah demi langkah:**
 
 1. Pengguna membuka aplikasi dan melihat antarmuka sosial.
-2. Klien bergabung dengan jaringan peer-to-peer dan membuat kueri DHT untuk setiap komunitas pengguna
-   berikut. Kueri masing-masing membutuhkan waktu beberapa detik tetapi dijalankan secara bersamaan.
-3. Setiap kueri mengembalikan penunjuk konten dan metadata terbaru komunitas (judul, deskripsi,
-   daftar moderator, konfigurasi tantangan).
-4. Klien mengambil konten posting sebenarnya menggunakan pointer tersebut, lalu merender semuanya dalam a
-   antarmuka sosial yang familiar.
+2. Klien menanyakan beberapa router HTTP secara paralel untuk tiap komunitas yang diikuti pengguna;
+   tiap router hanya mengembalikan alamat peer, tidak pernah konten. Latensi kueri bergantung pada
+   kondisi jaringan dan beban router; pada kondisi latensi rendah yang umum, kueri sering kembali
+   dalam waktu sekitar satu detik dan berjalan bersamaan.
+3. Setelah klien punya alamat peer, klien terhubung ke peer tersebut lalu mengambil penunjuk konten
+   terbaru serta metadata komunitas (judul, deskripsi, daftar moderator, konfigurasi tantangan).
+4. Klien mengambil konten postingan yang sebenarnya memakai penunjuk itu, lalu merender semuanya
+   dalam antarmuka sosial yang sudah familier.
 
 ---
 
-## Siklus Hidup: memublikasikan postingan
+## Siklus hidup: mempublikasikan postingan
 
-Penerbitan melibatkan jabat tangan tantangan-respons atas pubsub sebelum postingan diterima.
+Publikasi melibatkan jabat tangan tantangan-jawaban lewat pubsub sebelum postingan diterima.
 
 ```mermaid
 sequenceDiagram
@@ -149,24 +212,24 @@ sequenceDiagram
 
 **Langkah demi langkah:**
 
-1. Aplikasi ini menghasilkan pasangan kunci untuk pengguna jika mereka belum memilikinya.
-2. Pengguna menulis postingan untuk komunitas.
-3. Klien bergabung dengan topik pubsub untuk komunitas tersebut (dikunci ke kunci publik komunitas).
-4. Klien meminta tantangan atas pubsub.
-5. Node operator komunitas mengirimkan kembali tantangan (misalnya, captcha).
-6. Pengguna menyelesaikan tantangan.
-7. Klien mengirimkan postingan beserta jawaban tantangan melalui pubsub.
+1. Aplikasi membuatkan pasangan kunci untuk pengguna jika mereka belum punya.
+2. Pengguna menulis postingan untuk sebuah komunitas.
+3. Klien bergabung ke topik pubsub komunitas tersebut (terkunci pada kunci publik komunitas).
+4. Klien meminta tantangan lewat pubsub.
+5. Node operator komunitas mengirim balik sebuah tantangan (misalnya captcha).
+6. Pengguna menyelesaikan tantangan tersebut.
+7. Klien mengirimkan postingan beserta jawaban tantangan lewat pubsub.
 8. Node operator komunitas memvalidasi jawabannya. Jika benar, postingan diterima.
-9. Node menyiarkan hasilnya melalui pubsub sehingga rekan jaringan mengetahui cara meneruskannya
-   pesan dari pengguna ini.
+9. Node menyiarkan hasilnya lewat pubsub agar peer jaringan tahu bahwa mereka harus terus
+   meneruskan pesan dari pengguna ini.
 10. Node memperbarui konten komunitas di alamat kunci publiknya.
-11. Dalam beberapa menit, setiap pembaca komunitas menerima pembaruan.
+11. Dalam beberapa menit, setiap pembaca komunitas menerima pembaruan tersebut.
 
 ---
 
 ## Ikhtisar arsitektur
 
-Sistem lengkap memiliki tiga lapisan yang bekerja sama:
+Sistem lengkapnya punya tiga lapisan yang bekerja bersama:
 
 ```mermaid
 graph TB
@@ -183,103 +246,183 @@ graph TB
     end
 
     subgraph Network ["Network layer"]
-        DHT["🗂️ DHT<br/>(content discovery)"]
+        Router["🛰️ HTTP router<br/>(content discovery)"]
         GS["💬 Gossipsub<br/>(real-time messaging)"]
         TR["📦 Content transfer<br/>(data exchange)"]
     end
 
     A1 & A2 & A3 --> PK & PS & CH
-    PK --> DHT
+    PK --> Router
     PS --> GS
     CH --> GS
     PK --> TR
 ```
 
-| Lapisan      | Peran                                                                                                                                                       |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Aplikasi** | Antarmuka pengguna. Ada banyak aplikasi yang bisa dibuat, masing-masing memiliki desainnya sendiri, dan semuanya berbagi komunitas dan identitas yang sama. |
-| **Protokol** | Menentukan cara komunitas ditangani, cara postingan dipublikasikan, dan cara mencegah spam.                                                                 |
-| **Jaringan** | Infrastruktur peer-to-peer yang mendasari: DHT untuk penemuan, gosipsub untuk pengiriman pesan secara real-time, dan transfer konten untuk pertukaran data. |
+| Lapisan      | Peran                                                                                                                                                    |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Aplikasi** | Antarmuka pengguna. Banyak aplikasi bisa hidup berdampingan, masing-masing dengan desainnya sendiri, semuanya berbagi komunitas dan identitas yang sama. |
+| **Protokol** | Menentukan cara komunitas dialamatkan, cara postingan dipublikasikan, dan cara spam dicegah.                                                             |
+| **Jaringan** | Infrastruktur peer-to-peer yang mendasarinya: router HTTP untuk penemuan, gossipsub untuk pesan real-time, dan transfer konten untuk pertukaran data.    |
 
 ---
 
-## Privasi: memutuskan tautan penulis dari alamat IP
+## Privasi: memutus kaitan penulis dengan alamat IP
 
-Saat pengguna memublikasikan postingan, kontennya **dienkripsi dengan kunci publik operator komunitas** sebelum memasuki jaringan pubsub. Artinya, meskipun pengamat jaringan dapat melihat bahwa rekannya memublikasikan _sesuatu_, mereka tidak dapat menentukan:
+Saat pengguna mempublikasikan postingan, kontennya **dienkripsi dengan kunci publik operator
+komunitas** sebelum masuk ke jaringan pubsub. Artinya, meskipun pengamat jaringan bisa melihat bahwa
+suatu peer mempublikasikan _sesuatu_, mereka tidak bisa menentukan:
 
-- apa yang dikatakan kontennya
-- identitas penulis mana yang menerbitkannya
+- apa isi konten tersebut
+- identitas penulis mana yang mempublikasikannya
 
-Hal ini mirip dengan bagaimana BitTorrent memungkinkan untuk menemukan IP mana yang menghasilkan torrent tetapi tidak mengetahui siapa yang pertama kali membuatnya. Lapisan enkripsi menambahkan jaminan privasi tambahan di atas garis dasar tersebut.
+Ini mirip dengan cara BitTorrent memungkinkan orang mengetahui IP mana yang menyemai sebuah torrent,
+tetapi bukan siapa yang pertama kali membuatnya. Lapisan enkripsi menambahkan jaminan privasi
+tambahan di atas dasar tersebut.
 
 ---
 
-## Peramban peer-to-peer
+## Peer-to-peer di browser
 
-P2P browser sekarang dapat dilakukan di klien Bitsocial. Aplikasi browser dapat menjalankan node [Helia](https://helia.io/), menggunakan tumpukan klien protokol Bitsocial yang sama dengan aplikasi lain, dan mengambil konten dari rekan-rekan alih-alih meminta gateway IPFS terpusat untuk menyajikannya. Browser juga dapat berpartisipasi dalam pubsub secara langsung, jadi pengeposan tidak memerlukan penyedia pubsub milik platform di jalur bahagia.
+P2P di browser kini sudah bisa dilakukan pada klien Bitsocial. Aplikasi browser dapat menjalankan
+node [Helia](https://helia.io/), memakai tumpukan klien protokol Bitsocial yang sama dengan aplikasi
+lain, dan mengambil konten dari peer alih-alih meminta gateway IPFS terpusat untuk menyajikannya.
+Browser juga dapat ikut serta langsung dalam pubsub, jadi pada jalur normal memposting tidak
+memerlukan penyedia pubsub milik platform.
 
-Ini adalah tonggak penting untuk distribusi web: situs web HTTPS biasa dapat dibuka menjadi klien sosial P2P langsung. Pengguna tidak perlu menginstal aplikasi desktop sebelum mereka dapat membaca dari jaringan, dan operator aplikasi tidak perlu menjalankan gateway pusat yang menjadi titik penyensoran atau moderasi untuk setiap pengguna browser.
+Inilah tonggak penting untuk distribusi lewat web: situs HTTPS biasa bisa terbuka menjadi klien
+sosial P2P yang hidup. Pengguna tidak perlu memasang aplikasi desktop sebelum bisa membaca dari
+jaringan, dan operator aplikasi tidak perlu menjalankan gateway pusat yang menjadi titik sempit
+penyensoran atau moderasi bagi setiap pengguna browser.
 
-Jalur browser memiliki batasan yang berbeda dari node desktop atau server:
+Jalur browser punya batasan yang berbeda dari node desktop atau server:
 
-- node browser biasanya tidak dapat menerima koneksi masuk yang sewenang-wenang dari internet publik
-- itu dapat memuat, memvalidasi, menyimpan cache, dan mempublikasikan data saat aplikasi terbuka
-- ia tidak boleh diperlakukan sebagai tempat penyimpanan data komunitas yang berumur panjang
-- hosting komunitas lengkap masih paling baik ditangani oleh aplikasi desktop, `bitsocial-cli`, atau lainnya
-  simpul yang selalu aktif
+- node browser biasanya tidak bisa menerima koneksi masuk sembarangan dari internet publik
+- node browser bisa memuat, memvalidasi, menyimpan cache, dan mempublikasikan data selama aplikasi
+  terbuka
+- node browser sebaiknya tidak diperlakukan sebagai penampung jangka panjang data sebuah komunitas
+- hosting komunitas sepenuhnya tetap paling baik ditangani aplikasi desktop, `bitsocial-cli`, atau
+  node lain yang selalu aktif
 
-Router HTTP masih penting dalam penemuan konten: mereka mengembalikan alamat penyedia untuk hash komunitas. Ini bukan gateway IPFS karena tidak menyajikan konten itu sendiri. Setelah penemuan, klien browser terhubung ke rekan-rekan dan mengambil data melalui tumpukan P2P.
+Router HTTP tetap penting untuk penemuan konten: router mengembalikan alamat penyedia untuk hash
+sebuah komunitas. Router bukan gateway IPFS, karena tidak menyajikan kontennya sendiri. Setelah
+penemuan, klien browser terhubung ke peer dan mengambil datanya lewat tumpukan P2P.
 
-5chan memaparkan ini sebagai tombol Pengaturan Lanjutan keikutsertaan di aplikasi web 5chan.app normal. Tumpukan browser `pkc-js` terbaru telah menjadi cukup stabil untuk pengujian publik setelah pekerjaan interop libp2p/gossipsub upstream menangani pengiriman pesan antara rekan-rekan Helia dan Kubo. Pengaturan ini membuat P2P browser tetap terkontrol saat melakukan lebih banyak pengujian di dunia nyata; setelah memiliki kepercayaan produksi yang cukup, ini dapat menjadi jalur web default.
+P2P di browser kini menjadi jalur web bawaan, bukan eksperimen di balik sakelar. 5chan menjalankan
+P2P browser murni secara bawaan di 5chan.app, dan blog Bitsocial di bitsocial.net melakukan hal yang
+sama. Peer browser melakukan dial lewat WebSockets aman; `pkc-js` menolak dial WebRTC dan
+WebTransport secara bawaan karena jalur pembentukan koneksinya lambat dan tidak andal di browser.
+Perubahan upstream yang membuat publikasi dari browser jadi praktis pada 2026 adalah perbaikan nomor
+urut gossipsub di `@libp2p/gossipsub` 15.0.21, yang menghentikan peer Kubo membuang pesan yang
+dipublikasikan node JavaScript.
 
-## Penggantian gerbang
+Untuk gambaran lengkapnya, termasuk apa yang masih belum bisa dilakukan node browser, lihat
+[Peer-to-Peer di Browser](/browser-p2p/).
 
-Akses browser yang didukung gateway masih berguna sebagai pengganti kompatibilitas dan peluncuran. Gateway dapat menyampaikan data antara jaringan P2P dan klien browser ketika browser tidak dapat bergabung dengan jaringan secara langsung atau ketika aplikasi sengaja memilih jalur yang lebih lama. Gerbang ini:
+## Cadangan gateway {#gateway-fallback}
 
-- dapat dijalankan oleh siapa saja
+Akses browser yang ditopang gateway masih berguna sebagai cadangan untuk kompatibilitas dan
+peluncuran bertahap. Gateway bisa meneruskan data antara jaringan P2P dan klien browser ketika
+browser tidak dapat bergabung ke jaringan secara langsung atau ketika aplikasi sengaja memilih jalur
+yang lama. Gateway seperti ini:
+
+- bisa dijalankan siapa saja
 - tidak memerlukan akun pengguna atau pembayaran
-- tidak mendapatkan hak asuh atas identitas pengguna atau komunitas
-- dapat ditukar tanpa kehilangan data
+- tidak mendapat penguasaan atas identitas pengguna maupun komunitas
+- bisa diganti tanpa kehilangan data
 
-Arsitektur targetnya adalah P2P browser terlebih dahulu, dengan gateway sebagai alternatif opsional, bukan hambatan default.
+Arsitektur yang dituju adalah P2P browser lebih dulu, dengan gateway sebagai cadangan opsional,
+bukan sebagai titik sempit bawaan.
 
 ---
 
 ## Mengapa bukan blockchain?
 
-Blockchain memecahkan masalah pembelanjaan ganda: mereka perlu mengetahui urutan pasti setiap transaksi untuk mencegah seseorang membelanjakan koin yang sama dua kali.
+Blockchain menyelesaikan masalah pembelanjaan ganda: blockchain perlu mengetahui urutan persis
+setiap transaksi agar seseorang tidak bisa membelanjakan koin yang sama dua kali.
 
-Media sosial tidak memiliki masalah pembelanjaan ganda. Tidak masalah jika postingan A diterbitkan satu milidetik sebelum postingan B, dan postingan lama tidak perlu tersedia secara permanen di setiap node.
+Media sosial tidak punya masalah pembelanjaan ganda. Tidak jadi soal apakah postingan A
+dipublikasikan satu milidetik sebelum postingan B, dan postingan lama tidak perlu tersedia secara
+permanen di setiap node.
 
-Dengan melewatkan blockchain, Bitsocial menghindari:
+Dengan melewatkan blockchain, Bitsocial terhindar dari:
 
-- **biaya bahan bakar** — posting gratis
+- **biaya gas** — memposting itu gratis
 - **batas throughput** — tidak ada hambatan ukuran blok atau waktu blok
-- **penyimpanan membengkak** — node hanya menyimpan apa yang mereka perlukan
-- **overhead konsensus** — tidak diperlukan penambang, validator, atau staking
+- **pembengkakan penyimpanan** — node hanya menyimpan yang dibutuhkannya
+- **beban konsensus** — tidak perlu penambang, validator, atau staking
 
-Imbalannya adalah Bitsocial tidak menjamin ketersediaan konten lama secara permanen. Namun untuk media sosial, hal ini dapat diterima: node operator komunitas menyimpan data, konten populer tersebar ke banyak rekan, dan postingan yang sangat lama secara alami memudar — sama seperti yang terjadi di setiap platform sosial.
+Konsekuensinya, Bitsocial tidak menjamin ketersediaan permanen konten lama. Namun untuk media
+sosial, itu konsekuensi yang wajar: node operator komunitas menyimpan datanya, konten populer
+menyebar ke banyak peer, dan postingan yang sangat lama memudar dengan sendirinya — sama seperti di
+setiap platform sosial.
 
 ## Mengapa bukan federasi?
 
-Jaringan gabungan (seperti email atau platform berbasis ActivityPub) meningkatkan sentralisasi tetapi masih memiliki keterbatasan struktural:
+Jaringan federasi (seperti email atau platform berbasis ActivityPub) lebih baik daripada
+sentralisasi, tetapi tetap punya keterbatasan struktural:
 
-- **Ketergantungan server** — setiap komunitas memerlukan server dengan domain, TLS, dan berkelanjutan
-  pemeliharaan
-- **Kepercayaan Admin** — admin server memiliki kontrol penuh atas akun pengguna dan konten
-- **Fragmentasi** — berpindah antar server sering kali berarti kehilangan pengikut, riwayat, atau identitas
-- **Biaya** — seseorang harus membayar untuk hosting, yang menciptakan tekanan terhadap konsolidasi
+- **Ketergantungan pada server** — tiap komunitas butuh server dengan domain, TLS, dan pemeliharaan
+  berkelanjutan
+- **Kepercayaan pada admin** — admin server punya kendali penuh atas akun pengguna dan konten
+- **Fragmentasi** — pindah antarserver sering berarti kehilangan pengikut, riwayat, atau identitas
+- **Biaya** — ada pihak yang harus membayar hosting, dan itu menciptakan tekanan ke arah konsolidasi
 
-Pendekatan peer-to-peer Bitsocial menghilangkan server dari persamaan sepenuhnya. Node komunitas dapat berjalan di laptop, Raspberry Pi, atau VPS murah. Operator mengontrol kebijakan moderasi tetapi tidak dapat mengambil identitas pengguna, karena identitas dikontrol oleh pasangan kunci, bukan diberikan oleh server.
+Pendekatan peer-to-peer Bitsocial menghilangkan server dari persamaan sama sekali. Node komunitas
+bisa berjalan di laptop, Raspberry Pi, atau VPS murah. Operator mengendalikan kebijakan moderasi,
+tetapi tidak bisa merampas identitas pengguna, karena identitas dikendalikan pasangan kunci, bukan
+diberikan server.
+
+## Bagaimana dengan Nostr?
+
+Nostr tidak masuk rapi ke salah satu kategori itu. Nostr bukan federasi bergaya ActivityPub, karena
+pengguna tidak diberi akun oleh instance dan identitasnya tidak terikat pada satu server. Nostr juga
+bukan media sosial berbasis blockchain, karena tidak ada rantai, konsensus, gas, maupun urutan
+transaksi global.
+
+Nostr lebih tepat disebut **media sosial berbasis relay**. Pada protokol dasarnya
+([NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md)), pengguna memegang pasangan
+kunci, menandatangani event, lalu mempublikasikan event tersebut ke relay WebSocket. Klien
+berlangganan ke relay dengan filter, mengambil event yang cocok, dan memverifikasi tanda tangan
+secara lokal. Pengguna juga bisa mempublikasikan metadata daftar relay
+([NIP-65](https://github.com/nostr-protocol/nips/blob/master/65.md)) yang memberi tahu klien relay
+mana yang biasanya mereka pakai untuk menulis dan relay mana yang mereka pilih untuk membaca
+penyebutan.
+
+Hal itu menempatkan Nostr lebih dekat ke Bitsocial daripada sistem federasi atau blockchain dalam
+satu hal penting: identitasnya kriptografis dan bisa dibawa pindah. Perbedaan utamanya ada di
+lapisan data. Di Nostr, relay adalah lapisan penyimpanan dan pengiriman yang normal. Di Bitsocial,
+router HTTP hanya membantu klien menemukan peer. Router tidak menyimpan postingan, profil, metadata
+komunitas, atau status moderasi; router mengembalikan alamat peer penyedia, lalu klien mengambil
+kontennya dari peer.
+
+Komunitas menunjukkan pemisahan yang sama. Nostr punya pola opsional untuk
+[grup berbasis relay](https://github.com/nostr-protocol/nips/blob/master/29.md) dan
+[komunitas dengan persetujuan moderator](https://github.com/nostr-protocol/nips/blob/master/72.md),
+tetapi semuanya tetap bergantung pada kebijakan relay, status grup yang ditampung relay, atau
+pilihan klien tentang persetujuan mana yang dihormati. Bitsocial memperlakukan komunitas sebagai
+objek kriptografis kelas satu yang node operatornya memvalidasi postingan, menjalankan kebijakan
+tantangan komunitas, dan mempublikasikan status terbaru yang diterima ke jaringan peer-to-peer.
+
+| Pertanyaan                   | Nostr                                                                                      | Bitsocial                                                                     |
+| ---------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Kategori                     | Protokol berbasis relay                                                                    | Jaringan komunitas peer-to-peer                                               |
+| Identitas                    | Kunci publik pengguna                                                                      | Pasangan kunci pengguna dan komunitas                                         |
+| Jalur data                   | Event bertanda tangan yang dipublikasikan ke relay                                         | Alamat kunci publik diresolusi jadi peer; konten diambil dari peer            |
+| Siapa yang menjaganya online | Relay yang dipilih pengguna dan klien                                                      | Node pemilik komunitas plus seeder pembantu                                   |
+| Komunitas                    | Grup berbasis relay opsional atau komunitas dengan persetujuan moderator                   | Objek komunitas kelas satu dengan moderasi yang dikendalikan operator         |
+| Anti-spam                    | Kebijakan relay, auth, pembayaran, proof-of-work, filter klien, atau persetujuan moderator | Logika tantangan yang ditentukan komunitas sebelum konten dimasukkan          |
+| Konsekuensi utama            | Identitas bisa dibawa pindah, tetapi ketersediaan dan kebijakan bergantung pada relay      | Ketergantungan pada relay lebih kecil, tetapi konten lama tidak dijamin abadi |
 
 ---
 
 ## Ringkasan
 
-Bitsocial dibangun di atas dua primitif: pengalamatan berbasis kunci publik untuk penemuan konten, dan pubsub peer-to-peer untuk komunikasi real-time. Bersama-sama mereka menghasilkan jaringan sosial di mana:
+Bitsocial dibangun di atas dua primitif: pengalamatan berbasis kunci publik untuk penemuan konten,
+dan pubsub peer-to-peer untuk komunikasi real-time. Keduanya menghasilkan jejaring sosial dengan
+ciri:
 
-- komunitas diidentifikasi dengan kunci kriptografi, bukan nama domain
-- konten menyebar ke seluruh rekan seperti torrent, tidak disajikan dari satu database
-- resistensi terhadap spam bersifat lokal pada setiap komunitas, bukan ditentukan oleh platform
-- pengguna memiliki identitas mereka melalui pasangan kunci, bukan melalui akun yang dapat dibatalkan
-- seluruh sistem berjalan tanpa biaya server, blockchain, atau platform
+- komunitas dikenali lewat kunci kriptografis, bukan nama domain
+- konten menyebar antarpeer seperti torrent, bukan disajikan dari satu basis data
+- ketahanan terhadap spam bersifat lokal di tiap komunitas, bukan dipaksakan oleh platform
+- pengguna memiliki identitasnya melalui pasangan kunci, bukan melalui akun yang bisa dicabut
+- keseluruhan sistem berjalan tanpa server, blockchain, atau biaya platform

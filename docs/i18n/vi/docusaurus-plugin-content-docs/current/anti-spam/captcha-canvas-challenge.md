@@ -1,24 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Trình tạo hình ảnh xác thực dựa trên hình ảnh độc lập với các ký tự, kích thước và màu sắc có thể định cấu hình.
+description: Thử thách captcha dạng hình ảnh độc lập dành cho các cộng đồng Bitsocial.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-:::warning Đặt tên kế thừa
-Gói này ban đầu được xuất bản trong phạm vi `@plebbit`. Nó đã được đổi tên thành `@bitsocial/captcha-canvas-challenge`. Các tham chiếu đến tên cũ vẫn có thể xuất hiện trong tài liệu hoặc cơ sở mã cũ hơn.
-:::
+Captcha Canvas Challenge là một gói captcha hình ảnh độc lập dành cho các cộng đồng Bitsocial. Nó vẽ chuỗi ký tự ngẫu nhiên lên canvas và cho phép cộng đồng yêu cầu tác giả giải hình ảnh đó trước khi một nội dung được chấp nhận xuất bản.
 
-Captcha Canvas Challenge là một trình tạo hình ảnh xác thực độc lập ban đầu được trích xuất từ ​​`plebbit-js`. Nó hiển thị văn bản ngẫu nhiên trên khung vẽ HTML và trả về hình ảnh thu được mà cộng đồng có thể hiển thị cho tác giả dưới dạng thách thức spam.
-
-**Mã nguồn:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Yêu cầu
-
-- **Node.js** >= 22
-- **Chỉ dành cho ESM** -- gói này không gửi các bản dựng CommonJS.
-- **Phụ thuộc ngang hàng trong thời gian chạy:** `@plebbit/plebbit-js` (di chuyển sang `@pkc/pkc-js`)
+- **Mã nguồn và README hiện hành:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **Gói npm:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Cài đặt
 
@@ -26,19 +17,16 @@ Captcha Canvas Challenge là một trình tạo hình ảnh xác thực độc l
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Tùy chọn cấu hình
+## Vị trí của nó trong hệ thống
 
-| Tùy chọn     | Loại     | Mặc định  | Mô tả                                                      |
-| ------------ | -------- | --------- | ---------------------------------------------------------- |
-| `characters` | `number` | `6`       | Số ký tự ngẫu nhiên được hiển thị trong hình ảnh xác thực. |
-| `height`     | `number` | `100`     | Chiều cao của hình ảnh được tạo bằng pixel.                |
-| `width`      | `number` | `300`     | Chiều rộng của hình ảnh được tạo bằng pixel.               |
-| `colors`     | `string` | `#32cf7e` | Màu chính được sử dụng cho văn bản xác thực.               |
+Thử thách captcha hữu ích khi một cộng đồng muốn có một cổng tương tác đơn giản để chống thư rác ở mức rủi ro thấp. Gói này cố tình giữ phạm vi hẹp: nó cung cấp phần triển khai thử thách, còn cộng đồng hoặc nút Bitsocial mới là bên quyết định khi nào và trình bày thử thách ra sao.
 
-## Nó hoạt động như thế nào
+Để bảo vệ mạnh hơn, hãy kết hợp nó với các hệ thống kiểm duyệt hoặc chấm điểm rủi ro rộng hơn, thay vì coi captcha là một chiến lược chống thư rác hoàn chỉnh.
 
-1. Trình tạo chọn một chuỗi ngẫu nhiên có độ dài được định cấu hình.
-2. Chuỗi được hiển thị trên canvas có nhiễu hình ảnh để chống lại OCR.
-3. Hình ảnh thu được (và câu trả lời mong đợi) được trả về để ứng dụng gọi điện có thể đưa ra thử thách và sau đó xác minh phản hồi.
+## Tài liệu tham chiếu hiện hành của gói
 
-Vì gói này là một trình tạo hình ảnh thuần túy nên nó không tự xử lý việc quản lý mạng hoặc phiên. Nó nhằm mục đích được tích hợp vào luồng thách thức lớn hơn -- ví dụ: là một trong những loại thách thức được hỗ trợ bởi [Spam Blocker](./spam-blocker.md).
+Trang này cố tình chỉ là phần tổng quan, không phải bản sao của hướng dẫn cài đặt. README của gói mới là nguồn thông tin chuẩn cho tên thử thách hiện hành, ví dụ đăng ký, ví dụ CLI, các tùy chọn được hỗ trợ, yêu cầu hệ thống và ghi chú bảo mật:
+
+- [README của Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Khi cấu hình một cộng đồng đang chạy thật, hãy ưu tiên README ở thượng nguồn, vì các tùy chọn của gói và luồng cài đặt được đánh phiên bản theo chính gói đó chứ không theo trang web này.

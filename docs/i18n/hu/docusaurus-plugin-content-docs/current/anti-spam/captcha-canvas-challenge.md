@@ -1,19 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Önálló képalapú captcha generátor konfigurálható karakterekkel, méretekkel és színekkel.
+description: Önálló, képalapú captcha-kihívás Bitsocial közösségek számára.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-A Captcha Canvas Challenge egy önálló kép captcha generátor. Véletlenszerű szöveget jelenít meg egy HTML vászonra, és visszaadja az eredményül kapott képet, amelyet a közösségek spam kihívásként terjeszthetnek a szerzők elé.
+A Captcha Canvas Challenge egy önálló, képalapú captcha-csomag Bitsocial közösségek számára. Véletlenszerű szöveget rajzol egy vászonra, így a közösség megkérheti a szerzőket, hogy fejtsék meg a képet, mielőtt a közzététel elfogadásra kerül.
 
-**Forráskód:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Követelmények
-
-- **Node.js** >= 22
-- **Csak ESM** – ez a csomag nem szállít CommonJS buildeket.
+- **Forráskód és aktuális README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **npm csomag:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Telepítés
 
@@ -21,19 +17,16 @@ A Captcha Canvas Challenge egy önálló kép captcha generátor. Véletlenszer�
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Konfigurációs lehetőségek
+## Hol a helye
 
-| Opció        | Típus    | Alapértelmezett | Leírás                                                         |
-| ------------ | -------- | --------------- | -------------------------------------------------------------- |
-| `characters` | `number` | `6`             | A captcha-képben megjelenített véletlenszerű karakterek száma. |
-| `height`     | `number` | `100`           | Az előállított kép magassága pixelben.                         |
-| `width`      | `number` | `300`           | A generált kép szélessége pixelben.                            |
-| `colors`     | `string` | `#32cf7e`       | A captcha szöveghez használt elsődleges szín.                  |
+A captcha-kihívások akkor hasznosak, ha egy közösség egyszerű, interaktív kaput szeretne alacsony tétű spamvédelemhez. Ez a csomag szándékosan szűk fókuszú: magát a kihívás megvalósítását adja, azt pedig, hogy mikor és hogyan jelenjen meg, a közösség vagy a Bitsocial csomópont dönti el.
 
-## Hogyan működik
+Erősebb védelemhez érdemes szélesebb körű moderációs vagy kockázatpontozó rendszerekkel kombinálni, ahelyett hogy a captchát önmagában teljes értékű spamellenes stratégiának tekintenénk.
 
-1. A generátor véletlenszerűen választ ki egy konfigurált hosszúságú karakterláncot.
-2. A karakterlánc egy vászonra kerül megjelenítésre vizuális zajjal, hogy ellenálljon az OCR-nek.
-3. Az eredményül kapott kép (és a várt válasz) visszaküldésre kerül, így a hívó alkalmazás bemutathatja a kihívást, és később ellenőrizheti a választ.
+## A csomag aktuális dokumentációja
 
-Mivel a csomag egy tiszta képgenerátor, nem kezeli önmagában a hálózatkezelést vagy a munkamenet-kezelést. Úgy tervezték, hogy egy nagyobb kihívásfolyamba integrálódjon – például a [Spam Blocker](./spam-blocker.md) által támogatott kihívások egyikeként.
+Ez az oldal szándékosan áttekintés, nem pedig lemásolt beállítási útmutató. Az aktuális kihívásnevek, regisztrációs példák, CLI-példák, támogatott beállítások, követelmények és biztonsági megjegyzések tekintetében a csomag README-je a mérvadó forrás:
+
+- [Captcha Canvas Challenge README](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Éles közösség beállításakor mindig az eredeti README-t vegye alapul, mert a csomag beállításai és telepítési folyamatai a csomaggal együtt verziózódnak, nem ezzel a weboldallal.

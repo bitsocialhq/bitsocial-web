@@ -7,6 +7,6 @@ Oturum başına bir giriş ekleyin.
 - Ürün Kodu: F001
 - Özet: Bunu oturum özetiyle değiştirin.
 - Dosyalar: `path/to/file`
-- Doğrulama: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Doğrulama: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Engelleyiciler: yok
 - Sonraki: Bunu bir sonraki en iyi takiple değiştirin.

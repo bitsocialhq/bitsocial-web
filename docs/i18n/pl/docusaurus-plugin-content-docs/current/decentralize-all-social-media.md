@@ -1,52 +1,69 @@
 ---
-title: Zdecentralizuj wszystkie media społecznościowe
-description: Faza 5 planu głównego Bitsocial i stan końcowy, do którego dąży.
+title: Zdecentralizować wszystkie media społecznościowe
+description: Piąty etap planu głównego, skupiony na finansowaniu i budowaniu długiego ogona klientów społecznościowych Bitsocial.
 ---
 
-# Zdecentralizuj wszystkie media społecznościowe
+# Zdecentralizować wszystkie media społecznościowe
 
-Oto stan końcowy opisany w głównym planie Bitsocial: nie jedna aplikacja, ale ekosystem aplikacji Bitsocial, który może konkurować z każdą większą kategorią mediów społecznościowych.
+Stanem docelowym nie jest jedna aplikacja. Jest nim rynek klientów, węzłów, usług i społeczności,
+który potrafi zastąpić własność platformy konkurencją na poziomie protokołu.
 
-## Model
+Etap 5 to moment, w którym Bitsocial wychodzi poza pierwsze priorytetowe kategorie i zaczyna
+finansować jak najwięcej formatów społecznościowych.
 
-W proponowanym stanie dojrzałym sieci:
+## Co jeszcze trzeba zbudować
 
-- wielu publicznych dostawców RPC konkuruje z węzłami profilu hosta
-- użytkownicy nadal mogą samodzielnie hostować
-- algorytmy kanałów stają się usługami opcjonalnymi, a nie obowiązkowymi przepisami dotyczącymi platform
-- monetyzacja nie zależy od chęci banków do utrzymania platformy przy życiu
-- aplikacje konkurują pod względem jakości produktu, odkrywania i projektowania interfejsu
+Pierwsze etapy skupiają się na kategoriach o największej dźwigni: imageboardach, forach, publicznym
+RPC, Bitsocial Chain, węzłach profilowych, alternatywie dla Twittera/X z etapu 3 oraz gospodarce
+usług wokół nich.
 
-## Jak miałby wyglądać sukces
+Później sieć powinna rozszerzyć się na długi ogon:
 
-Aplikacje Bitsocial powinny być w stanie rzucić wyzwanie platformom w różnych formatach, nie tylko w jednej niszy:
-
-- tekst i dyskusja
-- tablice obrazowe
-- fora
+- klienci blogowi
+- aplikacje do finansowania społecznościowego
+- wideo dla twórców i wiarygodna [alternatywa dla YouTube'a](https://github.com/bitsocialnet/wetube)
 - społeczności twórców
-- krótkie formy wideo i szersze produkty medialne
+- eksperymenty z formatami krótkimi
+- lokalne lub językowe aplikacje społecznościowe
+- niszowi klienci, zbyt mali na pierwsze cztery etapy
+- narzędzia ułatwiające prowadzenie istniejących społeczności
 
-Celem nie jest narzucanie wszystkim jednego uniwersalnego interfejsu. Ma zapewnić wielu aplikacjom dostęp do tych samych społeczności, tożsamości i sieci.
+Część tych aplikacji może być otwartoźródłowa. Część może być scentralizowanymi klientami. Część
+może powstać w Bitsocial Forge, a wiele powinni zbudować niezależni deweloperzy.
 
-## Dlaczego warstwa RPC ma tutaj znaczenie
+## Finansowanie wielu twórców
 
-Zawsze aktywne społeczności i profile stają się znacznie bardziej praktyczne, gdy istnieją publiczne rynki RPC. Bez tej warstwy hosting własny byłby zbyt uciążliwy dla wielu użytkowników, zwłaszcza korzystających z urządzeń mobilnych.
+Celem jest sprawić, żeby nowi klienci społecznościowi dawali się finansować, zanim osiągną zasięg
+porównywalny z platformami.
 
-## Dlaczego warstwa sieciowa ma tutaj znaczenie
+Może to obejmować bezpośrednie inwestycje, granty, finansowanie społecznościowe, przychody z
+udanych usług Bitsocial albo zdecentralizowane programy grantowe, w których szersza społeczność
+Bitsocial współdecyduje, którzy deweloperzy powinni otrzymać wsparcie.
 
-Jeśli monetyzacja treści może zostać odcięta przez zwykłą bankowość lub presję platformy, ekosystem pozostanie kruchy. Sieć Bitsocial jest proponowana jako warstwa ekonomiczna, która zwiększa wiarygodność długoterminowej konkurencji.
+Najważniejszy jest pluralizm. Sieć powinna finansować wiele prób, a nie czekać, aż jedna oficjalna
+aplikacja obejmie każdą kategorię.
 
-## Podstawowy zakład
+## Jak wygląda sukces
 
-Największym założeniem jest to, że media społecznościowe można podzielić na wymienne warstwy:
+Bitsocial odnosi sukces wtedy, gdy media społecznościowe da się rozłożyć na wymienialne warstwy:
 
 - protokół
 - społeczności
 - tożsamość
 - hosting
-- odkrycie
+- odkrywanie treści
+- moderacja
 - monetyzacja
 - aplikacje
 
-Kiedy te warstwy będą już wymienne, żadna pojedyncza firma nie będzie musiała posiadać całego wykresu społecznościowego, aby produkt zadziałał.
+Kiedy te warstwy staną się wymienialne, żadna pojedyncza firma nie musi już posiadać całego grafu
+społecznego, żeby produkt działał.
+
+## Kluczowy zakład
+
+Dojrzały ekosystem Bitsocial powinien obejmować publiczne RPC, węzły hostowane samodzielnie, rynki
+algorytmów feedu, hostingi mediów, usługi odkrywania treści, klientów otwartoźródłowych, klientów
+komercyjnych i eksperymenty finansowane przez społeczność.
+
+Media społecznościowe wreszcie znajdują swój punkt równowagi: w pełni zdecentralizowaną sieć
+społecznościową peer-to-peer, której nikt nie posiada; Bitsocial.

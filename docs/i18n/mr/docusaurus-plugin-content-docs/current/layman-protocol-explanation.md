@@ -152,6 +152,8 @@ Bitsocial पोस्ट डेटा आणि समुदाय राज्
 - RPC कायमस्वरूपी कस्टडी बनू नये
 - मालकाचे नाते एका प्रदात्याच्या डेटाबेसशी नव्हे तर किल्लीशी जोडलेले असले पाहिजे
 
+या मॉडेलवर तयार केलेली पहिली सेवा म्हणजे [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) ची Forge RPC, जी [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) प्रोटोकॉल डिझाइनवर आधारित आहे.
+
 ## Bitsocial काय नाही
 
 बिटसोशियल हे ब्लॉकचेन सोशल नेटवर्क नाही. एका जागतिक लेजरमध्ये व्यवहार होण्यासाठी सोशल मीडियाला प्रत्येक पोस्टची आवश्यकता नाही.

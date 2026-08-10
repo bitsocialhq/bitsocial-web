@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
+title: Telegram-bots
 description: Feed-bots, der overvåger Bitsocial-fællesskabslister og videresender indlæg til Telegram-kanaler.
-sidebar_position: 3
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Telegram-bots
 
-Bitsocial Telegram-botterne overvåger klientfællesskabslister på Bitsocial-netværket og videresender automatisk nye indlæg til Telegram-kanaler. Hver videresendt besked indeholder inline-knapper, der linker tilbage til det oprindelige indlæg på 5chan og Seedit.
+Bitsocials Telegram-bots overvåger klienternes fællesskabslister på Bitsocial-netværket og videresender automatisk nye indlæg til Telegram-kanaler. Hver videresendt besked indeholder indlejrede knapper, der linker tilbage til det oprindelige indlæg på 5chan og Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
 ## Tilgængelige bots
 
-| Bot             | Status   | Beskrivelse                                                          |
-| --------------- | -------- | -------------------------------------------------------------------- |
-| **5chan feed**  | Aktiv    | Overvåger alle 5chan-mapper og videresender nye indlæg til Telegram. |
-| **Seedit Feed** | Planlagt | Vil give den samme funktionalitet til Seedit-fællesskaber.           |
+| Bot             | Status   | Beskrivelse                                                             |
+| --------------- | -------- | ----------------------------------------------------------------------- |
+| **5chan Feed**  | Aktiv    | Overvåger alle 5chan-kataloger og videresender nye indlæg til Telegram. |
+| **Seedit Feed** | Planlagt | Vil levere den samme funktionalitet for Seedit-fællesskaber.            |
 
 ## Opsætning
 
 ### Forudsætninger
 
 - Node.js
-- Garn
-- Et Telegram bot-token (opret et via [BotFather](https://t.me/BotFather))
+- Yarn
+- Et Telegram-bot-token (opret et via [BotFather](https://t.me/BotFather))
 
 ### Installation
 
-Klon depotet og installer afhængigheder:
+Klon depotet og installer afhængighederne:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -37,15 +37,15 @@ yarn install
 
 ### Konfiguration
 
-Opret en `.env`-fil i projektroden med dit bot-token:
+Opret en `.env`-fil i projektets rod med dit bot-token:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Løb
+### Kørsel
 
-Start botten efter at have konfigureret dit miljø:
+Start botten, når du har konfigureret dit miljø:
 
 ```bash
 yarn start
@@ -53,9 +53,9 @@ yarn start
 
 ## Indlægsformat
 
-Når botten videresender et indlæg til Telegram, inkluderer det to inline-knapper:
+Når botten videresender et indlæg til Telegram, indeholder beskeden to indlejrede knapper:
 
-- **Se på 5chan** -- Åbner indlægget i 5chan-webklienten.
-- **Se på Seedit** -- Åbner indlægget i Seedit-webklienten.
+- **Vis på 5chan** -- Åbner indlægget i 5chan-webklienten.
+- **Vis på Seedit** -- Åbner indlægget i Seedit-webklienten.
 
-Dette lader Telegram-abonnenter hoppe direkte til den fulde diskussionstråd på den klient, de foretrækker.
+Det lader Telegram-abonnenter hoppe direkte til hele diskussionstråden i den klient, de foretrækker.

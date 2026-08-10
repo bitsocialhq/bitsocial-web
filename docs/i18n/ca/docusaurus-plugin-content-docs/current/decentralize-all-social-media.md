@@ -1,52 +1,70 @@
 ---
 title: Descentralitzar totes les xarxes socials
-description: Fase 5 del pla director de Bitsocial i l'estat final al qual pretén.
+description: Fase 5 del pla director, centrada a finançar i construir la llarga cua de clients socials de Bitsocial.
 ---
 
 # Descentralitzar totes les xarxes socials
 
-Aquest és l'estat final descrit pel pla director de Bitsocial: no una aplicació, sinó un ecosistema d'aplicacions Bitsocial que pot competir amb totes les categories principals de xarxes socials.
+L'estat final no és una aplicació. És un mercat de clients, nodes, serveis i comunitats capaç de
+substituir la propietat de les plataformes per la competència damunt d'un protocol.
 
-## El model
+La Fase 5 és el moment en què Bitsocial va més enllà de les primeres categories prioritàries i
+comença a finançar tants formats socials com sigui possible.
 
-En l'estat madur proposat de la xarxa:
+## Què queda per construir
 
-- diversos proveïdors de RPC públics competeixen per allotjar nodes de perfil
-- els usuaris encara poden autoallotjar-se
-- els algorismes d'alimentació es converteixen en serveis opcionals en comptes de la llei de plataforma obligatòria
-- La monetització no depèn que els bancs estiguin disposats a mantenir viva la plataforma
-- les aplicacions competeixen en la qualitat del producte, el descobriment i el disseny de la interfície
+Les primeres fases se centren en les categories amb més palanca: taulers d'imatges, fòrums, RPC
+públic, Bitsocial Chain, nodes de perfil, l'alternativa a Twitter/X de la Fase 3 i l'economia de
+serveis que les envolta.
 
-## Quin èxit seria
+Després d'això, la xarxa hauria d'expandir-se cap a la llarga cua:
 
-Les aplicacions Bitsocial haurien de poder desafiar les plataformes en diferents formats, no només en un nínxol:
-
-- text i discussió
-- taulers d'imatge
-- fòrums
+- clients de blogs
+- aplicacions de micromecenatge
+- vídeo de creadors i una [alternativa a YouTube](https://github.com/bitsocialnet/wetube) creïble
 - comunitats de creadors
-- vídeos de format breu i productes multimèdia més amplis
+- experiments amb formats breus
+- aplicacions socials locals o específiques d'una llengua
+- clients de nínxol massa petits per a les quatre primeres fases
+- eines que facilitin la gestió de comunitats existents
 
-L'objectiu no és forçar una interfície universal a tothom. Es tracta de donar accés a moltes aplicacions a les mateixes comunitats, identitats i xarxes subjacents.
+Algunes d'aquestes aplicacions poden ser de codi obert. Algunes poden ser clients centralitzats.
+Algunes les pot construir Bitsocial Forge, i moltes les haurien de construir desenvolupadors
+independents.
 
-## Per què la capa RPC és important aquí
+## Finançar molts constructors
 
-Les comunitats i els perfils sempre activats es tornen molt més pràctics un cop existeixen els mercats públics de RPC. Sense aquesta capa, l'allotjament automàtic continua sent una fricció massa elevada per a molts usuaris, especialment al mòbil.
+L'objectiu és aconseguir que els clients socials nous es puguin finançar abans de tenir ja una
+tracció d'escala de plataforma.
 
-## Per què la capa de xarxa és important aquí
+Això pot incloure inversió directa, subvencions, finançament comunitari, ingressos de serveis de
+Bitsocial amb èxit o programes de subvencions descentralitzats on la comunitat de Bitsocial en
+sentit ampli ajudi a decidir quins desenvolupadors han de rebre suport.
 
-Si la monetització del contingut es pot tallar per la pressió de la banca o la plataforma normal, aleshores l'ecosistema es manté fràgil. Bitsocial Chain es proposa com la capa econòmica que fa que la competència a llarg termini sigui més creïble.
+La part important és el pluralisme. La xarxa hauria de finançar molts intents, no esperar que una
+aplicació oficial cobreixi totes les categories.
 
-## L'aposta bàsica
+## Com és l'èxit
 
-La gran aposta és que les xarxes socials es poden dividir en capes reemplaçables:
+Bitsocial se'n surt quan les xarxes socials es poden descompondre en capes substituïbles:
 
 - protocol
 - comunitats
 - identitat
-- hosting
-- descobriment
+- allotjament
+- descoberta
+- moderació
 - monetització
 - aplicacions
 
-Una vegada que aquestes capes són reemplaçables, cap empresa no ha de posseir tot el gràfic social perquè el producte funcioni.
+Un cop aquestes capes són substituïbles, cap empresa no ha de ser propietària de tot el graf social
+perquè el producte funcioni.
+
+## L'aposta de fons
+
+Un ecosistema madur de Bitsocial hauria de contenir RPC públics, nodes autoallotjats, mercats
+d'algorismes de feed, allotjadors de contingut multimèdia, serveis de descoberta, clients de codi
+obert, clients comercials i experiments finançats per la comunitat.
+
+Les xarxes socials troben finalment el seu equilibri: una xarxa social totalment descentralitzada i
+peer-to-peer que no és de ningú; Bitsocial.

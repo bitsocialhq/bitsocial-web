@@ -1,97 +1,93 @@
 ---
 title: React Hooks
-description: Biblioteka e grepave React për ndërtimin e aplikacioneve sociale të decentralizuara në protokollin Bitsocial.
+description: Bibliotekë hooks-esh React për të ndërtuar aplikacione sociale të decentralizuara mbi protokollin Bitsocial.
 sidebar_position: 1
 ---
 
 # React Hooks
 
-:::warning Emërtimi i trashëgimisë
-Kjo paketë përdor aktualisht konventat e emërtimit të trashëguara nga forku i saj në rrjedhën e sipërme. Referencat për "plebbit" në kod, API dhe konfigurim do të migrohen në "bitsocial" në një version të ardhshëm. Funksionaliteti është i paprekur.
-:::
+Paketa `bitsocial-react-hooks` ofron një API të njohur hooks-esh React për të ndërvepruar me protokollin Bitsocial. Ajo merret me marrjen e feed-eve, komenteve dhe profileve të autorëve, me menaxhimin e llogarive, me publikimin e përmbajtjes dhe me pajtimin në komunitete -- gjithçka pa u mbështetur në një server qendror.
 
-Paketa `bitsocial-react-hooks` ofron një API të njohur të React hooks për ndërveprim me protokollin Bitsocial. Ai trajton marrjen e burimeve, komenteve dhe profileve të autorëve, menaxhimin e llogarive, publikimin e përmbajtjes dhe abonimin në komunitete -- të gjitha pa u mbështetur në një server qendror.
-
-Kjo bibliotekë është ndërfaqja kryesore e përdorur nga [5chan](/apps/5chan/) dhe aplikacionet e tjera të klientit Bitsocial.
+Kjo bibliotekë është ndërfaqja kryesore që përdoret nga [5chan](/apps/5chan/) dhe nga aplikacione të tjera klient të Bitsocial.
 
 :::note
-`bitsocial-react-hooks` është një pirun i përkohshëm i `plebbit/plebbit-react-hooks` i mirëmbajtur për zhvillim të ndihmuar nga AI. Ai konsumohet drejtpërdrejt nga GitHub në vend që të publikohet në npm.
+`bitsocial-react-hooks` merret aktualisht drejtpërdrejt nga GitHub dhe nuk botohet në npm.
 :::
 
 ## Instalimi
 
-Për shkak se paketa nuk është ende në npm, instaloni atë direkt nga GitHub, duke e vendosur në një hash specifik të kryerjes:
+Meqë paketa nuk gjendet ende në npm, instalojeni drejtpërdrejt nga GitHub, duke e fiksuar te një hash i caktuar commit-i:
 
 ```bash
 yarn add https://github.com/bitsocialnet/bitsocial-react-hooks.git#<commit-hash>
 ```
 
-Zëvendësoni `<commit-hash>` me angazhimin që dëshironi të synoni.
+Zëvendësoni `<commit-hash>` me commit-in që doni të përdorni.
 
-## Përmbledhje e API
+## Përmbledhje e API-së
 
-Gurpat janë të organizuara në kategori funksionale. Më poshtë është një përmbledhje e grepave më të përdorura në secilën kategori. Për nënshkrimet e plota, parametrat dhe llojet e kthimit, shihni [Referenca e plotë e API-së në GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks).
+Hooks-et janë organizuar në kategori sipas funksionit. Më poshtë jepet një përmbledhje e hooks-eve më të përdorur në secilën kategori. Për nënshkrimet e plota, parametrat dhe tipet e kthimit, shihni [referencën e plotë të API-së në GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks).
 
 ### Llogaritë
 
-Menaxho llogaritë lokale të përdoruesve, identitetin dhe cilësimet.
+Menaxhoni llogaritë lokale të përdoruesve, identitetin dhe cilësimet.
 
-- `useAccount(accountName?)` -- kthen objektin aktiv (ose të emërtuar) të llogarisë
-- `useAccounts()` -- kthen të gjitha llogaritë e ruajtura në vend
+- `useAccount(accountName?)` -- kthen objektin e llogarisë aktive (ose të llogarisë së emërtuar)
+- `useAccounts()` -- kthen të gjitha llogaritë e ruajtura lokalisht
 - `useAccountComments(options?)` -- kthen komentet e publikuara nga llogaria aktive
 
 ### Komentet
 
-Merr dhe ndërvepro me komentet dhe temat individuale.
+Merrni dhe ndërveproni me komente e tema të veçanta.
 
-- `useComment(commentCid?)` -- merr një koment të vetëm nga CID e tij
-- `useComments(commentCids?)` -- merr komente të shumta në grup
+- `useComment(commentCid?)` -- merr një koment të vetëm sipas CID-së së tij
+- `useComments(commentCids?)` -- merr disa komente njëherësh
 - `useEditedComment(comment?)` -- kthen versionin më të fundit të redaktuar të një komenti
 
 ### Komunitetet
 
-Merr të dhënat dhe cilësimet e komunitetit.
+Merrni metadatat dhe cilësimet e komuniteteve.
 
-- `useSubplebbit(subplebbitAddress?)` -- merr një komunitet sipas adresës
-- `useSubplebbits(subplebbitAddresses?)` -- merr shumë bashkësi
-- `useSubplebbitStats(subplebbitAddress?)` -- kthen numrin e abonentëve dhe postimeve
+- Hook kërkimi për një komunitet të vetëm -- merr një komunitet sipas adresës
+- Hook kërkimi për disa komunitete -- merr njëherësh më shumë se një komunitet
+- Hook statistikash komuniteti -- kthen numrin e pajtimtarëve dhe të postimeve
 
 ### Autorët
 
-Kërkoni profilet dhe meta të dhënat e autorit.
+Kërkoni profile dhe metadata autorësh.
 
-- `useAuthor(authorAddress?)` -- merr një profil autori
-- `useAuthorComments(options?)` -- kthen komentet nga një autor specifik
-- `useResolvedAuthorAddress(authorAddress?)` - zgjidh një adresë të lexueshme nga njeriu (p.sh., ENS) në adresën e tij të protokollit
+- `useAuthor(authorAddress?)` -- merr profilin e një autori
+- `useAuthorComments(options?)` -- kthen komentet e një autori të caktuar
+- `useResolvedAuthorAddress(authorAddress?)` -- shndërron një adresë të lexueshme nga njerëzit (p.sh. ENS) në adresën e saj të protokollit
 
-### Feeds
+### Feed-et
 
-Abonohuni dhe faqerojini burimet e përmbajtjes.
+Pajtohuni te feed-et e përmbajtjes dhe shfaqini ato faqe pas faqeje.
 
-- `useFeed(options?)` -- kthen një furnizim me faqe të postimeve nga një ose më shumë komunitete
-- `useBufferedFeeds(feedOptions?)` -- para-buferon furnizime të shumta për paraqitje më të shpejtë
-- `useAuthorFeed(authorAddress?)` -- kthen një burim postimesh nga një autor specifik
+- `useFeed(options?)` -- kthen një feed të ndarë në faqe me postime nga një ose më shumë komunitete
+- `useBufferedFeeds(feedOptions?)` -- ngarkon paraprakisht disa feed-e në bufer për shfaqje më të shpejtë
+- `useAuthorFeed(authorAddress?)` -- kthen një feed me postimet e një autori të caktuar
 
 ### Veprimet
 
-Publikoni përmbajtjen dhe kryeni operacionet e shkrimit.
+Publikoni përmbajtje dhe kryeni operacione shkrimi.
 
-- `usePublishComment(options?)` -- publikoni një koment ose përgjigje të re
-- `usePublishVote(options?)` -- jepni një votë pro ose kundër
-- `useSubscribe(options?)` -- abonohuni ose çregjistrohuni nga një komunitet
+- `usePublishComment(options?)` -- publikon një koment ose një përgjigje të re
+- `usePublishVote(options?)` -- hedh një votë pro ose kundër
+- `useSubscribe(options?)` -- pajtohet në një komunitet ose anulon pajtimin
 
-### Shtetet dhe RPC
+### Gjendjet dhe RPC
 
-Monitoroni gjendjen e lidhjes dhe ndërveproni me një demon të largët Bitsocial.
+Mbikëqyrni gjendjen e lidhjes dhe ndërveproni me një daemon të largët Bitsocial.
 
 - `useClientsStates(options?)` -- kthen gjendjen e lidhjes së klientëve IPFS/pubsub
-- `usePlebbitRpcSettings()` -- kthen konfigurimin aktual të demonit RPC
+- Hook cilësimesh RPC -- kthen konfigurimin aktual të daemon-it RPC
 
 ## Zhvillimi
 
-Për të punuar në bibliotekën e grepave në nivel lokal:
+Për të punuar lokalisht me bibliotekën e hooks-eve:
 
-**Kushtet paraprake:** Node.js, Corepack i aktivizuar, Fije 4
+**Parakushtet:** Node.js, Corepack i aktivizuar, Yarn 4
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-react-hooks.git
@@ -100,9 +96,9 @@ corepack enable
 yarn install
 ```
 
-Referojuni depove README për komandat e testimit dhe ndërtimit.
+Për komandat e testimit dhe të ndërtimit, shihni README-në e depozitës.
 
 ## Lidhjet
 
-- **GitHub:** [Referenca e plotë e API-së në GitHub](https://github.com/bitsocialnet/bitsocial-react-hooks)
-- **Licenca:** GPL-2.0-vetëm
+- **GitHub:** [bitsocialnet/bitsocial-react-hooks](https://github.com/bitsocialnet/bitsocial-react-hooks)
+- **Licenca:** GPL-2.0-only

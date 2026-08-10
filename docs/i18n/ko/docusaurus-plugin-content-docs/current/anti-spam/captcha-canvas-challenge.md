@@ -1,19 +1,15 @@
 ---
-title: 보안문자 캔버스 챌린지
-description: 구성 가능한 문자, 크기 및 색상을 갖춘 독립형 이미지 기반 보안 문자 생성기입니다.
+title: Captcha Canvas 챌린지
+description: Bitsocial 커뮤니티를 위한 독립형 이미지 기반 캡차 챌린지.
 sidebar_position: 2
 ---
 
-# 보안문자 캔버스 챌린지
+# Captcha Canvas 챌린지
 
-보안문자 캔버스 챌린지는 독립형 이미지 보안문자 생성기입니다. 이는 임의의 텍스트를 HTML 캔버스에 렌더링하고 결과 이미지를 반환하며, 커뮤니티는 이를 작성자에게 스팸 문제로 제시할 수 있습니다.
+Captcha Canvas 챌린지는 Bitsocial 커뮤니티를 위한 독립형 이미지 캡차 패키지입니다. 무작위로 생성한 문자열을 캔버스에 그려주며, 커뮤니티는 게시물을 수락하기 전에 작성자에게 그 이미지를 풀도록 요구할 수 있습니다.
 
-**소스 코드:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## 요구사항
-
-- **Node.js** >= 22
-- **ESM 전용** -- 이 패키지는 CommonJS 빌드를 제공하지 않습니다.
+- **소스 코드 및 최신 README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **npm 패키지:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## 설치
 
@@ -21,19 +17,16 @@ sidebar_position: 2
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## 구성 옵션
+## 어디에 적합한가
 
-| 옵션         | 유형     | 기본값    | 설명                                              |
-| ------------ | -------- | --------- | ------------------------------------------------- |
-| `characters` | `number` | `6`       | 보안 문자 이미지에 렌더링된 임의의 문자 수입니다. |
-| `height`     | `number` | `100`     | 생성된 이미지의 높이(픽셀)입니다.                 |
-| `width`      | `number` | `300`     | 생성된 이미지의 너비(픽셀)입니다.                 |
-| `colors`     | `string` | `#32cf7e` | 보안 문자 텍스트에 사용되는 기본 색상입니다.      |
+캡차 챌린지는 부담이 크지 않은 스팸 방지를 위해 간단한 대화형 관문이 필요할 때 유용합니다. 이 패키지는 의도적으로 범위가 좁습니다. 챌린지 구현만 제공하고, 언제 어떻게 보여줄지는 커뮤니티나 Bitsocial 노드가 결정합니다.
 
-## 작동 방식
+더 강력한 보호가 필요하다면 캡차 하나를 완결된 스팸 방지 전략으로 여기지 말고, 더 폭넓은 모더레이션이나 위험 점수 시스템과 함께 사용하세요.
 
-1. 생성기는 구성된 길이의 임의 문자열을 선택합니다.
-2. 문자열은 OCR에 저항하기 위해 시각적 노이즈와 함께 캔버스에 렌더링됩니다.
-3. 호출 애플리케이션이 챌린지를 제시하고 나중에 응답을 확인할 수 있도록 결과 이미지(및 예상 답변)가 반환됩니다.
+## 최신 패키지 문서
 
-패키지는 순수 이미지 생성기이므로 네트워킹이나 세션 관리를 자체적으로 처리하지 않습니다. 예를 들어 [스팸 차단기](./spam-blocker.md)에서 지원하는 인증 확인 유형 중 하나로 더 큰 인증 확인 흐름에 통합될 예정입니다.
+이 문서는 설정 가이드를 그대로 옮긴 것이 아니라 의도적으로 개요만 다룹니다. 현재 챌린지 이름, 등록 예제, CLI 예제, 지원 옵션, 요구 사항, 보안 참고 사항의 기준이 되는 출처는 패키지 README입니다.
+
+- [Captcha Canvas 챌린지 README](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+패키지 옵션과 설치 절차는 이 웹사이트가 아니라 해당 패키지와 함께 버전 관리되므로, 실제 운영 중인 커뮤니티를 설정할 때는 원본 README를 우선하세요.

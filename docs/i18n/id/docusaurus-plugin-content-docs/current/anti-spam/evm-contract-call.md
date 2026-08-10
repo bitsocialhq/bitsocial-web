@@ -1,19 +1,15 @@
 ---
 title: Tantangan Panggilan Kontrak EVM
-description: Tantangan anti-spam yang memverifikasi kondisi on-chain dengan memanggil kontrak pintar EVM.
+description: Tantangan anti-spam yang memverifikasi kondisi on-chain dengan memanggil smart contract EVM.
 sidebar_position: 4
 ---
 
 # Tantangan Panggilan Kontrak EVM
 
-Tantangan Panggilan Kontrak EVM adalah mekanisme anti-spam yang memverifikasi kondisi on-chain sebelum mengizinkan publikasi. Hal ini memungkinkan pemilik komunitas mewajibkan penulis untuk memenuhi kriteria yang ditentukan dalam kontrak pintar -- misalnya, memiliki saldo token minimum -- untuk dapat memposting.
+Tantangan Panggilan Kontrak EVM memverifikasi status on-chain seorang penulis sebelum mengizinkan sebuah publikasi. Pemilik komunitas dapat mewajibkan dompet atau identitas yang berhasil diresolusi untuk memenuhi kondisi smart contract yang bersifat baca-saja, misalnya memegang saldo token minimum, sebelum bisa memposting.
 
-**Kode sumber:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Persyaratan
-
-- **Node.js** >= 22
-- **Khusus ESM** -- paket ini tidak mengirimkan build CommonJS.
+- **Kode sumber dan README terkini:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **Paket npm:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Instalasi
 
@@ -21,34 +17,26 @@ Tantangan Panggilan Kontrak EVM adalah mekanisme anti-spam yang memverifikasi ko
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Opsi Konfigurasi
+## Kapan Cocok Digunakan
 
-| Pilihan       | Ketik    | Deskripsi                                                                                       |
-| ------------- | -------- | ----------------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | Rantai yang akan dikueri (misalnya, `eth`, `matic`, `avax`).                                    |
-| `address`     | `string` | Alamat kontrak pintar untuk dihubungi.                                                          |
-| `abi`         | `string` | Fragmen ABI untuk fungsi yang dipanggil.                                                        |
-| `condition`   | `string` | Ekspresi perbandingan yang dievaluasi terhadap nilai pengembalian kontrak (misalnya, `> 1000`). |
-| `error`       | `string` | Pesan kesalahan ditampilkan kepada penulis yang tidak memenuhi ketentuan.                       |
+Gunakan tantangan ini untuk komunitas yang partisipasinya perlu bergantung pada sinyal EVM eksternal: kepemilikan token, kepemilikan NFT, skor proof-of-personhood, keanggotaan tata kelola, atau kondisi lain yang bisa dibaca dari sebuah kontrak.
 
-## Contoh
+Dari sudut pandang penulis, tantangan ini berjalan otomatis setelah dikonfigurasi. Tantangan ini memeriksa sumber dompet atau identitas yang memenuhi syarat, memanggil metode kontrak yang telah dikonfigurasi, lalu membandingkan nilai yang dikembalikan dengan kondisi yang ditetapkan komunitas.
 
-Pemilik komunitas yang ingin membatasi pengeposan kepada penulis yang memiliki lebih dari 1.000 token ERC-20 tertentu akan mengonfigurasi tantangan tersebut dengan:
+## Rujukan Paket Terkini
 
-- `chainTicker`: `"eth"`
-- `address`: alamat kontrak token
-- `abi`: ABI untuk `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Halaman ini sengaja hanya berupa ikhtisar, bukan salinan rujukan konfigurasi. README paket adalah sumber kebenaran untuk nama tantangan, contoh Bitsocial CLI, pendaftaran pkc-js, nilai bawaan opsi, contoh ABI, perilaku RPC, dan sumber dompet yang didukung:
 
-Saat penulis mencoba menerbitkan, tantangan memanggil `balanceOf` dengan alamat penulis dan memeriksa apakah nilai yang dikembalikan memenuhi ketentuan. Jika ya, publikasi akan dilanjutkan; jika tidak, pesan kesalahan yang dikonfigurasi akan dikembalikan.
+- [README Tantangan Kontrak EVM](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+
+Utamakan README upstream saat mengonfigurasi komunitas yang sudah berjalan, karena opsi kontrak dan contoh-contohnya mengikuti versi paket tersebut, bukan versi situs web ini.
 
 ## Kapan Menggunakannya
 
-Tantangan Panggilan Kontrak EVM sangat ideal untuk:
+Tantangan Panggilan Kontrak EVM sangat cocok untuk:
 
-- **Komunitas dengan gerbang token** yang membatasi postingan hanya untuk pemegang token.
-- **Akses dengan gerbang NFT** yang memerlukan kepemilikan NFT tertentu.
-- **Ruang tata kelola DAO** yang partisipasinya terbatas pada pemegang token tata kelola.
+- **Komunitas berbasis kepemilikan token** yang membatasi hak memposting hanya bagi pemegang token.
+- **Akses berbasis NFT** yang mensyaratkan kepemilikan NFT tertentu.
+- **Ruang tata kelola DAO** yang partisipasinya terbatas bagi pemegang token tata kelola.
 
-Untuk komunitas yang tidak bergantung pada identitas on-chain, pertimbangkan [Pemblokiran Spam](./spam-blocker.md) atau [Tantangan Voucher](./voucher-challenge.md) sebagai gantinya.
+Untuk komunitas yang tidak bergantung pada identitas on-chain, pertimbangkan [Pemblokir Spam](./spam-blocker.md) atau [Tantangan Voucher](./voucher-challenge.md).

@@ -1,19 +1,15 @@
 ---
 title: EVM Contract Call Challenge
-description: Roskapostin vastainen haaste, joka tarkistaa ketjun olosuhteet soittamalla EVM-älysopimukseen.
+description: Roskapostin torjuntahaaste, joka tarkistaa ketjussa olevat ehdot kutsumalla EVM-älysopimusta.
 sidebar_position: 4
 ---
 
 # EVM Contract Call Challenge
 
-EVM Contract Call Challenge on roskapostin estomekanismi, joka tarkistaa ketjun olosuhteet ennen julkaisun sallimista. Sen avulla yhteisön omistajat voivat vaatia kirjoittajia täyttämään älykkäissä sopimuksissa määritellyt kriteerit – esimerkiksi vähintään vähimmäissaldo – voidakseen julkaista.
+EVM Contract Call Challenge tarkistaa kirjoittajan ketjussa olevan tilan ennen kuin julkaisu sallitaan. Yhteisön omistajat voivat vaatia, että lompakko tai selvitetty identiteetti täyttää vain lukemiseen perustuvan älysopimusehdon, kuten tietyn vähimmäissaldon, ennen julkaisemista.
 
-**Lähdekoodi:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Vaatimukset
-
-- **Node.js** >= 22
-- **Vain ESM** – tämä paketti ei toimita CommonJS-koontiversioita.
+- **Lähdekoodi ja ajantasainen README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **npm-paketti:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Asennus
 
@@ -21,34 +17,26 @@ EVM Contract Call Challenge on roskapostin estomekanismi, joka tarkistaa ketjun 
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Kokoonpanoasetukset
+## Mihin se sopii
 
-| Vaihtoehto    | Tyyppi   | Kuvaus                                                                                  |
-| ------------- | -------- | --------------------------------------------------------------------------------------- |
-| `chainTicker` | `string` | Kyselyketju (esim. `eth`, `matic`, `avax`).                                             |
-| `address`     | `string` | Älykäs sopimusosoite, johon soittaa.                                                    |
-| `abi`         | `string` | Kutsuttavan funktion ABI-fragmentti.                                                    |
-| `condition`   | `string` | Vertailulauseke, joka on arvioitu suhteessa sopimuksen palautusarvoon (esim. `> 1000`). |
-| `error`       | `string` | Virheilmoitus näytetään kirjoittajille, jotka eivät täytä ehtoa.                        |
+Käytä tätä haastetta yhteisöissä, joissa osallistumisen kuuluu riippua ulkoisesta EVM-signaalista: tokenin omistuksesta, NFT:n omistuksesta, ihmisyyden todentavista pisteistä, hallintojäsenyydestä tai jostain muusta sopimuksesta luettavasta ehdosta.
 
-## Esimerkki
+Kun haaste on kerran määritetty, se toimii kirjoittajan näkökulmasta automaattisesti. Se tarkistaa kelvolliset lompakko- tai identiteettilähteet, kutsuu määritettyä sopimusmetodia ja vertaa palautettua arvoa yhteisön asettamaan ehtoon.
 
-Yhteisön omistaja, joka haluaa rajoittaa lähettämisen kirjoittajiin, joilla on enemmän kuin 1 000 tiettyä ERC-20-tunnusta, määrittää haasteen seuraavasti:
+## Paketin ajantasainen dokumentaatio
 
-- `chainTicker`: `"eth"`
-- `address`: Token-sopimuksen osoite
-- `abi`: ABI mallille `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Tämä sivu on tarkoituksella yleiskatsaus, ei peilattu asetusviite. Paketin README on luotettava lähde haasteiden nimille, Bitsocial CLI -esimerkeille, pkc-js-rekisteröinnille, asetusten oletusarvoille, ABI-esimerkeille, RPC-käyttäytymiselle ja tuetuille lompakkolähteille:
 
-Kun tekijä yrittää julkaista, haaste kutsuu `balanceOf` kirjoittajan osoitteen kanssa ja tarkistaa, täyttääkö palautettu arvo ehdon. Jos näin tapahtuu, julkaisu jatkuu; muussa tapauksessa palautetaan määritetty virhesanoma.
+- [EVM Contract Challenge -paketin README](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Milloin sitä käytetään
+Suosi alkuperäistä README-tiedostoa, kun määrität käytössä olevaa yhteisöä, koska sopimusasetukset ja esimerkit versioidaan kyseisen paketin mukana eikä tämän sivuston mukana.
 
-EVM Contract Call Challenge on ihanteellinen:
+## Milloin sitä kannattaa käyttää
 
-- **Token-gated-yhteisöt**, jotka rajoittavat lähettämisen tunnuksen haltijoille.
-- **NFT-porteilla varustettu pääsy**, jossa vaaditaan tietyn NFT:n omistus.
-- **DAO-hallintatilat**, joihin osallistuminen on rajoitettu hallintotunnuksen haltijoihin.
+EVM Contract Call Challenge sopii erinomaisesti seuraaviin:
 
-Jos yhteisöt eivät ole riippuvaisia ketjun identiteetistä, harkitse sen sijaan [Roskapostin esto](./spam-blocker.md) tai [Lahjakorttihaaste](./voucher-challenge.md).
+- **Tokenilla rajatut yhteisöt**, joissa julkaiseminen on rajattu tokenin haltijoihin.
+- **NFT:llä rajattu pääsy**, jossa vaaditaan tietyn NFT:n omistusta.
+- **DAO-hallintotilat**, joissa osallistuminen on rajattu hallintotokenin haltijoihin.
+
+Jos yhteisö ei nojaa ketjussa olevaan identiteettiin, harkitse sen sijaan vaihtoehtoja [Roskapostin esto](./spam-blocker.md) tai [Voucher Challenge](./voucher-challenge.md).

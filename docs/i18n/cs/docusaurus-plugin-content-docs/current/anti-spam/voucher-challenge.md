@@ -1,34 +1,45 @@
 ---
-title: Voucher Challenge
-description: Antispamová výzva, která omezuje publikování za unikátní kódy voucherů distribuované vlastníky komunity.
+title: Výzva s voucherem
+description: Antispamová výzva, která podmiňuje publikování unikátními kódy voucherů rozdávanými vlastníky komunit.
 sidebar_position: 3
 ---
 
-# Voucher Challenge
+# Výzva s voucherem
 
-Voucher Challenge je antispamový mechanismus, který zajišťuje publikování obsahu za unikátní kódy voucherů. Místo toho, aby se spoléhalo na automatickou detekci, přesouvá důvěru na vlastníka komunity, který ručně distribuuje kódy lidem, kterým důvěřují.
+Voucher Challenge podmiňuje publikování obsahu unikátními kódy voucherů, které rozdává vlastník komunity. Místo spoléhání na automatické hodnocení přesouvá důvěru k ručnímu procesu pozvánek, ve kterém známí lidé dostávají kódy kanálem, jejž vlastník ovládá.
 
-**Zdrojový kód:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Zdrojový kód a aktuální README:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Balíček na npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Instalace
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Jak to funguje
 
-1. Vlastník komunity vygeneruje jeden nebo více jedinečných kódů voucherů.
-2. Vlastník tyto kódy distribuuje důvěryhodným autorům prostřednictvím kanálu, který si zvolí (přímá zpráva, e-mail, osobně atd.).
-3. Když se autor pokusí publikovat, systém výzvy jej vyzve k zadání kódu voucheru.
-4. Kód je ověřen – pokud je pravý a ještě nebyl použit, je zveřejnění přijato.
+1. Vlastník komunity vygeneruje jeden nebo více unikátních kódů voucherů.
+2. Tyto kódy rozdá důvěryhodným autorům kanálem dle vlastní volby (přímá zpráva, e-mail, osobně a podobně).
+3. Když se autor pokusí publikovat, systém výzev jej požádá o kód voucheru.
+4. Kód se ověří – pokud je pravý a dosud nebyl použit, publikace je přijata.
 
-Každý kód voucheru je po uplatnění vázán na konkrétního autora, což zabraňuje opětovnému použití ostatními.
+Každý kód voucheru je po uplatnění navázán na konkrétního autora, což brání jeho opětovnému použití někým jiným.
+
+## Aktuální dokumentace balíčku
+
+Tato stránka je záměrně přehledem, nikoli zrcadleným návodem k nastavení. Zdrojem pravdy pro aktuální názvy výzev, příklady pro Bitsocial CLI, registraci v pkc-js, podporované volby a chování při uplatnění kódu je README balíčku:
+
+- [README balíčku Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+
+Při konfiguraci živé komunity dávejte přednost upstream README, protože volby voucherů a instalační postupy jsou verzované spolu s balíčkem, nikoli s tímto webem.
 
 ## Kdy ji použít
 
-Voucher Challenge se nejlépe hodí pro:
+Výzva s voucherem se nejlépe hodí pro:
 
-- **Komunity pouze pro zvané**, kde je členství záměrně omezeno.
-- **Upravené prostory**, kde majitel osobně prověřuje každého účastníka.
-- **Vysoce důvěryhodná prostředí**, kde je automatické hodnocení spamu zbytečné nebo nežádoucí.
+- **Komunity jen na pozvánku**, kde je členství záměrně omezené.
+- **Kurátorované prostory**, kde vlastník osobně prověřuje každého účastníka.
+- **Prostředí s vysokou mírou důvěry**, kde je automatické hodnocení spamu zbytečné nebo nežádoucí.
 
-Protože vyžaduje ruční distribuci kódu, neškáluje se na velké otevřené komunity. Pro tyto scénáře zvažte místo toho [Spam Blocker](./spam-blocker.md) nebo [EVM Contract Call Challenge](./evm-contract-call.md).
-
-## Integrace
-
-Voucher Challenge se zapojuje do stejného rozhraní výzvy, jaké používají jiné antispamové balíčky v ekosystému Bitsocial. Vlastníci komunity to umožňují prostřednictvím nastavení komunity a výzva se autorům zobrazí automaticky, když se pokusí přidat příspěvek.
+Protože vyžaduje ruční rozdávání kódů, neškáluje se na velké otevřené komunity. Pro takové situace zvažte místo toho [Blokátor spamu](./spam-blocker.md) nebo [Výzvu voláním EVM kontraktu](./evm-contract-call.md).

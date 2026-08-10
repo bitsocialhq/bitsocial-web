@@ -1,29 +1,29 @@
 ---
-title: Telegram Bots
-description: Feed bots që monitorojnë listat e komuniteteve Bitsocial dhe përcjellin postimet në kanalet Telegram.
-sidebar_position: 3
+title: Botët e Telegramit
+description: Bot-e feed-i që monitorojnë listat e komuniteteve Bitsocial dhe i përcjellin postimet në kanalet e Telegramit.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Botët e Telegramit
 
-Bots Bitsocial Telegram monitorojnë listat e komuniteteve të klientëve në rrjetin Bitsocial dhe përcjellin automatikisht postimet e reja në kanalet e Telegramit. Çdo mesazh i përcjellë përfshin butona inline që lidhen me postimin origjinal në 5chan dhe Seedit.
+Botët e Bitsocial për Telegram monitorojnë listat e komuniteteve të klientëve në rrjetin Bitsocial dhe i përcjellin automatikisht postimet e reja në kanalet e Telegramit. Çdo mesazh i përcjellë përmban butona inline që të kthejnë te postimi origjinal në 5chan dhe në Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
-## Bots në dispozicion
+## Botët e Disponueshëm
 
-| Bot              | Statusi     | Përshkrimi                                                                     |
-| ---------------- | ----------- | ------------------------------------------------------------------------------ |
-| **5kanali Feed** | Aktiv       | Monitoron të gjitha drejtoritë 5chan dhe përcjell postimet e reja në Telegram. |
-| **Seedit Feed**  | Planifikuar | Do të ofrojë të njëjtin funksionalitet për komunitetet Seedit.                 |
+| Boti            | Statusi       | Përshkrimi                                                                        |
+| --------------- | ------------- | --------------------------------------------------------------------------------- |
+| **5chan Feed**  | Aktiv         | Monitoron të gjitha direktoritë e 5chan dhe përcjell postimet e reja në Telegram. |
+| **Seedit Feed** | I planifikuar | Do të ofrojë të njëjtin funksionalitet për komunitetet e Seedit.                  |
 
-## Konfigurimi
+## Përgatitja
 
 ### Parakushtet
 
-- Nyja.js
-- fije
-- Një token bot i Telegramit (krijo një nëpërmjet [BotFather](https://t.me/BotFather))
+- Node.js
+- Yarn
+- Një token boti të Telegramit (krijoni një të tillë përmes [BotFather](https://t.me/BotFather))
 
 ### Instalimi
 
@@ -37,25 +37,25 @@ yarn install
 
 ### Konfigurimi
 
-Krijoni një skedar `.env` në rrënjën e projektit me tokenin tuaj të botit:
+Krijoni një skedar `.env` në rrënjën e projektit me token-in e botit tuaj:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Vrapimi
+### Ekzekutimi
 
-Nisni robotin pasi të keni konfiguruar mjedisin tuaj:
+Nisni botin pasi të keni konfiguruar mjedisin tuaj:
 
 ```bash
 yarn start
 ```
 
-## Formati i postimit
+## Formati i Postimit
 
-Kur roboti përcjell një postim në Telegram, ai përfshin dy butona inline:
+Kur boti përcjell një postim në Telegram, ai përfshin dy butona inline:
 
-- **Shiko në 5chan** -- Hap postimin në klientin në internet 5chan.
-- **Shiko në Seedit** -- Hap postimin në klientin e uebit të Seedit.
+- **Shihe në 5chan** -- Hap postimin në klientin ueb të 5chan.
+- **Shihe në Seedit** -- Hap postimin në klientin ueb të Seedit.
 
-Kjo i lejon abonentët e Telegram-it të kalojnë drejtpërdrejt në temën e plotë të diskutimit për cilindo klient që ata preferojnë.
+Kjo u lejon abonentëve në Telegram të kalojnë drejtpërdrejt te fija e plotë e diskutimit, në atë klient që preferojnë.

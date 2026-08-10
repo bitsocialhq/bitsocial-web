@@ -11,17 +11,17 @@ Antes de editar, verifique o histórico do git para obter o código relevante. C
 1. Verifique os títulos de commit recentes (somente títulos) para o arquivo/área:
 
 ```bash
-# Títulos de commits recentes para um arquivo específico
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Títulos de commits recentes para um intervalo de linhas específico
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspecione apenas commits relevantes com diferenças de escopo:
 
 ```bash
-# Mostrar mensagem de commit + diferença para um arquivo
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

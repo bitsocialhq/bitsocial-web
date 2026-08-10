@@ -1,34 +1,45 @@
 ---
-title: Voucher Challenge
-description: Desafío antispam que impide la publicación detrás de códigos de cupón únicos distribuidos por propietarios de comunidades.
+title: Desafío de vales
+description: Desafío antispam que condiciona la publicación a códigos de vale únicos repartidos por quien es dueño de la comunidad.
 sidebar_position: 3
 ---
 
-# Voucher Challenge
+# Desafío de vales
 
-Voucher Challenge es un mecanismo antispam que bloquea la publicación de contenido detrás de códigos de cupón únicos. En lugar de depender de la detección automática, transfiere la confianza al propietario de la comunidad, quien distribuye códigos manualmente a las personas en las que confía.
+Voucher Challenge condiciona la publicación de contenido a códigos de vale únicos que reparte quien es dueño de la comunidad. En lugar de basarse en una puntuación automática, traslada la confianza a un flujo manual de invitaciones en el que personas conocidas reciben códigos por un canal que controla esa misma persona.
 
-**Código fuente:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Código fuente y README actual:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Paquete de npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Instalación
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Cómo funciona
 
-1. El propietario de una comunidad genera uno o más códigos de cupón únicos.
-2. El propietario distribuye esos códigos a autores de confianza a través de un canal de su elección (mensaje directo, correo electrónico, en persona, etc.).
-3. Cuando un autor intenta publicar, el sistema de desafío le solicita un código de cupón.
-4. El código se valida; si es genuino y aún no se ha utilizado, se acepta la publicación.
+1. La persona dueña de la comunidad genera uno o varios códigos de vale únicos.
+2. Reparte esos códigos entre autores de confianza por el canal que prefiera (mensaje directo, correo electrónico, en persona, etc.).
+3. Cuando un autor intenta publicar, el sistema de desafíos le pide un código de vale.
+4. El código se valida: si es auténtico y no se ha usado antes, la publicación se acepta.
 
-Cada código de cupón está vinculado a un autor específico una vez canjeado, lo que impide que otros lo reutilicen.
+Cada código de vale queda vinculado a un autor concreto en cuanto se canjea, de modo que nadie más puede reutilizarlo.
 
-## Cuando usarlo
+## Referencia actual del paquete
 
-Voucher Challenge es más adecuado para:
+Esta página es deliberadamente una visión general, no una copia de la guía de configuración. El README del paquete es la fuente de verdad sobre los nombres actuales de los desafíos, los ejemplos con la CLI de Bitsocial, el registro en pkc-js, las opciones admitidas y el comportamiento del canje:
 
-- **Comunidades solo para invitados** donde la membresía está restringida intencionalmente.
-- **Espacios seleccionados** donde el propietario examina personalmente a cada participante.
-- **Entornos de alta confianza** donde la puntuación automatizada de spam es innecesaria o indeseable.
+- [README de Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Debido a que requiere distribución manual de código, no se adapta a grandes comunidades abiertas. Para esos escenarios, considere [Spam Blocker](./spam-blocker.md) o [EVM Contract Call Challenge](./evm-contract-call.md) en su lugar.
+Cuando configures una comunidad en producción, guíate por el README original, porque las opciones de los vales y los flujos de instalación se versionan con ese paquete y no con este sitio web.
 
-## Integración
+## Cuándo usarlo
 
-Voucher Challenge se conecta a la misma interfaz de desafío utilizada por otros paquetes antispam en el ecosistema Bitsocial. Los propietarios de la comunidad lo habilitan a través de la configuración de su comunidad y el desafío se presenta a los autores automáticamente cuando intentan publicar.
+El desafío de vales encaja mejor en:
+
+- **Comunidades solo por invitación**, donde la pertenencia se restringe a propósito.
+- **Espacios seleccionados**, donde quien es dueño revisa personalmente a cada participante.
+- **Entornos de mucha confianza**, donde la puntuación automática de spam es innecesaria o poco deseable.
+
+Como exige repartir los códigos a mano, no funciona bien en comunidades abiertas y grandes. Para esos casos, considera [Bloqueador de spam](./spam-blocker.md) o el [Desafío de llamada a contrato EVM](./evm-contract-call.md) en su lugar.

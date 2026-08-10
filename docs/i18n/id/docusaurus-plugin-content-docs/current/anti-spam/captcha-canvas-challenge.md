@@ -1,19 +1,15 @@
 ---
-title: Tantangan Kanvas Captcha
-description: Generator captcha berbasis gambar mandiri dengan karakter, dimensi, dan warna yang dapat dikonfigurasi.
+title: Tantangan Captcha Canvas
+description: Tantangan captcha berbasis gambar yang berdiri sendiri untuk komunitas Bitsocial.
 sidebar_position: 2
 ---
 
-# Tantangan Kanvas Captcha
+# Tantangan Captcha Canvas
 
-Captcha Canvas Challenge adalah generator captcha gambar mandiri. Ini merender teks acak ke dalam kanvas HTML dan mengembalikan gambar yang dihasilkan, yang dapat disajikan oleh komunitas kepada penulis sebagai tantangan spam.
+Tantangan Captcha Canvas adalah paket captcha gambar yang berdiri sendiri untuk komunitas Bitsocial. Paket ini menggambar teks acak ke atas sebuah canvas dan memungkinkan komunitas meminta penulis memecahkan gambar tersebut sebelum publikasinya diterima.
 
-**Kode sumber:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Persyaratan
-
-- **Node.js** >= 22
-- **Khusus ESM** -- paket ini tidak mengirimkan build CommonJS.
+- **Kode sumber dan README terkini:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **Paket npm:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Instalasi
 
@@ -21,19 +17,16 @@ Captcha Canvas Challenge adalah generator captcha gambar mandiri. Ini merender t
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Opsi Konfigurasi
+## Kapan Cocok Digunakan
 
-| Pilihan      | Ketik    | Bawaan    | Deskripsi                                               |
-| ------------ | -------- | --------- | ------------------------------------------------------- |
-| `characters` | `number` | `6`       | Jumlah karakter acak yang dirender pada gambar captcha. |
-| `height`     | `number` | `100`     | Tinggi gambar yang dihasilkan dalam piksel.             |
-| `width`      | `number` | `300`     | Lebar gambar yang dihasilkan dalam piksel.              |
-| `colors`     | `string` | `#32cf7e` | Warna primer yang digunakan untuk teks captcha.         |
+Tantangan captcha berguna ketika sebuah komunitas menginginkan gerbang interaktif sederhana untuk menahan spam dengan risiko rendah. Paket ini sengaja dibuat sempit: paket ini menyediakan implementasi tantangannya, sedangkan komunitas atau node Bitsocial yang menentukan kapan dan bagaimana tantangan itu ditampilkan.
 
-## Cara Kerjanya
+Untuk perlindungan yang lebih kuat, padukan dengan sistem moderasi atau penilaian risiko yang lebih luas, alih-alih memperlakukan captcha sebagai strategi anti-spam yang lengkap.
 
-1. Generator mengambil string acak dengan panjang yang dikonfigurasi.
-2. String dirender ke kanvas dengan noise visual untuk menahan OCR.
-3. Gambar yang dihasilkan (dan jawaban yang diharapkan) dikembalikan sehingga aplikasi pemanggil dapat menyajikan tantangan dan kemudian memverifikasi responsnya.
+## Rujukan Paket Terkini
 
-Karena paket ini adalah generator gambar murni, paket ini tidak menangani manajemen jaringan atau sesi sendiri. Hal ini dimaksudkan untuk diintegrasikan ke dalam aliran tantangan yang lebih besar -- misalnya, sebagai salah satu jenis tantangan yang didukung oleh [Pemblokir Spam](./spam-blocker.md).
+Halaman ini sengaja hanya berupa ikhtisar, bukan salinan panduan penyiapan. README paket adalah sumber kebenaran untuk nama tantangan terkini, contoh pendaftaran, contoh CLI, opsi yang didukung, persyaratan, dan catatan keamanan:
+
+- [README Tantangan Captcha Canvas](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Utamakan README upstream saat mengonfigurasi komunitas yang sudah berjalan, karena opsi paket dan alur instalasinya mengikuti versi paket tersebut, bukan versi situs web ini.

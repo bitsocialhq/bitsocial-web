@@ -7,6 +7,6 @@
 - Товар: F001
 - Підсумок: замініть це підсумком сеансу.
 - Файли: `path/to/file`
-- Перевірка: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Перевірка: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Блокатори: немає
 - Далі: замініть це наступним найкращим доповненням.

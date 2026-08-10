@@ -11,17 +11,17 @@ Abans d'editar, comproveu l'historial de git per trobar el codi rellevant. És p
 1. Escaneja els títols de confirmació recents (només els títols) per al fitxer/àrea:
 
 ```bash
-# Títols de confirmació recents per a un fitxer específic
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Títols de confirmació recents per a un interval de línies concret
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspeccioneu només les confirmacions rellevants amb diferències d'abast:
 
 ```bash
-# Mostra missatge de confirmació + diferència per a un fitxer
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

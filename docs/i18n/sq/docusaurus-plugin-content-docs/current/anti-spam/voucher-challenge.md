@@ -1,34 +1,45 @@
 ---
-title: Voucher Challenge
-description: Sfida anti-spam që boton pas kodeve unike të kuponëve të shpërndarë nga pronarët e komunitetit.
+title: Sfida Voucher
+description: Sfidë kundër spamit që e kushtëzon publikimin me kode unike voucher-i të shpërndara nga pronarët e komuniteteve.
 sidebar_position: 3
 ---
 
-# Voucher Challenge
+# Sfida Voucher
 
-Sfida e kuponit është një mekanizëm anti-spam që mbulon publikimin e përmbajtjes pas kodeve unike të kuponëve. Në vend që të mbështetet në zbulimin e automatizuar, ai e zhvendos besimin te pronari i komunitetit, i cili shpërndan manualisht kodet te njerëzit që u besojnë.
+Sfida Voucher e kushtëzon publikimin e përmbajtjes me kode unike voucher-i të shpërndara nga pronari i komunitetit. Në vend që të mbështetet te vlerësimi i automatizuar, ajo e zhvendos besimin te një rrjedhë manuale ftesash, ku njerëzit e njohur marrin kode përmes një kanali që e kontrollon pronari.
 
-**Kodi burimor:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Kodi burimor dhe README-ja aktuale:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Paketa npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Instalimi
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Si funksionon
 
-1. Një pronar i komunitetit gjeneron një ose më shumë kode unike kupon.
-2. Pronari ua shpërndan ato kode autorëve të besuar përmes një kanali të zgjedhur prej tyre (mesazh direkt, email, personalisht, etj.).
-3. Kur një autor përpiqet të publikojë, sistemi sfidues i kërkon një kod kupon.
-4. Kodi është vërtetuar -- nëse është i vërtetë dhe nuk është përdorur tashmë, publikimi pranohet.
+1. Pronari i një komuniteti gjeneron një ose më shumë kode unike voucher-i.
+2. Pronari ua shpërndan ato kode autorëve të besuar përmes një kanali sipas zgjedhjes së tij (mesazh i drejtpërdrejtë, email, personalisht etj.).
+3. Kur një autor përpiqet të publikojë, sistemi i sfidës i kërkon një kod voucher-i.
+4. Kodi validohet -- nëse është i vërtetë dhe nuk është përdorur më parë, publikimi pranohet.
 
-Çdo kod kupon është i lidhur me një autor specifik pasi të jetë shlyer, duke parandaluar ripërdorimin nga të tjerët.
+Sapo shlyhet, çdo kod voucher-i lidhet me një autor të caktuar, duke penguar ripërdorimin nga të tjerët.
+
+## Referenca aktuale e paketës
+
+Kjo faqe është me qëllim një përmbledhje, jo një kopje e udhëzuesit të konfigurimit. README-ja e paketës është burimi i së vërtetës për emrat aktualë të sfidave, shembujt me Bitsocial CLI, regjistrimin në pkc-js, opsionet e mbështetura dhe sjelljen e shlyerjes:
+
+- [README-ja e Sfidës Voucher](https://github.com/bitsocialnet/voucher-challenge#readme)
+
+Kur konfiguroni një komunitet të gjallë, preferoni README-në e burimit, sepse opsionet e voucher-it dhe rrjedhat e instalimit versionohen bashkë me atë paketë, jo me këtë faqe.
 
 ## Kur ta përdorni
 
-Sfida e kuponit është më e përshtatshme për:
+Sfida Voucher është më e përshtatshme për:
 
-- **Komunitetet vetëm me ftesa** ku anëtarësimi është i kufizuar qëllimisht.
-- **Hapësira të kuruara** ku pronari kontrollon personalisht çdo pjesëmarrës.
-- **Mjedise me besim të lartë ** ku vlerësimi i automatizuar i postës së padëshiruar është i panevojshëm ose i padëshirueshëm.
+- **Komunitete vetëm me ftesë** ku anëtarësia kufizohet me qëllim.
+- **Hapësira të kuruara** ku pronari verifikon personalisht çdo pjesëmarrës.
+- **Mjedise me besim të lartë** ku vlerësimi i automatizuar i spamit është i panevojshëm ose i padëshiruar.
 
-Për shkak se kërkon shpërndarje manuale të kodit, ai nuk shtrihet në komunitete të mëdha të hapura. Për ata skenarë, merrni parasysh [Spam Blocker](./spam-blocker.md) ose [EVM Contract Call Challenge](./evm-contract-call.md).
-
-## Integrimi
-
-Sfida e kuponit futet në të njëjtën ndërfaqe sfiduese të përdorur nga paketa të tjera anti-spam në ekosistemin Bitsocial. Pronarët e komunitetit e mundësojnë atë përmes cilësimeve të komunitetit të tyre dhe sfida u paraqitet autorëve automatikisht kur ata përpiqen të postojnë.
+Meqë kërkon shpërndarje manuale kodesh, nuk shkallëzohet për komunitete të mëdha e të hapura. Për ato skenarë, shqyrtoni në vend të saj [Spam Blocker](./spam-blocker.md) ose [Sfidën e thirrjes së kontratës EVM](./evm-contract-call.md).

@@ -7,6 +7,6 @@
 - العنصر: F001
 - ملخص: استبدل هذا بملخص الجلسة.
 - الملفات: `path/to/file`
-- التحقق: `corepack yarn build`، `corepack yarn lint`، `corepack yarn typecheck`
+- التحقق: `corepack yarn build:verify`، `corepack yarn lint`، `corepack yarn typecheck`
 - المانعون: لا يوجد
 - التالي: استبدل هذا بالمتابعة الأفضل التالية.

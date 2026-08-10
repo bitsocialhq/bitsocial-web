@@ -1,15 +1,15 @@
 ---
 title: BSO Resolver
-description: Resuelva nombres de dominio .bso en claves públicas utilizando registros TXT de ENS, con almacenamiento en caché integrado y soporte multiplataforma.
+description: Resuelve nombres de dominio .bso a claves públicas mediante los registros TXT de Bitsocial.
 sidebar_position: 1
 ---
 
 # BSO Resolver
 
-BSO Resolver traduce los nombres de dominio `.bso` a sus claves públicas correspondientes leyendo los registros TXT de Bitsocial almacenados en ENS. Proporciona un cliente viem compartido, almacenamiento en caché persistente y funciona tanto en entornos Node.js como de navegador.
+BSO Resolver traduce los nombres de dominio `.bso` a sus claves públicas correspondientes leyendo los registros TXT de Bitsocial. Es el paquete de resolución que usan las herramientas de Bitsocial cuando un nombre `.bso` de cara al usuario tiene que convertirse en el material de clave que entiende la pila peer-to-peer.
 
-- **GitHub**: [bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver)
-- **Licencia**: solo GPL-2.0
+- **Código fuente y README actual:** [github.com/bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver#readme)
+- **Paquete de npm:** [`@bitsocial/bso-resolver`](https://www.npmjs.com/package/@bitsocial/bso-resolver)
 
 ## Instalación
 
@@ -17,73 +17,16 @@ BSO Resolver traduce los nombres de dominio `.bso` a sus claves públicas corres
 npm install @bitsocial/bso-resolver
 ```
 
-## Creando un solucionador
+## Dónde encaja
 
-Cree una instancia del solucionador pasando un objeto de configuración al constructor:
+Los nombres de Bitsocial están pensados como puntos de entrada legibles para comunidades y autores. El resolutor mantiene esa capa de nombres separada del código de la aplicación, de modo que los clientes pueden preguntar si un nombre es compatible y resolverlo después a través del punto de entrada que corresponde a cada entorno de ejecución del paquete.
 
-```js
-const resolver = new BsoResolver({ key, provider, dataPath });
-```
+Úsalo cuando estés integrando un cliente, una herramienta de línea de comandos o un servicio compatible con Bitsocial que necesite aceptar nombres `.bso` y no solo claves públicas en bruto.
 
-| Parámetro  | Requerido | Descripción                                                |
-| ---------- | --------- | ---------------------------------------------------------- |
-| `key`      | Sí        | Identificador de la instancia de resolución.               |
-| `provider` | Sí        | Configuración de transporte (ver más abajo).               |
-| `dataPath` | No        | Directorio para el archivo de caché SQLite (solo Node.js). |
+## Referencia del paquete actual
 
-### Opciones de proveedor
+Esta página es a propósito una visión general, y no una copia de la referencia de la API. El README del paquete es la fuente de verdad para las opciones del constructor, los tipos de retorno, el comportamiento de la caché, los puntos de entrada, los ejemplos de proveedores y la semántica de apagado admitida:
 
-El parámetro `provider` acepta tres formatos:
+- [README de BSO Resolver](https://github.com/bitsocialnet/bso-resolver#readme)
 
-- **`"viem"`**: utiliza el transporte público predeterminado proporcionado por viem.
-- **URL HTTP(S)**: se conecta a través de un punto final JSON-RPC (por ejemplo, `https://mainnet.infura.io/v3/YOUR_KEY`).
-- **URL de WebSocket**: se conecta a través de un punto final RPC de WebSocket (por ejemplo, `wss://mainnet.infura.io/ws/v3/YOUR_KEY`).
-
-## Métodos
-
-### `resolve({ name, abortSignal? })`
-
-Busca un nombre `.bso` y devuelve la clave pública asociada. Se puede pasar un `AbortSignal` opcional para cancelar solicitudes de larga duración.
-
-### `canResolve({ name })`
-
-Devuelve un valor booleano que indica si el solucionador puede manejar el nombre de pila. Úselo para verificar el soporte antes de intentar una resolución completa.
-
-### `destroy()`
-
-Derriba el solucionador, cierra las conexiones de la base de datos y libera recursos. Llame a esto cuando el solucionador ya no sea necesario.
-
-## Almacenamiento en caché
-
-Los nombres resueltos se almacenan en caché automáticamente para reducir las búsquedas de red redundantes. El backend de almacenamiento en caché se elige según el entorno de ejecución:
-
-| Medio ambiente | Servidor         | Notas                                                                 |
-| -------------- | ---------------- | --------------------------------------------------------------------- |
-| Nodo.js        | SQLite           | Almacenado en `dataPath`. Utiliza el modo WAL para acceso simultáneo. |
-| Navegador      | DB indexado      | Utiliza transacciones nativas de IndexedDB.                           |
-| Reserva        | En memoria `Map` | Se utiliza cuando ni SQLite ni IndexedDB están disponibles.           |
-
-Todas las entradas de caché tienen un **TTL de una hora** y se eliminan automáticamente después de su vencimiento.
-
-## Integración con pkc-js
-
-El solucionador se puede conectar directamente a pkc-js a través de la opción `nameResolvers`, lo que permite una resolución transparente de nombres `.bso` durante las búsquedas de claves:
-
-```js
-const pkc = new Pkc({
-  nameResolvers: [resolver],
-  // ...other options
-});
-```
-
-## concurrencia
-
-El solucionador está diseñado para ser seguro en uso simultáneo:
-
-- Un único cliente viem compartido evita conexiones redundantes.
-- SQLite opera en modo WAL (Write-Ahead Logging), lo que permite lecturas simultáneas sin bloqueo.
-- El almacenamiento en caché del navegador se basa en transacciones nativas de IndexedDB para su aislamiento.
-
-## Puntos de entrada a la plataforma
-
-El paquete incluye puntos de entrada separados para Node.js y compilaciones de navegador. Los paquetes que admiten el campo `exports` en `package.json` seleccionarán automáticamente el correcto.
+Guíate por el README upstream cuando copies código a un proyecto, porque el comportamiento del resolutor se versiona con ese paquete y no con este sitio web.

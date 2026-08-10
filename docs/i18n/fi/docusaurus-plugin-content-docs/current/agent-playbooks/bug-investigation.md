@@ -11,17 +11,17 @@ Ennen muokkaamista tarkista asianmukainen koodi git-historiasta. Aiemmat kirjoit
 1. Tarkista tiedoston/alueen viimeisimmät toimitusotsikot (vain otsikot):
 
 ```bash
-# Tietyn tiedoston viimeisimmät sitoumusotsikot
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Viimeaikaiset sitoumukset tietylle rivialueelle
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Tarkista vain asiaankuuluvat sitoumukset, joissa on laajennettu ero:
 
 ```bash
-# Näytä vahvistusviesti + erotus yhdelle tiedostolle
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

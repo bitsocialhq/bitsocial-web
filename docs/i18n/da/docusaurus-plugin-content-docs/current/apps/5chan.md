@@ -1,12 +1,12 @@
 ---
-title: 5 chan
+title: 5chan
 description: Et serverløst, decentraliseret imageboard bygget på Bitsocial-protokollen, hvor alle kan oprette og eje boards.
 sidebar_position: 1
 ---
 
-# 5 chan
+# 5chan
 
-5chan er et serverløst, adminløst og fuldt decentraliseret imageboard, der kører på Bitsocial-protokollen. Den følger den velkendte imageboard-biblioteksstruktur, mens den introducerer decentraliseret ejerskab - alle kan oprette en bestyrelse, og flere bestyrelser kan konkurrere om den samme mappeplads gennem en afstemningsmekanisme.
+5chan er et serverløst, administratorløst og fuldt decentraliseret imageboard, der kører på Bitsocial-protokollen. Det følger den velkendte katalogstruktur fra imageboards, men tilføjer decentraliseret ejerskab — alle kan oprette et board, og flere boards kan konkurrere om den samme plads i kataloget gennem en afstemningsmekanisme.
 
 ## Downloads
 
@@ -16,24 +16,29 @@ sidebar_position: 1
 | Desktop  | Tilgængelig til Mac, Windows og Linux |
 | Mobil    | Tilgængelig til Android               |
 
-## Hvordan tavler fungerer
+## Sådan fungerer boards
 
-5chan organiserer indhold i tavler ved hjælp af et klassisk bibliotekslayout (f.eks. `/b/`, `/g/`). I modsætning til traditionelle imageboards, hvor en central administrator kontrollerer hvert board, giver 5chan enhver bruger mulighed for at oprette og fuldt ud eje deres eget board. Når flere boards målretter mod den samme mappeplads, konkurrerer de om denne position ved at stemme.
+5chan organiserer indhold i boards ved hjælp af et klassisk katalogopsæt (f.eks. `/b/`, `/g/`). I modsætning til traditionelle imageboards, hvor en central administrator styrer hvert board, lader 5chan enhver bruger oprette og fuldt ud eje sit eget board. Når flere boards sigter mod den samme plads i kataloget, konkurrerer de om positionen gennem afstemning.
 
-### Oprettelse af en tavle
+### Sådan opretter du et board
 
-For at oprette en ny tavle skal du køre `bitsocial-cli` som en peer-to-peer node. Dette sikrer, at dit board hostes på en decentral måde uden at være afhængig af nogen central server.
+For at oprette et nyt board skal du køre `bitsocial-cli` som en peer-to-peer-node. Det sikrer, at dit board hostes decentraliseret uden at læne sig op ad nogen central server.
 
-### Directory opgaver
+### Tildeling af katalogpladser
 
-Katalogslottildelinger (hvilket bord vises på hvilken sti) administreres i øjeblikket gennem GitHub pull-anmodninger til `5chan-directories.json`-filen. Dette er en midlertidig proces - fremtidige udgivelser vil understøtte oprettelse af tavler i appen og pubsub-baseret afstemning for at håndtere mappetildelinger automatisk.
+Tildelingen af katalogpladser (hvilket board der vises på hvilken sti) styres i øjeblikket gennem pull requests på GitHub til filen `5chan-directories.json`. Det er en midlertidig proces — kommende udgivelser vil understøtte oprettelse af boards direkte i appen samt pubsub-baseret afstemning, så tildelingerne håndteres automatisk.
 
-## Internaler
+## Interne detaljer
 
-Under hætten bruger 5chan det delte Bitsocial-protokol-klientlag til sine netværksinteraktioner. Webappen på 5chan.app kan også køre en Helia-node i browseren, når browseren P2P er aktiveret fra Avancerede indstillinger, så læsere kan indlæse fra peers uden en centraliseret IPFS-gateway. Se browserens P2P-sektion i peer-to-peer-protokollen.
+Under motorhjelmen bruger 5chan det fælles klientlag i Bitsocial-protokollen til sine
+netværksinteraktioner. Webappen på 5chan.app kører som standard en Helia-node i browseren, så en
+helt almindelig fane tilslutter sig netværket som peer: den henter boards fra andre peers og
+publicerer over pubsub, uden en centraliseret IPFS-gateway i indholdsstien. Se
+[Peer-to-peer i browseren](/browser-p2p/) for, hvad det indebærer, og hvad en browsernode fortsat
+ikke kan.
 
 ## Links
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
 - **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Licens**: Kun GPL-2.0
+- **Licens**: GPL-2.0-only

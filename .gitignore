@@ -13,6 +13,7 @@ about/test-results
 !.yarn/patches/**
 *.local
 .DS_Store
+__pycache__/
 bun.lock
 bun.lockb
 .cursor/worktrees.json

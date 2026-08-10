@@ -1,19 +1,15 @@
 ---
 title: EVM Contract Call Challenge
-description: Anti-Spam-Herausforderung, die die Bedingungen in der Kette durch den Aufruf eines EVM-Smart-Vertrags überprüft.
+description: Anti-Spam-Prüfung, die On-Chain-Bedingungen über den Aufruf eines EVM-Smart-Contracts überprüft.
 sidebar_position: 4
 ---
 
 # EVM Contract Call Challenge
 
-EVM Contract Call Challenge ist ein Anti-Spam-Mechanismus, der die Bedingungen in der Kette überprüft, bevor eine Veröffentlichung zugelassen wird. Damit können Community-Eigentümer von Autoren verlangen, dass sie Kriterien erfüllen, die durch Smart-Contracts definiert werden – zum Beispiel das Halten eines Mindest-Token-Guthabens –, um Beiträge zu veröffentlichen.
+EVM Contract Call Challenge prüft den On-Chain-Zustand eines Autors, bevor eine Veröffentlichung zugelassen wird. Betreiber einer Community können verlangen, dass eine Wallet oder eine aufgelöste Identität vor dem Posten eine nur lesende Bedingung in einem Smart Contract erfüllt, etwa ein Mindestguthaben an Token.
 
-**Quellcode:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## Anforderungen
-
-- **Node.js** >= 22
-- **Nur ESM** – dieses Paket liefert keine CommonJS-Builds.
+- **Quellcode und aktuelle README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **npm-Paket:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## Installation
 
@@ -21,34 +17,26 @@ EVM Contract Call Challenge ist ein Anti-Spam-Mechanismus, der die Bedingungen i
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## Konfigurationsoptionen
+## Wofür es gedacht ist
 
-| Option        | Geben Sie | ein Beschreibung                                                                                |
-| ------------- | --------- | ----------------------------------------------------------------------------------------------- |
-| `chainTicker` | `string`  | Die abzufragende Kette (z. B. `eth`, `matic`, `avax`).                                          |
-| `address`     | `string`  | Die aufzurufende Smart-Contract-Adresse.                                                        |
-| `abi`         | `string`  | Das ABI-Fragment für die aufgerufene Funktion.                                                  |
-| `condition`   | `string`  | Ein Vergleichsausdruck, der anhand des Vertragsrückgabewerts ausgewertet wird (z. B. `> 1000`). |
-| `error`       | `string`  | Die Fehlermeldung wird Autoren angezeigt, die die Bedingung nicht erfüllen.                     |
+Nutzen Sie diese Prüfung für Communities, in denen die Teilnahme von einem externen EVM-Signal abhängen soll: Token-Besitz, NFT-Besitz, Bewertungen aus Proof of Personhood, Governance-Mitgliedschaft oder eine andere aus einem Contract auslesbare Bedingung.
 
-## Beispiel
+Aus Sicht des Autors läuft die Prüfung nach der Konfiguration automatisch ab. Sie sieht sich die infrage kommenden Wallet- oder Identitätsquellen an, ruft die konfigurierte Contract-Methode auf und vergleicht den zurückgegebenen Wert mit der Bedingung der Community.
 
-Ein Community-Eigentümer, der das Posten auf Autoren beschränken möchte, die mehr als 1.000 eines bestimmten ERC-20-Tokens besitzen, würde die Herausforderung wie folgt konfigurieren:
+## Aktuelle Paketreferenz
 
-- `chainTicker`: `"eth"`
-- `address`: die Token-Vertragsadresse
-- `abi`: der ABI für `balanceOf(address)`
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+Diese Seite ist bewusst eine Übersicht und keine gespiegelte Konfigurationsreferenz. Die README des Pakets ist die maßgebliche Quelle für die Namen der Prüfungen, Beispiele für die Bitsocial CLI, die Registrierung in pkc-js, Standardwerte der Optionen, ABI-Beispiele, RPC-Verhalten und unterstützte Wallet-Quellen:
 
-Wenn ein Autor versucht zu veröffentlichen, ruft die Challenge `balanceOf` mit der Adresse des Autors auf und prüft, ob der zurückgegebene Wert die Bedingung erfüllt. Ist dies der Fall, wird die Veröffentlichung fortgesetzt. andernfalls wird die konfigurierte Fehlermeldung zurückgegeben.
+- [README von EVM Contract Challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## Wann man es verwendet
+Halten Sie sich beim Einrichten einer produktiven Community lieber an die README im Upstream, denn Contract-Optionen und Beispiele werden mit diesem Paket versioniert und nicht mit dieser Website.
 
-Die EVM Contract Call Challenge ist ideal für:
+## Wann Sie sie einsetzen sollten
 
-- **Token-Gated-Communities**, die das Posten auf Token-Inhaber beschränken.
-- **NFT-geschützter Zugriff**, bei dem der Besitz eines bestimmten NFT erforderlich ist.
-- **DAO-Governance-Bereiche**, an denen die Teilnahme auf Governance-Token-Inhaber beschränkt ist.
+EVM Contract Call Challenge eignet sich besonders für:
 
-Für Communities, die nicht auf On-Chain-Identität angewiesen sind, sollten Sie stattdessen [Spam-Blocker](./spam-blocker.md) oder [Gutschein-Challenge](./voucher-challenge.md) in Betracht ziehen.
+- **Communities mit Token-Zugang**, die das Posten auf Token-Halter beschränken.
+- **Zugang über NFTs**, bei dem der Besitz eines bestimmten NFT verlangt wird.
+- **Räume für DAO-Governance**, in denen nur Halter des Governance-Tokens teilnehmen.
+
+Für Communities, die nicht auf eine On-Chain-Identität setzen, kommen stattdessen [Spam Blocker](./spam-blocker.md) oder [Voucher Challenge](./voucher-challenge.md) infrage.

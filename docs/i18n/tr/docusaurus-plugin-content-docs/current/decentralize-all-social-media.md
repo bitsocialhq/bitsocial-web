@@ -1,52 +1,69 @@
 ---
-title: Tüm Sosyal Medyayı Merkezi Olmayan Hale Getirin
-description: Bitsocial master planının 5. Aşaması ve hedeflediği son durum.
+title: Tüm Sosyal Medyayı Merkeziyetsizleştirin
+description: Ana planın, Bitsocial sosyal istemcilerinin uzun kuyruğunu finanse etmeye ve geliştirmeye odaklanan 5. aşaması.
 ---
 
-# Tüm Sosyal Medyayı Merkezi Olmayan Hale Getirin
+# Tüm Sosyal Medyayı Merkeziyetsizleştirin
 
-Bu, Bitsocial ana planının tanımladığı son durumdur: tek bir uygulama değil, sosyal medyanın her büyük kategorisine rakip olabilecek bir Bitsocial uygulamaları ekosistemi.
+Varılacak nokta tek bir uygulama değildir. Platform sahipliğinin yerine protokol rekabetini
+koyabilecek bir istemci, düğüm, hizmet ve topluluk pazarıdır.
 
-## Model
+Beşinci aşama, Bitsocial'ın ilk öncelikli kategorilerin ötesine geçtiği ve mümkün olduğunca çok
+sosyal formatı finanse etmeye başladığı yerdir.
 
-Ağın önerilen olgun durumunda:
+## Hâlâ inşa edilmesi gerekenler
 
-- birden çok genel RPC sağlayıcısı, profil düğümlerini barındırmak için rekabet eder
-- kullanıcılar yine de kendilerini barındırabilirler
-- besleme algoritmaları zorunlu platform yasası yerine isteğe bağlı hizmetler haline geliyor
-- Para kazanma, bankaların platformu canlı tutmaya istekli olmalarına bağlı değil
-- uygulamalar ürün kalitesi, keşif ve arayüz tasarımı konusunda rekabet ediyor
+İlk aşamalar en yüksek kaldıraca sahip kategorilere odaklanır: imageboard'lar, forumlar, genel RPC,
+Bitsocial Chain, profil düğümleri, 3. aşamadaki Twitter/X alternatifi ve bunların etrafındaki hizmet
+ekonomisi.
 
-## Başarı nasıl görünür
+Bundan sonra ağın uzun kuyruğa doğru genişlemesi gerekir:
 
-Bitsosyal uygulamalar, yalnızca tek bir alanda değil, farklı formatlarda platformlara meydan okuyabilmelidir:
+- blog istemcileri
+- kitle fonlaması uygulamaları
+- içerik üreticisi videoları ve güvenilir bir [YouTube alternatifi](https://github.com/bitsocialnet/wetube)
+- içerik üreticisi toplulukları
+- kısa biçimli medya denemeleri
+- yerel veya belirli bir dile özgü sosyal uygulamalar
+- ilk dört aşama için fazla küçük kalan niş istemciler
+- mevcut toplulukların yönetimini kolaylaştıran araçlar
 
-- metin ve tartışma
-- resim panoları
-- forumlar
-- yaratıcı toplulukları
-- kısa biçimli video ve daha geniş medya ürünleri
+Bu uygulamaların bazıları açık kaynak olabilir. Bazıları merkezi istemciler olabilir. Bazılarını
+Bitsocial Forge geliştirebilir, çoğunu ise bağımsız geliştiricilerin geliştirmesi gerekir.
 
-Amaç herkese tek bir evrensel arayüz dayatmak değil. Birçok uygulamanın aynı temel topluluklara, kimliklere ve ağa erişmesini sağlamaktır.
+## Birçok geliştiriciyi finanse etmek
 
-## RPC katmanı neden burada önemlidir?
+Amaç, yeni sosyal istemcilerin platform ölçeğinde bir ilgi görmesini beklemeden finanse edilebilir
+olmasını sağlamaktır.
 
-Her zaman açık topluluklar ve profiller, halka açık RPC pazarları var olduğunda çok daha pratik hale gelir. Bu katman olmadan, kendi kendine barındırma, özellikle mobil cihazlarda birçok kullanıcı için çok yüksek sürtünmeye neden olur.
+Bu; doğrudan yatırımı, hibeleri, topluluk finansmanını, başarılı Bitsocial hizmetlerinden elde edilen
+geliri ya da hangi geliştiricilerin destek alacağına daha geniş Bitsocial topluluğunun karar
+vermesine yardımcı olduğu merkeziyetsiz hibe programlarını kapsayabilir.
 
-## Ağ katmanı neden burada önemlidir?
+Önemli olan çoğulculuktur. Ağ, tek bir resmî uygulamanın her kategoriyi kapsamasını beklemek yerine
+birçok girişimi finanse etmelidir.
 
-İçerikten para kazanma, sıradan bankacılık veya platform baskısıyla kesilebiliyorsa ekosistem kırılgan kalır. Bitsosyal Ağ, uzun vadeli rekabeti daha inandırıcı hale getiren ekonomik katman olarak öneriliyor.
+## Başarı neye benzer
 
-## Çekirdek bahis
-
-Büyük bahis, sosyal medyanın değiştirilebilir katmanlara bölünebilmesidir:
+Sosyal medya, değiştirilebilir katmanlara ayrılabildiğinde Bitsocial başarılı olur:
 
 - protokol
 - topluluklar
 - kimlik
 - barındırma
 - keşif
+- moderasyon
 - para kazanma
 - uygulamalar
 
-Bu katmanlar değiştirilebildiğinde, ürünün çalışması için hiçbir şirketin sosyal grafiğin tamamına sahip olması gerekmiyor.
+Bu katmanlar değiştirilebilir hâle geldiğinde, ürünün çalışması için tek bir şirketin tüm sosyal
+grafiğe sahip olması gerekmez.
+
+## Temel iddia
+
+Olgun bir Bitsocial ekosistemi; genel RPC'ler, kendi kendine barındırılan düğümler, akış algoritması
+pazarları, medya barındırıcıları, keşif hizmetleri, açık kaynak istemciler, ticari istemciler ve
+toplulukça finanse edilen denemeler içermelidir.
+
+Sosyal medya nihayet dengesini bulur: tamamen merkeziyetsiz, eşler arası ve kimsenin sahibi olmadığı
+bir sosyal ağ; Bitsocial.

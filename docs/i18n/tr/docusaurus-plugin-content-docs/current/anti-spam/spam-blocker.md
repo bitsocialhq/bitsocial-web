@@ -1,83 +1,79 @@
 ---
 title: Spam Blocker
-description: Risk puanlaması, OAuth sorgulamaları ve yapılandırılabilir katman eşikleri ile merkezi spam algılama hizmeti.
+description: Risk puanlaması, OAuth doğrulamaları ve yapılandırılabilir kademe eşikleri sunan merkezi spam tespit hizmeti.
 sidebar_position: 1
 ---
 
 # Spam Blocker
 
-:::warning Eski Adlandırma
-Bu paket ilk olarak `@plebbit` kapsamı altında yayımlandı. `@bitsocial/spam-blocker-server` ve `@bitsocial/spam-blocker-challenge` olarak yeniden adlandırıldı. Eski adlara yapılan atıflar hâlâ eski belgelerde veya kod tabanlarında görünebilir.
-:::
+Spam Blocker, gelen yayınları değerlendirip onlara risk puanı atayan merkezi bir spam tespit hizmetidir. İki paketten oluşur:
 
-Spam Engelleyici, gelen yayınları değerlendiren ve risk puanları atayan merkezi bir spam algılama hizmetidir. İki paketten oluşur:
-
-- **`@bitsocial/spam-blocker-server`** -- değerlendirme ve sorgulama API'lerini barındıran HTTP sunucusu.
-- **`@bitsocial/spam-blocker-challenge`** -- toplulukların yayınları değerlendirmeye göndermek üzere entegre ettiği hafif bir istemci paketi.
+- **`@bitsocial/spam-blocker-server`** -- değerlendirme ve doğrulama API'lerini barındıran HTTP sunucusu.
+- **`@bitsocial/spam-blocker-challenge`** -- toplulukların, yayınları değerlendirmeye göndermek için entegre ettiği hafif istemci paketi.
 
 **Kaynak kodu:** [github.com/bitsocialnet/spam-blocker](https://github.com/bitsocialnet/spam-blocker)
 
-## Risk Puanlaması Nasıl Çalışır?
+## Risk Puanlaması Nasıl Çalışır
 
-`/evaluate` uç noktasına gönderilen her yayın sayısal bir risk puanı alır. Skor, çeşitli sinyallerin ağırlıklı bir kombinasyonudur:
+`/evaluate` uç noktasına gönderilen her yayın sayısal bir risk puanı alır. Puan, birkaç sinyalin ağırlıklı birleşimidir:
 
-| Sinyal         | Açıklama                                                                                                                                         |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Hesap yaşı     | Daha yeni hesaplar daha yüksek risk puanları alır.                                                                                               |
-| Karma          | Birikmiş topluluk karması riski azaltır.                                                                                                         |
-| Yazar itibarı  | Arka plandaki ağ indeksleyici tarafından toplanan itibar verileri.                                                                               |
-| İçerik analizi | Metin düzeyinde buluşsal yöntemler (bağlantı yoğunluğu, bilinen spam kalıpları vb.).                                                             |
-| Hız            | Aynı yazarın hızlı ve art arda gönderileri riski artırır.                                                                                        |
-| IP istihbaratı | Ülke düzeyinde coğrafi konum ve tehdit akışı aramaları. Yalnızca ülke kodları saklanır; ham IP adresleri hiçbir zaman topluluklarla paylaşılmaz. |
+| Sinyal         | Açıklama                                                                                                                           |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Hesap yaşı     | Yeni açılmış hesaplar daha yüksek risk puanı alır.                                                                                 |
+| Karma          | Biriken topluluk karması riski azaltır.                                                                                            |
+| Yazar itibarı  | Arka planda çalışan ağ indeksleyicisinin topladığı itibar verileri.                                                                |
+| İçerik analizi | Metin düzeyindeki sezgisel kurallar (bağlantı yoğunluğu, bilinen spam kalıpları vb.).                                              |
+| Hız            | Aynı yazardan art arda gelen hızlı gönderiler riski artırır.                                                                       |
+| IP istihbaratı | Ülke düzeyinde konum ve tehdit listesi sorguları. Yalnızca ülke kodları saklanır; ham IP adresleri topluluklarla asla paylaşılmaz. |
 
-## Katman Eşikleri
+## Kademe Eşikleri
 
-Risk puanı, daha sonra ne olacağını belirleyen dört yapılandırılabilir katmandan biriyle eşleşir:
+Risk puanı, sonrasında ne olacağını belirleyen dört yapılandırılabilir kademeden birine denk gelir:
 
-1. **Otomatik kabul** -- Puan, yayının herhangi bir zorlukla karşılaşılmadan onaylanmasına yetecek kadar düşüktür.
-2. **OAuth yeterli** -- yazarın devam etmek için bir OAuth doğrulamasını tamamlaması gerekir.
-3. **OAuth-plus-more** -- OAuth tek başına yeterli değildir; ek doğrulama (ör. CAPTCHA) gereklidir.
-4. **Otomatik reddetme** -- puan çok yüksek; yayın doğrudan reddedilir.
+1. **Otomatik kabul** -- puan, yayının hiçbir doğrulama istenmeden onaylanacağı kadar düşüktür.
+2. **OAuth yeterli** -- yazarın devam edebilmek için bir OAuth doğrulamasını tamamlaması gerekir.
+3. **OAuth ve fazlası** -- OAuth tek başına yetmez; ek bir doğrulama (örneğin CAPTCHA) gerekir.
+4. **Otomatik ret** -- puan fazla yüksektir; yayın doğrudan reddedilir.
 
-Tüm eşik değerleri topluluğa göre yapılandırılabilir.
+Tüm eşik değerleri her topluluk için ayrı ayrı yapılandırılabilir.
 
-## Mücadele Akışı
+## Doğrulama Akışı
 
-Bir yayın doğrulama gerektiren bir aşamaya düştüğünde sorgulama akışı başlar:
+Bir yayın, doğrulama gerektiren bir kademeye düştüğünde doğrulama akışı başlar:
 
-1. Yazardan önce **OAuth** (GitHub, Google, Twitter ve diğer desteklenen sağlayıcılar) aracılığıyla kimlik doğrulaması yapması istenir.
-2. Tek başına OAuth yetersizse (3. aşama), Cloudflare Turnstile tarafından desteklenen bir **CAPTCHA geri dönüşü** sunulur.
-3. OAuth kimliği yalnızca doğrulama amacıyla kullanılır; toplulukla veya diğer kullanıcılarla **asla paylaşılmaz**.
+1. Yazardan önce **OAuth** (GitHub, Google, Twitter ve desteklenen diğer sağlayıcılar) ile kimliğini doğrulaması istenir.
+2. OAuth tek başına yetersiz kalıyorsa (3. kademe), Cloudflare Turnstile ile çalışan bir **CAPTCHA yedeği** gösterilir.
+3. OAuth kimliği yalnızca doğrulama için kullanılır; toplulukla ya da diğer kullanıcılarla **asla paylaşılmaz**.
 
 ## API Uç Noktaları
 
 ### `POST /evaluate`
 
-Risk değerlendirmesi için bir yayın gönderin. Hesaplanan risk puanını ve gerekli zorluk katmanını döndürür.
+Bir yayını risk değerlendirmesine gönderir. Hesaplanan risk puanını ve gereken doğrulama kademesini döndürür.
 
 ### `POST /challenge/verify`
 
-Tamamlanan sorgulamanın sonucunu (OAuth jetonu, CAPTCHA çözümü veya her ikisi) doğrulama için gönderin.
+Tamamlanmış bir doğrulamanın sonucunu (OAuth jetonu, CAPTCHA çözümü ya da her ikisi) denetlenmek üzere gönderir.
 
 ### `GET /iframe/:sessionId`
 
-Belirli bir oturum için uygun sınama kullanıcı arayüzünü oluşturan katıştırılabilir bir HTML sayfası döndürür.
+Verilen oturuma uygun doğrulama arayüzünü görüntüleyen, gömülebilir bir HTML sayfası döndürür.
 
-## Hız Sınırlaması
+## Hız Sınırlama
 
-Oran sınırları, yazarın yaşı ve itibarına göre dinamik olarak uygulanır. Daha yeni veya daha az itibara sahip yazarlar daha katı sınırlarla karşı karşıya kalırken, köklü yazarlar daha cömert eşiklerden yararlanır. Bu, güvenilen katılımcıları cezalandırmadan spam taşmasını önler.
+Hız sınırları, yazarın hesap yaşına ve itibarına göre dinamik olarak uygulanır. Yeni ya da itibarı düşük yazarlar daha katı sınırlarla karşılaşırken, köklü yazarlar daha geniş eşiklerden yararlanır. Böylece spam selleri, güvenilir katılımcılar cezalandırılmadan önlenir.
 
-## Arka Plan Ağ Dizini Oluşturucu
+## Arka Plan Ağ İndeksleyicisi
 
-Sunucu, yazar itibar verilerini oluşturmak ve sürdürmek için ağı sürekli olarak tarayan bir arka plan dizin oluşturucuyu çalıştırır. Bu veriler doğrudan risk puanlama hattını besleyerek sistemin topluluklar genelinde tekrarlanan iyi niyetli katılımcıları tanımasına olanak tanır.
+Sunucu, yazar itibar verilerini oluşturmak ve güncel tutmak için ağı sürekli tarayan bir arka plan indeksleyicisi çalıştırır. Bu veriler doğrudan risk puanlama hattını besler ve sistemin, topluluklar arasında tekrar tekrar iyi niyetle katılan kişileri tanımasını sağlar.
 
-## Mahremiyet
+## Gizlilik
 
-Spam Engelleyici gizlilik göz önünde bulundurularak tasarlanmıştır:
+Spam Blocker gizlilik gözetilerek tasarlanmıştır:
 
-- OAuth kimlikleri yalnızca sorgulamanın doğrulanması için kullanılır ve topluluklara **asla açıklanmaz**.
-- IP adresleri **yalnızca ülke kodlarına** çözümlenir; ham IP'ler saklanmaz veya paylaşılmaz.
+- OAuth kimlikleri yalnızca doğrulamanın denetlenmesinde kullanılır ve topluluklara **asla açıklanmaz**.
+- IP adresleri **yalnızca ülke koduna** çözümlenir; ham IP'ler saklanmaz ve paylaşılmaz.
 
 ## Veritabanı
 
-Sunucu, itibar verilerinin, oturum durumunun ve yapılandırmanın yerel kalıcılığı için **SQLite** (`better-sqlite3` aracılığıyla) kullanır.
+Sunucu; itibar verilerinin, oturum durumunun ve yapılandırmanın yerelde kalıcı olarak saklanması için **SQLite** (`better-sqlite3` üzerinden) kullanır.

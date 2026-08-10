@@ -1,34 +1,37 @@
-# Konfigurimi i Agent Hooks
+# Konfigurimi i hook-eve të agjentit
 
-Nëse asistenti juaj i kodimit të AI mbështet grepa të ciklit jetësor, konfiguroni ato për këtë depo.
+Nëse asistenti juaj i kodimit me AI mbështet hook-e të ciklit jetësor, konfiguroni këto për këtë depo.
 
-## Grepa të rekomanduara
+## Hook-et e rekomanduara
 
-| Hook            | Komanda                                    | Qëllimi                                                                                                                                                                                                               |
-| --------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Formatoni automatikisht skedarët pas modifikimeve të AI                                                                                                                                                               |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Ekzekutoni `corepack yarn install` kur ndryshon `package.json`                                                                                                                                                        |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Shkurtoj refs ndenjur dhe fshij degët e integruara të përkohshme të detyrave                                                                                                                                          |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Ndërtimi i portës së fortë, lintimi, kontrolli i shkrimit dhe kontrollet e formatit; mbajeni `yarn npm audit` informativ dhe ekzekutoni `yarn knip` veçmas si një auditim këshillues kur ndryshojnë varësitë/importet |
+| Hook            | Komanda                                       | Qëllimi                                                                                                                                                                                                                   |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Formaton automatikisht skedarët pas redaktimeve nga AI                                                                                                                                                                    |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Ekzekuton `corepack yarn install` kur ndryshon `package.json`                                                                                                                                                             |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Kur një diff shton primitiva `useEffect`/memo në `about/src/`, i kujton agjentit t'i rishqyrtojë me aftësitë e rishikimit të React                                                                                        |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Pastron referencat e vjetruara dhe fshin degët e përkohshme të detyrave që tashmë janë integruar                                                                                                                          |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Riskanon diff-in aktual për efekte/memo të reja React në `about/src/` përpara portës përfundimtare të verifikimit                                                                                                         |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Portë e fortë për verifikimin e synuar të ndërtimit, lint, kontroll tipash dhe kontroll formati; mban `yarn npm audit` informativ dhe ekzekuton `yarn knip` veçmas si auditim këshillues kur ndryshojnë varësitë/importet |
 
 ## Pse
 
-- Formatim konsistent
-- Lockfile qëndron në sinkron
-- Çështjet e ndërtimit/grave/llopit u kapën herët
-- Dukshmëria e sigurisë nëpërmjet `yarn npm audit`
-- Zhvendosja e varësisë/importit mund të kontrollohet me `yarn knip` pa e kthyer atë në një goditje globale të zhurmshme
-- Zbatim i një grepi të përbashkët si për Codex ashtu edhe për Kursorin
-- Degët e përkohshme të detyrave qëndrojnë në linjë me fluksin e punës të pemës së punës së repos
+- Formatim i njëtrajtshëm
+- Lockfile-i qëndron i sinkronizuar
+- Shtimet e reja të `useEffect`/memo në sajtin about marrin një rishikim të dytë të qartë përpara se agjenti të përfundojë
+- Problemet e ndërtimit, të lint-it dhe të tipave që prekin hapësirën e punës kapen herët, pa e detyruar ndërtimin e plotë shumëgjuhësh të dokumentacionit në çdo detyrë
+- Dukshmëri e sigurisë përmes `yarn npm audit`
+- Zhvendosja e varësive dhe e importeve mund të kontrollohet me `yarn knip` pa e kthyer atë në një hook global e të zhurmshëm në fazën stop
+- Një zbatim i vetëm i përbashkët i hook-eve si për Codex ashtu edhe për Cursor
+- Degët e përkohshme të detyrave qëndrojnë në linjë me rrjedhën e punës me worktree të depos
 
-## Shembull Hook Scripts
+## Shembuj skriptesh hook
 
-### Formati Hook
+### Hook-u i formatimit
 
 ```bash
 #!/bin/bash
-# Formatoni automatikisht skedarët JS/TS pas modifikimeve të AI
-# Hook merr JSON nëpërmjet stdin me file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Verifiko Hook
+### Hook-u i verifikimit
 
 ```bash
 #!/bin/bash
-# Ekzekutoni ndërtimin, lint, kontrollin e tipit, kontrollin e formatit dhe auditimin e sigurisë kur agjenti përfundon
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Si parazgjedhje, `scripts/agent-hooks/verify.sh` del jo zero kur një kontroll i kërkuar dështon. Cakto `AGENT_VERIFY_MODE=advisory` vetëm kur të duhet qëllimisht sinjal nga një pemë e thyer pa bllokuar grepin. Mbajeni `yarn knip` jashtë portës së vështirë, përveç nëse repo vendos në mënyrë eksplicite të dështojë për çështjet këshilluese të importit/varësisë.
+Si parazgjedhje, `scripts/agent-hooks/verify.sh` del me kod jo zero kur dështon një kontroll i detyrueshëm. Vendoseni `AGENT_VERIFY_MODE=advisory` vetëm kur ju duhet qëllimisht sinjal nga një pemë e prishur pa e bllokuar hook-un. Mbajeni `yarn knip` jashtë portës së fortë, përveçse kur depoja vendos shprehimisht të dështojë për probleme këshilluese importesh apo varësish.
 
-### Hook i instalimit të fijeve
+Hook-et e ciklit jetësor nuk e zëvendësojnë verifikimin manual në shfletues. Për ndryshime në ndërfaqe ose në pamje, ekzekutoni gjithsesi kontrollet me `playwright-cli` në `chrome`, `firefox` dhe `webkit`, plus një rrjedhë me pamje celulare në secilin motor kur ka ndryshuar reagueshmëria ose sjellja me prekje.
+
+### Hook-u i instalimit me Yarn
 
 ```bash
 #!/bin/bash
-# Ekzekutoni instalimin e fijeve të corepack kur ndryshohet package.json
-# Hook merr JSON nëpërmjet stdin me file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Konfiguro lidhjen me grep sipas dokumenteve të veglave të agjentit (`hooks.json`, ekuivalent, etj.).
+Konfiguroni lidhjen e hook-eve sipas dokumentacionit të veglës suaj të agjentëve (`hooks.json`, ekuivalent, etj.).
 
-Në këtë repo, `.codex/hooks/*.sh` dhe `.cursor/hooks/*.sh` duhet të qëndrojnë si mbështjellës të hollë që delegohen te zbatimet e përbashkëta nën `scripts/agent-hooks/`.
+Në këtë depo, `.codex/hooks/*.sh` dhe `.cursor/hooks/*.sh` duhet të mbeten mbështjellës të hollë që delegojnë te zbatimet e përbashkëta nën `scripts/agent-hooks/`.

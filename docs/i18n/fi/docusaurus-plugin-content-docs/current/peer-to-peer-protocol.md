@@ -1,44 +1,95 @@
 ---
-title: Peer-to-Peer-protokolla
-description: Kuinka Bitsocial käyttää IPFS/libp2p:tä, julkisen avaimen osoitteita, peer-to-peer pub- ja selaimen P2P-solmuja palvelimettoman sosiaalisen median toimittamiseen.
+title: Vertaisverkkoprotokolla
+description: Miten Bitsocial hyödyntää IPFS/libp2p-pinoa, julkiseen avaimeen perustuvaa osoitteistusta, vertaisverkon pubsubia ja selaimessa toimivia P2P-solmuja palvelimettoman sosiaalisen median toteuttamiseen.
 ---
 
-# Peer-to-Peer-protokolla
+# Vertaisverkkoprotokolla
 
-Bitsocial ei käytä lohkoketjua, liitospalvelinta tai keskitettyä taustajärjestelmää. Sen sijaan se yhdistää kaksi ideaa – **julkiseen avaimeen perustuva osoitus** ja **vertaispub** – joiden avulla kuka tahansa voi isännöidä yhteisöä kuluttajalaitteiston kautta, kun käyttäjät lukevat ja julkaisevat ilman tilejä yrityksen ohjaamissa palveluissa.
+Bitsocial ei käytä lohkoketjua, federaatiopalvelinta eikä keskitettyä taustajärjestelmää. Sen sijaan
+se yhdistää IPFS/libp2p-pinon avulla kaksi ideaa: **julkiseen avaimeen perustuvan osoitteistuksen**
+ja **vertaisverkon pubsubin**. Yhdessä ne antavat kenen tahansa ylläpitää yhteisöä tavallisella
+kuluttajalaitteistolla, kun taas käyttäjät lukevat ja julkaisevat ilman tilejä minkään yrityksen
+hallitsemassa palvelussa.
 
-Lue vähemmän tekninen esittely [Täydellinen maallikon selitys Bitsocial-protokollasta](./layman-protocol-explanation.md).
+Vähemmän teknisen läpikäynnin löydät sivulta
+[Täydellinen maallikon selitys Bitsocial-protokollasta](./layman-protocol-explanation.md).
+
+## Käyttääkö Bitsocial IPFS:ää?
+
+Kyllä. Bitsocial-solmut käyttävät IPFS/libp2p-primitiivejä vertaisverkkokerroksessa: julkisella
+avaimella osoitetut yhteisötietueet, sisällön siirto vertaisten välillä ja gossipsub-pubsub
+reaaliaikaisille viesteille. Kun näissä ohjeissa puhutaan pubsubista, tarkoitetaan
+IPFS/libp2p-pubsubia, ei erillistä keskitettyä viestivälittäjää.
+
+Protokolla kuvaa tällä hetkellä löytämisen HTTP-reitittimien kautta, koska Bitsocial-asiakkaat
+kysyvät tarjoajavertaisten osoitteita reititinpäätepisteiltä sen sijaan, että ne turvautuisivat
+jokaisessa haussa selaimelle hankalaan DHT:hen. Reitittimet palauttavat vain vertaisia; sisällön
+siirto ja pubsub-liikenne kulkevat edelleen vertaisverkon läpi.
 
 ## Kaksi ongelmaa
 
-Hajautetun sosiaalisen verkoston on vastattava kahteen kysymykseen:
+Hajautetun sosiaalisen verkon on vastattava kahteen kysymykseen:
 
-1. **Data** — miten tallennat ja palvelet maailman sosiaalista sisältöä ilman keskustietokantaa?
-2. **Roskaposti** — miten estät väärinkäytön ja pidät verkon vapaana?
+1. **Data** — miten maailman sosiaalinen sisältö tallennetaan ja tarjoillaan ilman keskitettyä
+   tietokantaa?
+2. **Roskaposti** — miten väärinkäyttö estetään pitäen verkko silti maksuttomana käyttää?
 
-Bitsocial ratkaisee dataongelman ohittamalla lohkoketjun kokonaan: sosiaalinen media ei tarvitse globaalia tapahtumajärjestystä tai jokaisen vanhan postauksen pysyvää saatavuutta. Se ratkaisee roskapostiongelman antamalla jokaisen yhteisön suorittaa oman roskapostin estohaasteensa vertaisverkon kautta.
+Bitsocial ratkaisee dataongelman ohittamalla lohkoketjun kokonaan: sosiaalinen media ei tarvitse
+globaalia tapahtumien järjestystä eikä jokaisen vanhan julkaisun pysyvää saatavuutta.
+Roskapostiongelman se ratkaisee antamalla jokaisen yhteisön ajaa oman roskapostin
+torjuntahaasteensa vertaisverkon yli.
 
-Tämän verkkokerroksen yläpuolella olevasta etsintämallista löytyy [Sisällön löytäminen](./content-discovery.md).
+Tämän verkkokerroksen yläpuolella toimivasta löytämismallista kerrotaan sivulla
+[Sisällön löytäminen](./content-discovery.md).
 
 ---
 
-## Julkiseen avaimeen perustuva osoitus
+## Julkiseen avaimeen perustuva osoitteistus {#public-key-based-addressing}
 
-BitTorrentissa tiedoston tiivisteestä tulee sen osoite (_sisältöpohjainen osoite_). Bitsocial käyttää samanlaista ideaa julkisten avainten kanssa: yhteisön julkisen avaimen tiivisteestä tulee sen verkko-osoite.
+BitTorrentissa tiedoston tiiviste toimii sen osoitteena (_sisältöpohjainen osoitteistus_). Bitsocial
+soveltaa samaa ideaa julkisiin avaimiin: yhteisön julkisen avaimen tiivisteestä tulee sen
+verkko-osoite.
 
 ```mermaid
 graph LR
     K["🔑 Community keypair"] --> H["#️⃣ Hash of public key"]
-    H --> A["📍 Network address"]
-    A --> D["🌐 DHT lookup"]
-    D --> C["📄 Latest community content"]
+    H --> D["🌐 HTTP router(s) lookup of hash"]
+    D --> P["🔌 Provider peer addresses"]
+    P --> C["📄 Latest community content from peers"]
 ```
 
-Mikä tahansa verkon vertaiskäyttäjä voi suorittaa DHT-kyselyn (jaettu hash-taulukko) kyseiselle osoitteelle ja hakea yhteisön viimeisimmän tilan. Joka kerta kun sisältöä päivitetään, sen versionumero kasvaa. Verkko säilyttää vain uusimman version – jokaista historiallista tilaa ei tarvitse säilyttää, mikä tekee tästä lähestymistavasta kevyen lohkoketjuun verrattuna.
+Kuka tahansa verkon vertainen voi kysyä tuota osoitetta **HTTP-reitittimeltä**: reititin vastaa
+listalla niiden vertaisten verkko-osoitteista, jotka tällä hetkellä tarjoavat yhteisön tiivistettä,
+ja asiakas yhdistää suoraan noihin vertaisiin hakeakseen yhteisön uusimman tilan. Aina kun sisältöä
+päivitetään, sen versionumero kasvaa. Verkko säilyttää vain uusimman version — jokaista
+historiallista tilaa ei tarvitse säilyttää, ja juuri se tekee tästä ratkaisusta kevyen lohkoketjuun
+verrattuna.
+
+> **Mitä HTTP-reititin oikeasti sisältää.** HTTP-reititin on ohut indeksi. Jokaisesta tuntemastaan
+> sisältöosoitteesta se tallentaa vain niiden vertaisten verkko-osoitteet, jotka ovat ilmoittautuneet
+> tarjoajiksi (IP-osoite–portti-pareja, libp2p-multiaddreja ja vastaavia). Se **ei** tallenna
+> yhteisön sisältöä, sen metatietoja, julkaisujen tekstiä, jäsenlistaa eikä edes ihmisluettavaa
+> nimeä sille, mitä kyseisessä osoitteessa on; se vastaa vain kysymykseen "mitkä vertaiset väittävät
+> omistavansa tämän tiivisteen?". Tämä tekee reitittimien ylläpidosta halpaa ja niiden vaihtamisesta
+> helppoa, eikä aseta niitä vastuuseen käyttäjien julkaisemasta sisällöstä. Ratkaisu muistuttaa
+> BitTorrent-trackeria, mutta ilman torrent-metatietoja: tracker yhdistää infohash-arvot vertaisiin,
+> kun taas HTTP-reititin yhdistää vain sisältöosoitteen tarjoajavertaisten osoitteisiin.
+>
+> Vikasietoisuuden vuoksi asiakas kysyy **useilta HTTP-reitittimiltä rinnakkain** ja yhdistää
+> saamansa tarjoajalistat. Kuka tahansa voi ylläpitää reititintä, ja reitittimen vaihtaminen tai
+> lisääminen on pelkkä asetusmuutos ilman datan siirtoa.
+>
+> Bitsocial käyttää HTTP-reitittimiä DHT:n sijaan, koska DHT:n ajaminen sisällön löytämiseen
+> vaadittavassa mittakaavassa on kallista, erityisesti mobiilissa. DHT ei myöskään toimi selaimessa,
+> koska selaimet eivät voi liittyä libp2p-DHT:hen suoraan. HTTP-reititin pyörii edullisesti
+> tavallisella HTTP-infrastruktuurilla ja toimii yhtä hyvin puhelimesta kuin selaimestakin.
 
 ### Mitä osoitteeseen tallennetaan
 
-Yhteisön osoite ei sisällä suoraan koko viestin sisältöä. Sen sijaan se tallentaa luettelon sisältötunnisteista – tiivisteistä, jotka osoittavat todellisiin tietoihin. Asiakas hakee sitten jokaisen sisällön DHT- tai tracker-tyyppisten hakujen kautta.
+Yhteisön osoite ei sisällä julkaisujen koko sisältöä suoraan. Sen sijaan siihen tallennetaan lista
+sisältötunnisteista — tiivisteitä, jotka osoittavat varsinaiseen dataan. Asiakas hakee sitten
+jokaisen sisältöpalan suoraan niiltä vertaisilta, jotka HTTP-reitittimet palauttivat. Reitittimet
+itse eivät koskaan näe eivätkä tallenna sisältöä.
 
 ```mermaid
 graph TD
@@ -49,73 +100,87 @@ graph TD
     P --> P3["📝 Post 3 content"]
 ```
 
-Ainakin yhdellä vertaisella on aina tiedot: yhteisön operaattorin solmu. Jos yhteisö on suosittu, myös monilla muilla vertaisilla on se ja kuorma jakautuu itsestään, samalla tavalla kuin suositut torrentit ovat nopeampia ladata.
+Vähintään yhdellä vertaisella on data aina hallussaan: yhteisön ylläpitäjän solmulla. Jos yhteisö on
+suosittu, myös monella muulla vertaisella on se, ja kuorma jakautuu itsestään — samaan tapaan kuin
+suositut torrentit latautuvat nopeammin.
 
 ---
 
-## Vertaispubi
+## Vertaisverkon pubsub
 
-Pubsub (julkaisu-tilaa) on viestimalli, jossa kumppanit tilaavat aiheen ja saavat kaikki kyseiseen aiheeseen julkaistut viestit. Bitsocial käyttää peer-to-peer pub-verkkoa – kuka tahansa voi julkaista, kuka tahansa voi tilata, eikä siellä ole keskitettyä viestivälittäjää.
+Pubsub (publish-subscribe) on viestintämalli, jossa vertaiset tilaavat aiheen ja vastaanottavat
+kaikki kyseiseen aiheeseen julkaistut viestit. Bitsocial käyttää vertaisverkon pubsubia — kuka
+tahansa voi julkaista, kuka tahansa voi tilata, eikä keskitettyä viestivälittäjää ole.
 
-Julkaistakseen julkaisun yhteisölle käyttäjä julkaisee viestin, jonka aihe vastaa yhteisön julkista avainta. Yhteisön operaattorin solmu poimii sen, vahvistaa sen ja – jos se läpäisee roskapostin estohaasteen – sisällyttää sen seuraavaan sisältöpäivitykseen.
+Julkaistakseen viestin yhteisöön käyttäjä lähettää viestin, jonka aihe on sama kuin yhteisön
+julkinen avain. Yhteisön ylläpitäjän solmu poimii sen, tarkistaa sen ja — jos se läpäisee roskapostin
+torjuntahaasteen — sisällyttää sen seuraavaan sisältöpäivitykseen.
 
 ---
 
-## Roskapostin esto: haasteita pubissa
+## Roskapostin torjunta: haasteet pubsubin yli
 
-Avoin pubiverkko on alttiina roskapostitulville. Bitsocial ratkaisee tämän vaatimalla julkaisijoita suorittamaan **haasteen** ennen kuin heidän sisältönsä hyväksytään.
+Avoin pubsub-verkko on altis roskapostitulville. Bitsocial ratkaisee tämän vaatimalla julkaisijoilta
+**haasteen** suorittamista ennen kuin sisältö hyväksytään.
 
-Haastejärjestelmä on joustava: jokainen yhteisön toimija määrittää oman käytäntönsä. Vaihtoehtoja ovat:
+Haastejärjestelmä on joustava: jokainen yhteisön ylläpitäjä määrittää oman käytäntönsä.
+Vaihtoehtoja ovat esimerkiksi:
 
-| Haastetyyppi             | Miten se toimii                                          |
-| ------------------------ | -------------------------------------------------------- |
-| **Captcha**              | Visuaalinen tai interaktiivinen palapeli sovelluksessa   |
-| **Korkearajoitus**       | Rajoita viestejä aikaikkunaa kohti identiteettiä kohti   |
-| **Token Gate**           | Vaadi todistus tietyn tunnuksen saldosta                 |
-| **Maksu**                | Vaadi pieni maksu postia kohden                          |
-| **Sallittujen luettelo** | Vain ennalta hyväksytyt henkilöllisyydet voivat lähettää |
-| **Muokattu koodi**       | Mikä tahansa koodissa                                    |
+| Haastetyyppi          | Miten se toimii                                                    |
+| --------------------- | ------------------------------------------------------------------ |
+| **Captcha**           | Sovelluksessa esitettävä visuaalinen tai vuorovaikutteinen tehtävä |
+| **Nopeusrajoitus**    | Rajaa julkaisujen määrää aikaikkunassa identiteettiä kohden        |
+| **Token-portti**      | Vaadi todiste tietyn tokenin saldosta                              |
+| **Maksu**             | Vaadi pieni maksu jokaisesta julkaisusta                           |
+| **Sallittujen lista** | Vain ennalta hyväksytyt identiteetit voivat julkaista              |
+| **Mukautettu koodi**  | Mikä tahansa koodilla ilmaistavissa oleva käytäntö                 |
 
-Liian monta epäonnistunutta haasteyritystä välittävät vertaiskäyttäjät estetään pubsub-aiheesta, mikä estää palvelunestohyökkäykset verkkokerrokseen.
+Vertaiset, jotka välittävät liikaa epäonnistuneita haasteyrityksiä, estetään pubsub-aiheesta, mikä
+ehkäisee palvelunestohyökkäykset verkkokerroksella.
 
 ---
 
 ## Elinkaari: yhteisön lukeminen
 
-Näin tapahtuu, kun käyttäjä avaa sovelluksen ja katselee yhteisön uusimpia viestejä.
+Näin tapahtuu, kun käyttäjä avaa sovelluksen ja katsoo yhteisön uusimpia julkaisuja.
 
 ```mermaid
 sequenceDiagram
     participant User as 👤 User app
-    participant DHT as 🌐 DHT network
+    participant Routers as 🌐 HTTP routers
     participant Node as 🖥️ Community node
 
-    User->>DHT: Query community address
-    Note over DHT: Distributed lookup<br/>across network peers
-    DHT-->>User: Return latest content pointers + metadata
+    User->>Routers: Query community address (in parallel)
+    Note over Routers: Each router returns<br/>peer addresses only, never content
+    Routers-->>User: Return provider peer addresses
 
-    User->>DHT: Fetch post content by hash
-    DHT-->>User: Return post data
+    User->>Node: Connect to peer, fetch latest pointers + metadata
+    Node-->>User: Return latest content pointers + metadata
+
+    User->>Node: Fetch post content by hash
+    Node-->>User: Return post data
     Note over User: Render posts in<br/>familiar social UI
 
     Note over User,Node: Multiple community queries<br/>run concurrently
 ```
 
-**Askel askeleelta:**
+**Vaihe vaiheelta:**
 
 1. Käyttäjä avaa sovelluksen ja näkee sosiaalisen käyttöliittymän.
-2. Asiakas liittyy peer-to-peer-verkkoon ja tekee DHT-kyselyn jokaiselle käyttäjäyhteisölle
-   seuraa. Kyselyt vievät kukin muutaman sekunnin, mutta ne suoritetaan samanaikaisesti.
-3. Jokainen kysely palauttaa yhteisön uusimmat sisältöosoittimet ja metatiedot (otsikko, kuvaus,
-   moderaattoriluettelo, haastekokoonpano).
-4. Asiakas hakee todellisen viestin sisällön näiden osoittimien avulla ja hahmontaa sitten kaiken a
-   tuttu sosiaalinen käyttöliittymä.
+2. Asiakas kysyy useilta HTTP-reitittimiltä rinnakkain jokaisesta yhteisöstä, jota käyttäjä seuraa;
+   jokainen reititin palauttaa vain vertaisosoitteita, ei koskaan sisältöä. Kyselyn viive riippuu
+   verkon olosuhteista ja reitittimen kuormasta; tavanomaisissa matalan viiveen oloissa kyselyt
+   palaavat usein noin sekunnissa ja etenevät rinnakkain.
+3. Kun asiakkaalla on vertaisosoitteet, se yhdistää noihin vertaisiin ja hakee yhteisön uusimmat
+   sisältöosoittimet ja metatiedot (otsikko, kuvaus, moderaattorilista, haasteen asetukset).
+4. Asiakas hakee varsinaisen julkaisusisällön näiden osoittimien avulla ja piirtää sitten kaiken
+   tuttuun sosiaaliseen käyttöliittymään.
 
 ---
 
-## Elinkaari: postauksen julkaiseminen
+## Elinkaari: julkaisun lähettäminen
 
-Julkaisemiseen kuuluu haaste-vastaus-kättely pubsubissa ennen julkaisun hyväksymistä.
+Julkaisemiseen kuuluu haaste–vastaus-kättely pubsubin yli ennen kuin julkaisu hyväksytään.
 
 ```mermaid
 sequenceDiagram
@@ -147,26 +212,26 @@ sequenceDiagram
     Note over User,Node: Other readers receive<br/>the update within minutes
 ```
 
-**Askel askeleelta:**
+**Vaihe vaiheelta:**
 
-1. Sovellus luo avainparin käyttäjälle, jos hänellä ei vielä ole sellaista.
-2. Käyttäjä kirjoittaa julkaisun yhteisölle.
-3. Asiakas liittyy kyseisen yhteisön pub-aiheeseen (avaimella yhteisön julkiseen avaimeen).
-4. Asiakas pyytää haastetta pubin kautta.
-5. Yhteisön operaattorin solmu lähettää takaisin haasteen (esimerkiksi captcha).
+1. Sovellus luo käyttäjälle avainparin, jos hänellä ei vielä ole sellaista.
+2. Käyttäjä kirjoittaa julkaisun yhteisöön.
+3. Asiakas liittyy kyseisen yhteisön pubsub-aiheeseen (joka on sidottu yhteisön julkiseen avaimeen).
+4. Asiakas pyytää haastetta pubsubin yli.
+5. Yhteisön ylläpitäjän solmu lähettää takaisin haasteen, esimerkiksi captchan.
 6. Käyttäjä suorittaa haasteen.
-7. Asiakas lähettää julkaisun haastevastauksen kanssa pubsub-palvelun kautta.
-8. Yhteisön operaattorin solmu vahvistaa vastauksen. Jos oikein, viesti hyväksytään.
-9. Solmu lähettää tuloksen pubsubin kautta, jotta verkon vertaiskäyttäjät tietävät jatkavansa välittämistä
-   viestit tältä käyttäjältä.
-10. Solmu päivittää yhteisön sisällön julkisen avaimen osoitteeseen.
-11. Muutamassa minuutissa jokainen yhteisön lukija saa päivityksen.
+7. Asiakas lähettää julkaisun ja haasteen vastauksen pubsubin yli.
+8. Yhteisön ylläpitäjän solmu tarkistaa vastauksen. Jos se on oikein, julkaisu hyväksytään.
+9. Solmu lähettää tuloksen pubsubin yli, jotta verkon vertaiset tietävät jatkaa tämän käyttäjän
+   viestien välittämistä.
+10. Solmu päivittää yhteisön sisällön sen julkisen avaimen osoitteeseen.
+11. Muutaman minuutin kuluessa jokainen yhteisön lukija saa päivityksen.
 
 ---
 
-## Arkkitehtuurin yleiskatsaus
+## Arkkitehtuurin yleiskuva
 
-Koko järjestelmässä on kolme kerrosta, jotka toimivat yhdessä:
+Koko järjestelmässä on kolme yhdessä toimivaa kerrosta:
 
 ```mermaid
 graph TB
@@ -183,103 +248,182 @@ graph TB
     end
 
     subgraph Network ["Network layer"]
-        DHT["🗂️ DHT<br/>(content discovery)"]
+        Router["🛰️ HTTP router<br/>(content discovery)"]
         GS["💬 Gossipsub<br/>(real-time messaging)"]
         TR["📦 Content transfer<br/>(data exchange)"]
     end
 
     A1 & A2 & A3 --> PK & PS & CH
-    PK --> DHT
+    PK --> Router
     PS --> GS
     CH --> GS
     PK --> TR
 ```
 
-| Kerros         | Rooli                                                                                                                               |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| **Sovellus**   | Käyttöliittymä. Voi olla useita sovelluksia, joista jokaisella on oma muotoilu, ja kaikilla on samat yhteisöt ja identiteetit.      |
-| **Pöytäkirja** | Määrittää, kuinka yhteisöjä käsitellään, miten viestit julkaistaan ​​ja kuinka roskapostia estetään.                                |
-| **Verkko**     | Taustalla oleva peer-to-peer-infrastruktuuri: DHT etsimiseen, gossipsub reaaliaikaiseen viestiin ja sisällön siirto tiedonvaihtoon. |
+| Kerros         | Rooli                                                                                                                                                |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Sovellus**   | Käyttöliittymä. Sovelluksia voi olla useita, kullakin oma muotoilunsa, ja kaikki jakavat samat yhteisöt ja identiteetit.                             |
+| **Protokolla** | Määrittelee, miten yhteisöt osoitetaan, miten julkaisut lähetetään ja miten roskaposti estetään.                                                     |
+| **Verkko**     | Taustalla oleva vertaisverkkoinfrastruktuuri: HTTP-reitittimet löytämiseen, gossipsub reaaliaikaiseen viestintään ja sisällön siirto datan vaihtoon. |
 
 ---
 
-## Tietosuoja: tekijöiden linkityksen poistaminen IP-osoitteista
+## Yksityisyys: tekijöiden irrottaminen IP-osoitteista
 
-Kun käyttäjä julkaisee viestin, sisältö **salataan yhteisön operaattorin julkisella avaimella** ennen kuin se saapuu pub-verkkoon. Tämä tarkoittaa, että vaikka verkon tarkkailijat voivat nähdä, että vertaiskäyttäjä julkaisi _jotain_, he eivät voi määrittää:
+Kun käyttäjä lähettää julkaisun, sisältö **salataan yhteisön ylläpitäjän julkisella avaimella**
+ennen kuin se päätyy pubsub-verkkoon. Tämä tarkoittaa, että vaikka verkon tarkkailijat näkevät
+vertaisen julkaisseen _jotain_, he eivät voi päätellä:
 
-- mitä sisältö kertoo
-- mikä tekijän henkilöllisyys sen julkaisi
+- mitä sisällössä lukee
+- mikä tekijäidentiteetti sen julkaisi
 
-Tämä on samanlainen tapa kuin BitTorrentin avulla on mahdollista selvittää, mitkä IP-osoitteet synnyttävät torrentin, mutta ei kuka sen alun perin loi. Salauskerros lisää ylimääräisen tietosuojatakuun perustason päälle.
+Tämä muistuttaa sitä, miten BitTorrentissa voi selvittää, mitkä IP-osoitteet jakavat torrenttia,
+muttei sitä, kuka sen alun perin loi. Salauskerros lisää tämän perustason päälle vielä yhden
+yksityisyystakuun.
 
 ---
 
-## Selaimen vertaisverkko
+## Selainpohjainen vertaisverkko
 
-Selain P2P on nyt mahdollista Bitsocial-asiakkaissa. Selainsovellus voi suorittaa [Helia](https://helia.io/)-solmun, käyttää samaa Bitsocial-protokollaasiakaspinoa kuin muut sovellukset ja hakea sisältöä vertaisilta sen sijaan, että se pyytäisi keskitettyä IPFS-yhdyskäytävää palvelemaan sitä. Selain voi myös osallistua suoraan pubsub-palveluun, joten postaukseen ei tarvita alustan omistamaa pubsub-palveluntarjoajaa onnellisen polun kautta.
+Selain-P2P on nyt mahdollista Bitsocial-asiakkaissa. Selainsovellus voi ajaa
+[Helia](https://helia.io/)-solmua, käyttää samaa Bitsocial-protokollapinoa kuin muutkin sovellukset
+ja hakea sisältöä vertaisilta sen sijaan, että pyytäisi keskitettyä IPFS-yhdyskäytävää tarjoilemaan
+sen. Selain voi myös osallistua pubsubiin suoraan, joten julkaiseminen ei normaalissa
+toimintapolussa tarvitse alustan omistamaa pubsub-tarjoajaa.
 
-Tämä on tärkeä virstanpylväs verkkojakelulle: normaali HTTPS-verkkosivusto voi avautua eläväksi P2P-sosiaaliseksi asiakkaaksi. Käyttäjien ei tarvitse asentaa työpöytäsovellusta ennen kuin he voivat lukea verkosta, eikä sovellusoperaattorin tarvitse käyttää keskusyhdyskäytävää, josta tulee jokaisen selaimen käyttäjän sensuurin tai moderoinnin rajoituspiste.
+Tämä on verkkojakelun kannalta ratkaiseva virstanpylväs: tavallinen HTTPS-sivusto voi avautua
+eläväksi P2P-sosiaaliasiakkaaksi. Käyttäjien ei tarvitse asentaa työpöytäsovellusta ennen kuin he
+voivat lukea verkosta, eikä sovelluksen ylläpitäjän tarvitse pyörittää keskitettyä yhdyskäytävää,
+josta tulisi sensuurin tai moderoinnin pullonkaula jokaiselle selainkäyttäjälle.
 
-Selainpolulla on erilaiset rajoitukset kuin työpöydällä tai palvelinsolmulla:
+Selainpolulla on eri rajoitteet kuin työpöytä- tai palvelinsolmulla:
 
-- selainsolmu ei yleensä voi hyväksyä mielivaltaisia ​​saapuvia yhteyksiä julkisesta Internetistä
-- se voi ladata, vahvistaa, tallentaa välimuistiin ja julkaista tietoja sovelluksen ollessa auki
-- sitä ei pitäisi käsitellä yhteisön tietojen pitkäikäisenä isäntänä
-- koko yhteisöisännöinti onnistuu edelleen parhaiten työpöytäsovelluksella, `bitsocial-cli` tai muulla
-  aina päällä oleva solmu
+- selainsolmu ei yleensä voi ottaa vastaan mielivaltaisia saapuvia yhteyksiä julkisesta internetistä
+- se voi ladata, tarkistaa, välimuistittaa ja julkaista dataa niin kauan kuin sovellus on auki
+- sitä ei pidä pitää yhteisön datan pitkäaikaisena isäntänä
+- yhteisön täysimittainen ylläpito hoituu edelleen parhaiten työpöytäsovelluksella,
+  `bitsocial-cli`-työkalulla tai muulla jatkuvasti päällä olevalla solmulla
 
-HTTP-reitittimillä on edelleen merkitystä sisällön löytämisessä: ne palauttavat palveluntarjoajan osoitteet yhteisön hashille. Ne eivät ole IPFS-yhdyskäytäviä, koska ne eivät palvele itse sisältöä. Löytämisen jälkeen selainasiakas muodostaa yhteyden vertaisverkkoihin ja hakee tiedot P2P-pinon kautta.
+HTTP-reitittimillä on edelleen merkitystä sisällön löytämisessä: ne palauttavat yhteisön tiivisteen
+tarjoajaosoitteet. Ne eivät ole IPFS-yhdyskäytäviä, koska ne eivät tarjoile itse sisältöä.
+Löytämisen jälkeen selainasiakas yhdistää vertaisiin ja hakee datan P2P-pinon kautta.
 
-5chan paljastaa tämän valinnaisena Lisäasetukset-kytkimenä tavallisessa 5chan.app-verkkosovelluksessa. Uusimmasta `pkc-js`-selainpinosta on tullut riittävän vakaa julkista testausta varten sen jälkeen, kun ylävirran libp2p/gossipsub-yhteistoimitus käsitteli viestien toimittamista Helian ja Kubon vertaisten välillä. Asetus pitää selaimen P2P-hallinnan samalla kun se saa enemmän todellista testausta; Kun sillä on tarpeeksi tuotantovarmuutta, siitä voi tulla oletusverkkopolku.
+Selain-P2P on nyt oletusarvoinen verkkopolku, ei kytkimen takana piilevä kokeilu. 5chan ajaa
+oletuksena puhdasta selain-P2P:tä osoitteessa 5chan.app, ja Bitsocialin blogi bitsocial.net-sivustolla
+tekee saman. Selainvertaiset muodostavat yhteydet suojattujen WebSocketien yli; `pkc-js` estää
+oletuksena WebRTC- ja WebTransport-yhteydenotot, koska niiden yhteydenmuodostus on selaimessa hidasta
+ja epäluotettavaa. Vuonna 2026 selaimesta julkaisemisen teki käytännölliseksi gossipsubin
+järjestysnumerokorjaus paketissa `@libp2p/gossipsub` 15.0.21, joka lopetti sen, että Kubo-vertaiset
+hylkäsivät JavaScript-solmujen julkaisemat viestit.
 
-## Gateway-varaus
+Koko kuvan, mukaan lukien sen mitä selainsolmu ei vieläkään pysty tekemään, löydät sivulta
+[Selainpohjainen vertaisverkko](/browser-p2p/).
 
-Yhdyskäytävätuettu selaimen käyttöoikeus on edelleen hyödyllinen yhteensopivuuden ja käyttöönoton vararatkaisuna. Yhdyskäytävä voi välittää tietoja P2P-verkon ja selainasiakkaan välillä, kun selain ei voi liittyä verkkoon suoraan tai kun sovellus valitsee tarkoituksella vanhemman polun. Nämä yhdyskäytävät:
+## Yhdyskäytävä varapolkuna {#gateway-fallback}
 
-- voi johtaa kuka tahansa
+Yhdyskäytävän kautta toimiva selainkäyttö on edelleen hyödyllistä yhteensopivuuden ja
+käyttöönoton varapolkuna. Yhdyskäytävä voi välittää dataa P2P-verkon ja selainasiakkaan välillä,
+kun selain ei voi liittyä verkkoon suoraan tai kun sovellus tarkoituksella valitsee vanhemman polun.
+Nämä yhdyskäytävät:
+
+- voi ottaa käyttöön kuka tahansa
 - eivät vaadi käyttäjätilejä tai maksuja
-- älä saa käyttäjien identiteettejä tai yhteisöjä
-- voidaan vaihtaa ilman tietojen menettämistä
+- eivät saa haltuunsa käyttäjien identiteettejä tai yhteisöjä
+- voidaan vaihtaa toisiin ilman datan menetystä
 
-Kohdearkkitehtuuri on selain P2P ensin, ja yhdyskäytävät ovat valinnainen varavaihtoehto oletuspullonkaulan sijaan.
+Tavoitearkkitehtuurissa selain-P2P on ensisijainen ja yhdyskäytävät ovat valinnainen varapolku, ei
+oletusarvoinen pullonkaula.
 
 ---
 
-## Miksei lohkoketju?
+## Miksi ei lohkoketjua?
 
-Lohkoketjut ratkaisevat kaksinkertaisen kulutuksen ongelman: niiden on tiedettävä jokaisen tapahtuman tarkka järjestys, jotta joku ei kuluttaisi samaa kolikkoa kahdesti.
+Lohkoketjut ratkaisevat kaksinkertaisen käytön ongelman: niiden on tiedettävä jokaisen tapahtuman
+tarkka järjestys, jottei kukaan voi käyttää samaa kolikkoa kahdesti.
 
-Sosiaalisessa mediassa ei ole kaksinkertaisen kulutuksen ongelmaa. Ei ole väliä, jos viesti A julkaistiin millisekuntia ennen viestiä B, eikä vanhojen viestien tarvitse olla pysyvästi saatavilla jokaisessa solmussa.
+Sosiaalisessa mediassa ei ole kaksinkertaisen käytön ongelmaa. Sillä ei ole väliä, julkaistiinko
+julkaisu A millisekuntia ennen julkaisua B, eikä vanhojen julkaisujen tarvitse olla pysyvästi
+saatavilla jokaisella solmulla.
 
-Ohitamalla lohkoketjun Bitsocial välttää:
+Ohittamalla lohkoketjun Bitsocial välttää seuraavat:
 
-- **kaasumaksut** — postitus on ilmaista
-- **suorituskykyrajoitukset** — ei lohkon kokoa tai lohkon ajan pullonkaulaa
-- **säilytys bloat** — solmut säilyttävät vain tarvitsemansa
-- **konsensuskulut** — ei vaadi kaivostyöläisiä, validaattoreita tai panostamista
+- **gas-maksut** — julkaiseminen on ilmaista
+- **läpäisyrajat** — ei lohkokoon tai lohkoajan pullonkaulaa
+- **tallennustilan paisuminen** — solmut säilyttävät vain sen, mitä tarvitsevat
+- **konsensuksen yleiskustannukset** — ei louhijoita, validaattoreita eikä stakingia
 
-Kompromissi on, että Bitsocial ei takaa vanhan sisällön pysyvää saatavuutta. Mutta sosiaalisen median kannalta se on hyväksyttävä kompromissi: yhteisön operaattorin solmu pitää tiedot hallussaan, suosittu sisältö leviää monien vertaisten kesken ja hyvin vanhat viestit haalistuvat luonnollisesti – samalla tavalla kuin kaikilla sosiaalisilla alustoilla.
+Kompromissina Bitsocial ei takaa vanhan sisällön pysyvää saatavuutta. Sosiaaliselle medialle se on
+hyväksyttävä kompromissi: yhteisön ylläpitäjän solmu säilyttää datan, suosittu sisältö leviää usealle
+vertaiselle, ja hyvin vanhat julkaisut haipuvat luonnostaan — aivan kuten jokaisella sosiaalisella
+alustalla.
 
-## Miksei liitto?
+## Miksi ei federaatiota?
 
-Federoidut verkot (kuten sähköposti tai ActivityPub-pohjaiset alustat) parantavat keskittämistä, mutta niillä on silti rakenteellisia rajoituksia:
+Federoidut verkot (kuten sähköposti tai ActivityPub-pohjaiset alustat) ovat parannus keskitettyyn
+malliin, mutta niissä on silti rakenteellisia rajoitteita:
 
-- **Palvelinriippuvuus** — jokainen yhteisö tarvitsee palvelimen, jossa on verkkotunnus, TLS ja jatkuva
-  huolto
-- **Järjestelmänvalvojan luottamus** — palvelimen järjestelmänvalvojalla on täysi määräysvalta käyttäjätileihin ja sisältöön
-- **Fragmentoituminen** — palvelimien välillä siirtyminen tarkoittaa usein seuraajien, historian tai identiteetin menettämistä
-- **Kustannus** — jonkun on maksettava isännöinnistä, mikä luo painetta konsolidointiin
+- **Palvelinriippuvuus** — jokainen yhteisö tarvitsee palvelimen, jolla on verkkotunnus, TLS ja
+  jatkuva ylläpito
+- **Luottamus ylläpitäjään** — palvelimen ylläpitäjällä on täysi valta käyttäjätileihin ja sisältöön
+- **Pirstaloituminen** — palvelimelta toiselle siirtyminen tarkoittaa usein seuraajien, historian
+  tai identiteetin menettämistä
+- **Kustannukset** — jonkun on maksettava ylläpidosta, mikä luo painetta keskittymiseen
 
-Bitsocialin peer-to-peer-lähestymistapa poistaa palvelimen yhtälöstä kokonaan. Yhteisösolmu voi toimia kannettavalla tietokoneella, Raspberry Pi:llä tai halvalla VPS:llä. Operaattori hallitsee moderointikäytäntöä, mutta ei voi taata käyttäjien identiteettejä, koska identiteetit ovat avainparin ohjaamia, ei palvelimen myöntämiä.
+Bitsocialin vertaisverkkomalli poistaa palvelimen yhtälöstä kokonaan. Yhteisösolmu voi pyöriä
+kannettavalla, Raspberry Pi:llä tai halvalla VPS:llä. Ylläpitäjä hallitsee moderointikäytäntöä,
+mutta ei voi ottaa haltuunsa käyttäjien identiteettejä, koska identiteettejä hallitaan avainpareilla
+eikä niitä myönnetä palvelimelta.
+
+## Entä Nostr?
+
+Nostr ei asetu siististi kumpaankaan lokeroon. Se ei ole ActivityPub-tyylistä federaatiota, koska
+instanssit eivät myönnä käyttäjille tilejä eikä identiteetti ole sidottu yhteen palvelimeen. Se ei
+ole myöskään lohkoketjupohjaista sosiaalista mediaa, koska ketjua, konsensusta, gasia tai globaalia
+tapahtumajärjestystä ei ole.
+
+Nostria kuvaa paremmin **välityspalvelinpohjainen sosiaalinen media**. Perusprotokollassa
+([NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md)) käyttäjillä on avainparit, he
+allekirjoittavat tapahtumia ja julkaisevat ne WebSocket-välityspalvelimille. Asiakkaat tilaavat
+välityspalvelimilta suodattimilla, hakevat vastaavat tapahtumat ja tarkistavat allekirjoitukset
+paikallisesti. Käyttäjät voivat myös julkaista välityspalvelinlistan metatietoja
+([NIP-65](https://github.com/nostr-protocol/nips/blob/master/65.md)), jotka kertovat asiakkaille,
+mille välityspalvelimille he yleensä kirjoittavat ja miltä he lukevat mainintoja mieluiten.
+
+Yhdessä tärkeässä suhteessa se asettaa Nostrin lähemmäs Bitsocialia kuin federoidut tai
+lohkoketjupohjaiset järjestelmät: identiteetti on kryptografinen ja siirrettävä. Pääero on
+datakerroksessa. Nostrissa välityspalvelimet ovat tavanomainen tallennus- ja jakelukerros.
+Bitsocialissa HTTP-reitittimet vain auttavat asiakkaita löytämään vertaisia. Reitittimet eivät
+säilytä julkaisuja, profiileja, yhteisöjen metatietoja tai moderointitilaa; ne palauttavat
+tarjoajavertaisten osoitteet, ja asiakkaat hakevat sisällön vertaisilta.
+
+Yhteisöissä näkyy sama jako. Nostrissa on valinnaisia malleja
+[välityspalvelinpohjaisille ryhmille](https://github.com/nostr-protocol/nips/blob/master/29.md) ja
+[moderaattorien hyväksymille yhteisöille](https://github.com/nostr-protocol/nips/blob/master/72.md),
+mutta ne nojaavat edelleen välityspalvelinten käytäntöihin, välityspalvelimella isännöityyn
+ryhmätilaan tai asiakkaan valintoihin siitä, mitä hyväksyntöjä kunnioitetaan. Bitsocial kohtelee
+yhteisöjä ensiluokkaisina kryptografisina objekteina, joiden ylläpitäjän solmu tarkistaa julkaisut,
+ajaa yhteisön haastekäytäntöä ja julkaisee viimeisimmän hyväksytyn tilan vertaisverkkoon.
+
+| Kysymys                 | Nostr                                                                                               | Bitsocial                                                                                      |
+| ----------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Kategoria               | Välityspalvelinpohjainen protokolla                                                                 | Vertaisverkkopohjainen yhteisöverkko                                                           |
+| Identiteetti            | Käyttäjän julkinen avain                                                                            | Käyttäjien ja yhteisöjen avainparit                                                            |
+| Datapolku               | Allekirjoitetut tapahtumat julkaistaan välityspalvelimille                                          | Julkisen avaimen osoite ratkeaa vertaisiksi; sisältö haetaan vertaisilta                       |
+| Kuka pitää sen verkossa | Käyttäjien ja asiakkaiden valitsemat välityspalvelimet                                              | Yhteisön omistajan solmu sekä avustavat jakajat                                                |
+| Yhteisöt                | Valinnaiset välityspalvelinpohjaiset ryhmät tai moderaattorien hyväksymät yhteisöt                  | Ensiluokkaiset yhteisöobjektit, joiden moderointia ylläpitäjä hallitsee                        |
+| Roskapostin torjunta    | Välityspalvelinkäytäntö, tunnistautuminen, maksu, proof-of-work, asiakassuodattimet tai hyväksynnät | Yhteisön määrittelemä haastelogiikka ennen sisällyttämistä                                     |
+| Tärkein kompromissi     | Siirrettävä identiteetti, mutta saatavuus ja käytännöt riippuvat välityspalvelimista                | Vähemmän riippuvuutta välityspalvelimista, mutta vanhan sisällön säilymistä ei taata ikuisesti |
 
 ---
 
 ## Yhteenveto
 
-Bitsocial perustuu kahteen primitiiviin: julkiseen avaimeen perustuvaan osoitteeseen sisällön löytämiseen ja vertaispubiin reaaliaikaiseen viestintään. Yhdessä he tuottavat sosiaalisen verkoston, jossa:
+Bitsocial rakentuu kahdelle primitiiville: julkiseen avaimeen perustuvalle osoitteistukselle sisällön
+löytämisessä ja vertaisverkon pubsubille reaaliaikaisessa viestinnässä. Yhdessä ne tuottavat
+sosiaalisen verkon, jossa:
 
-- yhteisöt tunnistetaan salausavaimilla, ei verkkotunnuksilla
-- sisältö leviää toistensa välillä kuin torrent, ei toimiteta yhdestä tietokannasta
-- roskapostin vastustus on paikallista jokaiselle yhteisölle, ei alustan määräämä
-- käyttäjät omistavat henkilöllisyytensä avainparien kautta, eivät peruutettavien tilien kautta
+- yhteisöt tunnistetaan kryptografisilla avaimilla, ei verkkotunnuksilla
+- sisältö leviää vertaisten kesken kuin torrentti, sitä ei tarjoilla yhdestä tietokannasta
+- roskapostin torjunta on kunkin yhteisön oma asia, ei alustan sanelema
+- käyttäjät omistavat identiteettinsä avainparien kautta, eivät peruutettavissa olevien tilien kautta
 - koko järjestelmä toimii ilman palvelimia, lohkoketjuja tai alustamaksuja

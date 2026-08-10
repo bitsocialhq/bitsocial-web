@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## 其他有用的命令
 
 ```bash
-# 将密钥从英语复制到所有语言（试运行然后写入）
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# 从所有语言中删除密钥
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# 审核未使用的翻译密钥
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

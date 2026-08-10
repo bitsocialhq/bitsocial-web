@@ -152,6 +152,8 @@ Rozróżnienie ma znaczenie:
 - RPC nie powinno stać się opieką stałą
 - relacja właściciela powinna pozostać powiązana z kluczami, a nie z bazą danych jednego dostawcy
 
+Pierwszą usługą zbudowaną na tym modelu jest Forge RPC od [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), która opiera się na projekcie protokołu [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Czym Bitsocial nie jest
 
 Bitsocial nie jest siecią społecznościową typu blockchain. Media społecznościowe nie potrzebują, aby każdy post stał się transakcją w jednym globalnym rejestrze.

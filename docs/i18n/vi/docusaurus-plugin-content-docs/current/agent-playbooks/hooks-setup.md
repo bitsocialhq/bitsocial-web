@@ -1,34 +1,37 @@
-# Thiết lập móc tác nhân
+# Thiết lập hook cho agent
 
-Nếu trợ lý mã hóa AI của bạn hỗ trợ các móc nối vòng đời, hãy định cấu hình các móc nối này cho kho lưu trữ này.
+Nếu trợ lý lập trình AI của bạn hỗ trợ hook vòng đời, hãy cấu hình các hook sau cho kho lưu trữ này.
 
-## Móc được đề xuất
+## Hook được khuyến nghị
 
-| Móc             | Lệnh                                       | Mục đích                                                                                                                                                                                                   |
-| --------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Tự động định dạng tệp sau khi chỉnh sửa AI                                                                                                                                                                 |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Chạy `corepack yarn install` khi `package.json` thay đổi                                                                                                                                                   |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Cắt bớt các tài liệu tham khảo cũ và xóa các nhánh tác vụ tạm thời được tích hợp                                                                                                                           |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Xây dựng cổng cứng, kiểm tra lỗi mã nguồn, đánh máy và định dạng; lưu giữ thông tin về `yarn npm audit` và chạy `yarn knip` riêng biệt dưới dạng kiểm tra tư vấn khi các phần phụ thuộc/nhập khẩu thay đổi |
+| Hook            | Lệnh                                          | Mục đích                                                                                                                                                                                                            |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Tự động định dạng tệp sau khi AI chỉnh sửa                                                                                                                                                                          |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Chạy `corepack yarn install` khi `package.json` thay đổi                                                                                                                                                            |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Khi một diff thêm `useEffect` hoặc các nguyên hàm memo trong `about/src/`, nhắc agent cân nhắc lại bằng các skill review React                                                                                      |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Cắt tỉa các ref cũ và xóa những nhánh tác vụ tạm đã được tích hợp                                                                                                                                                   |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Quét lại diff hiện tại để tìm effect/memo React mới trong `about/src/` trước cổng xác minh cuối                                                                                                                     |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Cổng cứng cho kiểm tra bản dựng có mục tiêu, lint, kiểm tra kiểu và kiểm tra định dạng; giữ `yarn npm audit` ở mức thông tin và chạy `yarn knip` riêng như một bước rà soát tham khảo khi phụ thuộc/import thay đổi |
 
-## Tại sao
+## Vì sao
 
 - Định dạng nhất quán
-- Lockfile vẫn được đồng bộ hóa
-- Các vấn đề về xây dựng/lint/loại được phát hiện sớm
-- Khả năng hiển thị bảo mật qua `yarn npm audit`
-- Có thể kiểm tra sự phụ thuộc/sự trôi dạt nhập khẩu bằng `yarn knip` mà không biến nó thành một móc dừng toàn cầu ồn ào
-- Một triển khai hook chia sẻ cho cả Codex và Cursor
-- Các nhánh nhiệm vụ tạm thời luôn phù hợp với quy trình làm việc của repo
+- Lockfile luôn được đồng bộ
+- Mỗi lần thêm `useEffect` hoặc memo mới trong site about đều được xem lại một lượt rõ ràng trước khi agent kết thúc
+- Các vấn đề dựng/lint/kiểu liên quan tới workspace được phát hiện sớm mà không phải chạy bản dựng tài liệu đa ngôn ngữ đầy đủ cho mọi tác vụ
+- Thấy được tình hình bảo mật qua `yarn npm audit`
+- Có thể kiểm tra độ lệch phụ thuộc/import bằng `yarn knip` mà không biến nó thành một stop hook toàn cục gây nhiễu
+- Một bản triển khai hook dùng chung cho cả Codex và Cursor
+- Các nhánh tác vụ tạm luôn ăn khớp với quy trình worktree của kho lưu trữ
 
-## Tập lệnh móc ví dụ
+## Ví dụ script hook
 
-### Móc định dạng
+### Hook định dạng
 
 ```bash
 #!/bin/bash
-# Tự động định dạng tệp JS/TS sau khi chỉnh sửa AI
-# Hook nhận JSON qua stdin với file_path
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Xác minh móc
+### Hook xác minh
 
 ```bash
 #!/bin/bash
-# Chạy bản dựng, tìm lỗi mã nguồn, kiểm tra lỗi đánh máy, kiểm tra định dạng và kiểm tra bảo mật khi tác nhân kết thúc
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Theo mặc định, `scripts/agent-hooks/verify.sh` thoát khác 0 khi kiểm tra bắt buộc không thành công. Chỉ đặt `AGENT_VERIFY_MODE=advisory` khi bạn cố tình cần tín hiệu từ cây gãy mà không chặn móc. Giữ `yarn knip` ngoài cổng cứng trừ khi repo quyết định rõ ràng là không thành công về các vấn đề nhập/phụ thuộc tư vấn.
+Theo mặc định, `scripts/agent-hooks/verify.sh` thoát với mã khác 0 khi một bước kiểm tra bắt buộc thất bại. Chỉ đặt `AGENT_VERIFY_MODE=advisory` khi bạn cố ý cần tín hiệu từ một cây mã đang hỏng mà không muốn chặn hook. Hãy giữ `yarn knip` ngoài cổng cứng, trừ khi kho lưu trữ quyết định rõ ràng là sẽ báo hỏng vì các vấn đề import/phụ thuộc ở mức tham khảo.
 
-### Móc cài sợi
+Hook vòng đời không thay thế việc kiểm tra thủ công trên trình duyệt. Với thay đổi về UI hoặc hình ảnh, vẫn phải chạy kiểm tra bằng `playwright-cli` trên `chrome`, `firefox` và `webkit`, kèm một luồng ở khung nhìn di động trong từng engine khi tính đáp ứng hoặc hành vi chạm có thay đổi.
+
+### Hook cài đặt Yarn
 
 ```bash
 #!/bin/bash
-# Chạy cài đặt sợi corepack khi gói.json được thay đổi
-# Hook nhận JSON qua stdin với file_path
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Định cấu hình nối dây móc theo tài liệu công cụ đại lý của bạn (`hooks.json`, tương đương, v.v.).
+Hãy cấu hình cách nối hook theo tài liệu của công cụ agent bạn dùng (`hooks.json`, hoặc tương đương, v.v.).
 
-Trong kho lưu trữ này, `.codex/hooks/*.sh` và `.cursor/hooks/*.sh` sẽ vẫn ở dạng trình bao bọc mỏng ủy quyền cho việc triển khai được chia sẻ trong `scripts/agent-hooks/`.
+Trong kho lưu trữ này, `.codex/hooks/*.sh` và `.cursor/hooks/*.sh` nên giữ vai trò lớp bọc mỏng, ủy quyền cho các bản triển khai dùng chung trong `scripts/agent-hooks/`.

@@ -1,68 +1,68 @@
 ---
-title: CLI
-description: Befehlszeilenschnittstelle zum Ausführen eines Bitsocial-Knotens, zum Erstellen von Communities und zum Verwalten von Protokollvorgängen.
+title: Bitsocial CLI
+description: Kommandozeilenwerkzeug zum Betreiben eines Bitsocial-Knotens, zum Erstellen von Communities und zum Verwalten von Protokolloperationen.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-`bitsocial-cli` ist ein Befehlszeilentool für die Interaktion mit dem Bitsocial-Protokoll-Backend. Sie können damit einen lokalen P2P-Daemon ausführen, Communities erstellen und konfigurieren sowie Inhalte veröffentlichen – alles vom Terminal aus.
+`bitsocial-cli` ist ein Kommandozeilenwerkzeug für die Arbeit mit dem Backend des Bitsocial-Protokolls. Damit betreiben Sie einen lokalen P2P-Daemon, erstellen und konfigurieren Communities und veröffentlichen Inhalte – alles direkt im Terminal.
 
-Es basiert auf der gemeinsamen Bitsocial-Protokoll-Client-Schicht und wird von [5chan](/apps/5chan/) und [Seedit](/apps/seedit/) für die Community-Erstellung und Knotenverwaltung verwendet.
+Es baut auf der gemeinsamen Client-Schicht des Bitsocial-Protokolls auf und wird von [5chan](/apps/5chan/) und [Seedit](/apps/seedit/) zum Erstellen von Communities und zur Knotenverwaltung genutzt.
 
 ## Installation
 
-Vorgefertigte Binärdateien sind für Windows, macOS und Linux verfügbar. Laden Sie die neueste Version für Ihre Plattform von GitHub herunter:
+Für Windows, macOS und Linux stehen vorgefertigte Binärdateien bereit. Laden Sie die neueste Version für Ihre Plattform von GitHub herunter:
 
-**[Von GitHub Releases herunterladen](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Download über GitHub Releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Machen Sie nach dem Herunterladen die Binärdatei ausführbar (macOS/Linux):
-
-```bash
-chmod +x bitsocial-cli
-```
-
-## Den Daemon ausführen
-
-Die häufigste Verwendung der CLI ist die Ausführung eines Bitsocial-Knotens. Der Daemon startet die P2P-Netzwerkschicht und stellt eine lokale API bereit, mit der Clients eine Verbindung herstellen können.
+Machen Sie die Binärdatei nach dem Herunterladen ausführbar (macOS/Linux):
 
 ```bash
-bitsocial-cli daemon
+chmod +x bitsocial
 ```
 
-Beim ersten Start gibt der Daemon Links zur **WebUI** aus, einer browserbasierten grafischen Oberfläche zur Verwaltung Ihres Knotens, Ihrer Communities und Einstellungen. Dies ist nützlich, wenn Sie eine GUI gegenüber Terminalbefehlen bevorzugen.
+## Den Daemon betreiben
 
-## Schlüsselaktionen
-
-| Aktion                        | Beschreibung                                                        |
-| ----------------------------- | ------------------------------------------------------------------- |
-| Starten Sie den Daemon        | Starten Sie den Bitsocial P2P-Knoten                                |
-| Erstellen Sie eine Community  | Erstellen Sie eine neue Community                                   |
-| Bearbeiten Sie eine Community | Community-Einstellungen aktualisieren (Titel, Beschreibung, Regeln) |
-| Lokale Gemeinden auflisten    | Auf diesem Knoten gehostete Communities auflisten                   |
-| Eine Community gründen        | Beginnen Sie, einer bestimmten Community zu dienen                  |
-| Stoppen Sie eine Community    | Hören Sie auf, einer bestimmten Community zu dienen                 |
-
-Führen Sie die CLI mit `--help` aus, um die aktuellen Befehlsnamen und Flags anzuzeigen, die von Ihrer installierten Version verfügbar gemacht werden:
+Am häufigsten wird die CLI genutzt, um einen Bitsocial-Knoten zu betreiben. Der Daemon startet die P2P-Netzwerkschicht und stellt eine lokale API bereit, mit der sich Clients verbinden können.
 
 ```bash
-bitsocial-cli --help
-bitsocial-cli daemon --help
+bitsocial daemon
 ```
 
-## Typischer Arbeitsablauf
+Beim ersten Start gibt der Daemon Links zur **WebUI** aus, einer browserbasierten grafischen Oberfläche zur Verwaltung von Knoten, Communities und Einstellungen. Das ist praktisch, wenn Sie eine GUI den Terminalbefehlen vorziehen.
 
-Ein üblicher Einrichtungsablauf zum Hosten einer neuen Community:
+## Wichtige Aktionen
+
+| Aktion                       | Beschreibung                                                        |
+| ---------------------------- | ------------------------------------------------------------------- |
+| Den Daemon starten           | Den Bitsocial-P2P-Knoten starten                                    |
+| Eine Community erstellen     | Eine neue Community anlegen                                         |
+| Eine Community bearbeiten    | Community-Einstellungen aktualisieren (Titel, Beschreibung, Regeln) |
+| Lokale Communities auflisten | Auf diesem Knoten gehostete Communities auflisten                   |
+| Eine Community starten       | Eine bestimmte Community ausliefern                                 |
+| Eine Community stoppen       | Die Auslieferung einer bestimmten Community beenden                 |
+
+Rufen Sie die CLI mit `--help` auf, um die Befehlsnamen und Optionen Ihrer installierten Version zu sehen:
+
+```bash
+bitsocial --help
+bitsocial daemon --help
+```
+
+## Typischer Ablauf
+
+Ein üblicher Einrichtungsablauf, um eine neue Community zu hosten:
 
 ```bash
 # 1. Start the daemon
-bitsocial-cli daemon
+bitsocial daemon
 
 # 2. In another terminal, inspect the available community-management commands
-bitsocial-cli --help
+bitsocial --help
 ```
 
-Von dort aus verwenden Sie die Community-Verwaltungsbefehle der installierten Version, um eine Community zu erstellen, zu konfigurieren und mit der Bereitstellung zu beginnen. Nach dem Start ist die Community live im Bitsocial-Netzwerk und über kompatible Clients zugänglich.
+Nutzen Sie von dort aus die Community-Verwaltungsbefehle Ihrer installierten Version, um eine Community anzulegen, zu konfigurieren und auszuliefern. Sobald sie gestartet ist, ist die Community im Bitsocial-Netzwerk live und aus kompatiblen Clients erreichbar.
 
 ## Links
 

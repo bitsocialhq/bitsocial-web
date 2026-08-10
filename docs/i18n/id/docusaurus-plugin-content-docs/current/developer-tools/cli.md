@@ -1,68 +1,68 @@
 ---
-title: CLI
+title: CLI Bitsocial
 description: Antarmuka baris perintah untuk menjalankan node Bitsocial, membuat komunitas, dan mengelola operasi protokol.
 sidebar_position: 2
 ---
 
-# CLI
+# CLI Bitsocial
 
-`bitsocial-cli` adalah alat baris perintah untuk berinteraksi dengan backend protokol Bitsocial. Ini memungkinkan Anda menjalankan daemon P2P lokal, membuat dan mengkonfigurasi komunitas, dan mempublikasikan konten -- semuanya dari terminal.
+`bitsocial-cli` adalah perkakas baris perintah untuk berinteraksi dengan backend protokol Bitsocial. Dengannya Anda bisa menjalankan daemon P2P lokal, membuat dan mengonfigurasi komunitas, serta menerbitkan konten -- semuanya dari terminal.
 
-Itu dibangun di atas lapisan klien protokol Bitsocial bersama dan digunakan oleh [5chan](/apps/5chan/) dan [edit benih](/apps/seedit/) untuk pembuatan komunitas dan manajemen node.
+Perkakas ini dibangun di atas lapisan klien protokol Bitsocial bersama, dan dipakai oleh [5chan](/apps/5chan/) dan [Seedit](/apps/seedit/) untuk pembuatan komunitas dan pengelolaan node.
 
 ## Instalasi
 
-Biner bawaan tersedia untuk Windows, macOS, dan Linux. Unduh rilis terbaru untuk platform Anda dari GitHub:
+Biner siap pakai tersedia untuk Windows, macOS, dan Linux. Unduh rilis terbaru untuk platform Anda dari GitHub:
 
-**[Unduh dari Rilis GitHub](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Unduh dari GitHub Releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-Setelah mengunduh, buat binernya dapat dieksekusi (macOS/Linux):
+Setelah diunduh, jadikan binernya dapat dieksekusi (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
 ## Menjalankan Daemon
 
-Penggunaan CLI yang paling umum adalah menjalankan node Bitsocial. Daemon memulai lapisan jaringan P2P dan menampilkan API lokal yang dapat dihubungkan oleh klien.
+Penggunaan CLI yang paling umum adalah menjalankan sebuah node Bitsocial. Daemon menyalakan lapisan jaringan P2P dan menyediakan API lokal yang bisa dihubungi oleh klien.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-Pada peluncuran pertama, daemon mengeluarkan tautan ke **WebUI**, antarmuka grafis berbasis browser untuk mengelola node, komunitas, dan pengaturan Anda. Ini berguna jika Anda lebih memilih GUI daripada perintah terminal.
+Pada peluncuran pertama, daemon menampilkan tautan ke **WebUI**, yaitu antarmuka grafis berbasis browser untuk mengelola node, komunitas, dan pengaturan Anda. Ini berguna jika Anda lebih menyukai GUI ketimbang perintah terminal.
 
 ## Tindakan Utama
 
-| Aksi                   | Deskripsi                                                |
-| ---------------------- | -------------------------------------------------------- |
-| Mulai daemon           | Luncurkan simpul P2P Bitsocial                           |
-| Buat komunitas         | Buat komunitas baru                                      |
-| Edit komunitas         | Perbarui pengaturan komunitas (judul, deskripsi, aturan) |
-| Daftar komunitas lokal | Daftar komunitas yang dihosting di node ini              |
-| Mulai komunitas        | Mulai melayani komunitas tertentu                        |
-| Hentikan komunitas     | Berhenti melayani komunitas tertentu                     |
+| Tindakan                | Deskripsi                                                   |
+| ----------------------- | ----------------------------------------------------------- |
+| Menjalankan daemon      | Menyalakan node P2P Bitsocial                               |
+| Membuat komunitas       | Membuat komunitas baru                                      |
+| Menyunting komunitas    | Memperbarui pengaturan komunitas (judul, deskripsi, aturan) |
+| Melihat komunitas lokal | Menampilkan komunitas yang dihosting di node ini            |
+| Memulai komunitas       | Mulai menyajikan sebuah komunitas tertentu                  |
+| Menghentikan komunitas  | Berhenti menyajikan sebuah komunitas tertentu               |
 
-Jalankan CLI dengan `--help` untuk melihat nama perintah dan tanda saat ini yang diekspos oleh rilis yang Anda instal:
+Jalankan CLI dengan `--help` untuk melihat nama perintah dan flag terkini yang disediakan oleh rilis yang Anda pasang:
 
 ```bash
-bitsocial-cli --help
-bitsocial-cli daemon --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
-## Alur Kerja Khas
+## Alur Kerja Umum
 
-Alur penyiapan umum untuk menghosting komunitas baru:
+Alur penyiapan yang lazim untuk menghosting komunitas baru:
 
 ```bash
 # 1. Start the daemon
-bitsocial-cli daemon
+bitsocial daemon
 
 # 2. In another terminal, inspect the available community-management commands
-bitsocial-cli --help
+bitsocial --help
 ```
 
-Dari sana, gunakan perintah manajemen komunitas rilis yang diinstal untuk membuat, mengonfigurasi, dan mulai melayani komunitas. Setelah dimulai, komunitas tersebut aktif di jaringan Bitsocial dan dapat diakses dari klien yang kompatibel.
+Dari titik itu, gunakan perintah pengelolaan komunitas dari rilis yang terpasang untuk membuat, mengonfigurasi, dan mulai menyajikan sebuah komunitas. Setelah dijalankan, komunitas tersebut aktif di jaringan Bitsocial dan bisa diakses dari klien yang kompatibel.
 
 ## Tautan
 

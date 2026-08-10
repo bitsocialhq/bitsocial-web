@@ -11,17 +11,17 @@ Antes de editar, consulte el historial de git para ver el código relevante. Es 
 1. Escanee títulos de confirmaciones recientes (solo títulos) para el archivo/área:
 
 ```bash
-# Títulos de confirmación recientes para un archivo específico
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Títulos de confirmación recientes para un rango de líneas específico
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspeccione solo confirmaciones relevantes con diferencias de ámbito:
 
 ```bash
-# Mostrar mensaje de confirmación + diferencia para un archivo
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

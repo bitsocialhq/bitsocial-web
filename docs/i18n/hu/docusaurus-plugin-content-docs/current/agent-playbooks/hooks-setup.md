@@ -1,34 +1,37 @@
-# Agent Hooks beállítása
+# Ügynöki hookok beállítása
 
-Ha az AI-kódolási asszisztens támogatja az életciklus-horogokat, konfigurálja ezeket ehhez a repóhoz.
+Ha az AI-kódolóasszisztense támogatja az életciklus-hookokat, állítsa be az alábbiakat ehhez a repóhoz.
 
-## Ajánlott horgok
+## Ajánlott hookok
 
-| Horog           | Parancs                                    | Cél                                                                                                                                                                                                               |
-| --------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Auto-format files after AI edits                                                                                                                                                                                  |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | A `corepack yarn install` futtatása, amikor a `package.json` megváltozik                                                                                                                                          |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Az elavult hivatkozások levágása és az integrált ideiglenes feladatágak törlése                                                                                                                                   |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Hard-gate összeépítés, szösz, típusellenőrzés és formátumellenőrzés; a `yarn npm audit` információs megőrzése és a `yarn knip` külön futtatása tanácsadó auditként, amikor a függőségek/importálások megváltoznak |
+| Hook            | Parancs                                       | Cél                                                                                                                                                                                                                                                     |
+| --------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Fájlok automatikus formázása az AI-szerkesztések után                                                                                                                                                                                                   |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | `corepack yarn install` futtatása, amikor a `package.json` változik                                                                                                                                                                                     |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Ha egy diff `useEffect`/memo primitíveket ad hozzá az `about/src/` alatt, emlékezteti az ügynököt, hogy gondolja újra a React-review skillekkel                                                                                                         |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Elavult refek metszése és a beolvasztott ideiglenes feladatágak törlése                                                                                                                                                                                 |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Az aktuális diff újbóli átvizsgálása új React-effektek és -memók után az `about/src/` alatt, a záró ellenőrzési kapu előtt                                                                                                                              |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Kemény kapu a célzott build-ellenőrzéshez, linthez, típusellenőrzéshez és formátumellenőrzéshez; a `yarn npm audit` maradjon tájékoztató jellegű, a `yarn knip` pedig külön, tanácsadó auditként fusson, amikor a függőségek vagy az importok változnak |
 
 ## Miért
 
-- Következetes formázás
-- A zárolt fájl szinkronban marad
-- Az építési/bolyhosodási/típusú problémákat korán észlelték
-- Biztonsági láthatóság a `yarn npm audit` segítségével
-- A függőség/import elsodródás ellenőrizhető a `yarn knip`-val anélkül, hogy zajos globális stophookgá alakítaná
-- Egy megosztott horog megvalósítás a Codex és a Cursor számára
-- Az ideiglenes feladatágak összhangban maradnak a repo munkafa munkafolyamatával
+- Egységes formázás
+- A lockfile szinkronban marad
+- Az about-oldalon megjelenő új `useEffect`/memo kiegészítések kifejezett második átnézést kapnak, mielőtt az ügynök befejezi a munkát
+- A workspace szempontjából releváns build-, lint- és típusproblémák korán kiderülnek anélkül, hogy minden feladatnál ki kellene kényszeríteni a teljes többnyelvű dokumentációs buildet
+- Biztonsági rálátás a `yarn npm audit` révén
+- A függőségek és importok elsodródása a `yarn knip` paranccsal ellenőrizhető anélkül, hogy zajos, globális stop hookká válna
+- Egyetlen közös hookimplementáció a Codex és a Cursor számára
+- Az ideiglenes feladatágak összhangban maradnak a repó munkafa-munkafolyamatával
 
-## Példa Hook szkriptekre
+## Példa hookszkriptek
 
-### Format Hook
+### Formázó hook
 
 ```bash
 #!/bin/bash
-# A JS/TS fájlok automatikus formázása a mesterséges intelligencia szerkesztése után
-# A Hook stdin-n keresztül fogadja a JSON-t a file_path paraméterrel
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Ellenőrizze Hook
+### Ellenőrző hook
 
 ```bash
 #!/bin/bash
-# Futtassa az összeállítást, a szöszölést, a típusellenőrzést, a formátumellenőrzést és a biztonsági auditot, amikor az ügynök befejeződik
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Alapértelmezés szerint a `scripts/agent-hooks/verify.sh` nem nulláról lép ki, ha a szükséges ellenőrzés sikertelen. Csak akkor állítsa be a `AGENT_VERIFY_MODE=advisory`-t, ha szándékosan jelre van szüksége egy törött fáról anélkül, hogy elzárná a horgot. Tartsa távol a `yarn knip`-t a keménykapun, kivéve, ha a repo kifejezetten úgy dönt, hogy meghiúsul tanácsadó importálási/függőségi problémák miatt.
+Alapértelmezés szerint a `scripts/agent-hooks/verify.sh` nem nulla kóddal lép ki, ha egy kötelező ellenőrzés elbukik. Az `AGENT_VERIFY_MODE=advisory` beállítást csak akkor használja, ha szándékosan szeretne jelzést kapni egy hibás fáról anélkül, hogy a hook blokkolna. A `yarn knip` maradjon a kemény kapun kívül, hacsak a repó kifejezetten úgy nem dönt, hogy tanácsadó import- és függőségi problémákon is elbukik.
 
-### Fonal telepítési horog
+Az életciklus-hookok nem helyettesítik a kézi böngészős ellenőrzést. UI- vagy vizuális változásoknál továbbra is futtasson `playwright-cli` ellenőrzéseket `chrome`, `firefox` és `webkit` motorokon, valamint mindegyik motorban egy mobil nézetablakos folyamatot, ha a reszponzivitás vagy az érintéses viselkedés változott.
+
+### Yarn install hook
 
 ```bash
 #!/bin/bash
-# Futtassa a corepack yarn telepítését a package.json módosításakor
-# A Hook stdin-n keresztül fogadja a JSON-t a file_path paraméterrel
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Konfigurálja a horgos vezetékezést az ügynöki eszköz dokumentumai szerint (`hooks.json`, egyenértékű stb.).
+A hookok bekötését az ügynökeszköz dokumentációja szerint állítsa be (`hooks.json` vagy ennek megfelelője stb.).
 
-Ebben a repóban a `.codex/hooks/*.sh` és a `.cursor/hooks/*.sh` vékony burkolók maradnak, amelyek a `scripts/agent-hooks/` alatti megosztott megvalósításokra delegálnak.
+Ebben a repóban a `.codex/hooks/*.sh` és a `.cursor/hooks/*.sh` fájlok maradjanak vékony burkolók, amelyek a `scripts/agent-hooks/` alatti közös implementációkra delegálnak.

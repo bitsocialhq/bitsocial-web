@@ -1,69 +1,69 @@
 ---
-title: CLI
-description: Parancssori interfész Bitsocial csomópont futtatásához, közösségek létrehozásához és protokollműveletek kezeléséhez.
+title: Bitsocial CLI
+description: Parancssori felület Bitsocial csomópont futtatásához, közösségek létrehozásához és protokollműveletek kezeléséhez.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-A `bitsocial-cli` egy parancssori eszköz a Bitsocial protokoll hátterével való interakcióhoz. Lehetővé teszi helyi P2P démon futtatását, közösségek létrehozását és konfigurálását, valamint tartalom közzétételét – mindezt a terminálról.
+A `bitsocial-cli` egy parancssori eszköz a Bitsocial protokoll háttérrétegével való munkához. Lehetővé teszi helyi P2P démon futtatását, közösségek létrehozását és konfigurálását, valamint tartalom közzétételét -- mindezt a terminálból.
 
-A megosztott Bitsocial protokoll kliens rétegére épül, és a [5chan](/apps/5chan/) és a [Seedit](/apps/seedit/) használja a közösség létrehozására és a csomópontok kezelésére.
+A megosztott Bitsocial protokoll-kliensrétegre épül, és az [5chan](/apps/5chan/), valamint a [Seedit](/apps/seedit/) is ezt használja közösségek létrehozásához és a csomópontok kezeléséhez.
 
 ## Telepítés
 
-Előre beépített bináris fájlok állnak rendelkezésre Windows, macOS és Linux rendszereken. Töltse le a platform legújabb kiadását a GitHubról:
+Előre elkészített binárisok érhetők el Windows, macOS és Linux rendszerre. Töltse le a platformjához tartozó legfrissebb kiadást a GitHubról:
 
-**[Letöltés a GitHub kiadásaiból](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Letöltés a GitHub Releases oldaláról](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
-A letöltés után tegye a bináris fájlt végrehajthatóvá (macOS/Linux):
+A letöltés után tegye futtathatóvá a binárist (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
-## A Daemon futtatása
+## A démon futtatása
 
-A CLI legáltalánosabb használata egy Bitsocial csomópont futtatása. A démon elindítja a P2P hálózati réteget, és felfed egy helyi API-t, amelyhez az ügyfelek csatlakozhatnak.
+A CLI leggyakoribb felhasználása egy Bitsocial csomópont futtatása. A démon elindítja a P2P hálózati réteget, és elérhetővé tesz egy helyi API-t, amelyhez a kliensek csatlakozhatnak.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-Az első indításkor a démon hivatkozásokat ad ki a **WebUI**-ra, amely egy böngésző alapú grafikus felület a csomópont, a közösségek és a beállítások kezelésére. Ez akkor hasznos, ha a GUI-t részesíti előnyben a terminálparancsokkal szemben.
+Az első indításkor a démon kiírja a **WebUI** hivatkozásait; ez egy böngészőalapú grafikus felület a csomópont, a közösségek és a beállítások kezeléséhez. Akkor hasznos, ha a grafikus felületet részesíti előnyben a terminálparancsokkal szemben.
 
-## Kulcsműveletek
+## Fő műveletek
 
-| Akció                    | Leírás                                                    |
-| ------------------------ | --------------------------------------------------------- |
-| Indítsa el a démont      | Indítsa el a Bitsocial P2P csomópontot                    |
-| Közösség létrehozása     | Új közösség létrehozása                                   |
-| Közösség szerkesztése    | Közösségi beállítások frissítése (cím, leírás, szabályok) |
-| Helyi közösségek listája | Az ezen a csomóponton tárolt közösségek listázása         |
-| Közösség indítása        | Egy adott közösség kiszolgálásának megkezdése             |
-| Közösség leállítása      | Egy adott közösség kiszolgálásának leállítása             |
+| Művelet                    | Leírás                                                    |
+| -------------------------- | --------------------------------------------------------- |
+| A démon indítása           | A Bitsocial P2P csomópont elindítása                      |
+| Közösség létrehozása       | Új közösség létrehozása                                   |
+| Közösség szerkesztése      | Közösségi beállítások frissítése (cím, leírás, szabályok) |
+| Helyi közösségek listázása | Az ezen a csomóponton hosztolt közösségek listázása       |
+| Közösség indítása          | Egy adott közösség kiszolgálásának megkezdése             |
+| Közösség leállítása        | Egy adott közösség kiszolgálásának leállítása             |
 
-Futtassa a parancssori felületet a `--help` segítségével, hogy megtekinthesse a telepített kiadás által közzétett aktuális parancsneveket és jelzőket:
+Futtassa a CLI-t a `--help` kapcsolóval, hogy lássa a telepített kiadásban elérhető aktuális parancsneveket és kapcsolókat:
 
 ```bash
-bitsocial-cli --help
-bitsocial-cli daemon --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Tipikus munkafolyamat
 
-Egy közös beállítási folyamat új közösség fogadásához:
+Egy gyakori beállítási folyamat új közösség hosztolásához:
 
 ```bash
 # 1. Start the daemon
-bitsocial-cli daemon
+bitsocial daemon
 
 # 2. In another terminal, inspect the available community-management commands
-bitsocial-cli --help
+bitsocial --help
 ```
 
-Innentől kezdve használja a telepített kiadás közösségkezelési parancsait a közösség létrehozásához, konfigurálásához és szolgáltatásának megkezdéséhez. Miután elindult, a közösség élesben van a Bitsocial hálózaton, és elérhető kompatibilis ügyfelekről.
+Innentől a telepített kiadás közösségkezelő parancsaival hozhat létre, konfigurálhat és indíthat el egy közösséget. Az indítás után a közösség élőben elérhető a Bitsocial hálózaton, és a kompatibilis kliensekből is elérhető.
 
-## Linkek
+## Hivatkozások
 
 - **GitHub:** [bitsocialnet/bitsocial-cli](https://github.com/bitsocialnet/bitsocial-cli)

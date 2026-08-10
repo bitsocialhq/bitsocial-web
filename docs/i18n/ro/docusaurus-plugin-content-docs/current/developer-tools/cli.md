@@ -1,79 +1,69 @@
 ---
-title: CLI
+title: Bitsocial CLI
 description: Interfață de linie de comandă pentru rularea unui nod Bitsocial, crearea comunităților și gestionarea operațiunilor de protocol.
 sidebar_position: 2
 ---
 
-# CLI
+# Bitsocial CLI
 
-:::warning Denumire moștenită
-Acest pachet utilizează în prezent convențiile de denumire moștenite din dependența sa în amonte. Referințele la „plebbit” în comenzi, ieșire și configurare vor fi migrate la „bitsocial” într-o versiune viitoare. Funcționalitatea este neafectată.
-:::
+`bitsocial-cli` este o unealtă de linie de comandă pentru interacțiunea cu backendul protocolului Bitsocial. Vă permite să rulați un daemon P2P local, să creați și să configurați comunități și să publicați conținut -- totul din terminal.
 
-`bitsocial-cli` este un instrument de linie de comandă pentru interacțiunea cu backend-ul protocolului Bitsocial. Vă permite să rulați un demon P2P local, să creați și să configurați comunități și să publicați conținut -- totul din terminal.
-
-Este construit pe `plebbit-js` și este folosit de [5chan](/apps/5chan/) și [Seedit](/apps/seedit/) pentru crearea comunității și gestionarea nodurilor.
+Este construită peste stratul comun de client al protocolului Bitsocial și este folosită de [5chan](/apps/5chan/) și [Seedit](/apps/seedit/) pentru crearea comunităților și administrarea nodurilor.
 
 ## Instalare
 
-Binarele prefabricate sunt disponibile pentru Windows, macOS și Linux. Descărcați cea mai recentă versiune pentru platforma dvs. de pe GitHub:
+Sunt disponibile binare precompilate pentru Windows, macOS și Linux. Descărcați cea mai recentă versiune pentru platforma dumneavoastră de pe GitHub:
 
-**[Descărcați din versiunile GitHub](https://github.com/bitsocialnet/bitsocial-cli/releases)**
+**[Descărcați din GitHub Releases](https://github.com/bitsocialnet/bitsocial-cli/releases)**
 
 După descărcare, faceți binarul executabil (macOS/Linux):
 
 ```bash
-chmod +x bitsocial-cli
+chmod +x bitsocial
 ```
 
-## Conducerea Daemonului
+## Rularea daemonului
 
-Cea mai comună utilizare a CLI este rularea unui nod Bitsocial. Daemonul pornește stratul de rețea P2P și expune un API local la care clienții se pot conecta.
+Cea mai frecventă utilizare a CLI-ului este rularea unui nod Bitsocial. Daemonul pornește stratul de rețea P2P și expune un API local la care se pot conecta clienții.
 
 ```bash
-bitsocial-cli daemon
+bitsocial daemon
 ```
 
-La prima lansare, demonul afișează link-uri către **WebUI**, o interfață grafică bazată pe browser pentru gestionarea nodului, comunităților și setărilor. Acest lucru este util dacă preferați o GUI decât comenzile terminalului.
+La prima pornire, daemonul afișează linkuri către **WebUI**, o interfață grafică din browser pentru administrarea nodului, a comunităților și a setărilor. Este utilă dacă preferați o interfață grafică în locul comenzilor din terminal.
 
-## Comenzi cheie
+## Acțiuni principale
 
-| Comanda             | Descriere                                                   |
-| ------------------- | ----------------------------------------------------------- |
-| `daemon`            | Porniți nodul Bitsocial P2P                                 |
-| `create subplebbit` | Creați o nouă comunitate                                    |
-| `subplebbit edit`   | Actualizați setările comunității (titlu, descriere, reguli) |
-| `subplebbit list`   | Listează comunitățile găzduite pe acest nod                 |
-| `subplebbit start`  | Începeți să deserviți o anumită comunitate                  |
-| `subplebbit stop`   | Nu mai deservi o anumită comunitate                         |
+| Acțiune                       | Descriere                                                    |
+| ----------------------------- | ------------------------------------------------------------ |
+| Pornirea daemonului           | Lansează nodul P2P Bitsocial                                 |
+| Crearea unei comunități       | Creează o comunitate nouă                                    |
+| Editarea unei comunități      | Actualizează setările comunității (titlu, descriere, reguli) |
+| Listarea comunităților locale | Listează comunitățile găzduite pe acest nod                  |
+| Pornirea unei comunități      | Începe servirea unei anumite comunități                      |
+| Oprirea unei comunități       | Oprește servirea unei anumite comunități                     |
 
-Rulați orice comandă cu `--help` pentru a vedea opțiunile și semnalizatoarele disponibile:
+Rulați CLI-ul cu `--help` pentru a vedea numele de comenzi și opțiunile expuse de versiunea instalată:
 
 ```bash
-bitsocial-cli daemon --help
-bitsocial-cli create subplebbit --help
+bitsocial --help
+bitsocial daemon --help
 ```
 
 ## Flux de lucru tipic
 
-Un flux comun de configurare pentru găzduirea unei noi comunități:
+Un flux obișnuit de configurare pentru găzduirea unei comunități noi:
 
 ```bash
-# 1. Porniți demonul
-bitsocial-cli daemon
+# 1. Start the daemon
+bitsocial daemon
 
-# 2. Într-un alt terminal, creați o comunitate
-bitsocial-cli create subplebbit
-
-# 3. Configurați comunitatea
-bitsocial-cli subplebbit edit <address> --title "My Community" --description "A decentralized forum"
-
-# 4. Începeți să-l serviți
-bitsocial-cli subplebbit start <address>
+# 2. In another terminal, inspect the available community-management commands
+bitsocial --help
 ```
 
-Comunitatea este acum live pe rețeaua Bitsocial și accesibilă de la orice client compatibil.
+De acolo, folosiți comenzile de administrare a comunităților din versiunea instalată pentru a crea, configura și începe să serviți o comunitate. Odată pornită, comunitatea este activă în rețeaua Bitsocial și accesibilă din clienții compatibili.
 
-## Legături
+## Linkuri
 
 - **GitHub:** [bitsocialnet/bitsocial-cli](https://github.com/bitsocialnet/bitsocial-cli)

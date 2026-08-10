@@ -7,6 +7,6 @@ Legg til en oppføring per økt.
 - Vare: F001
 - Sammendrag: Erstatt dette med øktsammendraget.
 - Filer: `path/to/file`
-- Bekreftelse: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Bekreftelse: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Blokkere: ingen
 - Neste: Erstatt denne med den nest beste oppfølgingen.

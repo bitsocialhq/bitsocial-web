@@ -1,24 +1,15 @@
 ---
 title: Captcha Canvas Challenge
-description: Fristående bildbaserad captcha-generator med konfigurerbara tecken, dimensioner och färger.
+description: Fristående bildbaserad captcha-utmaning för Bitsocial-communities.
 sidebar_position: 2
 ---
 
 # Captcha Canvas Challenge
 
-:::warning Äldre namngivning
-Detta paket publicerades ursprungligen under `@plebbit`-omfånget. Den har bytt namn till `@bitsocial/captcha-canvas-challenge`. Referenser till det gamla namnet kan fortfarande förekomma i äldre dokumentation eller kodbaser.
-:::
+Captcha Canvas Challenge är ett fristående bildcaptcha-paket för Bitsocial-communities. Det ritar upp slumpad text på en canvas och låter ett community be författare att lösa bilden innan en publikation accepteras.
 
-Captcha Canvas Challenge är en fristående bild captcha-generator som ursprungligen extraherades från `plebbit-js`. Den återger randomiserad text på en HTML-duk och returnerar den resulterande bilden, som gemenskaper kan presentera för författare som en skräppostutmaning.
-
-**Källkod:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge)
-
-## Krav
-
-- **Node.js** >= 22
-- **Endast ESM** -- det här paketet skickar inte CommonJS-versioner.
-- **Runtime peer-beroende:** `@plebbit/plebbit-js` (migrerar till `@pkc/pkc-js`)
+- **Källkod och aktuell README:** [github.com/bitsocialnet/captcha-canvas-challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+- **npm-paket:** [`@bitsocial/captcha-canvas-challenge`](https://www.npmjs.com/package/@bitsocial/captcha-canvas-challenge)
 
 ## Installation
 
@@ -26,19 +17,16 @@ Captcha Canvas Challenge är en fristående bild captcha-generator som ursprungl
 npm install @bitsocial/captcha-canvas-challenge
 ```
 
-## Konfigurationsalternativ
+## Var det passar in
 
-| Alternativ   | Skriv    | Standard  | Beskrivning                                             |
-| ------------ | -------- | --------- | ------------------------------------------------------- |
-| `characters` | `number` | `6`       | Antal slumpmässiga tecken som återges i captcha-bilden. |
-| `height`     | `number` | `100`     | Höjd på den genererade bilden i pixlar.                 |
-| `width`      | `number` | `300`     | Bredden på den genererade bilden i pixlar.              |
-| `colors`     | `string` | `#32cf7e` | Primärfärg som används för captcha-texten.              |
+Captcha-utmaningar är användbara när ett community vill ha en enkel interaktiv spärr för spamskydd där insatserna är låga. Paketet är medvetet smalt: det tillhandahåller själva implementationen av utmaningen, medan communityn eller Bitsocial-noden avgör när och hur den ska visas.
 
-## Hur det fungerar
+För starkare skydd, kombinera det med bredare moderering eller riskbedömningssystem i stället för att behandla en captcha som en komplett anti-spam-strategi.
 
-1. Generatorn väljer en slumpmässig sträng med den konfigurerade längden.
-2. Strängen återges på en duk med visuellt brus för att motstå OCR.
-3. Den resulterande bilden (och det förväntade svaret) returneras så att den anropande applikationen kan presentera utmaningen och senare verifiera svaret.
+## Aktuell paketreferens
 
-Eftersom paketet är en ren bildgenerator, hanterar det inte nätverk eller sessionshantering på egen hand. Det är tänkt att integreras i ett större utmaningsflöde -- till exempel som en av utmaningstyperna som stöds av [Spam Blocker](./spam-blocker.md).
+Den här sidan är medvetet en översikt, inte en speglad installationsguide. Paketets README är källan till sanning för aktuella utmaningsnamn, registreringsexempel, CLI-exempel, alternativ som stöds, krav och säkerhetsnoteringar:
+
+- [README för Captcha Canvas Challenge](https://github.com/bitsocialnet/captcha-canvas-challenge#readme)
+
+Utgå hellre från README:n uppströms när du konfigurerar ett community i drift, eftersom paketalternativ och installationsflöden versioneras tillsammans med paketet snarare än med den här webbplatsen.

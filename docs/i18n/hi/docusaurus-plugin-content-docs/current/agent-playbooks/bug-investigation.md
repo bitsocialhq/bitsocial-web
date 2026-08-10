@@ -11,17 +11,17 @@
 1. फ़ाइल/क्षेत्र के लिए हाल के प्रतिबद्ध शीर्षक (केवल शीर्षक) को स्कैन करें:
 
 ```bash
-# किसी विशिष्ट फ़ाइल के लिए हाल ही में प्रतिबद्ध शीर्षक
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# किसी विशिष्ट पंक्ति श्रेणी के लिए हाल ही में प्रतिबद्ध शीर्षक
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. स्कोप्ड अंतर के साथ केवल प्रासंगिक प्रतिबद्धताओं का निरीक्षण करें:
 
 ```bash
-# एक फ़ाइल के लिए प्रतिबद्ध संदेश + अंतर दिखाएँ
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

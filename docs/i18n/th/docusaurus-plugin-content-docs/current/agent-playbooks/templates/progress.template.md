@@ -7,6 +7,6 @@
 - รายการ: F001
 - สรุป: แทนที่สิ่งนี้ด้วยสรุปเซสชัน
 - ไฟล์: `path/to/file`
-- การตรวจสอบ: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- การตรวจสอบ: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - บล็อคเกอร์: ไม่มี
 - ถัดไป: แทนที่สิ่งนี้ด้วยการติดตามผลที่ดีที่สุดถัดไป

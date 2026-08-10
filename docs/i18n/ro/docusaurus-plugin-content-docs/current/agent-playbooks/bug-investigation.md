@@ -11,17 +11,17 @@ Utilizați acest lucru atunci când o eroare este raportată într-un anumit fi�
 1. Scanați titlurile de comitere recente (numai titluri) pentru fișier/zonă:
 
 ```bash
-# Titluri de comitere recente pentru un anumit fișier
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Titluri de comitere recente pentru un anumit interval de linii
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspectați numai comiterile relevante cu diferențe în domeniu:
 
 ```bash
-# Afișează mesajul de comitere + dif. pentru un fișier
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Bitsocial topluluk listelerini izleyen ve gönderileri Telegram kanallarına ileten botları besleyin.
-sidebar_position: 3
+title: Telegram Botları
+description: Bitsocial topluluk listelerini izleyen ve gönderileri Telegram kanallarına ileten akış botları.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Telegram Botları
 
-Bitsocial Telegram botları, Bitsocial ağındaki müşteri topluluğu listelerini izliyor ve yeni gönderileri otomatik olarak Telegram kanallarına iletiyor. İletilen her mesaj, 5chan ve Seedit'teki orijinal gönderiye bağlantı sağlayan satır içi düğmeler içerir.
+Bitsocial Telegram botları, Bitsocial ağındaki istemci topluluk listelerini izler ve yeni gönderileri otomatik olarak Telegram kanallarına iletir. İletilen her mesajda, 5chan ve Seedit üzerindeki özgün gönderiye götüren satır içi düğmeler bulunur.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
 ## Mevcut Botlar
 
-| Bot                         | Durum     | Açıklama                                                           |
-| --------------------------- | --------- | ------------------------------------------------------------------ |
-| **5chan Yayını**            | Aktif     | Tüm 5chan dizinlerini izler ve yeni gönderileri Telegram'a iletir. |
-| **Bakış Akışını Düzenleme** | Planlanan | Seedit toplulukları için aynı işlevselliği sağlayacaktır.          |
+| Bot             | Durum       | Açıklama                                                           |
+| --------------- | ----------- | ------------------------------------------------------------------ |
+| **5chan Feed**  | Etkin       | Tüm 5chan dizinlerini izler ve yeni gönderileri Telegram'a iletir. |
+| **Seedit Feed** | Planlanıyor | Seedit toplulukları için aynı işlevi sağlayacak.                   |
 
-## Kurmak
+## Kurulum
 
-### Önkoşullar
+### Ön Koşullar
 
 - Node.js
-- İplik
-- Bir Telegram bot jetonu ([BotFather](https://t.me/BotFather)) aracılığıyla bir tane oluşturun)
+- Yarn
+- Bir Telegram bot jetonu ([BotFather](https://t.me/BotFather) üzerinden oluşturabilirsiniz)
 
-### Kurulum
+### Yükleme
 
-Depoyu klonlayın ve bağımlılıkları yükleyin:
+Depoyu klonlayın ve bağımlılıkları kurun:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -37,13 +37,13 @@ yarn install
 
 ### Yapılandırma
 
-Bot jetonunuzla proje kökünde bir `.env` dosyası oluşturun:
+Proje kök dizininde bot jetonunuzu içeren bir `.env` dosyası oluşturun:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Koşma
+### Çalıştırma
 
 Ortamınızı yapılandırdıktan sonra botu başlatın:
 
@@ -51,11 +51,11 @@ Ortamınızı yapılandırdıktan sonra botu başlatın:
 yarn start
 ```
 
-## Gönderi Formatı
+## Gönderi Biçimi
 
-Bot Telegram'a bir gönderi ilettiğinde iki satır içi düğme içerir:
+Bot bir gönderiyi Telegram'a ilettiğinde iki satır içi düğme ekler:
 
-- **5chan'da görüntüle** -- Gönderiyi 5chan web istemcisinde açar.
-- **Seedit'te görüntüle** -- Gönderiyi Seedit web istemcisinde açar.
+- **5chan'da görüntüle** — Gönderiyi 5chan web istemcisinde açar.
+- **Seedit'te görüntüle** — Gönderiyi Seedit web istemcisinde açar.
 
-Bu, Telegram abonelerinin tercih ettikleri istemcideki tartışma konusunun tamamına doğrudan atlamalarına olanak tanır.
+Böylece Telegram aboneleri, tercih ettikleri istemci üzerinden doğrudan tartışmanın tamamına geçebilir.

@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Anti-spam na hamon na pinipigilan ang pag-publish sa likod ng mga natatanging voucher code na ibinahagi ng mga may-ari ng komunidad.
+description: Hamon laban sa spam na naglalagay ng hadlang sa paglalathala gamit ang natatanging voucher code na ipinamamahagi ng mga may-ari ng komunidad.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Ang Voucher Challenge ay isang anti-spam na mekanismo na naghahatid ng paglalathala ng nilalaman sa likod ng mga natatanging voucher code. Sa halip na umasa sa awtomatikong pag-detect, inililipat nito ang tiwala sa may-ari ng komunidad, na manu-manong namamahagi ng mga code sa mga taong pinagkakatiwalaan nila.
+Nilalagyan ng Voucher Challenge ng hadlang ang paglalathala ng nilalaman sa pamamagitan ng natatanging voucher code na ipinamamahagi ng may-ari ng komunidad. Sa halip na umasa sa awtomatikong pagmamarka, inililipat nito ang tiwala sa isang manwal na daloy ng imbitasyon kung saan tumatanggap ng code ang mga kilalang tao sa pamamagitan ng channel na kontrolado ng may-ari.
 
-**Source code:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Source code at kasalukuyang README:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **Pakete sa npm:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
+
+## Pag-install
+
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
 ## Paano Ito Gumagana
 
-1. Ang isang may-ari ng komunidad ay bumubuo ng isa o higit pang natatanging voucher code.
-2. Ibinabahagi ng may-ari ang mga code na iyon sa mga pinagkakatiwalaang may-akda sa pamamagitan ng channel na kanilang pinili (direktang mensahe, email, personal, atbp.).
-3. Kapag sinubukan ng isang may-akda na mag-publish, ipo-prompt sila ng system ng hamon para sa isang voucher code.
-4. Ang code ay napatunayan -- kung ito ay tunay at hindi pa nagagamit, ang publikasyon ay tinatanggap.
+1. Gumagawa ang may-ari ng komunidad ng isa o higit pang natatanging voucher code.
+2. Ipinamamahagi ng may-ari ang mga code na iyon sa mga pinagkakatiwalaang may-akda sa pamamagitan ng channel na kanilang pinili (direct message, email, personal, atbp.).
+3. Kapag sumubok maglathala ang isang may-akda, hinihingan siya ng sistema ng hamon ng voucher code.
+4. Bine-validate ang code -- kung tunay ito at hindi pa nagagamit, tinatanggap ang publikasyon.
 
-Ang bawat voucher code ay nakatali sa isang partikular na may-akda kapag na-redeem, na pumipigil sa muling paggamit ng iba.
+Naiuugnay ang bawat voucher code sa isang partikular na may-akda kapag na-redeem na, kaya hindi na ito magagamit muli ng iba.
 
-## Kailan Ito Gamitin
+## Sanggunian sa Kasalukuyang Pakete
 
-Ang Voucher Challenge ay pinakaangkop para sa:
+Sadyang isang pangkalahatang-ideya lamang ang pahinang ito, hindi isang kopya ng gabay sa pag-setup. Ang README ng pakete ang pinagmumulan ng katotohanan para sa kasalukuyang mga pangalan ng hamon, mga halimbawa sa Bitsocial CLI, pagpaparehistro sa pkc-js, mga sinusuportahang opsyon, at kilos sa pag-redeem:
 
-- **Mga komunidad na nag-imbita lamang** kung saan sadyang pinaghihigpitan ang membership.
-- **Mga na-curate na espasyo** kung saan personal na binibigyang-pansin ng may-ari ang bawat kalahok.
-- **Mataas na pinagkakatiwalaang kapaligiran** kung saan ang awtomatikong pagmamarka ng spam ay hindi kailangan o hindi kanais-nais.
+- [README ng Voucher Challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Dahil nangangailangan ito ng manu-manong pamamahagi ng code, hindi ito lumalawak sa malalaking bukas na komunidad. Para sa mga sitwasyong iyon, isaalang-alang ang [Spam Blocker](./spam-blocker.md) o [EVM Contract Call Challenge](./evm-contract-call.md) sa halip.
+Mas mainam ang upstream na README kapag nagko-configure ng isang live na komunidad, dahil ang mga opsyon ng voucher at ang daloy ng pag-install ay may bersyong kaugnay ng paketeng iyon at hindi ng website na ito.
 
-## Pagsasama
+## Kailan Ito Gagamitin
 
-Ang Voucher Challenge ay sumasaklaw sa parehong interface ng hamon na ginagamit ng iba pang mga anti-spam na pakete sa Bitsocial ecosystem. Pinapagana ito ng mga may-ari ng komunidad sa pamamagitan ng kanilang mga setting ng komunidad, at ang hamon ay awtomatikong iniharap sa mga may-akda kapag sinubukan nilang mag-post.
+Pinakaangkop ang Voucher Challenge para sa:
+
+- **Mga komunidad na puro imbitasyon** kung saan sadyang limitado ang pagiging kasapi.
+- **Mga piling espasyo** kung saan personal na sinusuri ng may-ari ang bawat kalahok.
+- **Mga kapaligirang mataas ang tiwala** kung saan hindi kailangan o hindi kanais-nais ang awtomatikong pagmamarka ng spam.
+
+Dahil nangangailangan ito ng manwal na pamamahagi ng code, hindi ito angkop sa malalaki at bukas na komunidad. Para sa mga ganoong sitwasyon, isaalang-alang ang [Spam Blocker](./spam-blocker.md) o [EVM Contract Call Challenge](./evm-contract-call.md) sa halip.

@@ -662,7 +662,7 @@ For the discovery model above this network layer, see [Content Discovery](./cont
 
 ---
 
-## Public-key-based addressing
+## Public-key-based addressing {#public-key-based-addressing}
 
 In BitTorrent, a file's hash becomes its address (_content-based addressing_). Bitsocial uses a
 similar idea with public keys: the hash of a community's public key becomes its network address.
@@ -935,7 +935,7 @@ browser publishing practical in 2026 was the gossipsub sequence-number fix in `@
 For the full picture, including what a browser node still cannot do, see
 [Browser Peer-to-Peer](/browser-p2p/).
 
-## Gateway fallback
+## Gateway fallback {#gateway-fallback}
 
 Gateway-backed browser access is still useful as a compatibility and rollout fallback. A gateway can
 relay data between the P2P network and a browser client when a browser cannot join the network
@@ -2536,6 +2536,16 @@ If uncertain, ask the developer before adding an entry.
 - **What was surprising:** Each locale under `docs/i18n/<lang>/docusaurus-plugin-content-docs/current/` mirrors the docs tree. A new page absent from those mirrors still renders in every locale via English fallback, but its relative markdown links no longer resolve — Docusaurus emits `/ar/browser-p2p/peer-to-peer-protocol.md/` and fails the build with "Docusaurus found broken links!". Crucially, `yarn build:verify` and `yarn docs:build:verify` build only `en` and pass cleanly; only a full `yarn docs:build` surfaces it, and it aborts on the first locale alphabetically (`ar`).
 - **Impact:** A docs change can pass every fast local check and still break the production multilocale build. The failure also looks unrelated to the change, since the error names a locale path the author never touched.
 - **Mitigation:** In any docs page that is not mirrored into `docs/i18n/**`, use root-relative links (`/peer-to-peer-protocol/`, `/apps/5chan/`) instead of relative `.md` links; Docusaurus prefixes them with the locale automatically. `docs/build-your-own-client.md` is the existing example. Run a full `yarn docs:build` — not just `build:verify` — before handing off any change that adds or links a docs page.
+- **Status:** confirmed
+
+### `update-translations.js` must be run from `about/`, and concurrent runs silently lose keys
+
+- **Date:** 2026-08-02
+- **Observed by:** Claude
+- **Context:** Applying 26 translated i18next keys across all 36 locales via the `translate` skill
+- **What was surprising:** Two separate traps in the same script. First, `scripts/update-translations.js` resolves its target as `path.join(process.cwd(), "public", "translations")`, but this repo keeps translations at `about/public/translations`. Running the documented command from the repo root fails every invocation with "Translations directory not found" — `docs/agent-playbooks/translations.md` shows `node scripts/update-translations.js ...`, which reads as a repo-root command. Second, each invocation is a read-modify-write over all 36 locale files, so two invocations running at once clobber each other and one key vanishes with no error. The `translate` skill explicitly instructs spawning up to 4 subagents concurrently, each of which would call the script.
+- **Impact:** The repo-root form fails loudly and wastes a full pass. The concurrency issue fails silently: keys go missing from arbitrary locales, and the diff still looks plausible.
+- **Mitigation:** Run it as `cd about && node ../scripts/update-translations.js --key <key> --map <abs-path> --write`. Never let translator subagents write locale files concurrently — have them emit dictionary JSON files only, then apply every key serially from the parent agent. After applying, verify programmatically that each key exists in all 35 non-English locales and that no value is byte-identical to the English source.
 - **Status:** confirmed
 
 ### Long-Running Agent Workflow
@@ -5753,7 +5763,7 @@ EXAMPLES
   $ bitsocial challenge install ./my-local-challenge
 ```
 
-_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/challenge/install.ts)_
+_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/challenge/install.ts)_
 
 ## `bitsocial challenge list`
 
@@ -5779,7 +5789,7 @@ EXAMPLES
   $ bitsocial challenge list -q
 ```
 
-_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/challenge/list.ts)_
+_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/challenge/list.ts)_
 
 ## `bitsocial challenge ls`
 
@@ -5833,7 +5843,7 @@ EXAMPLES
   $ bitsocial challenge remove @scope/my-challenge
 ```
 
-_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/challenge/remove.ts)_
+_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/challenge/remove.ts)_
 
 ## `bitsocial challenge rm NAME`
 
@@ -5947,7 +5957,7 @@ EXAMPLES
     $ bitsocial community create --jsonFile ./create-options.json
 ```
 
-_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/create.ts)_
+_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/create.ts)_
 
 ## `bitsocial community delete ADDRESSES`
 
@@ -5972,7 +5982,7 @@ EXAMPLES
   $ bitsocial community delete 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/delete.ts)_
+_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/delete.ts)_
 
 ## `bitsocial community edit ADDRESS`
 
@@ -6042,7 +6052,7 @@ EXAMPLES
     $ bitsocial community edit bitsocial.bso --jsonFile ./edit-options.json
 ```
 
-_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/edit.ts)_
+_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/edit.ts)_
 
 ## `bitsocial community export [ADDRESS]`
 
@@ -6083,7 +6093,7 @@ EXAMPLES
   $ bitsocial community export --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/export.ts)_
+_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/export.ts)_
 
 ## `bitsocial community get [ADDRESS]`
 
@@ -6114,7 +6124,7 @@ EXAMPLES
   $ bitsocial community get --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/get.ts)_
+_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/get.ts)_
 
 ## `bitsocial community list`
 
@@ -6137,7 +6147,7 @@ EXAMPLES
   $ bitsocial community list
 ```
 
-_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/list.ts)_
+_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/list.ts)_
 
 ## `bitsocial community start ADDRESSES`
 
@@ -6171,7 +6181,7 @@ EXAMPLES
     $ bitsocial community start $(bitsocial community list -q) --concurrency 1
 ```
 
-_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/start.ts)_
+_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/start.ts)_
 
 ## `bitsocial community stop ADDRESSES`
 
@@ -6196,7 +6206,7 @@ EXAMPLES
   $ bitsocial community stop Qmb99crTbSUfKXamXwZBe829Vf6w5w5TktPkb6WstC9RFW
 ```
 
-_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/community/stop.ts)_
+_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/stop.ts)_
 
 ## `bitsocial daemon`
 
@@ -6204,20 +6214,24 @@ Run a network-connected Bitsocial node. Once the daemon is running you can creat
 
 ```
 USAGE
-  $ bitsocial daemon --pkcRpcUrl <value> --logPath <value> [--chainProviderUrls <value>...]
-    [--allowPrivateKeyExport]
+  $ bitsocial daemon --pkcRpcUrl <value> --logPath <value> [--chainProviderUrls <value>...] [--enableIpfsGc]
+    [--ipfsGcIntervalMinutes <value>] [--allowPrivateKeyExport]
 
 FLAGS
-  --[no-]allowPrivateKeyExport    Allow RPC clients to request community exports that include the community signer's
-                                  private key (`bitsocial community export --includePrivateKey`). Disable with
-                                  --no-allowPrivateKeyExport when exposing the RPC to untrusted clients
-  --chainProviderUrls=<value>...  [default:
-                                  https://eth.drpc.org,https://ethereum.publicnode.com,https://ethereum-rpc.publicnode.c
-                                  om,https://rpc.mevblocker.io,https://1rpc.io/eth,https://eth-pokt.nodies.app] RPC
-                                  URL(s) for .bso name resolution. Can be specified multiple times.
-  --logPath=<value>               (required) [default: /home/runner/.local/state/bitsocial] Specify a directory which
-                                  will be used to store logs
-  --pkcRpcUrl=<value>             (required) [default: ws://localhost:9138/] Specify PKC RPC URL to listen on
+  --[no-]allowPrivateKeyExport     Allow RPC clients to request community exports that include the community signer's
+                                   private key (`bitsocial community export --includePrivateKey`). Disable with
+                                   --no-allowPrivateKeyExport when exposing the RPC to untrusted clients
+  --chainProviderUrls=<value>...   [default:
+                                   https://eth.drpc.org,https://ethereum.publicnode.com,https://ethereum-rpc.publicnode.
+                                   com,https://rpc.mevblocker.io,https://1rpc.io/eth,https://eth-pokt.nodies.app] RPC
+                                   URL(s) for .bso name resolution. Can be specified multiple times.
+  --[no-]enableIpfsGc              Periodically garbage-collect the IPFS repo over the kubo RPC API while the daemon is
+                                   up. Only reclaims unpinned blocks — pinned data and MFS are never collected. Disable
+                                   with --no-enableIpfsGc
+  --ipfsGcIntervalMinutes=<value>  [default: 60] How often to garbage-collect the IPFS repo, in minutes
+  --logPath=<value>                (required) [default: /home/runner/.local/state/bitsocial] Specify a directory which
+                                   will be used to store logs
+  --pkcRpcUrl=<value>              (required) [default: ws://localhost:9138/] Specify PKC RPC URL to listen on
 
 DESCRIPTION
   Run a network-connected Bitsocial node. Once the daemon is running you can create and start your communities and
@@ -6242,7 +6256,7 @@ EXAMPLES
   $ bitsocial daemon --no-allowPrivateKeyExport
 ```
 
-_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/daemon.ts)_
+_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/daemon.ts)_
 
 ## `bitsocial help [COMMAND]`
 
@@ -6308,7 +6322,7 @@ EXAMPLES
   $ bitsocial logs --stdout -f
 ```
 
-_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/logs.ts)_
+_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/logs.ts)_
 
 ## `bitsocial update check`
 
@@ -6325,7 +6339,7 @@ EXAMPLES
   $ bitsocial update check
 ```
 
-_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/update/check.ts)_
+_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/update/check.ts)_
 
 ## `bitsocial update install [VERSION]`
 
@@ -6357,7 +6371,7 @@ EXAMPLES
   $ bitsocial update install --no-restart-daemons
 ```
 
-_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/update/install.ts)_
+_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/update/install.ts)_
 
 ## `bitsocial update versions`
 
@@ -6379,7 +6393,7 @@ EXAMPLES
   $ bitsocial update versions --limit 5
 ```
 
-_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.86/src/cli/commands/update/versions.ts)_
+_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/update/versions.ts)_
 <!-- commandsstop -->
 
 ## Contribution

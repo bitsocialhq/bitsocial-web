@@ -1,19 +1,15 @@
 ---
-title: EVM 계약 호출 챌린지
-description: EVM 스마트 계약을 호출하여 온체인 상태를 확인하는 스팸 방지 챌린지입니다.
+title: EVM 컨트랙트 호출 챌린지
+description: EVM 스마트 컨트랙트를 호출해 온체인 조건을 검증하는 스팸 방지 챌린지.
 sidebar_position: 4
 ---
 
-# EVM 계약 호출 챌린지
+# EVM 컨트랙트 호출 챌린지
 
-EVM 계약 호출 챌린지는 게시를 허용하기 전에 온체인 조건을 확인하는 스팸 방지 메커니즘입니다. 이를 통해 커뮤니티 소유자는 작성자가 게시를 위해 스마트 계약에서 정의한 기준(예: 최소 토큰 잔액 보유 등)을 충족하도록 요구할 수 있습니다.
+EVM 컨트랙트 호출 챌린지는 게시를 허용하기 전에 작성자의 온체인 상태를 검증합니다. 커뮤니티 소유자는 최소 토큰 보유량 같은 읽기 전용 스마트 컨트랙트 조건을 지갑이나 확인된 신원이 충족해야만 글을 올릴 수 있도록 설정할 수 있습니다.
 
-**소스 코드:** [github.com/bitsocialnet/evm-contract-call](https://github.com/bitsocialnet/evm-contract-call)
-
-## 요구사항
-
-- **Node.js** >= 22
-- **ESM 전용** -- 이 패키지는 CommonJS 빌드를 제공하지 않습니다.
+- **소스 코드 및 최신 README:** [github.com/bitsocialnet/evm-contract-challenge](https://github.com/bitsocialnet/evm-contract-challenge#readme)
+- **npm 패키지:** [`@bitsocial/evm-contract-challenge`](https://www.npmjs.com/package/@bitsocial/evm-contract-challenge)
 
 ## 설치
 
@@ -21,34 +17,26 @@ EVM 계약 호출 챌린지는 게시를 허용하기 전에 온체인 조건을
 npm install @bitsocial/evm-contract-challenge
 ```
 
-## 구성 옵션
+## 어디에 적합한가
 
-| 옵션          | 유형     | 설명                                                          |
-| ------------- | -------- | ------------------------------------------------------------- |
-| `chainTicker` | `string` | 쿼리할 체인입니다(예: `eth`, `matic`, `avax`).                |
-| `address`     | `string` | 호출할 스마트 계약 주소입니다.                                |
-| `abi`         | `string` | 호출되는 함수에 대한 ABI 조각입니다.                          |
-| `condition`   | `string` | 계약 반환 값(예: `> 1000`)에 대해 평가되는 비교 표현식입니다. |
-| `error`       | `string` | 조건을 충족하지 않는 작성자에게 표시되는 오류 메시지입니다.   |
+참여 자격을 외부 EVM 신호에 연동하고 싶은 커뮤니티에 이 챌린지를 사용하세요. 토큰 보유, NFT 보유, 인격 증명 점수, 거버넌스 참여 자격, 그 밖에 컨트랙트로 조회할 수 있는 조건이 여기에 해당합니다.
 
-## 예
+한번 설정하고 나면 작성자 입장에서는 자동으로 처리됩니다. 챌린지가 사용 가능한 지갑이나 신원 출처를 확인하고, 설정된 컨트랙트 메서드를 호출한 뒤, 반환된 값을 커뮤니티의 조건과 비교합니다.
 
-특정 ERC-20 토큰을 1,000개 이상 보유한 작성자에게만 게시를 제한하려는 커뮤니티 소유자는 다음과 같이 챌린지를 구성할 수 있습니다.
+## 최신 패키지 문서
 
-- `chainTicker`: `"eth"`
-- `address`: 토큰 계약 주소
-- `abi`: `balanceOf(address)`용 ABI
-- `condition`: `"> 1000"`
-- `error`: `"You must hold more than 1,000 tokens to post in this community."`
+이 문서는 설정 레퍼런스를 그대로 옮긴 것이 아니라 의도적으로 개요만 다룹니다. 챌린지 이름, Bitsocial CLI 예제, pkc-js 등록 방법, 옵션 기본값, ABI 예제, RPC 동작, 지원되는 지갑 출처의 기준이 되는 출처는 패키지 README입니다.
 
-작성자가 게시를 시도하면 챌린지는 작성자의 주소로 `balanceOf`를 호출하고 반환된 값이 조건을 충족하는지 확인합니다. 그렇다면 출판이 진행됩니다. 그렇지 않으면 구성된 오류 메시지가 반환됩니다.
+- [EVM 컨트랙트 챌린지 README](https://github.com/bitsocialnet/evm-contract-challenge#readme)
 
-## 언제 사용해야 하는가
+컨트랙트 옵션과 예제는 이 웹사이트가 아니라 해당 패키지와 함께 버전 관리되므로, 실제 운영 중인 커뮤니티를 설정할 때는 원본 README를 우선하세요.
 
-EVM 계약 통화 챌린지는 다음에 이상적입니다.
+## 언제 사용하면 좋은가
 
-- 토큰 보유자에 대한 게시를 제한하는 **토큰 관리 커뮤니티**.
-- **NFT 게이트 액세스** 특정 NFT의 소유권이 필요한 경우.
-- **DAO 거버넌스 공간** 참여가 거버넌스 토큰 보유자로 제한됩니다.
+EVM 컨트랙트 호출 챌린지는 다음과 같은 경우에 특히 잘 맞습니다.
 
-온체인 신원에 의존하지 않는 커뮤니티의 경우 [스팸 차단기](./spam-blocker.md) 또는 [바우처 챌린지](./voucher-challenge.md)를 대신 고려해보세요.
+- 게시 권한을 토큰 보유자로 제한하는 **토큰 게이팅 커뮤니티**.
+- 특정 NFT 보유가 필요한 **NFT 기반 접근 제어**.
+- 참여를 거버넌스 토큰 보유자로 한정하는 **DAO 거버넌스 공간**.
+
+온체인 신원에 의존하지 않는 커뮤니티라면 [스팸 차단기](./spam-blocker.md)나 [바우처 챌린지](./voucher-challenge.md)를 대신 고려해 보세요.

@@ -1,39 +1,44 @@
 ---
-title: 5canal
-description: Un tauler d'imatges descentralitzat i sense servidor basat en el protocol Bitsocial on qualsevol pot crear i tenir taulers.
+title: 5chan
+description: Un tauler d'imatges descentralitzat i sense servidor, construït sobre el protocol Bitsocial, on qualsevol pot crear i posseir taulers.
 sidebar_position: 1
 ---
 
-# 5canal
+# 5chan
 
-5chan és un tauler d'imatges sense servidor, sense administrador i totalment descentralitzat que s'executa amb el protocol Bitsocial. Segueix l'estructura de directoris del tauler d'imatges familiar mentre introdueix la propietat descentralitzada: qualsevol pot crear un tauler i diversos taulers poden competir pel mateix espai de directori mitjançant un mecanisme de votació.
+5chan és un tauler d'imatges sense servidor, sense administradors i totalment descentralitzat que funciona sobre el protocol Bitsocial. Segueix l'estructura de directoris habitual dels taulers d'imatges i hi afegeix la propietat descentralitzada: qualsevol pot crear un tauler, i diversos taulers poden competir per la mateixa posició del directori mitjançant un mecanisme de votació.
 
 ## Descàrregues
 
 | Plataforma | Enllaç                                |
 | ---------- | ------------------------------------- |
-| Web        | [5can.app](https://5chan.app)         |
+| Web        | [5chan.app](https://5chan.app)        |
 | Escriptori | Disponible per a Mac, Windows i Linux |
 | Mòbil      | Disponible per a Android              |
 
 ## Com funcionen els taulers
 
-5chan organitza el contingut en taulers utilitzant un disseny de directori clàssic (p. ex., `/b/`, `/g/`). A diferència dels taulers d'imatges tradicionals on un administrador central controla tots els taulers, 5chan permet a qualsevol usuari crear i ser propietari del seu propi tauler. Quan diversos taulers es dirigeixen al mateix espai de directori, competeixen per aquesta posició mitjançant la votació.
+5chan organitza el contingut en taulers seguint una disposició de directoris clàssica (p. ex., `/b/`, `/g/`). A diferència dels taulers d'imatges tradicionals, on un administrador central controla tots els taulers, 5chan permet que qualsevol usuari creï i sigui plenament propietari del seu propi tauler. Quan diversos taulers apunten a la mateixa posició del directori, competeixen per aquesta posició mitjançant votació.
 
-### Creació d'un tauler
+### Crear un tauler
 
-Per crear un tauler nou, heu d'executar `bitsocial-cli` com a node peer-to-peer. Això garanteix que el vostre tauler estigui allotjat de manera descentralitzada sense dependre de cap servidor central.
+Per crear un tauler nou, cal executar `bitsocial-cli` com a node peer-to-peer. Així el vostre tauler s'allotja de manera descentralitzada, sense dependre de cap servidor central.
 
 ### Assignacions de directori
 
-Les assignacions d'espai de directori (quin tauler apareix en quin camí) es gestionen actualment mitjançant sol·licituds d'extracció de GitHub al fitxer `5chan-directories.json`. Aquest és un procés temporal: les versions futures admetran la creació de taulers a l'aplicació i la votació basada en pubsub per gestionar les assignacions de directoris automàticament.
+Les assignacions de les posicions del directori (quin tauler apareix a quina ruta) es gestionen actualment mitjançant pull requests a GitHub sobre el fitxer `5chan-directories.json`. És un procés temporal: les versions futures admetran la creació de taulers dins de l'aplicació i la votació per pubsub per resoldre les assignacions de directori automàticament.
 
-## Interns
+## Interioritats
 
-Sota el capó, 5chan utilitza la capa de client de protocol Bitsocial compartida per a les seves interaccions de xarxa. L'aplicació web de 5chan.app també pot executar un node Helia al navegador quan el navegador P2P està habilitat des de la configuració avançada, de manera que els lectors poden carregar des d'un mateix sense una passarel·la IPFS centralitzada. Consulteu la secció P2P del navegador a les notes del protocol peer-to-peer.
+Per sota, 5chan fa servir la capa de client compartida del protocol Bitsocial per a les seves
+interaccions de xarxa. L'aplicació web de 5chan.app executa per defecte un node Helia al navegador,
+de manera que una pestanya normal s'uneix a la xarxa com a parell: carrega taulers d'altres parells i
+publica per pubsub, sense cap passarel·la IPFS centralitzada al camí del contingut. Vegeu
+[Peer-to-peer al navegador](/browser-p2p/) per saber què implica això i què encara no pot fer un node
+de navegador.
 
 ## Enllaços
 
 - **GitHub**: [github.com/bitsocialnet/5chan](https://github.com/bitsocialnet/5chan)
-- **Telegrama**: [t.me/fivechandev](https://t.me/fivechandev)
-- **Llicència**: només GPL-2.0
+- **Telegram**: [t.me/fivechandev](https://t.me/fivechandev)
+- **Llicència**: GPL-2.0-only

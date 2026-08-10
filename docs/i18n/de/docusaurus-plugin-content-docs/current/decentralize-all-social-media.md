@@ -1,52 +1,69 @@
 ---
-title: Dezentralisieren Sie alle sozialen Medien
-description: Phase 5 des Bitsocial-Masterplans und der angestrebte Endzustand.
+title: Alle sozialen Medien dezentralisieren
+description: Phase 5 des Masterplans, mit Fokus auf die Finanzierung und den Aufbau des Long Tail sozialer Bitsocial-Clients.
 ---
 
-# Dezentralisieren Sie alle sozialen Medien
+# Alle sozialen Medien dezentralisieren
 
-Dies ist der Endzustand, der im Bitsocial-Masterplan beschrieben wird: nicht eine App, sondern ein Ökosystem von Bitsocial-Apps, das mit jeder wichtigen Kategorie sozialer Medien mithalten kann.
+Der Endzustand ist nicht eine einzelne App. Er ist ein Markt aus Clients, Knoten, Diensten und
+Communities, der Plattformbesitz durch Wettbewerb auf einem Protokoll ersetzen kann.
 
-## Das Modell
+In Phase 5 geht Bitsocial über die ersten vorrangigen Kategorien hinaus und beginnt, so viele
+soziale Formate wie möglich zu finanzieren.
 
-Im vorgeschlagenen ausgereiften Zustand des Netzwerks:
+## Was noch gebaut werden muss
 
-- Mehrere öffentliche RPC-Anbieter konkurrieren um Hostprofilknoten
-- Benutzer können weiterhin selbst hosten
-- Feed-Algorithmen werden zu optionalen Diensten statt zu verpflichtendem Plattformrecht
-- Die Monetarisierung hängt nicht davon ab, dass Banken bereit sind, die Plattform am Leben zu erhalten
-- Apps konkurrieren um Produktqualität, Entdeckung und Schnittstellendesign
+Die ersten Phasen konzentrieren sich auf die Kategorien mit der größten Hebelwirkung: Imageboards,
+Foren, öffentliches RPC, Bitsocial Chain, Profilknoten, die Twitter/X-Alternative aus Phase 3 und die
+Dienstleistungsökonomie rundherum.
 
-## Wie ein Erfolg aussehen würde
+Danach sollte sich das Netzwerk in den Long Tail ausdehnen:
 
-Bitsocial-Apps sollten in der Lage sein, Plattformen in allen Formaten herauszufordern, nicht nur in einer Nische:
+- Blogging-Clients
+- Crowdfunding-Apps
+- Creator-Videos und eine glaubwürdige [YouTube-Alternative](https://github.com/bitsocialnet/wetube)
+- Creator-Communities
+- Experimente mit Medien im Kurzformat
+- lokale oder sprachspezifische Social-Apps
+- Nischen-Clients, die für die ersten vier Phasen zu klein sind
+- Werkzeuge, die den Betrieb bestehender Communities erleichtern
 
-- Text und Diskussion
-- Imageboards
-- Foren
-- Schöpfergemeinschaften
-- Kurzvideos und umfassendere Medienprodukte
+Manche dieser Apps können Open Source sein. Manche können zentralisierte Clients sein. Manche können
+von Bitsocial Forge gebaut werden, und viele sollten von unabhängigen Entwicklern kommen.
 
-Das Ziel besteht nicht darin, jedem eine universelle Schnittstelle aufzuzwingen. Dadurch soll vielen Apps Zugriff auf dieselben zugrunde liegenden Communities, Identitäten und Netzwerke gewährt werden.
+## Viele Entwickler finanzieren
 
-## Warum die RPC-Schicht hier wichtig ist
+Ziel ist es, neue soziale Clients finanzierbar zu machen, bevor sie bereits Zugkraft in
+Plattformgröße haben.
 
-Always-on-Communitys und -Profile werden viel praktischer, sobald öffentliche RPC-Märkte existieren. Ohne diese Ebene bleibt das Selbsthosting für viele Benutzer zu problematisch, insbesondere auf Mobilgeräten.
+Dazu können Direktinvestitionen gehören, Fördermittel, Finanzierung durch die Community, Einnahmen
+aus erfolgreichen Bitsocial-Diensten oder dezentrale Förderprogramme, bei denen die breitere
+Bitsocial-Community mitentscheidet, welche Entwickler Unterstützung erhalten sollen.
 
-## Warum die Netzwerkschicht hier wichtig ist
+Entscheidend ist die Vielfalt. Das Netzwerk sollte viele Versuche finanzieren, statt darauf zu
+warten, dass eine offizielle App jede Kategorie abdeckt.
 
-Wenn die Monetarisierung von Inhalten durch normalen Bank- oder Plattformdruck unterbrochen werden kann, bleibt das Ökosystem fragil. Das Bitsocial Chain wird als Wirtschaftsschicht vorgeschlagen, die den langfristigen Wettbewerb glaubwürdiger macht.
+## Wie Erfolg aussieht
 
-## Die Kernwette
-
-Die große Wette besteht darin, dass soziale Medien in austauschbare Schichten unterteilt werden können:
+Bitsocial ist erfolgreich, wenn soziale Medien in ersetzbare Schichten zerlegt werden können:
 
 - Protokoll
-- Gemeinschaften
+- Communities
 - Identität
 - Hosting
 - Entdeckung
+- Moderation
 - Monetarisierung
 - Apps
 
-Sobald diese Schichten austauschbar sind, muss kein einzelnes Unternehmen den gesamten Social Graph besitzen, damit das Produkt funktioniert.
+Sobald diese Schichten ersetzbar sind, muss kein einzelnes Unternehmen den gesamten Social Graph
+besitzen, damit das Produkt funktioniert.
+
+## Die Kernwette
+
+Ein ausgereiftes Bitsocial-Ökosystem sollte öffentliche RPCs enthalten, selbst gehostete Knoten,
+Märkte für Feed-Algorithmen, Medien-Hoster, Dienste für Entdeckung, quelloffene Clients,
+kommerzielle Clients und von der Community finanzierte Experimente.
+
+Soziale Medien finden endlich ihr Gleichgewicht: ein vollständig dezentrales, Peer-to-Peer
+aufgebautes soziales Netzwerk, das niemandem gehört; Bitsocial.

@@ -40,7 +40,7 @@ For the discovery model above this network layer, see [Content Discovery](./cont
 
 ---
 
-## Public-key-based addressing
+## Public-key-based addressing {#public-key-based-addressing}
 
 In BitTorrent, a file's hash becomes its address (_content-based addressing_). Bitsocial uses a
 similar idea with public keys: the hash of a community's public key becomes its network address.
@@ -313,7 +313,7 @@ browser publishing practical in 2026 was the gossipsub sequence-number fix in `@
 For the full picture, including what a browser node still cannot do, see
 [Browser Peer-to-Peer](/browser-p2p/).
 
-## Gateway fallback
+## Gateway fallback {#gateway-fallback}
 
 Gateway-backed browser access is still useful as a compatibility and rollout fallback. A gateway can
 relay data between the P2P network and a browser client when a browser cannot join the network

@@ -1,60 +1,60 @@
-# Long-Running Agent Workflow
+# Flusso di lavoro degli agenti per attività di lunga durata
 
-Use this playbook when a task is likely to span multiple sessions, handoffs, or spawned agents.
+Usa questo playbook quando è probabile che un'attività si estenda su più sessioni, passaggi di consegne o agenti avviati.
 
-## Goals
+## Obiettivi
 
-- Give each fresh session a fast way to regain context
-- Keep work incremental instead of one-shotting a large change
-- Catch a broken local baseline before adding more code
-- Leave durable artifacts that the next session can trust
+- Offrire a ogni nuova sessione un modo rapido per recuperare il contesto
+- Procedere in modo incrementale anziché tentare di completare una modifica di grandi dimensioni in un unico passaggio
+- Individuare una baseline locale non funzionante prima di aggiungere altro codice
+- Lasciare artefatti durevoli e affidabili per la sessione successiva
 
-## Where to Keep State
+## Dove conservare lo stato
 
-- Use `docs/agent-runs/<slug>/` when humans, review bots, or multiple toolchains need the same task state.
-- Use a tool-local directory such as `.codex/runs/<slug>/` only when the task state is intentionally local to one workstation or one toolchain.
-- Do not hide multi-session shared state in a private scratch file if another contributor or agent will need it later.
+- Usa `docs/agent-runs/<slug>/` quando persone, bot di revisione o più toolchain devono accedere allo stesso stato dell'attività.
+- Usa una directory locale allo strumento, come `.codex/runs/<slug>/`, solo quando lo stato dell'attività deve restare intenzionalmente locale a una singola workstation o toolchain.
+- Non nascondere lo stato condiviso tra più sessioni in un file temporaneo privato se servirà in seguito a un altro collaboratore o agente.
 
-## Required Files
+## File obbligatori
 
-Create these files at the start of the long-running task:
+Crea questi file all'inizio dell'attività di lunga durata:
 
 - `feature-list.json`
 - `progress.md`
 
-Use the templates in `docs/agent-playbooks/templates/feature-list.template.json` and `docs/agent-playbooks/templates/progress.template.md`.
+Usa i modelli disponibili in `docs/agent-playbooks/templates/feature-list.template.json` e `docs/agent-playbooks/templates/progress.template.md`.
 
-Prefer JSON for the feature list so agents can update a small number of fields without rewriting the whole document.
+Preferisci JSON per l'elenco delle funzionalità, in modo che gli agenti possano aggiornare pochi campi senza riscrivere l'intero documento.
 
-## Session Start Checklist
+## Lista di controllo per l'inizio della sessione
 
-1. Run `pwd`.
-2. Read `progress.md`.
-3. Read `feature-list.json`.
-4. Run `git log --oneline -20`.
-5. Run `./scripts/agent-init.sh --smoke`.
-6. Choose exactly one highest-priority item that is still `pending`, `in_progress`, or `blocked`.
+1. Esegui `pwd`.
+2. Leggi `progress.md`.
+3. Leggi `feature-list.json`.
+4. Esegui `git log --oneline -20`.
+5. Esegui `./scripts/agent-init.sh --smoke`.
+6. Scegli esattamente un elemento con la priorità più alta tra quelli ancora `pending`, `in_progress` o `blocked`.
 
-If the smoke step fails, fix the broken baseline before implementing a new feature slice.
+Se il controllo smoke non riesce, correggi la baseline non funzionante prima di implementare una nuova parte della funzionalità.
 
-## Session Rules
+## Regole della sessione
 
-- Work on one feature or task slice at a time.
-- Keep the feature list machine-readable and stable. Update status, notes, files, and verification fields instead of rewriting unrelated items.
-- Only mark an item verified after running the command or user flow listed in that item.
-- Use spawned agents for bounded slices, not for overall task-state ownership.
-- When a child agent owns one item, give it the exact item id, acceptance criteria, and files it may touch.
+- Lavora su una sola funzionalità o parte dell'attività alla volta.
+- Mantieni l'elenco delle funzionalità stabile e leggibile automaticamente. Aggiorna i campi relativi a stato, note, file e verifica anziché riscrivere elementi non pertinenti.
+- Contrassegna un elemento come verificato solo dopo aver eseguito il comando o il flusso utente indicato nell'elemento stesso.
+- Usa gli agenti avviati per parti circoscritte, non per affidare loro la responsabilità dello stato complessivo dell'attività.
+- Quando un agente secondario è responsabile di un elemento, forniscigli l'ID esatto dell'elemento, i criteri di accettazione e i file che può modificare.
 
-## Session End Checklist
+## Lista di controllo per la fine della sessione
 
-1. Append a short progress entry to `progress.md`.
-2. Update the touched item in `feature-list.json`.
-3. Record the exact commands run for verification.
-4. Capture blockers, follow-ups, and the next best item to resume.
+1. Aggiungi una breve voce di avanzamento a `progress.md`.
+2. Aggiorna l'elemento interessato in `feature-list.json`.
+3. Registra i comandi esatti eseguiti per la verifica.
+4. Annota impedimenti, attività successive e il prossimo elemento più indicato da riprendere.
 
-## Recommended Progress Entry Shape
+## Struttura consigliata per le voci di avanzamento
 
-Use a short structure like:
+Usa una struttura breve come questa:
 
 ```markdown
 ## 2026-03-17 14:30

@@ -1,21 +1,21 @@
 ---
-title: Telegram Bots
-description: Bitsocial コミュニティ一覧を監視し、投稿を Telegram チャンネルへ転送するフィード ボット。
-sidebar_position: 3
+title: Telegram ボット
+description: Bitsocial のコミュニティ一覧を監視し、投稿を Telegram のチャンネルへ転送するフィードボット。
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Telegram ボット
 
-Bitsocial Telegram ボットは、Bitsocial ネットワーク上のクライアント コミュニティ一覧を監視し、新しい投稿を Telegram チャンネルへ自動転送します。転送される各メッセージには、5chan と Seedit の元投稿へ戻るインライン ボタンが含まれます。
+Bitsocial の Telegram ボットは、Bitsocial ネットワーク上にあるクライアントのコミュニティ一覧を監視し、新しい投稿を Telegram のチャンネルへ自動で転送します。転送される各メッセージには、5chan と Seedit にある元の投稿へ戻れるインラインボタンが付きます。
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
-## 利用可能なボット
+## 利用できるボット
 
-| ボット              | ステータス | 説明                                                                      |
-| ------------------- | ---------- | ------------------------------------------------------------------------- |
-| **5chan フィード**  | アクティブ | すべての 5chan ディレクトリを監視し、新しい投稿を Telegram に転送します。 |
-| **Seedit フィード** | 計画中     | Seedit コミュニティにも同じ機能を提供します。                             |
+| ボット          | 状態   | 説明                                                                       |
+| --------------- | ------ | -------------------------------------------------------------------------- |
+| **5chan Feed**  | 稼働中 | 5chan のすべてのディレクトリを監視し、新しい投稿を Telegram へ転送します。 |
+| **Seedit Feed** | 予定   | Seedit のコミュニティ向けに同じ機能を提供する予定です。                    |
 
 ## セットアップ
 
@@ -23,7 +23,7 @@ Bitsocial Telegram ボットは、Bitsocial ネットワーク上のクライア
 
 - Node.js
 - Yarn
-- Telegram ボット トークン ([BotFather](https://t.me/BotFather) で作成)
+- Telegram のボットトークン（[BotFather](https://t.me/BotFather) で作成します）
 
 ### インストール
 
@@ -37,7 +37,7 @@ yarn install
 
 ### 設定
 
-ボット トークンを使って、プロジェクトのルートに `.env` ファイルを作成します。
+プロジェクトのルートに、ボットトークンを記述した `.env` ファイルを作成します。
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
@@ -51,11 +51,11 @@ BOT_TOKEN=your_telegram_bot_token
 yarn start
 ```
 
-## 投稿形式
+## 投稿の形式
 
-ボットが Telegram に投稿を転送するときは、2 つのインライン ボタンが付きます。
+ボットが投稿を Telegram へ転送するとき、2 つのインラインボタンが付きます。
 
-- **5chan で表示** -- 5chan Web クライアントで投稿を開きます。
-- **Seedit で表示** -- Seedit Web クライアントで投稿を開きます。
+- **View on 5chan** -- 5chan のウェブクライアントでその投稿を開きます。
+- **View on Seedit** -- Seedit のウェブクライアントでその投稿を開きます。
 
-これにより、Telegram の購読者は好みのクライアントから直接、完全な議論スレッドに移動できます。
+これにより、Telegram の購読者は自分の好きなクライアントで、スレッド全体の議論へ直接移動できます。

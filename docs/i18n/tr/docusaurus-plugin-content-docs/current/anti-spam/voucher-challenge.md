@@ -1,34 +1,45 @@
 ---
 title: Voucher Challenge
-description: Topluluk sahipleri tarafından dağıtılan benzersiz kupon kodlarının arkasında yayınlamayı engelleyen anti-spam mücadelesi.
+description: Yayımlamayı, topluluk sahiplerinin dağıttığı benzersiz kupon kodlarının arkasına alan anti-spam sınaması.
 sidebar_position: 3
 ---
 
 # Voucher Challenge
 
-Kupon Mücadelesi, benzersiz kupon kodlarının ardında içerik yayınlanmasını engelleyen bir anti-spam mekanizmasıdır. Otomatik algılamaya güvenmek yerine, güveni, kodları güvendikleri kişilere manuel olarak dağıtan topluluk sahibine kaydırır.
+Voucher Challenge, içerik yayımlamayı topluluk sahibinin dağıttığı benzersiz kupon kodlarının arkasına alır. Otomatik puanlamaya dayanmak yerine güveni, tanınan kişilerin kodları sahibin denetlediği bir kanal üzerinden aldığı manuel bir davet akışına taşır.
 
-**Kaynak kodu:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge)
+- **Kaynak kodu ve güncel README:** [github.com/bitsocialnet/voucher-challenge](https://github.com/bitsocialnet/voucher-challenge#readme)
+- **npm paketi:** [`@bitsocial/voucher-challenge`](https://www.npmjs.com/package/@bitsocial/voucher-challenge)
 
-## Nasıl Çalışır?
+## Kurulum
 
-1. Bir topluluk sahibi bir veya daha fazla benzersiz kupon kodu oluşturur.
-2. Sahibi, bu kodları güvenilir yazarlara kendi seçtikleri bir kanal aracılığıyla (doğrudan mesaj, e-posta, şahsen vb.) dağıtır.
-3. Bir yazar yayınlamaya çalıştığında, meydan okuma sistemi ondan bir kupon kodu ister.
-4. Kod doğrulanır; orijinalse ve henüz kullanılmamışsa yayın kabul edilir.
+```bash
+npm install @bitsocial/voucher-challenge
+```
 
-Her kupon kodu, kullanıldıktan sonra belirli bir yazara bağlanır ve başkaları tarafından yeniden kullanılması engellenir.
+## Nasıl Çalışır
 
-## Ne Zaman Kullanılmalı?
+1. Bir topluluk sahibi, bir veya daha fazla benzersiz kupon kodu üretir.
+2. Sahip, bu kodları seçtiği bir kanal üzerinden (doğrudan mesaj, e-posta, yüz yüze vb.) güvendiği yazarlara dağıtır.
+3. Bir yazar yayımlamaya çalıştığında, doğrulama sistemi ondan bir kupon kodu ister.
+4. Kod doğrulanır -- gerçekse ve daha önce kullanılmamışsa yayın kabul edilir.
 
-Kupon Yarışması aşağıdakiler için en uygunudur:
+Her kupon kodu, kullanıldığı anda belirli bir yazara bağlanır; böylece başkalarınca yeniden kullanılması engellenir.
 
-- Üyeliğin kasıtlı olarak kısıtlandığı **yalnızca davetli toplulukları**.
-- Sahibinin her katılımcıyı kişisel olarak incelediği **özelleştirilmiş alanlar**.
-- Otomatik spam puanlamanın gereksiz veya istenmediği **yüksek güven ortamları**.
+## Güncel Paket Referansı
 
-Manuel kod dağıtımı gerektirdiğinden büyük açık topluluklara ölçeklenemez. Bu senaryolar için bunun yerine [Spam Blocker](./spam-blocker.md) veya [EVM Contract Call Challenge](./evm-contract-call.md) seçeneğini düşünün.
+Bu sayfa bilinçli olarak bir genel bakıştır; birebir yansıtılmış bir kurulum kılavuzu değildir. Güncel doğrulama adları, Bitsocial CLI örnekleri, pkc-js kaydı, desteklenen seçenekler ve kod kullanım davranışı için kaynak, paketin README dosyasıdır:
 
-## Entegrasyon
+- [Voucher Challenge README](https://github.com/bitsocialnet/voucher-challenge#readme)
 
-Voucher Challenge, Bitsocial ekosistemindeki diğer anti-spam paketleri tarafından kullanılan aynı sorgulama arayüzüne bağlanır. Topluluk sahipleri bunu kendi topluluk ayarları aracılığıyla etkinleştirir ve meydan okuma, gönderi paylaşmaya çalıştıklarında yazarlara otomatik olarak sunulur.
+Canlı bir topluluğu yapılandırırken yukarı akıştaki README'yi tercih edin; çünkü kupon seçenekleri ve kurulum akışları bu web sitesiyle değil, o paketle birlikte sürümlenir.
+
+## Ne Zaman Kullanılır
+
+Voucher Challenge en çok şunlara uygundur:
+
+- Üyeliğin bilinçli olarak sınırlandırıldığı **yalnızca davetle girilen topluluklar**.
+- Sahibinin her katılımcıyı bizzat elediği **özenle derlenmiş alanlar**.
+- Otomatik spam puanlamasının gereksiz ya da istenmeyen olduğu **yüksek güven gerektiren ortamlar**.
+
+Manuel kod dağıtımı gerektirdiği için büyük ve açık topluluklara ölçeklenmez. Bu senaryolarda bunun yerine [Spam Blocker](./spam-blocker.md) veya [EVM Contract Call Challenge](./evm-contract-call.md) seçeneklerini değerlendirin.

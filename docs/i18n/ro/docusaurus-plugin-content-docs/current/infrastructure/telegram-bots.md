@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Feed bots care monitorizează listele comunității Bitsocial și trimit postări către canalele Telegram.
-sidebar_position: 3
+title: Boți Telegram
+description: Boți de flux care monitorizează listele de comunități Bitsocial și trimit postările în canale Telegram.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Boți Telegram
 
-Boții Bitsocial Telegram monitorizează listele comunității de clienți de pe rețeaua Bitsocial și trimit automat noi postări pe canalele Telegram. Fiecare mesaj redirecționat include butoane inline care se leagă înapoi la postarea originală pe 5chan și Seedit.
+Boții Telegram ai Bitsocial monitorizează listele de comunități ale clienților din rețeaua Bitsocial și trimit automat postările noi în canale Telegram. Fiecare mesaj retrimis include butoane inline care duc înapoi la postarea originală de pe 5chan și Seedit.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
 ## Boți disponibili
 
-| Bot                  | Stare      | Descriere                                                                           |
-| -------------------- | ---------- | ----------------------------------------------------------------------------------- |
-| **Feed de 5 canale** | Activ      | Monitorizează toate directoarele cu 5 canale și trimite postări noi către Telegram. |
-| **Seedit Feed**      | Planificat | Va oferi aceeași funcționalitate pentru comunitățile Seedit.                        |
+| Bot             | Stare      | Descriere                                                                    |
+| --------------- | ---------- | ---------------------------------------------------------------------------- |
+| **5chan Feed**  | Activ      | Monitorizează toate directoarele 5chan și trimite postările noi în Telegram. |
+| **Seedit Feed** | Planificat | Va oferi aceeași funcționalitate pentru comunitățile Seedit.                 |
 
-## Înființat
+## Configurare
 
 ### Cerințe preliminare
 
 - Node.js
-- Fire
-- Un jeton de bot Telegram (creați unul prin [BotFather](https://t.me/BotFather))
+- Yarn
+- Un token de bot Telegram (creați unul prin [BotFather](https://t.me/BotFather))
 
 ### Instalare
 
-Clonează depozitul și instalează dependențe:
+Clonați depozitul și instalați dependențele:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -35,27 +35,27 @@ cd bitsocial-telegram-bots
 yarn install
 ```
 
-### Configurare
+### Configurarea mediului
 
-Creați un fișier `.env` în rădăcina proiectului cu simbolul dvs. bot:
+Creați un fișier `.env` în rădăcina proiectului, cu tokenul botului:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Funcţionare
+### Rulare
 
-Porniți botul după configurarea mediului dvs.:
+Porniți botul după ce ați configurat mediul:
 
 ```bash
 yarn start
 ```
 
-## Format post
+## Formatul postării
 
-Când botul trimite o postare către Telegram, aceasta include două butoane în linie:
+Când botul trimite o postare în Telegram, aceasta include două butoane inline:
 
-- **Vizualizare pe 5chan** -- Deschide postarea în clientul web 5chan.
-- **Vizualizare pe Seedit** -- Deschide postarea în clientul web Seedit.
+- **Vezi pe 5chan** -- Deschide postarea în clientul web 5chan.
+- **Vezi pe Seedit** -- Deschide postarea în clientul web Seedit.
 
-Acest lucru le permite abonaților Telegram să sară direct la firul de discuții complet despre orice client preferă.
+Astfel, abonații Telegram pot ajunge direct la firul complet de discuție, în clientul pe care îl preferă.

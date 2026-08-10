@@ -1,15 +1,15 @@
 ---
 title: BSO Resolver
-description: Ratkaise .bso-verkkotunnusten nimet julkisiksi avaimille käyttämällä ENS TXT -tietueita, joissa on sisäänrakennettu välimuisti ja eri alustojen tuki.
+description: Selvitä .bso-verkkotunnukset julkisiksi avaimiksi Bitsocial TXT -tietueiden avulla.
 sidebar_position: 1
 ---
 
 # BSO Resolver
 
-BSO Resolver kääntää `.bso` verkkotunnusten nimet niitä vastaaviksi julkisiksi avaimille lukemalla ENS:ään tallennetut Bitsocial TXT -tietueet. Se tarjoaa jaetun viem-asiakkaan, jatkuvan välimuistin ja toimii sekä Node.js- että selainympäristöissä.
+BSO Resolver kääntää `.bso`-verkkotunnukset niitä vastaaviksi julkisiksi avaimiksi lukemalla Bitsocial TXT -tietueita. Se on selvityspaketti, jota Bitsocial-työkalut käyttävät, kun käyttäjälle näkyvä `.bso`-nimi täytyy muuntaa avainmateriaaliksi, jonka peer-to-peer-pino ymmärtää.
 
-- **GitHub**: [bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver)
-- **Lisenssi**: vain GPL-2.0
+- **Lähdekoodi ja ajantasainen README:** [github.com/bitsocialnet/bso-resolver](https://github.com/bitsocialnet/bso-resolver#readme)
+- **npm-paketti:** [`@bitsocial/bso-resolver`](https://www.npmjs.com/package/@bitsocial/bso-resolver)
 
 ## Asennus
 
@@ -17,73 +17,16 @@ BSO Resolver kääntää `.bso` verkkotunnusten nimet niitä vastaaviksi julkisi
 npm install @bitsocial/bso-resolver
 ```
 
-## Ratkaisijan luominen
+## Mihin se sijoittuu
 
-Instantoi ratkaisija välittämällä konfigurointiobjekti rakentajalle:
+Bitsocial-nimet on tarkoitettu ihmisen luettaviksi sisäänkäynneiksi yhteisöihin ja tekijöihin. Selvitin pitää tämän nimeämiskerroksen erillään sovelluskoodista, joten asiakas voi ensin kysyä, onko nimi tuettu, ja selvittää sen sitten paketin ajoympäristökohtaisen sisääntulopisteen kautta.
 
-```js
-const resolver = new BsoResolver({ key, provider, dataPath });
-```
+Käytä sitä, kun rakennat Bitsocial-tietoista asiakasta, komentorivityökalua tai palvelua, jonka on hyväksyttävä `.bso`-nimiä pelkkien raakojen julkisten avainten sijaan.
 
-| Parametri  | Pakollinen | Kuvaus                                               |
-| ---------- | ---------- | ---------------------------------------------------- |
-| `key`      | Kyllä      | Ratkaisijainstanssin tunniste.                       |
-| `provider` | Kyllä      | Kuljetusasetukset (katso alla).                      |
-| `dataPath` | Ei         | SQLite-välimuistitiedoston hakemisto (vain Node.js). |
+## Paketin ajantasainen viitedokumentaatio
 
-### Palveluntarjoajan vaihtoehdot
+Tämä sivu on tarkoituksella yleiskatsaus, ei peilattu API-viite. Paketin README on totuuden lähde, kun kyse on konstruktorin asetuksista, paluutyypeistä, välimuistin toiminnasta, sisääntulopisteistä, palveluntarjoajaesimerkeistä ja tuetusta sammutuslogiikasta:
 
-`provider`-parametri hyväksyy kolme muotoa:
+- [BSO Resolver README](https://github.com/bitsocialnet/bso-resolver#readme)
 
-- **`"viem"`** – Käyttää viemin tarjoamaa oletusarvoista julkista liikennettä.
-- **HTTP(S) URL** – muodostaa yhteyden JSON-RPC-päätepisteen kautta (esim. `https://mainnet.infura.io/v3/YOUR_KEY`).
-- **WebSocket URL** – muodostaa yhteyden WebSocket RPC -päätepisteen kautta (esim. `wss://mainnet.infura.io/ws/v3/YOUR_KEY`).
-
-## menetelmät
-
-### `resolve({ name, abortSignal? })`
-
-Etsii `.bso`-nimen ja palauttaa siihen liittyvän julkisen avaimen. Valinnainen `AbortSignal` voidaan välittää pitkäaikaisten pyyntöjen peruuttamiseksi.
-
-### `canResolve({ name })`
-
-Palauttaa loogisen arvon, joka osoittaa, pystyykö ratkaiseja käsittelemään annettua nimeä. Käytä tätä tarkistaaksesi tuen ennen täyden resoluution yrittämistä.
-
-### `destroy()`
-
-Purkaa ratkaisejan, sulkee tietokantayhteydet ja vapauttaa resursseja. Soita tähän, kun ratkaisijaa ei enää tarvita.
-
-## Välimuisti
-
-Ratkaistut nimet tallennetaan automaattisesti välimuistiin redundanttien verkkohakujen vähentämiseksi. Välimuistin taustaohjelma valitaan ajonaikaisen ympäristön perusteella:
-
-| Ympäristö | Backend               | Huomautuksia                                                                  |
-| --------- | --------------------- | ----------------------------------------------------------------------------- |
-| Node.js   | SQLite                | Säilytetty osoitteessa `dataPath`. Käyttää WAL-tilaa samanaikaiseen käyttöön. |
-| Selain    | IndexedDB             | Käyttää alkuperäisiä IndexedDB-tapahtumia.                                    |
-| Varaus    | Muistissa oleva `Map` | Käytetään, kun SQLite tai IndexedDB ei ole saatavilla.                        |
-
-Kaikilla välimuistin tiedoilla on **tunnin TTL**, ja ne häädetään automaattisesti vanhenemisen jälkeen.
-
-## Integrointi pkc-js:n kanssa
-
-Ratkaisin voidaan kytkeä suoraan pkc-js:ään `nameResolvers`-vaihtoehdon kautta, mikä mahdollistaa läpinäkyvän `.bso`-nimen tarkkuuden avainhakujen aikana:
-
-```js
-const pkc = new Pkc({
-  nameResolvers: [resolver],
-  // ...other options
-});
-```
-
-## Samanaikaisuus
-
-Resolver on suunniteltu turvalliseksi samanaikaisessa käytössä:
-
-- Yksi jaettu viem-asiakasohjelma välttää ylimääräiset yhteydet.
-- SQLite toimii WAL (Write-Ahead Logging) -tilassa, mikä mahdollistaa samanaikaisen lukemisen ilman estoa.
-- Selaimen välimuisti perustuu alkuperäisiin IndexedDB-tapahtumiin.
-
-## Alustan sisääntulopisteet
-
-Paketti toimittaa erilliset sisääntulokohdat Node.js:lle ja selainversioille. Niputtimet, jotka tukevat `exports`-kenttää `package.json`:ssa, valitsevat automaattisesti oikean.
+Kun kopioit koodia projektiin, käytä mieluummin ylävirran README:tä, koska selvittimen toiminta versioidaan kyseisen paketin eikä tämän sivuston mukana.

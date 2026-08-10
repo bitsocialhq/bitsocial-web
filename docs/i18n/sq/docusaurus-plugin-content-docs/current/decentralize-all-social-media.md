@@ -1,52 +1,70 @@
 ---
 title: Decentralizoni të gjitha mediat sociale
-description: Faza 5 e masterplanit Bitsocial dhe gjendja përfundimtare që synon.
+description: Faza 5 e masterplanit, e fokusuar te financimi dhe ndërtimi i bishtit të gjatë të klientëve socialë Bitsocial.
 ---
 
 # Decentralizoni të gjitha mediat sociale
 
-Kjo është gjendja përfundimtare e përshkruar nga masterplani Bitsocial: jo një aplikacion, por një ekosistem i aplikacioneve Bitsocial që mund të rivalizojë çdo kategori kryesore të mediave sociale.
+Gjendja përfundimtare nuk është një aplikacion i vetëm. Është një treg klientësh, nyjesh, shërbimesh
+dhe komunitetesh që mund ta zëvendësojë pronësinë e platformës me konkurrencë mbi protokollin.
 
-## Modeli
+Faza 5 është pika ku Bitsocial shkon përtej kategorive të para prioritare dhe nis të financojë sa më
+shumë formate sociale që të jetë e mundur.
 
-Në gjendjen e propozuar të pjekur të rrjetit:
+## Çfarë mbetet për t'u ndërtuar
 
-- ofrues të shumtë publikë RPC konkurrojnë për të pritur nyjet e profilit
-- përdoruesit ende mund të vetë-strehojnë
-- algoritmet e furnizimit bëhen shërbime opsionale në vend të ligjit të detyrueshëm të platformës
-- fitimi i parave nuk varet nga dëshira e bankave për të mbajtur gjallë platformën
-- aplikacionet konkurrojnë në cilësinë e produktit, zbulimin dhe dizajnin e ndërfaqes
+Fazat e para fokusohen te kategoritë me ndikimin më të madh: imageboard-et, forumet, RPC-ja publike,
+Bitsocial Chain, nyjet e profileve, alternativa ndaj Twitter/X e Fazës 3 dhe ekonomia e shërbimeve
+rreth tyre.
 
-## Si do të dukej suksesi
+Pas kësaj, rrjeti duhet të zgjerohet në bishtin e gjatë:
 
-Aplikacionet bitsociale duhet të jenë në gjendje të sfidojnë platformat nëpër formate, jo vetëm në një vend:
+- klientë për blogim
+- aplikacione për financim kolektiv
+- video për krijuesit dhe një [alternativë e besueshme ndaj YouTube](https://github.com/bitsocialnet/wetube)
+- komunitete krijuesish
+- eksperimente me media të formatit të shkurtër
+- aplikacione sociale lokale ose të dedikuara për një gjuhë
+- klientë të specializuar që janë tepër të vegjël për katër fazat e para
+- mjete që e bëjnë më të lehtë drejtimin e komuniteteve ekzistuese
 
-- teksti dhe diskutimi
-- tabelat e imazheve
-- forume
-- komunitetet e krijuesve
-- video në formë të shkurtër dhe produkte më të gjera mediatike
+Disa nga këto aplikacione mund të jenë me burim të hapur. Disa mund të jenë klientë të centralizuar.
+Disa mund t'i ndërtojë Bitsocial Forge, ndërsa shumë prej tyre duhet t'i ndërtojnë zhvillues të
+pavarur.
 
-Qëllimi nuk është të detyrosh të gjithë një ndërfaqe universale. Është për t'u dhënë shumë aplikacioneve qasje në të njëjtat komunitete, identitete dhe rrjete themelore.
+## Financimi i shumë ndërtuesve
 
-## Pse shtresa RPC ka rëndësi këtu
+Qëllimi është që klientët e rinj socialë të jenë të financueshëm përpara se të kenë arritur tërheqje
+në shkallë platforme.
 
-Komunitetet dhe profilet gjithmonë aktive bëhen shumë më praktike sapo të ekzistojnë tregjet publike RPC. Pa atë shtresë, vetë-pritja mbetet shumë e lartë për shumë përdorues, veçanërisht në celular.
+Kjo mund të përfshijë investim të drejtpërdrejtë, grante, financim nga komuniteti, të ardhura nga
+shërbime të suksesshme Bitsocial ose programe të decentralizuara grantesh, ku komuniteti më i gjerë i
+Bitsocial ndihmon të vendoset se cilët zhvillues duhet të marrin mbështetje.
 
-## Pse shtresa e rrjetit ka rëndësi këtu
+Pjesa e rëndësishme është pluralizmi. Rrjeti duhet të financojë shumë përpjekje, jo të presë që një
+aplikacion zyrtar të mbulojë çdo kategori.
 
-Nëse fitimi i parave të përmbajtjes mund të ndërpritet nga presioni i zakonshëm bankar ose platforma, atëherë ekosistemi mbetet i brishtë. Rrjeti bitsocial propozohet si shtresa ekonomike që e bën konkurrencën afatgjatë më të besueshme.
+## Si duket suksesi
 
-## Basti kryesor
+Bitsocial ia del kur mediat sociale mund të ndahen në shtresa të zëvendësueshme:
 
-Basti i madh është që mediat sociale mund të ndahen në shtresa të zëvendësueshme:
-
-- protokoll
+- protokolli
 - komunitetet
 - identiteti
-- hosting
-- zbulim
-- fitim parash
+- strehimi
+- zbulimi
+- moderimi
+- monetizimi
 - aplikacionet
 
-Pasi këto shtresa të zëvendësohen, asnjë kompani e vetme nuk duhet të zotërojë të gjithë grafikun social në mënyrë që produkti të funksionojë.
+Sapo këto shtresa të jenë të zëvendësueshme, asnjë kompani e vetme nuk ka nevojë të zotërojë të gjithë
+grafin social që produkti të funksionojë.
+
+## Basti themelor
+
+Një ekosistem i pjekur Bitsocial duhet të përmbajë RPC publike, nyje të vetëstrehuara, tregje
+algoritmesh për prurjet, strehues mediash, shërbime zbulimi, klientë me burim të hapur, klientë
+komercialë dhe eksperimente të financuara nga komuniteti.
+
+Mediat sociale më në fund gjejnë ekuilibrin e tyre: një rrjet social plotësisht i decentralizuar,
+peer-to-peer, që nuk e zotëron askush; Bitsocial.

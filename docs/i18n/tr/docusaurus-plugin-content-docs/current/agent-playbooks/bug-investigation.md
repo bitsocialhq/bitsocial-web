@@ -11,17 +11,17 @@ Düzenlemeden önce ilgili kod için git geçmişini kontrol edin. Önceki katk�
 1. Dosya/alan için son kayıt başlıklarını (yalnızca başlıklar) tarayın:
 
 ```bash
-# Belirli bir dosya için son kayıt başlıkları
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Belirli bir satır aralığı için son kayıt başlıkları
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Kapsamlı farklarla yalnızca ilgili taahhütleri inceleyin:
 
 ```bash
-# Bir dosya için taahhüt mesajını + farkı göster
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

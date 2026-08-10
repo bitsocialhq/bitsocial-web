@@ -1,34 +1,37 @@
-# Agent Hooks -asetukset
+# Agenttikoukkujen asetukset
 
-Jos AI-koodausavustajasi tukee elinkaaren koukkuja, määritä ne tätä repoa varten.
+Jos tekoälyavustajasi tukee elinkaarikoukkuja, määritä nämä tätä repoa varten.
 
 ## Suositellut koukut
 
-| Koukku          | Komento                                    | Tarkoitus                                                                                                                                                                                     |
-| --------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `afterFileEdit` | `scripts/agent-hooks/format.sh`            | Muotoile tiedostot automaattisesti tekoälyn muokkauksen jälkeen                                                                                                                               |
-| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`      | Suorita `corepack yarn install`, kun `package.json` muuttuu                                                                                                                                   |
-| `stop`          | `scripts/agent-hooks/sync-git-branches.sh` | Leikkaa vanhentuneet viitteet ja poista integroidut väliaikaiset tehtävähaarat                                                                                                                |
-| `stop`          | `scripts/agent-hooks/verify.sh`            | Kovan portin koonti-, nukka-, tyyppi- ja muototarkistukset; pitää `yarn npm audit` tiedot ja suorittaa `yarn knip` erikseen neuvoa-antavana tarkastuksena, kun riippuvuudet/tuonnit muuttuvat |
+| Koukku          | Komento                                       | Tarkoitus                                                                                                                                                                                                       |
+| --------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `afterFileEdit` | `scripts/agent-hooks/format.sh`               | Muotoile tiedostot automaattisesti tekoälyn muokkausten jälkeen                                                                                                                                                 |
+| `afterFileEdit` | `scripts/agent-hooks/yarn-install.sh`         | Aja `corepack yarn install`, kun `package.json` muuttuu                                                                                                                                                         |
+| `afterFileEdit` | `scripts/agent-hooks/react-pattern-review.sh` | Kun muutos lisää `useEffect`- tai memo-primitiivejä hakemistoon `about/src/`, muistuta agenttia harkitsemaan ratkaisua uudelleen React-katselmustaitojen avulla                                                 |
+| `stop`          | `scripts/agent-hooks/sync-git-branches.sh`    | Karsi vanhentuneet viitteet ja poista jo yhdistetyt tilapäiset tehtävähaarat                                                                                                                                    |
+| `stop`          | `scripts/agent-hooks/react-pattern-review.sh` | Käy nykyinen muutos uudelleen läpi uusien React-efektien ja -memojen varalta hakemistossa `about/src/` ennen lopullista varmistusporttia                                                                        |
+| `stop`          | `scripts/agent-hooks/verify.sh`               | Pakota kohdennettu koonnin varmistus, lint, tyyppitarkistus ja muotoilutarkistukset; pidä `yarn npm audit` informatiivisena ja aja `yarn knip` erikseen neuvoa-antavana, kun riippuvuudet tai tuonnit muuttuvat |
 
-## Miksi?
+## Miksi
 
-- Johdonmukainen muotoilu
-- Lukitustiedosto pysyy synkronoituna
-- Rakenne-/nukka-/tyyppiongelmat havaittiin aikaisin
-- Suojauksen näkyvyys `yarn npm audit`:n kautta
-- Riippuvuus/tuontipoikkeama voidaan tarkistaa `yarn knip`:lla muuttamatta sitä äänekkääksi globaaliksi pysäytyskoukuksi
+- Yhtenäinen muotoilu
+- Lukkotiedosto pysyy synkronissa
+- About-sivustoon lisätyt uudet `useEffect`- ja memo-kohdat saavat nimenomaisen toisen tarkastelun ennen kuin agentti lopettaa
+- Työtilan kannalta olennaiset koonti-, lint- ja tyyppiongelmat havaitaan ajoissa ilman, että jokaisessa tehtävässä pakotetaan täysi monikielinen dokumentaatiokoonti
+- Tietoturvanäkyvyys komennon `yarn npm audit` kautta
+- Riippuvuuksien ja tuontien ajautumista voi seurata komennolla `yarn knip` ilman, että siitä tulee meluisa globaali stop-koukku
 - Yksi jaettu koukkutoteutus sekä Codexille että Cursorille
-- Väliaikaiset tehtävähaarat pysyvät linjassa repon työpuun työnkulun kanssa
+- Tilapäiset tehtävähaarat pysyvät linjassa repon worktree-työnkulun kanssa
 
-## Esimerkki Hook-skriptit
+## Esimerkkejä koukkuskripteistä
 
-### Muotoile koukku
+### Muotoilukoukku
 
 ```bash
 #!/bin/bash
-# Muotoile JS/TS-tiedostot automaattisesti tekoälyn muokkauksen jälkeen
-# Hook vastaanottaa JSON-tiedoston stdinin kautta tiedostopolkulla
+# Auto-format JS/TS files after AI edits
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -39,15 +42,15 @@ esac
 exit 0
 ```
 
-### Vahvista koukku
+### Varmistuskoukku
 
 ```bash
 #!/bin/bash
-# Suorita koonti-, nukka-, tyyppitarkistus, muototarkistus ja suojaustarkastus, kun agentti on valmis
+# Run targeted build verification, lint, typecheck, format check, and security audit when agent finishes
 
 cat > /dev/null  # consume stdin
 status=0
-corepack yarn build || status=1
+corepack yarn build:verify || status=1
 corepack yarn lint || status=1
 corepack yarn typecheck || status=1
 corepack yarn format:check || status=1
@@ -55,14 +58,16 @@ echo "=== yarn npm audit ===" && (corepack yarn npm audit || true)  # informatio
 exit $status
 ```
 
-Oletuksena `scripts/agent-hooks/verify.sh` poistuu nollasta poikkeavalla tavalla, kun vaadittu tarkistus epäonnistuu. Aseta `AGENT_VERIFY_MODE=advisory` vain silloin, kun tarvitset tarkoituksella signaalia katkenneesta puusta tukkimatta koukkua. Pidä `yarn knip` poissa kovasta portista, ellei repo nimenomaisesti päätä epäonnistua neuvoa-antavien tuonti-/riippuvuusongelmien vuoksi.
+Oletusarvoisesti `scripts/agent-hooks/verify.sh` palauttaa nollasta poikkeavan paluuarvon, kun vaadittu tarkistus epäonnistuu. Aseta `AGENT_VERIFY_MODE=advisory` vain, kun haluat tarkoituksella signaalia rikkinäisestä puusta ilman että koukku estää etenemisen. Pidä `yarn knip` kovan portin ulkopuolella, ellei repossa nimenomaisesti päätetä kaatua neuvoa-antaviin tuonti- tai riippuvuushavaintoihin.
 
-### Lanka asennuskoukku
+Elinkaarikoukut eivät korvaa manuaalista selaintarkistusta. Tee käyttöliittymä- tai ulkoasumuutosten yhteydessä edelleen `playwright-cli`-tarkistukset moottoreilla `chrome`, `firefox` ja `webkit`, ja lisäksi mobiilinäkymän kulku kussakin moottorissa, kun responsiivisuus tai kosketuskäyttäytyminen muuttui.
+
+### Yarn install -koukku
 
 ```bash
 #!/bin/bash
-# Suorita corepack yarn install, kun package.json muutetaan
-# Hook vastaanottaa JSON-tiedoston stdinin kautta tiedostopolkulla
+# Run corepack yarn install when package.json is changed
+# Hook receives JSON via stdin with file_path
 
 input=$(cat)
 file_path=$(echo "$input" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*:.*"\([^"]*\)"/\1/')
@@ -80,6 +85,6 @@ fi
 exit 0
 ```
 
-Määritä koukkujohdot agenttityökalusi asiakirjojen mukaan (`hooks.json`, vastaava jne.).
+Kytke koukut agenttityökalusi dokumentaation mukaisesti (`hooks.json` tai vastaava).
 
-Tässä repossa `.codex/hooks/*.sh`:n ja `.cursor/hooks/*.sh`:n tulisi pysyä ohuina kääreinä, jotka delegoivat `scripts/agent-hooks/`:n jaetuille toteutuksille.
+Tässä repossa `.codex/hooks/*.sh` ja `.cursor/hooks/*.sh` tulee pitää ohuina kääreinä, jotka delegoivat työn jaetuille toteutuksille hakemistossa `scripts/agent-hooks/`.

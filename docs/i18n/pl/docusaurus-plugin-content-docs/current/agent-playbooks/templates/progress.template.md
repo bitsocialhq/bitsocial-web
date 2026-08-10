@@ -7,6 +7,6 @@ Dołącz jeden wpis na sesję.
 - Pozycja: F001
 - Podsumowanie: Zastąp to podsumowaniem sesji.
 - Pliki: `path/to/file`
-- Weryfikacja: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Weryfikacja: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Blokery: brak
 - Dalej: Zamień to na następną najlepszą kontynuację.

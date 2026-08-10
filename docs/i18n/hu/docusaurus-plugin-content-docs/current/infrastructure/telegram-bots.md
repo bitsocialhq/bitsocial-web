@@ -1,33 +1,33 @@
 ---
-title: Telegram Bots
-description: Feed botok, amelyek figyelik a Bitsocial közösségi listákat, és továbbítják a bejegyzéseket a Telegram csatornáknak.
-sidebar_position: 3
+title: Telegram botok
+description: Feed botok, amelyek figyelik a Bitsocial közösséglistákat, és továbbítják a bejegyzéseket Telegram csatornákba.
+sidebar_position: 4
 ---
 
-# Telegram Bots
+# Telegram botok
 
-A Bitsocial Telegram robotok figyelik a Bitsocial hálózat kliensközösségi listáit, és automatikusan továbbítják az új bejegyzéseket a Telegram csatornákra. Minden továbbított üzenet tartalmaz beágyazott gombokat, amelyek az 5chan és a Seedit eredeti bejegyzésére hivatkoznak.
+A Bitsocial Telegram botjai figyelik a kliensek közösséglistáit a Bitsocial hálózaton, és automatikusan továbbítják az új bejegyzéseket Telegram csatornákba. Minden továbbított üzenet olyan beágyazott gombokat tartalmaz, amelyek visszavezetnek az eredeti bejegyzésre az 5chanen és a Seediten.
 
 - **GitHub**: [bitsocialnet/bitsocial-telegram-bots](https://github.com/bitsocialnet/bitsocial-telegram-bots)
 
-## Elérhető Botok
+## Elérhető botok
 
-| Bot                        | Állapot   | Leírás                                                                               |
-| -------------------------- | --------- | ------------------------------------------------------------------------------------ |
-| **5 csatorna hírcsatorna** | Aktív     | Figyeli az összes 5chan könyvtárat, és továbbítja az új bejegyzéseket a Telegramnak. |
-| **Seedit feed**            | Tervezett | Ugyanazt a funkcionalitást fogja biztosítani a Seedit közösségek számára.            |
+| Bot             | Állapot   | Leírás                                                                              |
+| --------------- | --------- | ----------------------------------------------------------------------------------- |
+| **5chan Feed**  | Aktív     | Figyeli az összes 5chan könyvtárat, és továbbítja az új bejegyzéseket a Telegramra. |
+| **Seedit Feed** | Tervezett | Ugyanezt fogja nyújtani a Seedit közösségekhez.                                     |
 
 ## Beállítás
 
 ### Előfeltételek
 
 - Node.js
-- Fonal
-- Telegram bot token (hozzon létre egyet a [BotFather](https://t.me/BotFather) segítségével)
+- Yarn
+- Egy Telegram bot token (hozzon létre egyet a [BotFather](https://t.me/BotFather) segítségével)
 
 ### Telepítés
 
-A tár klónozása és a függőségek telepítése:
+Klónozza a tárolót, és telepítse a függőségeket:
 
 ```bash
 git clone https://github.com/bitsocialnet/bitsocial-telegram-bots.git
@@ -37,25 +37,25 @@ yarn install
 
 ### Konfiguráció
 
-Hozzon létre egy `.env` fájlt a projekt gyökérjében a bot tokennel:
+Hozzon létre egy `.env` fájlt a projekt gyökerében a bot tokenjével:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token
 ```
 
-### Futás
+### Futtatás
 
-Indítsa el a botot a környezet konfigurálása után:
+A környezet beállítása után indítsa el a botot:
 
 ```bash
 yarn start
 ```
 
-## Hozzászólás formátuma
+## A bejegyzések formátuma
 
-Amikor a bot továbbít egy bejegyzést a Telegramnak, két soron belüli gombot tartalmaz:
+Amikor a bot továbbít egy bejegyzést a Telegramra, két beágyazott gombot helyez el rajta:
 
-- **Megtekintés az 5chan-on** – Megnyitja a bejegyzést az 5chan webkliensben.
-- **Megtekintés a Seediten** – Megnyitja a bejegyzést a Seedit webkliensben.
+- **Megtekintés az 5chanen** -- Megnyitja a bejegyzést az 5chan webes kliensében.
+- **Megtekintés a Seediten** -- Megnyitja a bejegyzést a Seedit webes kliensében.
 
-Ez lehetővé teszi a Telegram-előfizetők számára, hogy közvetlenül a teljes vitaszálra ugorjanak, amelyik kliensről szeretnek.
+Így a Telegram-feliratkozók közvetlenül a teljes beszélgetésszálhoz ugorhatnak azon a kliensen, amelyiket előnyben részesítik.

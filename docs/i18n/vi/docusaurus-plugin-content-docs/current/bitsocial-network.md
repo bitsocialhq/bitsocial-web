@@ -1,56 +1,92 @@
 ---
 title: Bitsocial Chain
-description: Giai đoạn 4 của kế hoạch tổng thể, bao gồm lớp chuỗi ứng dụng dùng chung được đề xuất cho các ứng dụng Bitsocial.
+description: Giai đoạn 2 của kế hoạch tổng thể, trình bày lớp kinh tế appchain Ethereum L2 được đề xuất cho các ứng dụng Bitsocial.
 ---
 
 # Bitsocial Chain
 
-Mạng Bitsocial là tên được sử dụng trong kế hoạch tổng thể cho lớp chuỗi ứng dụng được chia sẻ sẽ nằm trong các ứng dụng Bitsocial.
+Bitsocial Chain là lớp kinh tế appchain Ethereum L2 được đề xuất cho các ứng dụng Bitsocial. Trang
+web dành riêng cho chuỗi này hiện nằm tại [chain.bitsocial.net](https://chain.bitsocial.net).
 
-Ý tưởng không phải là thay thế tầng lớp xã hội ngang hàng. Nó nhằm cung cấp các nguyên tắc phối hợp và kinh tế chung mà các ứng dụng xã hội sẽ cần nếu chúng muốn cạnh tranh với các nền tảng hiện tại trên quy mô lớn.
+Lớp xã hội ngang hàng cho phép cộng đồng, danh tính và nội dung tồn tại bên ngoài cơ sở dữ liệu của
+một nền tảng tập trung. Bitsocial Chain nhằm bổ sung các thành phần nền tảng dùng chung cho việc đặt
+tên, kiếm tiền và thanh toán, những thứ khiến các ứng dụng đó khó bị cắt nguồn tài chính hơn.
 
-## Nó có ý nghĩa gì đối với sức mạnh
+## Nó dự kiến hỗ trợ những gì
 
-- các miền Bitsocial phi tập trung như `.bso`
-- thanh khoản được chia sẻ trên các ứng dụng
-- đường ray kiếm tiền bền vững
-- cấu trúc tài chính khiến các ngân hàng hoặc nền tảng khó bị bóp nghẹt hơn
-- hiệu ứng mạng không phụ thuộc vào một công ty sở hữu toàn bộ ngăn xếp
+- các tên miền Bitsocial phi tập trung như `.bso`
+- trao thưởng và tặng tiền boa
+- hạ tầng kiếm tiền bền vững
+- thanh khoản dùng chung giữa các ứng dụng
+- các cấu trúc tài chính mà ngân hàng hay nền tảng khó bóp nghẹt hơn
+- hiệu ứng mạng không phụ thuộc vào việc một công ty sở hữu toàn bộ hạ tầng
 
-## Tại sao nó quan trọng
+Mục tiêu không phải là đặt cơ chế token lên hàng đầu. Mục tiêu là làm cho những ứng dụng xã hội hữu
+ích trở nên bền vững hơn, dễ gọi vốn hơn và bớt phụ thuộc vào các nhà cung cấp thanh toán hay dịch vụ
+đặt tên tập trung.
 
-Phân cấp cộng đồng và danh tính là cần thiết, nhưng chưa đủ để phân cấp tất cả các phương tiện truyền thông xã hội.
+## Bản chứng minh khái niệm hiện tại
 
-Nếu tầng kinh tế vẫn phụ thuộc vào một số đường ray tập trung thì các ứng dụng vẫn dễ bị áp lực, bị hủy nền tảng hoặc thiếu hụt tài chính. Mạng Bitsocial là câu trả lời được đề xuất cho lớp phụ thuộc thứ hai đó.
+Bản chứng minh khái niệm đầu tiên của Bitsocial Chain tập trung vào các tên `.bso` gốc. Nó cho thấy
+một sổ đăng ký tên có thể được suy ra từ lịch sử Ethereum L1 mà không cần đưa nội dung xã hội lên
+chuỗi:
 
-## Mối quan hệ với phần còn lại của Bitsocial
+- người dùng gửi các ý định đăng ký, cập nhật, chuyển nhượng và thu hồi thông qua những giao dịch
+  Ethereum L1 thông thường
+- bất kỳ ai cũng có thể chạy node suy dẫn và dựng lại đúng trạng thái sổ đăng ký `.bso` đó
+- một bộ phân giải ánh xạ tên `.bso` sang khóa công khai Bitsocial mà các ứng dụng khách vốn đã dùng
+  trên giao thức ngang hàng
+- bài đăng, lượt bình chọn, kiểm duyệt, nguồn cấp dữ liệu và nội dung cộng đồng vẫn nằm ngoài chuỗi
+  và giữ tính ngang hàng
 
-Mạng Bitsocial được đề xuất làm cơ sở hạ tầng dùng chung cho các ứng dụng Bitsocial chứ không phải là sản phẩm mà người dùng tương tác trực tiếp hàng ngày.
+Bản chứng minh khái niệm đó chưa phải là một lần ra mắt Stage 2 ở môi trường sản xuất. Nó chưa có hệ
+thống chứng minh, cơ chế tranh chấp, mã nguồn đã kiểm toán, bản triển khai chính thức, biểu phí cuối
+cùng hay mô hình quản trị cuối cùng. Định hướng dài hạn của nó là minh bạch theo mặc định và tương
+thích với quyền riêng tư ngay từ khâu thiết kế: chuỗi lõi là công khai, còn các tính năng tặng tiền
+boa, thanh toán, trao thưởng và thanh khoản trong tương lai nên tránh việc buộc gắn vĩnh viễn danh
+tính xã hội với lịch sử ví.
 
-Kết quả công khai sẽ là:
+## Vì sao điều này quan trọng
 
-- cộng đồng luôn ngang hàng
-- ứng dụng luôn khác biệt
-- kiếm tiền và đặt tên trở nên bền vững hơn
-- giá trị có thể di chuyển khắp hệ sinh thái mà không cần tạo lại chủ sở hữu nền tảng tập trung
+Phi tập trung hóa cộng đồng và danh tính là điều cần thiết, nhưng chừng đó chưa đủ để phi tập trung
+hóa toàn bộ mạng xã hội.
 
-## Tại sao điều này lại nằm trong Giai đoạn 4
+Nếu các ứng dụng xã hội vẫn phụ thuộc vào một vài hạ tầng kinh tế tập trung, chúng vẫn dễ bị gây sức
+ép, bị loại khỏi nền tảng hoặc bị cắt nguồn tài chính. Bitsocial Chain là lời giải được đề xuất cho
+lớp phụ thuộc thứ hai đó.
 
-Kế hoạch tổng thể đặt điều này sau các điểm chứng minh cấp ứng dụng trước đó:
+## Quan hệ với các ứng dụng
 
-1. phân cấp bảng hình ảnh
-2. khởi chạy RPC Bitsocial
-3. phân quyền diễn đàn
-4. ra mắt mạng xã hội Bit
+Bitsocial Chain nên nằm bên dưới các ứng dụng Bitsocial chứ không thay thế chúng.
 
-Trình tự đó có ý nghĩa vì lớp phối hợp ở cấp hệ sinh thái sẽ hữu ích hơn khi các ứng dụng thực và hành vi người dùng thực đã tồn tại trên mạng.
+Kết quả mà người dùng nhìn thấy nên là:
+
+- cộng đồng vẫn giữ tính ngang hàng
+- các ứng dụng vẫn giữ được nét riêng
+- người dùng có được những tính năng đặt tên và kiếm tiền thiết thực
+- nhà sáng tạo và cộng đồng có thể nhận ủng hộ từ nhiều ứng dụng khách khác nhau
+- giá trị có thể luân chuyển trong hệ sinh thái mà không tái tạo ra một chủ sở hữu nền tảng tập trung
+
+## Vì sao phần này đến sớm trong lộ trình
+
+Kế hoạch tổng thể hiện tại đặt Bitsocial Chain ngay sau những nhóm mở đường đầu tiên: bảng hình ảnh,
+diễn đàn, và lớp RPC công khai giúp các ứng dụng đó trở nên thiết thực với nhiều người dùng hơn.
+
+Thời điểm đó quan trọng vì các ứng dụng xã hội cần hiệu ứng mạng mạnh. Nếu việc đặt tên, ủng hộ, trao
+thưởng, tặng tiền boa và kiếm tiền đến quá muộn, các đối thủ tập trung sẽ giữ được lợi thế lớn nhất
+của họ quá lâu.
 
 ## Nguyên tắc thiết kế
 
-Vì Bitsocial Chain vẫn là hạ tầng được đề xuất chứ chưa phải sản phẩm đã ra mắt, kế hoạch hiện tại nên giữ kỷ luật ở một số điểm:
+Vì Bitsocial Chain vẫn là hạ tầng được đề xuất chứ chưa phải sản phẩm đã ra mắt, kế hoạch cần giữ kỷ
+luật:
 
-- ứng dụng và cộng đồng đi trước. Lớp mạng nên đi theo mức sử dụng thực tế trong các ứng dụng Bitsocial, chứ không nên dẫn đầu bằng các tính năng tài chính mang tính đầu cơ.
-- đóng góp thực chất quan trọng hơn hype. Nếu sau này Bitsocial bổ sung tài sản ở cấp cộng đồng, nhà sáng tạo hoặc client, chúng nên thưởng cho sự tham gia và xây dựng dài hạn thay vì các đợt ra mắt bắt chước hay giao dịch ngắn hạn.
-- curation là hợp lệ. Các ứng dụng Bitsocial có thể định hình bảng xếp hạng, mặc định, khả năng khám phá và nhịp rollout để ưu tiên các cộng đồng bền vững hơn hành vi kiểu sòng bạc.
-- rollout dần dần là lành mạnh. Việc trì hoãn các tính năng tài chính gốc của appchain là hợp lý cho đến khi hệ sinh thái có đủ người dùng, công cụ kiểm duyệt và độ rõ ràng của sản phẩm để hỗ trợ chúng một cách an toàn.
-- các cơ chế chính xác vẫn còn để ngỏ. Trang này giải thích vai trò của Bitsocial Chain, chứ không phải một lời hứa cố định về token launcher, công thức phí hay tokenomics cuối cùng.
+- Ứng dụng và cộng đồng đi trước. Lớp mạng phải làm cho các sản phẩm xã hội thực tế mạnh hơn.
+- Tính năng thiết thực đi trước. Tên miền, trao thưởng, tặng tiền boa và thanh toán dễ giải thích hơn
+  so với một kiến trúc tài chính trừu tượng.
+- Đóng góp thực chất quan trọng hơn hype. Các thành phần kinh tế nền tảng nên tưởng thưởng cho sự
+  tham gia, việc xây dựng và sự ủng hộ cộng đồng.
+- Việc chọn lọc là hợp lệ. Các ứng dụng có thể định hình xếp hạng, thiết lập mặc định và khả năng
+  khám phá để ưu tiên những cộng đồng bền vững.
+- Cơ chế cụ thể vẫn còn để ngỏ. Trang này giải thích vai trò của Bitsocial Chain, chứ không phải một
+  lời hứa cố định về mô hình kinh tế cuối cùng.

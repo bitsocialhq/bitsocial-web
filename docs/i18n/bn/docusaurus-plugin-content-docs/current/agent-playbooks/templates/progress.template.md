@@ -7,6 +7,6 @@
 - আইটেম: F001
 - সারাংশ: এটিকে সেশনের সারাংশ দিয়ে প্রতিস্থাপন করুন।
 - ফাইল: `path/to/file`
-- যাচাইকরণ: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- যাচাইকরণ: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - ব্লকার: কেউ না
 - পরবর্তী: পরবর্তী সেরা ফলো-আপ দিয়ে এটি প্রতিস্থাপন করুন।
