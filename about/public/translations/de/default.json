@@ -792,5 +792,41 @@
     "sectionLabel": "Browser P2P",
     "supporting": "Öffne eine Bitsocial-Web-App in einem normalen Tab und sie tritt selbst dem Netzwerk bei, ruft Beiträge von anderen Peers ab und veröffentlicht deine. Jedes andere dezentralisierte soziale Netzwerk unterhält immer noch einen Server in der Mitte.",
     "title": "Dein Browser ist ein Peer"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Fragen?",
+    "supporting": "Jeder Abschnitt dieser Website beantwortet eine davon. Klick auf eine Frage, um dorthin zu springen.",
+    "navLabel": "Auf dieser Seite beantwortete Fragen",
+    "answeredIn": "Beantwortet im Abschnitt",
+    "items": {
+      "problem": {
+        "question": "Welches Problem löst Bitsocial?"
+      },
+      "core-features": {
+        "question": "Was ist Bitsocial? Wie funktioniert es?"
+      },
+      "browser-peer": {
+        "question": "Warum hat das noch niemand gebaut?"
+      },
+      "decentralized": {
+        "question": "Gibt es nicht schon dezentrale soziale Netzwerke?"
+      },
+      "arbitrary-challenges": {
+        "question": "Was stoppt Spam, wenn es keine Server gibt?"
+      },
+      "text-only-protocol": {
+        "question": "Was ist mit illegalen Inhalten?"
+      },
+      "adoption-thesis": {
+        "question": "Warum würden Leute zu Bitsocial wechseln?"
+      },
+      "master-plan": {
+        "question": "Wie geht es von hier aus weiter? Wie kann ich helfen?"
+      },
+      "mailing-list": {
+        "question": "Wie bleibe ich auf dem Laufenden?"
+      }
+    }
   }
 }

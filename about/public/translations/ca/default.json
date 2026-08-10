@@ -792,5 +792,41 @@
     "sectionLabel": "Navegador P2P",
     "supporting": "Obriu una aplicació web de Bitsocial en una pestanya normal i s'uneix a la xarxa per si mateixa, obtenint missatges d'altres iguals i publicant els vostres. Cada altra xarxa social descentralitzada encara manté un servidor al mig.",
     "title": "El teu navegador és un par"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Preguntes?",
+    "supporting": "Cada secció d'aquest lloc web en respon una. Clica una pregunta per anar-hi.",
+    "navLabel": "Preguntes contestades en aquesta pàgina",
+    "answeredIn": "Resposta a la secció",
+    "items": {
+      "problem": {
+        "question": "Quin problema resol Bitsocial?"
+      },
+      "core-features": {
+        "question": "Què és Bitsocial? Com funciona?"
+      },
+      "browser-peer": {
+        "question": "Per què ningú no ho ha fet abans?"
+      },
+      "decentralized": {
+        "question": "No hi ha ja xarxes socials descentralitzades?"
+      },
+      "arbitrary-challenges": {
+        "question": "Sense servidors, què atura el spam?"
+      },
+      "text-only-protocol": {
+        "question": "I el contingut il·legal?"
+      },
+      "adoption-thesis": {
+        "question": "Per què la gent passaria a Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Quin és el pla d'ara endavant? Com puc ajudar?"
+      },
+      "mailing-list": {
+        "question": "Com puc estar al dia?"
+      }
+    }
   }
 }

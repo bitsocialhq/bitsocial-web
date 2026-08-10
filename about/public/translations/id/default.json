@@ -792,5 +792,41 @@
     "sectionLabel": "Peramban P2P",
     "supporting": "Buka aplikasi web Bitsocial di tab normal dan bergabung dengan jaringan sendiri, mengambil postingan dari peer lain dan memublikasikan milik Anda. Setiap jaringan sosial terdesentralisasi lainnya masih menyimpan server di tengah.",
     "title": "Peramban Anda adalah peer"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Ada pertanyaan?",
+    "supporting": "Setiap bagian situs ini menjawab satu pertanyaan. Klik salah satu untuk langsung menuju ke sana.",
+    "navLabel": "Pertanyaan yang dijawab di halaman ini",
+    "answeredIn": "Dijawab di bagian",
+    "items": {
+      "problem": {
+        "question": "Masalah apa yang diselesaikan Bitsocial?"
+      },
+      "core-features": {
+        "question": "Apa itu Bitsocial? Bagaimana cara kerjanya?"
+      },
+      "browser-peer": {
+        "question": "Kenapa belum ada yang membuatnya?"
+      },
+      "decentralized": {
+        "question": "Bukankah sudah ada jaringan sosial terdesentralisasi?"
+      },
+      "arbitrary-challenges": {
+        "question": "Tanpa server, apa yang mencegah spam?"
+      },
+      "text-only-protocol": {
+        "question": "Bagaimana dengan konten ilegal?"
+      },
+      "adoption-thesis": {
+        "question": "Kenapa orang mau beralih ke Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Apa rencana selanjutnya? Bagaimana saya bisa membantu?"
+      },
+      "mailing-list": {
+        "question": "Bagaimana saya bisa mengikuti perkembangannya?"
+      }
+    }
   }
 }

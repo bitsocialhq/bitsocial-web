@@ -792,5 +792,41 @@
     "sectionLabel": "ブラウザ P2P",
     "supporting": "通常のタブでBitsocial Webアプリを開くと、ネットワーク自体に参加して、他のピアから投稿を取得し、自分の投稿を公開します。他のすべての分散型ソーシャルネットワークは、依然として中間にサーバーを保持しています。",
     "title": "あなたのブラウザはピアです"
+  },
+  "faq": {
+    "sectionLabel": "よくある質問",
+    "title": "質問は？",
+    "supporting": "このサイトの各セクションが、それぞれ1つの質問に答えます。質問をクリックして、その答えへジャンプしてください。",
+    "navLabel": "このページで回答している質問",
+    "answeredIn": "回答セクション",
+    "items": {
+      "problem": {
+        "question": "Bitsocialはどのような問題を解決しますか？"
+      },
+      "core-features": {
+        "question": "Bitsocialとは何ですか？どういう仕組みですか？"
+      },
+      "browser-peer": {
+        "question": "なぜ今まで誰も作らなかったのですか？"
+      },
+      "decentralized": {
+        "question": "分散型ソーシャルネットワークはすでにあるのではないですか？"
+      },
+      "arbitrary-challenges": {
+        "question": "サーバーがないのに、スパムはどう防ぐのですか？"
+      },
+      "text-only-protocol": {
+        "question": "違法コンテンツはどうなるのですか？"
+      },
+      "adoption-thesis": {
+        "question": "なぜ人々はBitsocialに乗り換えるのですか？"
+      },
+      "master-plan": {
+        "question": "これからの計画は何ですか？どうすれば協力できますか？"
+      },
+      "mailing-list": {
+        "question": "最新情報を受け取るにはどうすればいいですか？"
+      }
+    }
   }
 }

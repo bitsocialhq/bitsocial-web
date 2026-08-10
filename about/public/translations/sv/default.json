@@ -792,5 +792,41 @@
     "sectionLabel": "Webbläsare P2P",
     "supporting": "Öppna en Bitsocial-webbapp i en vanlig flik och den ansluter sig själv till nätverket, hämtar inlägg från andra peer och publicerar dina egna. Varje annat decentraliserat socialt nätverk har fortfarande en server i mitten.",
     "title": "Din webbläsare är en peer"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Frågor?",
+    "supporting": "Varje avsnitt på den här sidan svarar på en av dem. Klicka på en fråga för att hoppa dit.",
+    "navLabel": "Frågor som besvaras på den här sidan",
+    "answeredIn": "Besvaras i avsnittet",
+    "items": {
+      "problem": {
+        "question": "Vilket problem löser Bitsocial?"
+      },
+      "core-features": {
+        "question": "Vad är Bitsocial? Hur fungerar det?"
+      },
+      "browser-peer": {
+        "question": "Varför har ingen byggt det här tidigare?"
+      },
+      "decentralized": {
+        "question": "Finns det inte redan decentraliserade sociala nätverk?"
+      },
+      "arbitrary-challenges": {
+        "question": "Vad stoppar spam när det inte finns några servrar?"
+      },
+      "text-only-protocol": {
+        "question": "Hur är det med olagligt innehåll?"
+      },
+      "adoption-thesis": {
+        "question": "Varför skulle folk byta till Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Vad är planen härifrån? Hur kan jag hjälpa till?"
+      },
+      "mailing-list": {
+        "question": "Hur håller jag mig uppdaterad?"
+      }
+    }
   }
 }

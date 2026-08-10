@@ -792,5 +792,41 @@
     "sectionLabel": "Shfletues P2P",
     "supporting": "Hap një aplikacion web Bitsocial në një skedul normal dhe ajo bashkohet në rrjetin vetë, duke marrë postime nga homologët e tjerë dhe duke publikuar tuajat. Çdo rrjet social i decentralizuar tjetër prapë mban një server në mes.",
     "title": "Shfletuesi yt është një peer"
+  },
+  "faq": {
+    "sectionLabel": "Pyetje të shpeshta",
+    "title": "Pyetje?",
+    "supporting": "Çdo seksion i kësaj faqeje i përgjigjet njërës prej tyre. Kliko një pyetje për të kaluar te seksioni përkatës.",
+    "navLabel": "Pyetjet që marrin përgjigje në këtë faqe",
+    "answeredIn": "Përgjigjja gjendet te seksioni",
+    "items": {
+      "problem": {
+        "question": "Çfarë problemi zgjidh Bitsocial?"
+      },
+      "core-features": {
+        "question": "Çfarë është Bitsocial? Si funksionon?"
+      },
+      "browser-peer": {
+        "question": "Pse nuk e ka ndërtuar ende askush?"
+      },
+      "decentralized": {
+        "question": "A nuk ka tashmë rrjete sociale të decentralizuara?"
+      },
+      "arbitrary-challenges": {
+        "question": "Si ndalohet spami pa serverë?"
+      },
+      "text-only-protocol": {
+        "question": "Po përmbajtja e paligjshme?"
+      },
+      "adoption-thesis": {
+        "question": "Pse do të kalonin njerëzit te Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Cili është plani i mëtejshëm? Si mund të ndihmoj?"
+      },
+      "mailing-list": {
+        "question": "Si mund të qëndroj në hap?"
+      }
+    }
   }
 }

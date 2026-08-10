@@ -792,5 +792,41 @@
     "sectionLabel": "Browser P2P",
     "supporting": "Magbukas ng Bitsocial web app sa isang normal na tab at ito ay sumali sa network nang sarili nito, kumukuha ng mga post mula sa ibang peers at naglalathala ng iyong sarili. Bawat ibang decentralized social network ay nagpapanatili pa rin ng server sa gitna.",
     "title": "Ang iyong browser ay isang peer"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Mga tanong?",
+    "supporting": "Sinasagot ng bawat seksyon ng site na ito ang isa sa mga ito. I-click ang isang tanong para dumiretso roon.",
+    "navLabel": "Mga tanong na sinasagot sa pahinang ito",
+    "answeredIn": "Nasagot sa seksyong",
+    "items": {
+      "problem": {
+        "question": "Anong problema ang nalulutas ng Bitsocial?"
+      },
+      "core-features": {
+        "question": "Ano ang Bitsocial? Paano ito gumagana?"
+      },
+      "browser-peer": {
+        "question": "Bakit wala pang gumawa nito?"
+      },
+      "decentralized": {
+        "question": "Hindi ba't may mga desentralisadong social network na?"
+      },
+      "arbitrary-challenges": {
+        "question": "Kung walang server, ano ang pipigil sa spam?"
+      },
+      "text-only-protocol": {
+        "question": "Paano naman ang ilegal na nilalaman?"
+      },
+      "adoption-thesis": {
+        "question": "Bakit lilipat ang mga tao sa Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Ano ang susunod na plano? Paano ako makakatulong?"
+      },
+      "mailing-list": {
+        "question": "Paano ko masusubaybayan ang mga update?"
+      }
+    }
   }
 }

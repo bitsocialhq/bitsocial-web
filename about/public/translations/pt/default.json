@@ -792,5 +792,41 @@
     "sectionLabel": "Navegador P2P",
     "supporting": "Abra um aplicativo web Bitsocial em uma aba normal e ele se junta à rede por conta própria, buscando posts de outros pares e publicando os seus. Todas as outras redes sociais descentralizadas ainda mantêm um servidor no meio.",
     "title": "Seu navegador é um par"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Dúvidas?",
+    "supporting": "Cada seção deste site responde a uma delas. Clique em uma pergunta para ir até ela.",
+    "navLabel": "Perguntas respondidas nesta página",
+    "answeredIn": "Resposta na seção",
+    "items": {
+      "problem": {
+        "question": "Que problema o Bitsocial resolve?"
+      },
+      "core-features": {
+        "question": "O que é Bitsocial? Como funciona?"
+      },
+      "browser-peer": {
+        "question": "Por que ninguém fez isso antes?"
+      },
+      "decentralized": {
+        "question": "Não existem já redes sociais descentralizadas?"
+      },
+      "arbitrary-challenges": {
+        "question": "Sem servidores, o que impede o spam?"
+      },
+      "text-only-protocol": {
+        "question": "E o conteúdo ilegal?"
+      },
+      "adoption-thesis": {
+        "question": "Por que as pessoas mudariam para o Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Qual é o plano daqui para frente? Como posso ajudar?"
+      },
+      "mailing-list": {
+        "question": "Como me manter atualizado?"
+      }
+    }
   }
 }

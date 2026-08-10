@@ -792,5 +792,41 @@
     "sectionLabel": "브라우저 P2P",
     "supporting": "일반 탭에서 Bitsocial 웹 앱을 열면 네트워크에 자동으로 참여하여 다른 피어로부터 게시물을 가져오고 자신의 게시물을 게시합니다. 다른 모든 분산형 소셜 네트워크는 여전히 중간에 서버를 유지합니다.",
     "title": "당신의 브라우저는 피어입니다"
+  },
+  "faq": {
+    "sectionLabel": "자주 묻는 질문",
+    "title": "궁금한 점이 있나요?",
+    "supporting": "이 사이트의 각 섹션이 질문 하나에 답합니다. 질문을 클릭해 해당 섹션으로 이동하세요.",
+    "navLabel": "이 페이지에서 답변하는 질문",
+    "answeredIn": "답변 섹션",
+    "items": {
+      "problem": {
+        "question": "Bitsocial은 어떤 문제를 해결하나요?"
+      },
+      "core-features": {
+        "question": "Bitsocial이란 무엇인가요? 어떻게 작동하나요?"
+      },
+      "browser-peer": {
+        "question": "왜 아직 아무도 만들지 않았을까요?"
+      },
+      "decentralized": {
+        "question": "이미 분산형 소셜 네트워크가 있지 않나요?"
+      },
+      "arbitrary-challenges": {
+        "question": "서버가 없는데, 무엇이 스팸을 막나요?"
+      },
+      "text-only-protocol": {
+        "question": "불법 콘텐츠는 어떻게 되나요?"
+      },
+      "adoption-thesis": {
+        "question": "사람들이 왜 Bitsocial로 갈아탈까요?"
+      },
+      "master-plan": {
+        "question": "앞으로의 계획은 무엇인가요? 제가 어떻게 도울 수 있나요?"
+      },
+      "mailing-list": {
+        "question": "최신 소식을 어떻게 받을 수 있나요?"
+      }
+    }
   }
 }

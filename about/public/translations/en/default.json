@@ -542,6 +542,42 @@
     "subtitle": "Bitsocial wins by attracting as many builders as possible. Run your own unstoppable community, develop your own decentralized social app, or even launch your own business on top of Bitsocial. The tide rises with every builder.",
     "sectionLabel": "Master Plan"
   },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Questions?",
+    "supporting": "Every section of this site answers one. Click a question to jump to it.",
+    "navLabel": "Questions answered on this page",
+    "answeredIn": "Answered in",
+    "items": {
+      "problem": {
+        "question": "What problem does Bitsocial solve?"
+      },
+      "core-features": {
+        "question": "What is Bitsocial? How does it work?"
+      },
+      "browser-peer": {
+        "question": "Why hasn't someone built this already?"
+      },
+      "decentralized": {
+        "question": "Aren't there decentralized social networks already?"
+      },
+      "arbitrary-challenges": {
+        "question": "With no servers, what stops spam?"
+      },
+      "text-only-protocol": {
+        "question": "What about illegal content?"
+      },
+      "adoption-thesis": {
+        "question": "Why would people switch to Bitsocial?"
+      },
+      "master-plan": {
+        "question": "What's the plan from here? How can I help?"
+      },
+      "mailing-list": {
+        "question": "How do I follow along?"
+      }
+    }
+  },
   "blog": {
     "title": "Bitsocial Updates",
     "subtitle": "This Bitsocial blog is run by the <devs>Bitsocial core devs</devs> and published as an unstoppable peer-to-peer feed, so you can read it on any Bitsocial app at <address>{{address}}</address>.",

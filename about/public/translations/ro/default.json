@@ -792,5 +792,41 @@
     "sectionLabel": "Browser P2P",
     "supporting": "Deschide o aplicație web Bitsocial într-o filă normală și se alătură rețelei singură, preluând postări de la alți pari și publicând-ți pe ale tale. Fiecare altă rețea socială descentralizată încă menține un server în mijloc.",
     "title": "Browserul tău este un peer"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Întrebări?",
+    "supporting": "Fiecare secțiune a acestui site răspunde la una. Dă clic pe o întrebare ca să ajungi la ea.",
+    "navLabel": "Întrebări la care răspunde această pagină",
+    "answeredIn": "Răspuns în secțiunea",
+    "items": {
+      "problem": {
+        "question": "Ce problemă rezolvă Bitsocial?"
+      },
+      "core-features": {
+        "question": "Ce este Bitsocial? Cum funcționează?"
+      },
+      "browser-peer": {
+        "question": "De ce nu a făcut nimeni asta până acum?"
+      },
+      "decentralized": {
+        "question": "Nu există deja rețele sociale descentralizate?"
+      },
+      "arbitrary-challenges": {
+        "question": "Fără servere, ce oprește spam-ul?"
+      },
+      "text-only-protocol": {
+        "question": "Dar conținutul ilegal?"
+      },
+      "adoption-thesis": {
+        "question": "De ce ar trece oamenii la Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Care e planul de aici înainte? Cum pot ajuta?"
+      },
+      "mailing-list": {
+        "question": "Cum mă pot ține la curent?"
+      }
+    }
   }
 }

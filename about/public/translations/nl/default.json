@@ -792,5 +792,41 @@
     "sectionLabel": "Browser P2P",
     "supporting": "Open een Bitsocial web-app in een normaal tabblad en het voegt zich automatisch bij het netwerk, haalt berichten van andere peers op en publiceert de jouwe. Elk ander gedecentraliseerd sociaal netwerk behoudt nog steeds een server in het midden.",
     "title": "Je browser is een peer"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Vragen?",
+    "supporting": "Elk onderdeel van deze site beantwoordt er een. Klik op een vraag om er naartoe te gaan.",
+    "navLabel": "Vragen die op deze pagina worden beantwoord",
+    "answeredIn": "Beantwoord in het onderdeel",
+    "items": {
+      "problem": {
+        "question": "Welk probleem lost Bitsocial op?"
+      },
+      "core-features": {
+        "question": "Wat is Bitsocial? Hoe werkt het?"
+      },
+      "browser-peer": {
+        "question": "Waarom heeft niemand dit eerder gebouwd?"
+      },
+      "decentralized": {
+        "question": "Zijn er niet al gedecentraliseerde sociale netwerken?"
+      },
+      "arbitrary-challenges": {
+        "question": "Wat houdt spam tegen als er geen servers zijn?"
+      },
+      "text-only-protocol": {
+        "question": "Hoe zit het met illegale inhoud?"
+      },
+      "adoption-thesis": {
+        "question": "Waarom zouden mensen naar Bitsocial overstappen?"
+      },
+      "master-plan": {
+        "question": "Hoe gaat het nu verder? Hoe kan ik helpen?"
+      },
+      "mailing-list": {
+        "question": "Hoe blijf ik op de hoogte?"
+      }
+    }
   }
 }
