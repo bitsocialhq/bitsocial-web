@@ -1,14 +1,20 @@
 // Dev-only React render scanner + source inspection.
 // Toggle the toolbar off during automated screenshots by setting
 // window.__VISUAL_TESTING__ = true before load. window.__PROFILING__
-// suppresses the toolbar/sounds during automated profiling runs.
+// suppresses the toolbar/sounds during automated profiling runs, and
+// window.__NO_DEV_TOOLBAR__ (set by scripts/pw-session.sh for every driven
+// session) keeps the toolbar from swallowing clicks aimed at the page.
 if (import.meta.env.DEV) {
   import("react-scan").then(({ scan, getReport }) => {
     const isVisualTesting = Boolean((window as any).__VISUAL_TESTING__);
+    const hideToolbar =
+      isVisualTesting ||
+      Boolean((window as any).__NO_DEV_TOOLBAR__) ||
+      Boolean((window as any).__PROFILING__);
 
     scan({
       enabled: !isVisualTesting,
-      showToolbar: !isVisualTesting && !(window as any).__PROFILING__,
+      showToolbar: !hideToolbar,
     });
 
     const notReady = async () => ({

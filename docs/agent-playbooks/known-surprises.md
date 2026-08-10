@@ -198,3 +198,13 @@ If uncertain, ask the developer before adding an entry.
 - **Mitigation:** Never let translator subagents write locale files concurrently — have them emit dictionary JSON files only, then apply every key serially from the parent agent. After applying, verify programmatically that each key exists in all 35 non-English locales and that no value is byte-identical to the English source.
 - **Status:** confirmed
 - **Update (2026-08-10):** The script used to also resolve its target as `path.join(process.cwd(), "public", "translations")`, so the documented repo-root command failed with "Translations directory not found" and had to be run from `about/`. It now resolves the workspace from the current directory or from its own location, and works from anywhere. The concurrency trap above is unchanged.
+
+### The dev react-scan toolbar swallows driven clicks in the bottom-right corner
+
+- **Date:** 2026-08-10
+- **Observed by:** Claude
+- **Context:** Verifying the fixed scroll button on the about home page with `playwright-cli`
+- **What was surprising:** `playwright-cli click` on the fixed scroll button times out with `<div id="react-scan-root"></div> intercepts pointer events`. The host element is a zero-height `<div>` at the end of `<body>`, so it looks harmless in a DOM dump; the toolbar actually lives in its open shadow root and is fixed to the bottom-right corner — the same corner as the app's scroll button. `element.click()` from `eval` bypasses hit-testing and still works, so a scripted check can pass while every real pointer click fails.
+- **Impact:** A whole verification pass reads as a product bug in the control being tested. `navigator.webdriver` is `false` in playwright-cli sessions, so the app cannot detect automation on its own.
+- **Mitigation:** `scripts/pw-session.sh open` now registers `window.__NO_DEV_TOOLBAR__ = true` via `page.addInitScript` and reloads, so sessions opened through the wrapper never mount the toolbar. Only the toolbar is suppressed — `react-scan` itself stays enabled, so `__getReactScanReport` and `__ELEMENT_SOURCE__` keep working for the profiler and element-inspection skills. When driving `playwright-cli` directly, set the same flag before load, or expect corner clicks to be intercepted.
+- **Status:** confirmed
