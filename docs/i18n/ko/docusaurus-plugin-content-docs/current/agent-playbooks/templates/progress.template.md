@@ -7,6 +7,6 @@
 - 항목: F001
 - 요약: 이것을 세션 요약으로 대체합니다.
 - 파일: `path/to/file`
-- 확인: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- 확인: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - 차단제: 없음
 - 다음: 이것을 차선책으로 교체하세요.

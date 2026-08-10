@@ -11,17 +11,17 @@
 1. Сканировать заголовки последних коммитов (только заголовки) для файла/области:
 
 ```bash
-# Заголовки последних коммитов для определенного файла
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Заголовки последних коммитов для определенного диапазона строк
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Проверяйте только соответствующие коммиты с ограниченными различиями:
 
 ```bash
-# Показать сообщение фиксации + разницу для одного файла
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

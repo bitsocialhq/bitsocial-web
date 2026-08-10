@@ -11,17 +11,17 @@ Před úpravou zkontrolujte historii git pro příslušný kód. Předchozí př
 1. Skenování posledních názvů odevzdání (pouze tituly) pro soubor/oblast:
 
 ```bash
-# Nedávné názvy odevzdání pro konkrétní soubor
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Názvy posledních potvrzení pro konkrétní rozsah řádků
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Kontrolujte pouze relevantní odevzdání s rozsahem rozdílů:
 
 ```bash
-# Zobrazit zprávu o odevzdání + rozdíl pro jeden soubor
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

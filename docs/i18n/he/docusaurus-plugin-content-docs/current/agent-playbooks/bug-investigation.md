@@ -11,17 +11,17 @@
 1. סרוק כותרות התחייבות אחרונות (כותרות בלבד) עבור הקובץ/אזור:
 
 ```bash
-# כותרות התחייבות אחרונות עבור קובץ ספציפי
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# כותרות התחייבות אחרונות עבור טווח שורות ספציפי
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. בדוק רק התחייבויות רלוונטיות עם הבדלים בהיקף:
 
 ```bash
-# הצג הודעת commit + diff עבור קובץ אחד
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

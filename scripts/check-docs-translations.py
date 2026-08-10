@@ -20,6 +20,7 @@ import json
 import re
 import sys
 import unicodedata
+from collections import Counter
 from difflib import SequenceMatcher
 from pathlib import Path
 
@@ -66,6 +67,8 @@ INLINE_CODE_RE = re.compile(r"`([^`\n]+)`")
 HEX_RE = re.compile(r"\b0x[0-9a-fA-F]{6,}\b")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$")
 ADMONITION_RE = re.compile(r"^:::")
+MDX_IMPORT_RE = re.compile(r'^\s*import\s+.+?\s+from\s+["\'].+["\'];?\s*$')
+MDX_COMPONENT_RE = re.compile(r"^\s*</?[A-Z][A-Za-z0-9_.]*(?:\s+[^>]*)?/?>\s*$")
 
 
 def split_frontmatter(text: str) -> tuple[dict[str, str], str]:
@@ -136,6 +139,22 @@ def heading_signature(prose: str) -> list[int]:
     return [len(match.group(1)) for line in prose.splitlines() if (match := HEADING_RE.match(line))]
 
 
+def translatable_prose(prose: str) -> str:
+    """Remove MDX scaffolding that is intentionally identical in every locale."""
+    return "\n".join(
+        line
+        for line in prose.splitlines()
+        if not MDX_IMPORT_RE.match(line) and not MDX_COMPONENT_RE.match(line)
+    ).strip()
+
+
+def multiset_delta(expected: list[str], actual: list[str]) -> tuple[list[str], list[str]]:
+    """Return missing and unexpected values while preserving duplicate counts."""
+    return list((Counter(expected) - Counter(actual)).elements()), list(
+        (Counter(actual) - Counter(expected)).elements()
+    )
+
+
 def check_pair(en_path: Path, tr_path: Path, locale: str, page: str) -> list[dict[str, str]]:
     issues: list[dict[str, str]] = []
 
@@ -151,7 +170,12 @@ def check_pair(en_path: Path, tr_path: Path, locale: str, page: str) -> list[dic
     if en_fm and not tr_fm:
         add("frontmatter-missing", "translated file has no frontmatter block")
 
-    for key in sorted(set(en_fm) - set(tr_fm)):
+    missing_frontmatter = set(en_fm) - set(tr_fm)
+    # Docusaurus inherits the default locale's root slug for localized index pages.
+    # Repeating it in every translation is optional and does not change the route.
+    if page == "index.mdx" and en_fm.get("slug") == "/":
+        missing_frontmatter.discard("slug")
+    for key in sorted(missing_frontmatter):
         add("frontmatter-key-missing", f"missing key: {key}")
 
     for key in sorted(NON_TRANSLATABLE_FRONTMATTER & set(en_fm) & set(tr_fm)):
@@ -176,8 +200,7 @@ def check_pair(en_path: Path, tr_path: Path, locale: str, page: str) -> list[dic
     en_links = sorted(LINK_RE.findall(en_prose))
     tr_links = sorted(LINK_RE.findall(tr_prose))
     if en_links != tr_links:
-        missing = [link for link in en_links if link not in tr_links]
-        extra = [link for link in tr_links if link not in en_links]
+        missing, extra = multiset_delta(en_links, tr_links)
         detail = []
         if missing:
             detail.append(f"missing {missing}")
@@ -193,8 +216,7 @@ def check_pair(en_path: Path, tr_path: Path, locale: str, page: str) -> list[dic
     en_code = sorted(INLINE_CODE_RE.findall(en_prose))
     tr_code = sorted(INLINE_CODE_RE.findall(tr_prose))
     if en_code != tr_code:
-        missing = [span for span in en_code if span not in tr_code]
-        extra = [span for span in tr_code if span not in en_code]
+        missing, extra = multiset_delta(en_code, tr_code)
         detail = []
         if missing:
             detail.append(f"missing {missing}")
@@ -223,12 +245,16 @@ def check_pair(en_path: Path, tr_path: Path, locale: str, page: str) -> list[dic
         add("admonitions", f"{en_adm} vs {tr_adm}")
 
     # Untranslated-copy detection.
+    en_translatable = translatable_prose(en_prose)
+    tr_translatable = translatable_prose(tr_prose)
     expected_script = NON_LATIN_SCRIPT_LOCALES.get(locale)
-    if expected_script:
-        if expected_script not in dominant_script(tr_prose):
+    if not en_translatable and not tr_translatable:
+        pass
+    elif expected_script:
+        if expected_script not in dominant_script(tr_translatable):
             add("untranslated", f"no {expected_script} script found in translated prose")
     else:
-        ratio = SequenceMatcher(None, en_prose, tr_prose).ratio()
+        ratio = SequenceMatcher(None, en_translatable, tr_translatable).ratio()
         if ratio >= COPY_SIMILARITY_THRESHOLD:
             add("untranslated", f"prose is {ratio:.0%} identical to English")
 

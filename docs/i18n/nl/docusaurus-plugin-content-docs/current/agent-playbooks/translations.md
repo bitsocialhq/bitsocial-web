@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Andere nuttige opdrachten
 
 ```bash
-# Kopieer een sleutel van het Engels naar alle talen (proefdraaien en vervolgens schrijven)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Verwijder een sleutel uit alle talen
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Controle op ongebruikte vertaalsleutels
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

@@ -152,6 +152,8 @@ Skillet er viktig:
 - RPC skal ikke bli permanent varetekt
 - eierforholdet skal forbli knyttet til nøkler, ikke til én leverandørs database
 
+Den første tjenesten som er bygget på denne modellen, er Forge RPC fra [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), som bygger på protokolldesignet [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Hva Bitsocial ikke er
 
 Bitsocial er ikke et sosialt blokkjedenettverk. Sosiale medier trenger ikke hvert innlegg for å bli en transaksjon i én global hovedbok.

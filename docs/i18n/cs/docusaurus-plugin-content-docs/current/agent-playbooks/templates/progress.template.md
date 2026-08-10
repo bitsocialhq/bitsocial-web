@@ -7,6 +7,6 @@ Připojte jeden záznam na relaci.
 - Položka: F001
 - Shrnutí: Nahraďte to souhrnem relace.
 - Soubory: `path/to/file`
-- Ověření: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Ověření: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Blokátory: žádné
 - Další: Nahraďte to dalším nejlepším pokračováním.

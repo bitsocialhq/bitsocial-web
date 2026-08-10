@@ -11,17 +11,17 @@ Controleer vóór het bewerken de gitgeschiedenis op de relevante code. Eerdere 
 1. Scan recente committitels (alleen titels) voor het bestand/gebied:
 
 ```bash
-# Recente committitels voor een specifiek bestand
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Recente committitels voor een specifiek regelbereik
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Inspecteer alleen relevante commits met scoped diffs:
 
 ```bash
-# Toon commit-bericht + diff voor één bestand
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

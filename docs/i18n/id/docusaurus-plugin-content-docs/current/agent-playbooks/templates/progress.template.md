@@ -7,6 +7,6 @@ Tambahkan satu entri per sesi.
 - Barang: F001
 - Ringkasan: Ganti ini dengan ringkasan sesi.
 - File: `path/to/file`
-- Verifikasi: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Verifikasi: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Pemblokir: tidak ada
 - Berikutnya: Ganti ini dengan tindak lanjut terbaik berikutnya.

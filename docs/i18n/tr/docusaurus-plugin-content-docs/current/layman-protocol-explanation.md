@@ -152,6 +152,8 @@ Ayrım önemlidir:
 - RPC kalıcı velayet haline gelmemeli
 - sahip ilişkisi tek bir sağlayıcının veritabanına değil, anahtarlara bağlı kalmalıdır
 
+Bu model üzerine kurulan ilk hizmet, [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) tarafından sunulan Forge RPC'dir ve [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) protokol tasarımını temel alır.
+
 ## Bitsocial ne değildir?
 
 Bitsocial bir blockchain sosyal ağı değildir. Sosyal medyanın her gönderinin tek bir küresel defterde işlem haline gelmesine ihtiyacı yok.

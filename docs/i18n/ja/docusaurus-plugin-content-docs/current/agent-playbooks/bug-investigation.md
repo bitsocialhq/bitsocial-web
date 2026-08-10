@@ -11,17 +11,17 @@
 1. ファイル/エリアの最近のコミット タイトル (タイトルのみ) をスキャンします:
 
 ```bash
-# 特定のファイルの最近のコミット タイトル
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# 特定の行範囲の最近のコミットのタイトル
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. スコープ付きの差分を使用して関連するコミットのみを検査します:
 
 ```bash
-# 1つのファイルのコミットメッセージと差分を表示
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

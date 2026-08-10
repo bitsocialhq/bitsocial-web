@@ -152,6 +152,8 @@ Auf die Unterscheidung kommt es an:
 - RPC sollte nicht zur dauerhaften Verwahrung werden
 - Die Eigentümerbeziehung sollte an Schlüssel gebunden bleiben und nicht an die Datenbank eines Anbieters
 
+Der erste auf diesem Modell basierende Dienst ist Forge RPC von [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), der auf dem Protokolldesign von [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) aufbaut.
+
 ## Was Bitsocial nicht ist
 
 Bitsocial ist kein soziales Blockchain-Netzwerk. In den sozialen Medien muss nicht jeder Beitrag zu einer Transaktion in einem globalen Hauptbuch werden.

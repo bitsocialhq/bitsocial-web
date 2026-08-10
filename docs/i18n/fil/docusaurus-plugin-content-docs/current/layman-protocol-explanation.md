@@ -152,6 +152,8 @@ Mahalaga ang pagkakaiba:
 - Ang RPC ay hindi dapat maging permanenteng kustodiya
 - ang relasyon ng may-ari ay dapat manatiling nakatali sa mga susi, hindi sa database ng isang provider
 
+Ang unang serbisyong binuo sa modelong ito ay Forge RPC ng [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), na nakabatay sa disenyo ng protocol na [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Ano ang hindi Bitsocial
 
 Ang Bitsocial ay hindi isang blockchain social network. Hindi kailangan ng social media ang bawat post para maging isang transaksyon sa isang global ledger.

@@ -11,17 +11,17 @@ Trước khi chỉnh sửa, hãy kiểm tra lịch sử git để biết mã li�
 1. Quét các tiêu đề cam kết gần đây (chỉ tiêu đề) cho tệp/khu vực:
 
 ```bash
-# Tiêu đề cam kết gần đây cho một tệp cụ thể
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Tiêu đề cam kết gần đây cho một phạm vi dòng cụ thể
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Chỉ kiểm tra các cam kết có liên quan với các khác biệt trong phạm vi:
 
 ```bash
-# Hiển thị thông báo cam kết + khác biệt cho một tệp
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

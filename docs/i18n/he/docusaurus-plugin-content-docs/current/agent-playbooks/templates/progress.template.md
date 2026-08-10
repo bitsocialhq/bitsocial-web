@@ -7,6 +7,6 @@
 - פריט: F001
 - סיכום: החלף את זה בסיכום הפגישה.
 - קבצים: `path/to/file`
-- אימות: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- אימות: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - חוסמים: אין
 - הבא: החלף את זה במעקב הטוב הבא.

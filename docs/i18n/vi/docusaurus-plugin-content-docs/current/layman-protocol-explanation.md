@@ -152,6 +152,8 @@ Sự khác biệt quan trọng:
 - RPC không nên trở thành quyền giám hộ vĩnh viễn
 - mối quan hệ chủ sở hữu phải được gắn với các khóa chứ không phải với cơ sở dữ liệu của một nhà cung cấp
 
+Dịch vụ đầu tiên được xây dựng trên mô hình này là Forge RPC của [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), dựa trên thiết kế giao thức [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Bitsocial không phải là gì
 
 Bitsocial không phải là mạng xã hội blockchain. Phương tiện truyền thông xã hội không cần mọi bài đăng đều trở thành giao dịch trong một sổ cái toàn cầu.

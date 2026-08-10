@@ -7,6 +7,6 @@ Liitä yksi merkintä per istunto.
 - Tuote: F001
 - Yhteenveto: Korvaa tämä istunnon yhteenvedolla.
 - Tiedostot: `path/to/file`
-- Vahvistus: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Vahvistus: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Estoaineet: ei mitään
 - Seuraava: Korvaa tämä seuraavaksi parhaalla seurannalla.

@@ -152,6 +152,8 @@ Public RPC는 Bitsocial을 더욱 편리하게 만들어주는 서비스 레이�
 - RPC는 영구적인 보관소가 되어서는 안 됩니다.
 - 소유자 관계는 한 공급자의 데이터베이스가 아닌 키에 묶여 있어야 합니다.
 
+이 모델을 기반으로 구축된 첫 번째 서비스는 [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc)의 Forge RPC이며, [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) 프로토콜 설계를 기반으로 합니다.
+
 ## 비트소셜이 아닌 것
 
 비트소셜은 블록체인 소셜 네트워크가 아닙니다. 소셜 미디어는 하나의 글로벌 원장에서 거래가 되기 위해 모든 게시물이 필요하지 않습니다.

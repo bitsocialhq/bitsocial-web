@@ -11,17 +11,17 @@
 1. 파일/영역에 대한 최근 커밋 제목(제목만) 검색:
 
 ```bash
-# 특정 파일의 최근 커밋 제목
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# 특정 라인 범위에 대한 최근 커밋 제목
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. 범위가 지정된 차이점이 있는 관련 커밋만 검사:
 
 ```bash
-# 하나의 파일에 대한 커밋 메시지 + 차이점 표시
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

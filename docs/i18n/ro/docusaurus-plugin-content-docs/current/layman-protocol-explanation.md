@@ -152,6 +152,8 @@ Distincția contează:
 - RPC nu ar trebui să devină custodia permanentă
 - relația cu proprietarul ar trebui să rămână legată de chei, nu de baza de date a unui singur furnizor
 
+Primul serviciu construit pe acest model este Forge RPC de la [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), care se bazează pe designul protocolului [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Ce nu este Bitsocial
 
 Bitsocial nu este o rețea socială blockchain. Rețelele sociale nu au nevoie de fiecare postare pentru a deveni o tranzacție într-un singur registru global.

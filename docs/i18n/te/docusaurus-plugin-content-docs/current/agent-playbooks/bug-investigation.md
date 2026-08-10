@@ -11,17 +11,17 @@
 1. ఫైల్/ఏరియా కోసం ఇటీవలి కమిట్ టైటిల్‌లను (టైటిల్‌లు మాత్రమే) స్కాన్ చేయండి:
 
 ```bash
-# నిర్దిష్ట ఫైల్ కోసం ఇటీవలి కమిట్ టైటిల్స్
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# నిర్దిష్ట లైన్ పరిధి కోసం ఇటీవలి కమిట్ టైటిల్స్
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. స్కోప్డ్ డిఫ్‌లతో సంబంధిత కమిట్‌లను మాత్రమే తనిఖీ చేయండి:
 
 ```bash
-# ఒక ఫైల్ కోసం కమిట్ మెసేజ్ + తేడాను చూపించు
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

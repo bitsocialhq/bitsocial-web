@@ -152,6 +152,8 @@ RPC عمومی لایه سرویسی است که می تواند Bitsocial را 
 - RPC نباید به حضانت دائم تبدیل شود
 - رابطه مالک باید به کلیدها وابسته باشد، نه به پایگاه داده یک ارائه دهنده
 
+اولین سرویسی که بر اساس این مدل ساخته شده، Forge RPC از [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) است که بر طراحی پروتکل [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) بنا شده است.
+
 ## چیزی که Bitsocial نیست
 
 Bitsocial یک شبکه اجتماعی بلاک چین نیست. رسانه های اجتماعی برای تبدیل شدن به یک تراکنش در یک دفتر کل جهانی به هر پستی نیاز ندارند.

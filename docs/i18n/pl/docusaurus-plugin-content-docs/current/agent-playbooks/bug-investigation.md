@@ -11,17 +11,17 @@ Przed edycją sprawdź historię git pod kątem odpowiedniego kodu. Poprzedni ws
 1. Skanuj tytuły ostatnich zatwierdzeń (tylko tytuły) dla pliku/obszaru:
 
 ```bash
-# Tytuły ostatnich zatwierdzeń dla określonego pliku
-git log --oneline -10 -- src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific file
+git log --oneline -10 -- about/src/components/post-desktop/post-desktop.tsx
 
-# Tytuły ostatnich zatwierdzeń dla określonego zakresu linii
-git blame -L 120,135 src/components/post-desktop/post-desktop.tsx
+# Recent commit titles for a specific line range
+git blame -L 120,135 about/src/components/post-desktop/post-desktop.tsx
 ```
 
 2. Sprawdź tylko istotne zatwierdzenia z różnicami o określonym zakresie:
 
 ```bash
-# Pokaż komunikat zatwierdzenia + różnicę dla jednego pliku
+# Show commit message + diff for one file
 git show <commit-hash> -- path/to/file.tsx
 ```
 

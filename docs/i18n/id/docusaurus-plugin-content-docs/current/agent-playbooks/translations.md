@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Perintah Berguna Lainnya
 
 ```bash
-# Salin kunci dari bahasa Inggris ke semua bahasa (uji coba lalu tulis)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Hapus kunci dari semua bahasa
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Audit untuk kunci terjemahan yang tidak digunakan
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

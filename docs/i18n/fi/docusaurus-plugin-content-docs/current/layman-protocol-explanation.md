@@ -152,6 +152,8 @@ Erotuksella on merkitystä:
 - RPC:stä ei pitäisi tulla pysyvää huoltajuutta
 - omistajasuhteen tulee pysyä sidottuina avaimiin, ei yhden palveluntarjoajan tietokantaan
 
+Ensimmäinen tämän mallin pohjalta rakennettu palvelu on Forge RPC, jonka tarjoaa [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) ja joka perustuu [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) -protokollan suunnitteluun.
+
 ## Mitä Bitsocial ei ole
 
 Bitsocial ei ole blockchain-sosiaalinen verkosto. Sosiaalinen media ei tarvitse jokaista viestiä tullakseen tapahtumaksi yhdessä globaalissa kirjanpidossa.

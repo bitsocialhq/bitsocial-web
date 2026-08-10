@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## 기타 유용한 명령
 
 ```bash
-# 영어에서 모든 언어로 키 복사(시험 실행 후 쓰기)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# 모든 언어에서 키 삭제
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# 사용되지 않은 번역 키에 대한 감사
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

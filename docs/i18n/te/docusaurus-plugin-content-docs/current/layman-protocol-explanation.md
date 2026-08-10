@@ -152,6 +152,8 @@ Bitsocial కమ్యూనిటీ అనేది ఒక యాప్‌ల�
 - RPC శాశ్వత కస్టడీగా మారకూడదు
 - యజమాని సంబంధం ఒక ప్రొవైడర్ డేటాబేస్‌తో కాకుండా కీలతో ముడిపడి ఉండాలి
 
+ఈ నమూనాపై నిర్మించిన మొదటి సేవ [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) అందించే Forge RPC, ఇది [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) ప్రోటోకాల్ రూపకల్పనపై ఆధారపడి ఉంటుంది.
+
 ## Bitsocial ఏమి కాదు
 
 Bitsocial బ్లాక్‌చెయిన్ సోషల్ నెట్‌వర్క్ కాదు. ఒక గ్లోబల్ లెడ్జర్‌లో లావాదేవీగా మారడానికి సోషల్ మీడియాకు ప్రతి పోస్ట్ అవసరం లేదు.

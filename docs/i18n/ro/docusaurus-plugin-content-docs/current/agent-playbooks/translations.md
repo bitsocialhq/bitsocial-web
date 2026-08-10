@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Alte comenzi utile
 
 ```bash
-# Copiați o cheie din engleză în toate limbile (funcție uscată, apoi scrieți)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Ștergeți o cheie din toate limbile
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Audit pentru cheile de traducere neutilizate
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

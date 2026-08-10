@@ -7,6 +7,6 @@ Shtoni një hyrje për seancë.
 - Artikulli: F001
 - Përmbledhje: Zëvendësojeni këtë me përmbledhjen e sesionit.
 - Skedarët: `path/to/file`
-- Verifikimi: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Verifikimi: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Bllokuesit: asnjë
 - Tjetra: Zëvendësojeni këtë me ndjekjen tjetër më të mirë.

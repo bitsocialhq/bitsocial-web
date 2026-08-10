@@ -102,7 +102,7 @@ Bitsocial 将这些东西分开。该协议为社区提供了一种在接受帖�
 
 这种灵活性很重要，因为垃圾邮件会发生变化。协议级垃圾邮件规则变得过时。社区级别的挑战可以在不迁移整个网络的情况下发展。
 
-重点说明请阅读【自定义反垃圾邮件挑战】(./custom-challenges.md)。
+重点说明请阅读[自定义反垃圾邮件挑战](./custom-challenges.md)。
 
 ## 节制如何发挥作用
 
@@ -151,6 +151,8 @@ Public RPC是可以让Bitsocial更加方便的服务层。公共 RPC 提供商�
 - RPC 有助于提高正常运行时间并提高便利性
 - RPC 不应成为永久托管
 - 所有者关系应与密钥相关，而不是与某个提供商的数据库相关
+
+基于此模型构建的第一个服务是 [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) 的 Forge RPC，它建立在 [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) 协议设计之上。
 
 ## Bitsocial 不是什么
 

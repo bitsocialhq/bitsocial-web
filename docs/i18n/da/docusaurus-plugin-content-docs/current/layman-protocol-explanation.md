@@ -152,6 +152,8 @@ Forskellen er vigtig:
 - RPC bør ikke blive permanent forældremyndighed
 - ejerforholdet skal forblive bundet til nøgler, ikke til én udbyders database
 
+Den første tjeneste bygget på denne model er Forge RPC fra [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc), som bygger på protokoldesignet [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md).
+
 ## Hvad Bitsocial ikke er
 
 Bitsocial er ikke et socialt blockchain-netværk. Sociale medier behøver ikke hvert indlæg for at blive en transaktion i én global hovedbog.

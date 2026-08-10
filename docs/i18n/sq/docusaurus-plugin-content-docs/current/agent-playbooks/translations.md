@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Komanda të tjera të dobishme
 
 ```bash
-# Kopjoni një çelës nga anglishtja në të gjitha gjuhët (kontrolloni thatë dhe më pas shkruani)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Fshi një çelës nga të gjitha gjuhët
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Kontrolli për çelësat e përkthimit të papërdorur
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

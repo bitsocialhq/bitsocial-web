@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## Andere nützliche Befehle
 
 ```bash
-# Kopieren Sie einen Schlüssel vom Englischen in alle Sprachen (Probelauf, dann schreiben)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# Einen Schlüssel aus allen Sprachen löschen
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# Prüfung auf ungenutzte Übersetzungsschlüssel
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

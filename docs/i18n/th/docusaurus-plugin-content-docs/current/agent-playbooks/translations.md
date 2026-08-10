@@ -30,14 +30,14 @@ node scripts/update-translations.js --key my_new_key --map translations-temp.jso
 ## คำสั่งที่เป็นประโยชน์อื่น ๆ
 
 ```bash
-# คัดลอกคีย์จากภาษาอังกฤษไปยังทุกภาษา (ทดลองรันแล้วจึงเขียน)
+# Copy a key from English to all languages (dry run then write)
 node scripts/update-translations.js --key some_key --from en --dry
 node scripts/update-translations.js --key some_key --from en --write
 
-# ลบคีย์ออกจากทุกภาษา
+# Delete a key from all languages
 node scripts/update-translations.js --key obsolete_key --delete --write
 
-# ตรวจสอบคีย์การแปลที่ไม่ได้ใช้
+# Audit for unused translation keys
 node scripts/update-translations.js --audit --dry
 node scripts/update-translations.js --audit --write
 ```

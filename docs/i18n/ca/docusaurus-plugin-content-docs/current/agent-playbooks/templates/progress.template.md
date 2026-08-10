@@ -7,6 +7,6 @@ Afegiu una entrada per sessió.
 - Element: F001
 - Resum: substituïu-ho pel resum de la sessió.
 - Fitxers: `path/to/file`
-- Verificació: `corepack yarn build`, `corepack yarn lint`, `corepack yarn typecheck`
+- Verificació: `corepack yarn build:verify`, `corepack yarn lint`, `corepack yarn typecheck`
 - Bloquejadors: cap
 - Següent: substituïu-ho pel següent millor seguiment.

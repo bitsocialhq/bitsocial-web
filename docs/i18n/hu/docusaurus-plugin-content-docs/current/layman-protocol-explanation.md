@@ -152,6 +152,8 @@ A megkülönböztetés számít:
 - Az RPC nem válhat állandó őrizetbe
 - a tulajdonosi viszonynak kulcsokhoz kell kötődnie, nem pedig egyetlen szolgáltató adatbázisához
 
+Az első, erre a modellre épülő szolgáltatás a [Bitsocial Forge](https://bitsocialforge.com/#forge-rpc) Forge RPC-je, amely a [Delegated IPNS](https://github.com/pkcprotocol/pkc-js/blob/master/docs/protocol/delegated-ipns.md) protokolltervére épül.
+
 ## Ami a Bitsocial nem az
 
 A Bitsocial nem egy blockchain közösségi hálózat. A közösségi médiának nincs szüksége minden bejegyzésre ahhoz, hogy tranzakcióvá váljon egy globális főkönyvben.
