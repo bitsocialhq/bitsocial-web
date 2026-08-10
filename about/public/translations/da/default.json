@@ -21,7 +21,8 @@
     "newsletter": "Nyhedsbrev",
     "backToTop": "Tilbage til toppen",
     "chain": "Chain",
-    "goToBottom": "Gå til bunden"
+    "goToBottom": "Gå til bunden",
+    "backToPrevious": "Tilbage til forrige sted"
   },
   "footer": {
     "tagline": "Open Source P2P-netværk til sociale apps",

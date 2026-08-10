@@ -3,6 +3,7 @@ import { KeyRound, Scale, ServerCrash } from "lucide-react";
 import { type ComponentType, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CardInlineCta from "@/components/card-inline-cta";
+import { rememberScrollReturn } from "@/lib/scroll-return";
 import { triggerFeatureGlow } from "@/lib/utils";
 
 type ProblemId = "rented-identity" | "single-owner" | "one-rulebook";
@@ -208,6 +209,7 @@ export default function ProblemSection() {
   const handleAnswerClick = (event: React.MouseEvent<HTMLAnchorElement>, answeredBy: string) => {
     if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) return;
     event.preventDefault();
+    rememberScrollReturn();
     window.history.pushState(
       null,
       "",

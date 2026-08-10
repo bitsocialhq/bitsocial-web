@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { scrollToHomeSectionHash } from "@/lib/home-section-nav";
 import { goToMailingListSection, MAILING_LIST_HASH } from "@/lib/mailing-list-nav";
+import { rememberScrollReturn } from "@/lib/scroll-return";
 
 type FaqId =
   | "problem"
@@ -115,6 +116,10 @@ export default function Faq() {
   const handleQuestionClick = (event: React.MouseEvent<HTMLAnchorElement>, targetId: FaqId) => {
     if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) return;
     event.preventDefault();
+
+    // Every answer sits above this index, so the scroll button should offer the way back here
+    // rather than the page bottom while the reader is on the answer.
+    rememberScrollReturn();
 
     const hash = `#${targetId}`;
     if (hash === MAILING_LIST_HASH) {

@@ -21,7 +21,8 @@
     "newsletter": "Zpravodaj",
     "backToTop": "Zpět nahoru",
     "chain": "Chain",
-    "goToBottom": "Přejít dolů"
+    "goToBottom": "Přejít dolů",
+    "backToPrevious": "Zpět na předchozí místo"
   },
   "footer": {
     "tagline": "Síť P2P s otevřeným zdrojovým kódem pro sociální aplikace",

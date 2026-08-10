@@ -22,7 +22,8 @@
     "chain": "Chain",
     "newsletter": "Newsletter",
     "backToTop": "Back to top",
-    "goToBottom": "Go to bottom"
+    "goToBottom": "Go to bottom",
+    "backToPrevious": "Back to where you were"
   },
   "languageSelector": {
     "title": "Select Language",

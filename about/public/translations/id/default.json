@@ -21,7 +21,8 @@
     "newsletter": "Buletin",
     "backToTop": "Kembali ke atas",
     "chain": "Chain",
-    "goToBottom": "Ke bawah"
+    "goToBottom": "Ke bawah",
+    "backToPrevious": "Kembali ke posisi sebelumnya"
   },
   "footer": {
     "tagline": "Jaringan P2P sumber terbuka untuk aplikasi sosial",

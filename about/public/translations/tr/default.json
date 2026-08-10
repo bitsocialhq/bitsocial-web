@@ -21,7 +21,8 @@
     "newsletter": "Bülten",
     "backToTop": "Başa dön",
     "chain": "Chain",
-    "goToBottom": "Sona git"
+    "goToBottom": "Sona git",
+    "backToPrevious": "Önceki konuma dön"
   },
   "footer": {
     "tagline": "Sosyal uygulamalar için açık kaynak P2P ağı",
