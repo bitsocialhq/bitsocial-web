@@ -20,9 +20,9 @@
     "theme": "Tema",
     "newsletter": "Buletin",
     "backToTop": "Kembali ke atas",
-    "chain": "Chain",
     "goToBottom": "Ke bawah",
-    "backToPrevious": "Kembali ke posisi sebelumnya"
+    "backToPrevious": "Kembali ke posisi sebelumnya",
+    "faq": "FAQ"
   },
   "footer": {
     "tagline": "Jaringan P2P sumber terbuka untuk aplikasi sosial",

@@ -2,8 +2,9 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MouseEv
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { m } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { CHAIN_SITE_URL, DOCS_LINKS, STATS_LINKS, isDocsPath, isStatsPath } from "@/lib/docs-links";
+import { DOCS_LINKS, STATS_LINKS, isDocsPath, isStatsPath } from "@/lib/docs-links";
 import { isRouteAccessible } from "@/lib/dev-only-routes";
+import { FAQ_HASH, goToHomeSectionHash } from "@/lib/home-section-nav";
 import { cn } from "@/lib/utils";
 import { goHomeScrollTop, goRouteScrollTop } from "@/lib/home-nav";
 import { NoJsThemeToggle, ThemeToggle } from "./theme-toggle";
@@ -86,14 +87,16 @@ function NavLink({
 }
 
 function TopbarLinks({
-  chainLabel,
+  faqLabel,
   onNavClick,
   onAppsClick,
+  onFaqClick,
   routeLinks,
 }: {
-  chainLabel: string;
+  faqLabel: string;
   onNavClick: () => void;
   onAppsClick: (event: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
+  onFaqClick: (event: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
   routeLinks: Array<{ label: string; to: string }>;
 }) {
   return (
@@ -108,32 +111,35 @@ function TopbarLinks({
           {link.label}
         </NavLink>
       ))}
-      <NavLink href={CHAIN_SITE_URL} onClick={onNavClick} noUnderline>
-        {chainLabel}
+      <NavLink to={`/${FAQ_HASH}`} onClick={onFaqClick} noUnderline>
+        {faqLabel}
       </NavLink>
     </div>
   );
 }
 
 function DesktopNavigation({
-  chainLabel,
+  faqLabel,
   onNavClick,
   onAppsClick,
+  onFaqClick,
   routeLinks,
   includeNoJsControls = true,
 }: {
-  chainLabel: string;
+  faqLabel: string;
   onNavClick: () => void;
   onAppsClick: (event: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
+  onFaqClick: (event: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
   routeLinks: Array<{ label: string; to: string }>;
   includeNoJsControls?: boolean;
 }) {
   return (
     <div className="topbar-desktop-nav flex items-center">
       <TopbarLinks
-        chainLabel={chainLabel}
+        faqLabel={faqLabel}
         onNavClick={onNavClick}
         onAppsClick={onAppsClick}
+        onFaqClick={onFaqClick}
         routeLinks={routeLinks}
       />
       {routeLinks.length > 0 ? <div className="h-4 w-px bg-border mx-4" /> : null}
@@ -159,10 +165,10 @@ function DesktopNavigation({
 
 function NoJsMobileMenu({
   routeLinks,
-  chainLabel,
+  faqLabel,
 }: {
   routeLinks: Array<{ label: string; to: string }>;
-  chainLabel: string;
+  faqLabel: string;
 }) {
   return (
     <details className="nojs-mobile-menu">
@@ -191,13 +197,8 @@ function NoJsMobileMenu({
               </a>
             );
           })}
-          <a
-            href={CHAIN_SITE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={navLinkClassName}
-          >
-            {chainLabel}
+          <a href={`/${FAQ_HASH}`} className={navLinkClassName}>
+            {faqLabel}
           </a>
         </nav>
 
@@ -339,11 +340,17 @@ export default function Topbar() {
     goRouteScrollTop(location.pathname, APPS_DIRECTORY_HREF, navigate);
   };
 
+  const handleFaqClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    goToHomeSectionHash(location.pathname, location.hash, FAQ_HASH, navigate, handleNavClick);
+  };
+
   const appsLabel = t("nav.apps");
   const blogLabel = t("nav.blog");
   const docsLabel = t("nav.docs");
   const statsLabel = t("nav.status");
-  const chainLabel = t("nav.chain");
+  const faqLabel = t("nav.faq");
   const routeLinks = [
     { label: appsLabel, to: APPS_DIRECTORY_HREF },
     { label: blogLabel, to: "/blog" },
@@ -379,9 +386,10 @@ export default function Topbar() {
               className="pointer-events-none invisible absolute left-0 top-0 whitespace-nowrap"
             >
               <DesktopNavigation
-                chainLabel={chainLabel}
+                faqLabel={faqLabel}
                 onNavClick={handleNavClick}
                 onAppsClick={handleAppsClick}
+                onFaqClick={handleFaqClick}
                 routeLinks={routeLinks}
                 includeNoJsControls={false}
               />
@@ -413,15 +421,16 @@ export default function Topbar() {
                 </div>
               ) : (
                 <DesktopNavigation
-                  chainLabel={chainLabel}
+                  faqLabel={faqLabel}
                   onNavClick={handleNavClick}
                   onAppsClick={handleAppsClick}
+                  onFaqClick={handleFaqClick}
                   routeLinks={routeLinks}
                 />
               )}
 
               <noscript>
-                <NoJsMobileMenu routeLinks={routeLinks} chainLabel={chainLabel} />
+                <NoJsMobileMenu routeLinks={routeLinks} faqLabel={faqLabel} />
               </noscript>
             </div>
           </div>
@@ -440,8 +449,8 @@ export default function Topbar() {
                   {link.label}
                 </NavLink>
               ))}
-              <NavLink href={CHAIN_SITE_URL} onClick={handleNavClick} noUnderline>
-                {chainLabel}
+              <NavLink to={`/${FAQ_HASH}`} onClick={handleFaqClick} noUnderline>
+                {faqLabel}
               </NavLink>
             </div>
 

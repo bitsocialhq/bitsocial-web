@@ -20,9 +20,9 @@
     "theme": "Tema",
     "newsletter": "Balitaan",
     "backToTop": "Bumalik sa itaas",
-    "chain": "Chain",
     "goToBottom": "Pumunta sa ibaba",
-    "backToPrevious": "Bumalik sa dating posisyon"
+    "backToPrevious": "Bumalik sa dating posisyon",
+    "faq": "FAQ"
   },
   "footer": {
     "tagline": "Open Source na P2P Network para sa mga Social App",

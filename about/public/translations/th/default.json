@@ -20,9 +20,9 @@
     "theme": "ธีม",
     "newsletter": "จดหมายข่าว",
     "backToTop": "กลับไปด้านบน",
-    "chain": "Chain",
     "goToBottom": "ไปด้านล่าง",
-    "backToPrevious": "กลับไปยังตำแหน่งเดิม"
+    "backToPrevious": "กลับไปยังตำแหน่งเดิม",
+    "faq": "คำถามที่พบบ่อย"
   },
   "footer": {
     "tagline": "เครือข่าย P2P โอเพนซอร์สสำหรับแอปโซเชียล",

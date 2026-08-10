@@ -20,9 +20,9 @@
     "theme": "Thema",
     "newsletter": "Nieuwsbrief",
     "backToTop": "Terug naar boven",
-    "chain": "Chain",
     "goToBottom": "Naar beneden",
-    "backToPrevious": "Terug naar de vorige plek"
+    "backToPrevious": "Terug naar de vorige plek",
+    "faq": "FAQ"
   },
   "footer": {
     "tagline": "Open Source P2P-netwerk voor sociale apps",

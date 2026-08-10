@@ -20,9 +20,9 @@
     "theme": "主题",
     "newsletter": "简报",
     "backToTop": "返回顶部",
-    "chain": "Chain",
     "goToBottom": "前往底部",
-    "backToPrevious": "返回之前的位置"
+    "backToPrevious": "返回之前的位置",
+    "faq": "常见问题"
   },
   "footer": {
     "tagline": "面向社交应用的开放源码 P2P 网络",

@@ -20,9 +20,9 @@
     "theme": "Téma",
     "newsletter": "Hírlevél",
     "backToTop": "Vissza a tetejére",
-    "chain": "Chain",
     "goToBottom": "Ugrás az aljára",
-    "backToPrevious": "Vissza az előző helyre"
+    "backToPrevious": "Vissza az előző helyre",
+    "faq": "GYIK"
   },
   "footer": {
     "tagline": "Nyílt forráskódú P2P hálózat közösségi alkalmazásokhoz",

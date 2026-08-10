@@ -20,9 +20,9 @@
     "theme": "Tema",
     "newsletter": "Nyhetsbrev",
     "backToTop": "Till toppen",
-    "chain": "Chain",
     "goToBottom": "Till botten",
-    "backToPrevious": "Tillbaka till föregående plats"
+    "backToPrevious": "Tillbaka till föregående plats",
+    "faq": "FAQ"
   },
   "footer": {
     "tagline": "Öppen källkod P2P-nätverk för sociala appar",

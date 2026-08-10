@@ -20,9 +20,9 @@
     "theme": "Tema",
     "newsletter": "Buletini",
     "backToTop": "Kthehu lart",
-    "chain": "Chain",
     "goToBottom": "Shko poshtë",
-    "backToPrevious": "Kthehu te vendi i mëparshëm"
+    "backToPrevious": "Kthehu te vendi i mëparshëm",
+    "faq": "Pyetje të shpeshta"
   },
   "footer": {
     "tagline": "Rrjet P2P me burim të hapur për aplikacione sociale",

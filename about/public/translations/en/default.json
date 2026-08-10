@@ -19,11 +19,11 @@
     "status": "Stats",
     "language": "Language",
     "theme": "Theme",
-    "chain": "Chain",
     "newsletter": "Newsletter",
     "backToTop": "Back to top",
     "goToBottom": "Go to bottom",
-    "backToPrevious": "Back to where you were"
+    "backToPrevious": "Back to where you were",
+    "faq": "FAQ"
   },
   "languageSelector": {
     "title": "Select Language",
