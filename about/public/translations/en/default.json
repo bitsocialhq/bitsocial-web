@@ -541,6 +541,51 @@
     "subtitle": "Bitsocial wins by attracting as many builders as possible. Run your own unstoppable community, develop your own decentralized social app, or even launch your own business on top of Bitsocial. The tide rises with every builder.",
     "sectionLabel": "Master Plan"
   },
+  "faq": {
+    "sectionLabel": "Questions",
+    "title": "The answers are above.",
+    "supporting": "Nothing here expands. The page you just scrolled is the answer, so each question jumps back up to the section that already answered it.",
+    "navLabel": "Questions answered on this page",
+    "answeredIn": "Answered in",
+    "items": {
+      "problem": {
+        "hint": "A company's database says so. Nothing there is yours.",
+        "question": "Who owns my account right now?"
+      },
+      "core-features": {
+        "hint": "One network, many apps, no company in the middle.",
+        "question": "What am I actually joining?"
+      },
+      "browser-peer": {
+        "hint": "Publishing from a browser only became reliable in 2026.",
+        "question": "Why hasn't someone built this already?"
+      },
+      "decentralized": {
+        "hint": "They exist. Each one still keeps a server somewhere.",
+        "question": "Aren't there decentralized networks already?"
+      },
+      "arbitrary-challenges": {
+        "hint": "Each node sets its own challenge, and can swap it.",
+        "question": "With no servers, what stops spam?"
+      },
+      "text-only-protocol": {
+        "hint": "Communities moderate. Apps moderate too.",
+        "question": "If nobody can ban anyone, what about illegal content?"
+      },
+      "adoption-thesis": {
+        "hint": "It never goes down. You keep what you earn.",
+        "question": "Why would I actually switch?"
+      },
+      "master-plan": {
+        "hint": "Five phases. The first one is ongoing.",
+        "question": "What's the plan from here?"
+      },
+      "mailing-list": {
+        "hint": "Milestones and new apps. Low frequency.",
+        "question": "How do I follow along?"
+      }
+    }
+  },
   "blog": {
     "title": "Bitsocial Updates",
     "subtitle": "This Bitsocial blog is run by the <devs>Bitsocial core devs</devs> and published as an unstoppable peer-to-peer feed, so you can read it on any Bitsocial app at <address>{{address}}</address>.",
