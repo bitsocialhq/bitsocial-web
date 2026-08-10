@@ -20,7 +20,8 @@
     "theme": "主题",
     "newsletter": "简报",
     "backToTop": "返回顶部",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "前往底部"
   },
   "footer": {
     "tagline": "面向社交应用的开放源码 P2P 网络",

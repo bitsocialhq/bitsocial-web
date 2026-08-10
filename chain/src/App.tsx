@@ -63,10 +63,10 @@ export default function App() {
             <Sections />
           </div>
           <MailingList />
-          <BackToTop />
           <Footer />
         </div>
       </main>
+      <BackToTop />
       <Analytics />
       <SpeedInsights />
     </div>

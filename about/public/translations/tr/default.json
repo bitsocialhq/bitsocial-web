@@ -20,7 +20,8 @@
     "theme": "Tema",
     "newsletter": "Bülten",
     "backToTop": "Başa dön",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Sona git"
   },
   "footer": {
     "tagline": "Sosyal uygulamalar için açık kaynak P2P ağı",

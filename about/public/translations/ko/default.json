@@ -20,7 +20,8 @@
     "theme": "테마",
     "newsletter": "뉴스레터",
     "backToTop": "맨 위로",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "맨 아래로"
   },
   "footer": {
     "tagline": "소셜 앱을 위한 오픈소스 P2P 네트워크",

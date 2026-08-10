@@ -20,7 +20,8 @@
     "theme": "Tema",
     "newsletter": "Newsletter",
     "backToTop": "Torna su",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Vai in fondo"
   },
   "footer": {
     "tagline": "Rete P2P open source per app social",

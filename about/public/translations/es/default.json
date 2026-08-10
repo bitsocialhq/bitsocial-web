@@ -20,7 +20,8 @@
     "theme": "Tema",
     "newsletter": "Boletín",
     "backToTop": "Volver arriba",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Ir abajo"
   },
   "footer": {
     "tagline": "Red P2P de código abierto para aplicaciones sociales",

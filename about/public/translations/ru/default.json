@@ -20,7 +20,8 @@
     "theme": "Тема",
     "newsletter": "Рассылка",
     "backToTop": "Наверх",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Вниз"
   },
   "footer": {
     "tagline": "Сеть P2P с открытым исходным кодом для социальных приложений",

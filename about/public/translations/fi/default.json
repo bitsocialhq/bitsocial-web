@@ -20,7 +20,8 @@
     "theme": "Teema",
     "newsletter": "Uutiskirje",
     "backToTop": "Takaisin ylös",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Siirry alas"
   },
   "footer": {
     "tagline": "Avoimen lähdekoodin P2P-verkko sosiaalisille sovelluksille",

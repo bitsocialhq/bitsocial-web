@@ -20,7 +20,8 @@
     "theme": "Tema",
     "newsletter": "Nyhetsbrev",
     "backToTop": "Tilbake til toppen",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Gå til bunnen"
   },
   "footer": {
     "tagline": "Åpen kildekode P2P-nettverk for sosiale apper",

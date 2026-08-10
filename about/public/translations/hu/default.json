@@ -20,7 +20,8 @@
     "theme": "Téma",
     "newsletter": "Hírlevél",
     "backToTop": "Vissza a tetejére",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Ugrás az aljára"
   },
   "footer": {
     "tagline": "Nyílt forráskódú P2P hálózat közösségi alkalmazásokhoz",

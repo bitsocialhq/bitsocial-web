@@ -20,7 +20,8 @@
     "theme": "Тема",
     "newsletter": "Розсилка",
     "backToTop": "Нагору",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "Униз"
   },
   "footer": {
     "tagline": "Мережа P2P з відкритим кодом для соціальних додатків",

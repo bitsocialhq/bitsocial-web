@@ -21,7 +21,8 @@
     "theme": "Theme",
     "chain": "Chain",
     "newsletter": "Newsletter",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "goToBottom": "Go to bottom"
   },
   "languageSelector": {
     "title": "Select Language",

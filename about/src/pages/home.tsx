@@ -216,11 +216,11 @@ export default function Home() {
             <AdoptionThesis />
             <MasterPlan />
             <MailingList />
-            <BackToTop />
             <Footer />
           </div>
         </div>
       </main>
+      <BackToTop />
     </div>
   );
 }

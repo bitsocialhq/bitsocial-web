@@ -20,7 +20,8 @@
     "theme": "テーマ",
     "newsletter": "ニュースレター",
     "backToTop": "トップに戻る",
-    "chain": "Chain"
+    "chain": "Chain",
+    "goToBottom": "一番下へ移動"
   },
   "footer": {
     "tagline": "ソーシャルアプリ向けオープンソースP2Pネットワーク",
