@@ -791,5 +791,41 @@
     "sectionLabel": "Trình duyệt P2P",
     "supporting": "Mở ứng dụng web Bitsocial trong một tab bình thường và nó tự kết nối với mạng, lấy bài viết từ các peer khác và đăng bài của bạn. Mỗi mạng xã hội phi tập trung khác vẫn giữ một máy chủ ở giữa.",
     "title": "Trình duyệt của bạn là một peer"
+  },
+  "faq": {
+    "sectionLabel": "Câu hỏi thường gặp",
+    "title": "Còn thắc mắc?",
+    "supporting": "Mỗi phần của trang này trả lời một câu hỏi. Nhấp vào câu hỏi để chuyển đến phần đó.",
+    "navLabel": "Các câu hỏi được trả lời trên trang này",
+    "answeredIn": "Được trả lời trong",
+    "items": {
+      "problem": {
+        "question": "Bitsocial giải quyết vấn đề gì?"
+      },
+      "core-features": {
+        "question": "Bitsocial là gì? Nó hoạt động như thế nào?"
+      },
+      "browser-peer": {
+        "question": "Tại sao trước giờ chưa ai làm điều này?"
+      },
+      "decentralized": {
+        "question": "Chẳng phải đã có mạng xã hội phi tập trung rồi sao?"
+      },
+      "arbitrary-challenges": {
+        "question": "Không có máy chủ thì lấy gì chặn spam?"
+      },
+      "text-only-protocol": {
+        "question": "Còn nội dung bất hợp pháp thì sao?"
+      },
+      "adoption-thesis": {
+        "question": "Tại sao mọi người lại chuyển sang Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Kế hoạch sắp tới là gì? Tôi có thể giúp gì?"
+      },
+      "mailing-list": {
+        "question": "Làm sao để tôi luôn cập nhật?"
+      }
+    }
   }
 }

@@ -791,5 +791,41 @@
     "sectionLabel": "דפדפן P2P",
     "supporting": "פתח אפליקציית Bitsocial ברשת בכרטיסייה רגילה והיא תצטרף לרשת בעצמה, תביא פוסטים מעמיתים אחרים ותפרסם את שלך. כל רשת חברתית מבוזרת אחרת עדיין שומרת על שרת במקום האמצע.",
     "title": "הדפדפן שלך הוא עמית"
+  },
+  "faq": {
+    "sectionLabel": "שאלות נפוצות",
+    "title": "יש שאלות?",
+    "supporting": "כל חלק באתר הזה עונה על אחת מהן. לחצו על שאלה כדי לקפוץ אליה.",
+    "navLabel": "שאלות שנענו בעמוד זה",
+    "answeredIn": "התשובה נמצאת בחלק",
+    "items": {
+      "problem": {
+        "question": "איזו בעיה Bitsocial פותר?"
+      },
+      "core-features": {
+        "question": "מה זה Bitsocial? איך זה עובד?"
+      },
+      "browser-peer": {
+        "question": "למה אף אחד עוד לא בנה את זה?"
+      },
+      "decentralized": {
+        "question": "אין כבר רשתות חברתיות מבוזרות?"
+      },
+      "arbitrary-challenges": {
+        "question": "בלי שרתים, מה עוצר את הספאם?"
+      },
+      "text-only-protocol": {
+        "question": "מה לגבי תוכן לא חוקי?"
+      },
+      "adoption-thesis": {
+        "question": "למה שאנשים יעברו ל-Bitsocial?"
+      },
+      "master-plan": {
+        "question": "מה התוכנית מכאן והלאה? איך אני יכול לעזור?"
+      },
+      "mailing-list": {
+        "question": "איך אני נשאר מעודכן?"
+      }
+    }
   }
 }

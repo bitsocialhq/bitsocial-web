@@ -790,5 +790,41 @@
     "sectionLabel": "浏览器 P2P",
     "supporting": "在普通标签页中打开 Bitsocial 网络应用，它自身就加入网络，从其他对等节点获取帖子并发布您的帖子。每个其他去中心化社交网络仍然在中间保持一个服务器。",
     "title": "你的浏览器是一个对等体"
+  },
+  "faq": {
+    "sectionLabel": "常见问题",
+    "title": "有疑问？",
+    "supporting": "本站的每个板块都回答其中一个问题。点击问题，跳转到对应板块。",
+    "navLabel": "本页解答的问题",
+    "answeredIn": "答案在",
+    "items": {
+      "problem": {
+        "question": "Bitsocial解决什么问题？"
+      },
+      "core-features": {
+        "question": "Bitsocial是什么？它如何运作？"
+      },
+      "browser-peer": {
+        "question": "为什么以前没人做出来？"
+      },
+      "decentralized": {
+        "question": "去中心化社交网络不是早就有了吗？"
+      },
+      "arbitrary-challenges": {
+        "question": "没有服务器，靠什么挡住垃圾信息？"
+      },
+      "text-only-protocol": {
+        "question": "那违法内容呢？"
+      },
+      "adoption-thesis": {
+        "question": "人们为什么会转向Bitsocial？"
+      },
+      "master-plan": {
+        "question": "接下来的计划是什么？我能帮上什么忙？"
+      },
+      "mailing-list": {
+        "question": "我怎么持续关注进展？"
+      }
+    }
   }
 }

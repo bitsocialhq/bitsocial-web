@@ -791,5 +791,41 @@
     "sectionLabel": "Selain P2P",
     "supporting": "Avaa Bitsocial-verkkosovellus tavallisella välilehdellä ja se liittyy verkkoon itsestään, noutaa viestejä muilta vertaisilta ja julkaisee omat viestisi. Jokainen muu hajautettu sosiaalinen verkko säilyttää edelleen palvelimen keskellä.",
     "title": "Selaimesi on peer"
+  },
+  "faq": {
+    "sectionLabel": "UKK",
+    "title": "Kysymyksiä?",
+    "supporting": "Sivuston jokainen osio vastaa yhteen niistä. Klikkaa kysymystä, niin siirryt sen kohdalle.",
+    "navLabel": "Kysymykset, joihin tällä sivulla vastataan",
+    "answeredIn": "Vastattu osiossa",
+    "items": {
+      "problem": {
+        "question": "Minkä ongelman Bitsocial ratkaisee?"
+      },
+      "core-features": {
+        "question": "Mikä on Bitsocial? Miten se toimii?"
+      },
+      "browser-peer": {
+        "question": "Miksi tätä ei ole rakennettu jo aiemmin?"
+      },
+      "decentralized": {
+        "question": "Eikö hajautettuja sosiaalisia verkostoja ole jo olemassa?"
+      },
+      "arbitrary-challenges": {
+        "question": "Mikä estää roskapostin, kun palvelimia ei ole?"
+      },
+      "text-only-protocol": {
+        "question": "Entä laiton sisältö?"
+      },
+      "adoption-thesis": {
+        "question": "Miksi ihmiset vaihtaisivat Bitsocialiin?"
+      },
+      "master-plan": {
+        "question": "Mikä on suunnitelma tästä eteenpäin? Miten voin auttaa?"
+      },
+      "mailing-list": {
+        "question": "Miten pysyn ajan tasalla?"
+      }
+    }
   }
 }

@@ -791,5 +791,41 @@
     "sectionLabel": "Böngésző P2P",
     "supporting": "Nyiss meg egy Bitsocial webalkalmazást egy normál lapon, és önmagában csatlakozik a hálózathoz, lekéri a bejegyzéseket más társaktól, és közzéteszi a sajátaidat. Minden más decentralizált közösségi hálózat továbbra is tart egy szervert a közepén.",
     "title": "A böngésződ egy peer"
+  },
+  "faq": {
+    "sectionLabel": "GYIK",
+    "title": "Kérdések?",
+    "supporting": "Az oldal minden szakasza egy-egy kérdésre válaszol. Kattints egy kérdésre, és odaugrasz.",
+    "navLabel": "Ezen az oldalon megválaszolt kérdések",
+    "answeredIn": "Megválaszolva ebben a szakaszban:",
+    "items": {
+      "problem": {
+        "question": "Milyen problémát old meg a Bitsocial?"
+      },
+      "core-features": {
+        "question": "Mi az a Bitsocial? Hogyan működik?"
+      },
+      "browser-peer": {
+        "question": "Miért nem építette meg ezt eddig senki?"
+      },
+      "decentralized": {
+        "question": "Nem léteznek már decentralizált közösségi hálózatok?"
+      },
+      "arbitrary-challenges": {
+        "question": "Ha nincsenek szerverek, mi állítja meg a spamet?"
+      },
+      "text-only-protocol": {
+        "question": "Mi a helyzet az illegális tartalommal?"
+      },
+      "adoption-thesis": {
+        "question": "Miért váltanának át az emberek a Bitsocialra?"
+      },
+      "master-plan": {
+        "question": "Mi a terv innentől? Hogyan segíthetek?"
+      },
+      "mailing-list": {
+        "question": "Hogyan maradok naprakész?"
+      }
+    }
   }
 }

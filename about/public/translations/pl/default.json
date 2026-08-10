@@ -791,5 +791,41 @@
     "sectionLabel": "Przeglądarka P2P",
     "supporting": "Otwórz aplikację internetową Bitsocial w normalnej karcie, a ona sama dołączy do sieci, pobiera posty od innych peerów i publikuje własne. Każda inna zdecentralizowana sieć społeczna nadal utrzymuje serwer pośrodku.",
     "title": "Twoja przeglądarka to peer"
+  },
+  "faq": {
+    "sectionLabel": "Najczęstsze pytania",
+    "title": "Masz pytania?",
+    "supporting": "Każda sekcja tej strony odpowiada na jedno z nich. Kliknij pytanie, aby przejść do odpowiedzi.",
+    "navLabel": "Pytania, na które odpowiada ta strona",
+    "answeredIn": "Odpowiedź w sekcji",
+    "items": {
+      "problem": {
+        "question": "Jaki problem rozwiązuje Bitsocial?"
+      },
+      "core-features": {
+        "question": "Czym jest Bitsocial? Jak to działa?"
+      },
+      "browser-peer": {
+        "question": "Dlaczego nikt tego jeszcze nie zrobił?"
+      },
+      "decentralized": {
+        "question": "Przecież zdecentralizowane sieci społecznościowe już istnieją?"
+      },
+      "arbitrary-challenges": {
+        "question": "Skoro nie ma serwerów, co powstrzyma spam?"
+      },
+      "text-only-protocol": {
+        "question": "A co z nielegalnymi treściami?"
+      },
+      "adoption-thesis": {
+        "question": "Dlaczego ludzie mieliby przejść na Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Jakie są dalsze plany? Jak mogę pomóc?"
+      },
+      "mailing-list": {
+        "question": "Jak mogę być na bieżąco?"
+      }
+    }
   }
 }

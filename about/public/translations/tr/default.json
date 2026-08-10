@@ -791,5 +791,41 @@
     "sectionLabel": "Tarayıcı P2P",
     "supporting": "Bitsocial web uygulamasını normal bir sekmede açın ve kendisini ağa katılır, diğer eşlerden gönderiler alır ve kendi gönderilerinizi yayınlar. Diğer tüm merkezi olmayan sosyal ağlar hala ortada bir sunucu tutar.",
     "title": "Tarayıcın bir peer'dir"
+  },
+  "faq": {
+    "sectionLabel": "SSS",
+    "title": "Sorunuz mu var?",
+    "supporting": "Bu sitedeki her bölüm bunlardan birini yanıtlıyor. İlgili bölüme atlamak için bir soruya tıklayın.",
+    "navLabel": "Bu sayfada yanıtlanan sorular",
+    "answeredIn": "Yanıtın bulunduğu bölüm",
+    "items": {
+      "problem": {
+        "question": "Bitsocial hangi sorunu çözer?"
+      },
+      "core-features": {
+        "question": "Bitsocial nedir? Nasıl çalışır?"
+      },
+      "browser-peer": {
+        "question": "Bunu neden kimse daha önce yapmadı?"
+      },
+      "decentralized": {
+        "question": "Zaten merkeziyetsiz sosyal ağlar yok mu?"
+      },
+      "arbitrary-challenges": {
+        "question": "Sunucu olmadan spam nasıl engellenir?"
+      },
+      "text-only-protocol": {
+        "question": "Peki ya yasa dışı içerik?"
+      },
+      "adoption-thesis": {
+        "question": "İnsanlar neden Bitsocial'a geçsin?"
+      },
+      "master-plan": {
+        "question": "Bundan sonraki plan nedir? Nasıl yardımcı olabilirim?"
+      },
+      "mailing-list": {
+        "question": "Nasıl haberdar olabilirim?"
+      }
+    }
   }
 }

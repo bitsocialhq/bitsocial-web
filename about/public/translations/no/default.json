@@ -791,5 +791,41 @@
     "sectionLabel": "Nettleser P2P",
     "supporting": "Åpne en Bitsocial-webapp i en normal fane og den slutter seg selv til nettverket, henter innlegg fra andre jevnaldrende og publiserer dine egne. Ethvert annet desentralisert sosialt nettverk opprettholder fortsatt en server i midten.",
     "title": "Nettleseren din er en peer"
+  },
+  "faq": {
+    "sectionLabel": "FAQ",
+    "title": "Spørsmål?",
+    "supporting": "Hver del av dette nettstedet svarer på ett av dem. Klikk på et spørsmål for å hoppe dit.",
+    "navLabel": "Spørsmål som besvares på denne siden",
+    "answeredIn": "Besvart i delen",
+    "items": {
+      "problem": {
+        "question": "Hvilket problem løser Bitsocial?"
+      },
+      "core-features": {
+        "question": "Hva er Bitsocial? Hvordan fungerer det?"
+      },
+      "browser-peer": {
+        "question": "Hvorfor har ingen bygget dette før?"
+      },
+      "decentralized": {
+        "question": "Finnes det ikke allerede desentraliserte sosiale nettverk?"
+      },
+      "arbitrary-challenges": {
+        "question": "Hva stopper spam når det ikke finnes servere?"
+      },
+      "text-only-protocol": {
+        "question": "Hva med ulovlig innhold?"
+      },
+      "adoption-thesis": {
+        "question": "Hvorfor skulle folk bytte til Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Hva er planen herfra? Hvordan kan jeg hjelpe til?"
+      },
+      "mailing-list": {
+        "question": "Hvordan holder jeg meg oppdatert?"
+      }
+    }
   }
 }

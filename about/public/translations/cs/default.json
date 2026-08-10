@@ -757,5 +757,41 @@
     "sectionLabel": "Prohlížeč P2P",
     "supporting": "Otevřete webovou aplikaci Bitsocial v normální kartě a připojí se k síti sama, načítá příspěvky od dalších partnerů a publikuje vaše. Každá jiná decentralizovaná sociální síť stále udržuje server uprostřed.",
     "title": "Tvůj prohlížeč je peer"
+  },
+  "faq": {
+    "sectionLabel": "Časté dotazy",
+    "title": "Máte otázky?",
+    "supporting": "Každá sekce tohoto webu odpovídá na jednu z nich. Klikněte na otázku a přejdete k odpovědi.",
+    "navLabel": "Otázky zodpovězené na této stránce",
+    "answeredIn": "Odpověď v sekci",
+    "items": {
+      "problem": {
+        "question": "Jaký problém řeší Bitsocial?"
+      },
+      "core-features": {
+        "question": "Co je Bitsocial? Jak funguje?"
+      },
+      "browser-peer": {
+        "question": "Proč to ještě nikdo neudělal?"
+      },
+      "decentralized": {
+        "question": "Decentralizované sociální sítě přece už existují, ne?"
+      },
+      "arbitrary-challenges": {
+        "question": "Když nejsou servery, co zastaví spam?"
+      },
+      "text-only-protocol": {
+        "question": "A co nelegální obsah?"
+      },
+      "adoption-thesis": {
+        "question": "Proč by lidé přecházeli na Bitsocial?"
+      },
+      "master-plan": {
+        "question": "Jaké jsou další plány? Jak mohu pomoci?"
+      },
+      "mailing-list": {
+        "question": "Jak mohu zůstat v obraze?"
+      }
+    }
   }
 }
