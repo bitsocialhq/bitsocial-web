@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Panggilan untuk Bertindak",
+    "title": "Sebuah ajakan bertindak.",
     "logoAlt": "logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Status akhir bukanlah satu aplikasi. Ini adalah pasar klien, node, layanan, dan komunitas yang dapat menggantikan kepemilikan platform dengan kompetisi protokol.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Ada pertanyaan?",
+    "title": "Pertanyaan umum",
     "supporting": "Setiap bagian situs ini menjawab satu pertanyaan. Klik salah satu untuk langsung menuju ke sana.",
     "navLabel": "Pertanyaan yang dijawab di halaman ini",
     "answeredIn": "Dijawab di bagian",

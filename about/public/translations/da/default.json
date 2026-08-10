@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "En opfordring til handling",
+    "title": "En opfordring til handling.",
     "logoAlt": "Logo",
     "easterEggAlt": "SvampeBob",
     "epilogue": "Sluttilstanden er ikke én app. Det er et marked af kunder, noder, tjenester og fællesskaber, der kan erstatte platformsejerskab med protokolkonkurrence.",
@@ -762,7 +762,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Spørgsmål?",
+    "title": "Hyppigt stillede spørgsmål",
     "supporting": "Hvert afsnit på denne side besvarer ét af dem. Klik på et spørgsmål for at hoppe derhen.",
     "navLabel": "Spørgsmål der besvares på denne side",
     "answeredIn": "Besvaret i afsnittet",

@@ -497,7 +497,7 @@
     }
   },
   "masterPlan": {
-    "title": "A Call to Action",
+    "title": "A call to action.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "The end state is not one app. It is a market of clients, nodes, services, and communities that can replace platform ownership with protocol competition.",
@@ -545,7 +545,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Questions?",
+    "title": "Common Questions",
     "supporting": "Every section of this site answers one. Click a question to jump to it.",
     "navLabel": "Questions answered on this page",
     "answeredIn": "Answered in",

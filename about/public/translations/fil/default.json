@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Isang Tawag sa Pagkilos",
+    "title": "Isang tawag sa aksyon.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Ang end state ay hindi isang app. Ito ay isang merkado ng mga kliyente, node, serbisyo, at komunidad na maaaring palitan ang pagmamay-ari ng platform ng kumpetisyon sa protocol.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Mga tanong?",
+    "title": "Madalas na Tanong",
     "supporting": "Sinasagot ng bawat seksyon ng site na ito ang isa sa mga ito. I-click ang isang tanong para dumiretso roon.",
     "navLabel": "Mga tanong na sinasagot sa pahinang ito",
     "answeredIn": "Nasagot sa seksyong",

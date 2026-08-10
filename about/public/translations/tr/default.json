@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Bir Eylem Çağrısı",
+    "title": "Harekete çağrı.",
     "logoAlt": "logo",
     "easterEggAlt": "Sünger Bob",
     "epilogue": "Son durum tek bir uygulama değil. Platform mülkiyetini protokol rekabetiyle değiştirebilecek müşteriler, düğümler, hizmetler ve topluluklardan oluşan bir pazardır.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "SSS",
-    "title": "Sorunuz mu var?",
+    "title": "Sık sorulan sorular",
     "supporting": "Bu sitedeki her bölüm bunlardan birini yanıtlıyor. İlgili bölüme atlamak için bir soruya tıklayın.",
     "navLabel": "Bu sayfada yanıtlanan sorular",
     "answeredIn": "Yanıtın bulunduğu bölüm",

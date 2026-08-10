@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Toimintakehotus",
+    "title": "Kutsu toimintaan.",
     "logoAlt": "Logo",
     "easterEggAlt": "Paavo Pesusieni",
     "epilogue": "Lopputila ei ole yksi sovellus. Se on asiakkaiden, solmujen, palveluiden ja yhteisöjen markkinat, jotka voivat korvata alustan omistamisen protokollakilpailulla.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "UKK",
-    "title": "Kysymyksiä?",
+    "title": "Usein kysytyt kysymykset",
     "supporting": "Sivuston jokainen osio vastaa yhteen niistä. Klikkaa kysymystä, niin siirryt sen kohdalle.",
     "navLabel": "Kysymykset, joihin tällä sivulla vastataan",
     "answeredIn": "Vastattu osiossa",

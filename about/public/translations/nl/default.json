@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Een oproep tot actie",
+    "title": "Een oproep tot actie.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "De eindstatus is niet één app. Het is een markt van klanten, knooppunten, diensten en gemeenschappen die platformeigendom kunnen vervangen door protocolconcurrentie.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Vragen?",
+    "title": "Veelgestelde vragen",
     "supporting": "Elk onderdeel van deze site beantwoordt er een. Klik op een vraag om er naartoe te gaan.",
     "navLabel": "Vragen die op deze pagina worden beantwoord",
     "answeredIn": "Beantwoord in het onderdeel",

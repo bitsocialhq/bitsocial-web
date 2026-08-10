@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Kêu gọi hành động",
+    "title": "Lời kêu gọi hành động.",
     "logoAlt": "biểu tượng",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Trạng thái kết thúc không phải là một ứng dụng. Đó là thị trường của khách hàng, nút, dịch vụ và cộng đồng có thể thay thế quyền sở hữu nền tảng bằng sự cạnh tranh về giao thức.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "Câu hỏi thường gặp",
-    "title": "Còn thắc mắc?",
+    "title": "Câu hỏi thường gặp",
     "supporting": "Mỗi phần của trang này trả lời một câu hỏi. Nhấp vào câu hỏi để chuyển đến phần đó.",
     "navLabel": "Các câu hỏi được trả lời trên trang này",
     "answeredIn": "Được trả lời trong",

@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Una crida a l'acció",
+    "title": "Una crida a l'acció.",
     "logoAlt": "Logotip",
     "easterEggAlt": "Bob Esponja",
     "epilogue": "L'estat final no és una aplicació. És un mercat de clients, nodes, serveis i comunitats que poden substituir la propietat de la plataforma per la competència de protocols.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Preguntes?",
+    "title": "Preguntes freqüents",
     "supporting": "Cada secció d'aquest lloc web en respon una. Clica una pregunta per anar-hi.",
     "navLabel": "Preguntes contestades en aquesta pàgina",
     "answeredIn": "Resposta a la secció",

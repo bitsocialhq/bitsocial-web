@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Výzva k akci",
+    "title": "Výzva k akci.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Koncový stav není jedna aplikace. Je to trh klientů, uzlů, služeb a komunit, které mohou nahradit vlastnictví platformy konkurencí protokolů.",
@@ -762,7 +762,7 @@
   },
   "faq": {
     "sectionLabel": "Časté dotazy",
-    "title": "Máte otázky?",
+    "title": "Často kladené otázky",
     "supporting": "Každá sekce tohoto webu odpovídá na jednu z nich. Klikněte na otázku a přejdete k odpovědi.",
     "navLabel": "Otázky zodpovězené na této stránce",
     "answeredIn": "Odpověď v sekci",

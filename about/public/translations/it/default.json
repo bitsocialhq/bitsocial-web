@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un invito all'azione",
+    "title": "Un invito all'azione.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Lo stato finale non è un'app. È un mercato di clienti, nodi, servizi e comunità che può sostituire la proprietà della piattaforma con la competizione sui protocolli.",
@@ -796,7 +796,7 @@
   },
   "faq": {
     "sectionLabel": "FAQ",
-    "title": "Domande?",
+    "title": "Domande frequenti",
     "supporting": "Ogni sezione di questo sito risponde a una. Clicca su una domanda per raggiungerla.",
     "navLabel": "Domande a cui risponde questa pagina",
     "answeredIn": "Risposta nella sezione",
