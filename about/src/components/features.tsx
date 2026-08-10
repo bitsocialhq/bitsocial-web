@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
 import CardInlineCta, { prominentCtaClassName } from "@/components/card-inline-cta";
 import { DOCS_LINKS, STATS_LINKS, isDocsPath, isStatsPath } from "@/lib/docs-links";
+import { rememberScrollReturn } from "@/lib/scroll-return";
 import { getScrollBehavior, triggerFeatureGlow, triggerTaglineGlow } from "@/lib/utils";
 
 type FeatureId =
@@ -422,6 +423,7 @@ export default function Features() {
   };
 
   const handleTitleClick = (id: string) => {
+    rememberScrollReturn();
     window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
     triggerTaglineGlow(id);
   };
@@ -430,6 +432,7 @@ export default function Features() {
     event.preventDefault();
     const sanctuaryTarget = document.getElementById("decentralized");
     if (!sanctuaryTarget) return;
+    rememberScrollReturn();
     window.history.pushState(
       null,
       "",

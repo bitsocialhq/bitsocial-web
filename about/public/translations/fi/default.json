@@ -21,7 +21,8 @@
     "newsletter": "Uutiskirje",
     "backToTop": "Takaisin ylös",
     "chain": "Chain",
-    "goToBottom": "Siirry alas"
+    "goToBottom": "Siirry alas",
+    "backToPrevious": "Takaisin edelliseen kohtaan"
   },
   "footer": {
     "tagline": "Avoimen lähdekoodin P2P-verkko sosiaalisille sovelluksille",

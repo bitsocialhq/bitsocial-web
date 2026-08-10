@@ -21,7 +21,8 @@
     "newsletter": "Newsletter",
     "backToTop": "Nach oben",
     "chain": "Chain",
-    "goToBottom": "Nach unten"
+    "goToBottom": "Nach unten",
+    "backToPrevious": "Zurück zur vorherigen Stelle"
   },
   "footer": {
     "tagline": "Open-Source-P2P-Netzwerk für soziale Apps",

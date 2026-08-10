@@ -24,6 +24,7 @@ import {
   useGraphicsMode,
 } from "@/lib/graphics-mode";
 import { goToMailingListSection } from "@/lib/mailing-list-nav";
+import { rememberScrollReturn } from "@/lib/scroll-return";
 import { highlightedCtaClassName } from "@/components/card-inline-cta";
 import { cn, triggerFeatureGlow } from "@/lib/utils";
 
@@ -321,6 +322,7 @@ export default function Hero() {
   const navigateToFeatureFromTagline = useCallback(
     (hash: string) => {
       resetIntro();
+      rememberScrollReturn();
       window.history.replaceState(null, "", `#${hash}`);
       requestAnimationFrame(() => triggerFeatureGlow(hash));
     },

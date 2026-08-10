@@ -21,7 +21,8 @@
     "newsletter": "خبرنامه",
     "backToTop": "بازگشت به بالا",
     "chain": "Chain",
-    "goToBottom": "رفتن به پایین"
+    "goToBottom": "رفتن به پایین",
+    "backToPrevious": "بازگشت به جای قبلی"
   },
   "footer": {
     "tagline": "شبکه P2P متن‌باز برای اپلیکیشن‌های اجتماعی",
