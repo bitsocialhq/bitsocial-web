@@ -241,6 +241,7 @@ case "$command" in
     shift
     wait_seconds=0
     session=''
+    opened_url=''
     open_args=()
 
     # `--wait` is accepted anywhere so `open <session> --wait` is not a silent
@@ -264,6 +265,9 @@ case "$command" in
             session="$1"
           else
             open_args+=("$1")
+            case "$1" in
+              http://* | https://*) opened_url="$1" ;;
+            esac
           fi
           ;;
       esac
@@ -281,6 +285,22 @@ case "$command" in
     if ! "$playwright_cli" -s="$session" open ${open_args[@]+"${open_args[@]}"}; then
       release "$session"
       exit 1
+    fi
+
+    # In dev the react-scan toolbar mounts over the bottom-right corner and swallows pointer
+    # events aimed at whatever sits under it, so a driven click on a fixed control there never
+    # lands. Every session opened through this wrapper is automation, so the toolbar is switched
+    # off for the whole session. Only the toolbar: the scanner stays on, and the profiler's own
+    # __PROFILING__ / __VISUAL_TESTING__ flags are untouched. An init script only applies to
+    # loads that follow it, hence the reload when a page is already open.
+    if "$playwright_cli" -s="$session" run-code \
+      "async page => await page.addInitScript(() => { window.__NO_DEV_TOOLBAR__ = true })" \
+      >/dev/null 2>&1; then
+      if [ -n "$opened_url" ]; then
+        "$playwright_cli" -s="$session" reload >/dev/null 2>&1 || true
+      fi
+    else
+      echo "pw-session: could not disable the dev toolbar; clicks in the bottom-right corner may be intercepted" >&2
     fi
     ;;
   close)

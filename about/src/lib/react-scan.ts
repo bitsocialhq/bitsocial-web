@@ -1,10 +1,18 @@
 if (import.meta.env.DEV) {
   import("react-scan").then(({ scan, getReport }) => {
     const isVisualTesting = Boolean((window as any).__VISUAL_TESTING__);
+    // The toolbar sits in the bottom-right corner and swallows pointer events aimed at whatever
+    // is underneath it, which in this app is the fixed scroll button. `scripts/pw-session.sh`
+    // sets `__NO_DEV_TOOLBAR__` for every driven session so those clicks reach the page; the
+    // scanner itself stays on, so render reports and element-source lookups still work.
+    const hideToolbar =
+      isVisualTesting ||
+      Boolean((window as any).__NO_DEV_TOOLBAR__) ||
+      Boolean((window as any).__PROFILING__);
 
     scan({
       enabled: !isVisualTesting,
-      showToolbar: !isVisualTesting && !(window as any).__PROFILING__,
+      showToolbar: !hideToolbar,
     });
 
     const notReady = async () => ({
