@@ -8,11 +8,11 @@ Bitsocial Web is the public web monorepo for Bitsocial.
 It currently serves:
 
 - `https://bitsocial.net/` for the public Bitsocial landing/about site
-- `https://bitsocial.net/chain/` for the Bitsocial Chain landing site (BSO token and L2 appchain)
+- `https://chain.bitsocial.net/` for the Bitsocial Chain landing site (BSO token and L2 appchain)
 - `https://docs.bitsocial.net/` for Docusaurus docs
 - `https://stats.bitsocial.net/` for the Grafana-backed stats dashboard
 
-Docs and stats are served on their own subdomains, like `chain.bitsocial.net`, while remaining in this monorepo. Legacy `/docs` and `/stats` paths on `bitsocial.net` redirect permanently to those subdomains.
+Chain, docs, and stats are served on their own subdomains while remaining in this monorepo. Legacy `/docs` and `/stats` paths on `bitsocial.net` redirect permanently to their dedicated subdomains.
 
 ## Repo Layout
 
@@ -104,16 +104,17 @@ If public-facing English content changed, regenerate the LLM indexes:
 corepack yarn llms:generate
 ```
 
-This keeps `about/public/llms*.txt` and `docs/static/llms*.txt` aligned with the landing page,
-docs pages, project directory data, public README text, and the generator itself.
+This keeps `about/public/llms*.txt`, `chain/public/llms*.txt`, and `docs/static/llms*.txt`
+aligned with the landing pages, docs pages, project directory data, public README text, and
+the generator itself.
 
 ## Subproject Notes
 
 ### `chain/`
 
 - Contains the Bitsocial Chain landing site for BSO and the proposed L2 appchain
-- Standalone Vite app under `chain/`; served at `https://bitsocial.net/chain/`
-- Shares visual language with the about site but has no i18n layer
+- Standalone Vite app under `chain/`; served at `https://chain.bitsocial.net/`
+- Has a translated language-selection shell, while the substantive Chain narrative is currently authored in English
 
 ### `about/`
 
@@ -146,6 +147,12 @@ Landing-site translations live under:
 
 - `about/public/translations/{lang}/default.json`
 
+The Chain site's translated interface strings live under:
+
+- `chain/public/translations/{lang}/default.json`
+
+The Chain landing narrative is currently authored in English in `chain/src/sections/`.
+
 Docs translations live under:
 
 - `docs/i18n/{lang}/...`
@@ -167,6 +174,7 @@ Relevant local rules also live in:
 ## Deployment Shape
 
 - `bitsocial.net` is served by Vercel
+- `chain.bitsocial.net` is served from the standalone Chain app
 - `docs.bitsocial.net` is served from the docs build
 - `stats.bitsocial.net` routes to the VPS-hosted Grafana stack
 - Legacy `/docs` and `/stats` paths on `bitsocial.net` return permanent redirects to those subdomains
