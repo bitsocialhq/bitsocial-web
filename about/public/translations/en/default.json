@@ -89,7 +89,7 @@
   },
   "features": {
     "sectionLabel": "Core Features",
-    "title": "What is Bitsocial?",
+    "title": "A social layer nobody owns.",
     "supporting": "An ever-expanding universe of social media apps, all using the same underlying decentralized social network — one that no company owns, and none can take away from you.",
     "items": {
       "open-source": {
@@ -120,8 +120,8 @@
   },
   "browserPeer": {
     "sectionLabel": "Browser P2P",
-    "title": "Your browser is a peer.",
-    "supporting": "Open a Bitsocial web app in a normal tab and it joins the network itself, fetching posts from other peers and publishing your own. Every other decentralized social network still keeps a server in the middle.",
+    "title": "The browser is the breakthrough.",
+    "supporting": "Open a Bitsocial web app in a normal tab and it joins the network itself, fetching posts from other peers and publishing your own. That's the hard part — and why every other decentralized social network still keeps a server in the middle.",
     "cards": {
       "node": {
         "title": "The tab runs a node",
@@ -427,7 +427,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Text-only Protocol",
     "title": "Freedom has moderation.",
-    "supporting": "There's no global admin and no server to seize, so nobody can ban you from the whole network. Moderation just moves closer to you.",
+    "supporting": "The protocol carries only text, and it's not a hidden network. There's no global admin and no server to seize, so nobody can ban you from the whole network. Moderation just moves closer to you.",
     "carouselLabel": "Common concerns, answered",
     "communities": {
       "myth": "No bans means it's a free-for-all.",
@@ -452,7 +452,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Adoption Thesis",
-    "title": "Why would anyone use it?",
+    "title": "Owning beats renting.",
     "supporting": "It can't be censored, it never goes down, and you keep everything you earn. Here's who shows up — and why.",
     "diagramLabel": "Adoption curve showing why each user cohort adopts Bitsocial.",
     "curve": {
@@ -497,7 +497,7 @@
     }
   },
   "masterPlan": {
-    "title": "A call to action.",
+    "title": "A call to builders.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "The end state is not one app. It is a market of clients, nodes, services, and communities that can replace platform ownership with protocol competition.",

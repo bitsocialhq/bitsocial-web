@@ -31,11 +31,11 @@ Two interpretation notes matter:
 - [Home](https://bitsocial.net/): Bitsocial is an open-source peer-to-peer network for social apps, with no servers, no global bans, where users and communities are cryptographic property.
 - [The problem](https://bitsocial.net/#problem): It's not a conspiracy, it's an architecture. Every mainstream social platform is a private database on private servers, and livelihoods, businesses, and communities now live on it, so decisions made inside a handful of companies reach directly into the physical world. That design has three consequences, no matter who runs it.
 - [Core features](https://bitsocial.net/#core-features): Bitsocial is open source, peer-to-peer via IPFS/libp2p, app-oriented, serverless by default, locally moderated with no protocol-level global bans, and built around key-controlled identities and communities.
-- [Browser P2P](https://bitsocial.net/#browser-peer): Open a Bitsocial web app in a normal tab and it joins the network itself, fetching posts from other peers and publishing your own. Every other decentralized social network still keeps a server in the middle.
+- [Browser P2P](https://bitsocial.net/#browser-peer): Open a Bitsocial web app in a normal tab and it joins the network itself, fetching posts from other peers and publishing your own. That's the hard part — and why every other decentralized social network still keeps a server in the middle.
 - [Sanctuary comparison](https://bitsocial.net/#decentralized): Compares Server-based (Bluesky, Mastodon, Lemmy); Blockchain-based (Farcaster, Lens, DeSo, Steemit); Bitsocial (Pure P2P with arbitrary anti-spam challenges) across self-hosting cost, who keeps content online, scaling, custom anti-spam logic, and takedown choke points.
 - [Deep comparison tables](https://bitsocial.net/#nostr-comparison): Sourced modal tables compare Bitsocial with Nostr, Bluesky, ActivityPub / Fediverse, Farcaster, Lens, DeSo, Steemit across Spam replies, Community rules, Scaling costs, Data hosting, Censorship points, Who accepts posts?, First post, What your browser is, Human names, Finding content.
 - [Arbitrary Challenges](https://bitsocial.net/#arbitrary-challenges): Each node runs its own anti-spam challenge, exchanged purely peer-to-peer with the user. When spam evolves, nodes adapt without changing the protocol. Example modules include any code, AI-powered moderation, SMS OTP, whatever comes next.
-- [Text-only Protocol](https://bitsocial.net/#text-only-protocol): There's no global admin and no server to seize, so nobody can ban you from the whole network. Moderation just moves closer to you.
+- [Text-only Protocol](https://bitsocial.net/#text-only-protocol): The protocol carries only text, and it's not a hidden network. There's no global admin and no server to seize, so nobody can ban you from the whole network. Moderation just moves closer to you.
 - [Adoption thesis](https://bitsocial.net/#adoption-thesis): It can't be censored, it never goes down, and you keep everything you earn. Here's who shows up — and why.
 - [Master Plan](https://bitsocial.net/#master-plan): Bitsocial wins by attracting as many builders as possible. Run your own unstoppable community, develop your own decentralized social app, or even launch your own business on top of Bitsocial. The tide rises with every builder.
 - [Newsletter](https://bitsocial.net/#mailing-list): Get notified about protocol milestones, new Bitsocial apps, and ecosystem updates. Low frequency, high signal.
@@ -94,9 +94,9 @@ Founder note: What's the point of creating a company or product to make the worl
 
 Source: https://bitsocial.net/#browser-peer
 
-Your browser is a peer.
+The browser is the breakthrough.
 
-Open a Bitsocial web app in a normal tab and it joins the network itself, fetching posts from other peers and publishing your own. Every other decentralized social network still keeps a server in the middle.
+Open a Bitsocial web app in a normal tab and it joins the network itself, fetching posts from other peers and publishing your own. That's the hard part — and why every other decentralized social network still keeps a server in the middle.
 
 - The tab runs a node: The page boots a Helia node and speaks the same protocol as desktop and CLI nodes, reaching peers over the same kind of encrypted connection any website uses. Publishing from a browser became reliable in 2026, once the last upstream fix landed.
 - Nothing to shut down: The page is only a client: any copy of it, on any domain or as a desktop build, reaches the same network. Your identity and your community are keys you hold, not rows in a company's database, so there is no account to lose and no host to seize.
@@ -133,7 +133,7 @@ Source: https://bitsocial.net/#text-only-protocol
 
 Freedom has moderation.
 
-There's no global admin and no server to seize, so nobody can ban you from the whole network. Moderation just moves closer to you.
+The protocol carries only text, and it's not a hidden network. There's no global admin and no server to seize, so nobody can ban you from the whole network. Moderation just moves closer to you.
 
 - Communities moderate. Each community sets and enforces its own rules, with its own anti-spam. There's just no single admin above the network who can ban you everywhere.
 - Apps moderate too. Client developers can hide known-dangerous communities. Developers can run opt-in reputation and scoring services to increase safety.
@@ -145,7 +145,7 @@ Founder note: No one can force a community to censor you, and no one can force i
 
 Source: https://bitsocial.net/#adoption-thesis
 
-Why would anyone use it?
+Owning beats renting.
 
 It can't be censored, it never goes down, and you keep everything you earn. Here's who shows up — and why.
 
@@ -167,7 +167,7 @@ Adoption cohorts:
 
 Source: https://bitsocial.net/#master-plan
 
-A call to action.
+A call to builders.
 
 Bitsocial wins by attracting as many builders as possible. Run your own unstoppable community, develop your own decentralized social app, or even launch your own business on top of Bitsocial. The tide rises with every builder.
 
@@ -3642,6 +3642,8 @@ For device testing on a USB-connected Android phone (without relying on `5chan.l
 
 Bitsocial communities can require users to solve one or more anti-spam challenges before a publication is accepted. 5chan already supports multiple challenge types, including `url/iframe` challenges so [Mintpass](https://github.com/bitsocialnet/mintpass) communities can run their iframe flow directly inside a modal. The modal first shows a hostname confirmation (showing only the host for mintpass.org, full URL otherwise), then opens the HTTPS iframe with the current theme, replaces `{userAddress}` tokens with the signed-in address, and submits automatically when the user finishes.
 
+5chan also has an optional UX integration with [`@bitsocial/ai-moderation-challenge`](https://github.com/bitsocialnet/ai-moderation-challenge): when a failed verification contains the exact message `This media was already posted recently.`, 5chan abandons the rejected pending publication, returns to the originating post form, preserves the draft, and shows the message inline. This string is an intentionally small cross-package contract rather than a package dependency. Challenges that omit it, or return any other error, continue through the normal generic challenge-error flow.
+
 ### Build
 
 The Linux/Windows/macOS/Android build scripts are in [.github/workflows/release.yml](https://github.com/bitsocialnet/5chan/blob/master/.github/workflows/release.yml)
@@ -3957,20 +3959,21 @@ Production operators should keep the real moderation prompt in a private node-lo
 
 ## Options
 
-| Option              | Default                                  | Description                                                                           |
-| ------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------- |
-| `apiUrl`            | `https://api.openai.com/v1/responses`    | Full OpenAI-compatible endpoint URL                                                   |
-| `apiFormat`         | `responses`                              | Request/response format: `responses` or `chat-completions`                            |
-| `apiKey`            | none                                     | Private provider API key                                                              |
-| `model`             | `gpt-5.4-nano`                           | Model name sent to the provider                                                       |
-| `branch`            | `allow`                                  | Branch mode: `allow` or `review`                                                      |
-| `prompt`            | built-in prompt                          | Private inline system prompt text                                                     |
-| `promptPath`        | none                                     | Private file path for a system prompt on the community node                           |
-| `promptUrl`         | none                                     | Private HTTPS URL for a remotely hosted system prompt                                 |
-| `promptBearerToken` | none                                     | Private bearer token sent only when fetching `promptUrl`                              |
-| `cachePath`         | `~/.bitsocial-ai-moderation-cache.json`  | Private JSON verdict cache path; set to an empty string to disable persistent caching |
-| `auditLogPath`      | `~/.bitsocial-ai-moderation-audit.jsonl` | Private JSONL verdict audit log path; set to an empty string to disable audit logging |
-| `error`             | `Rejected by Bitsocial AI moderation.`   | Error shown when content edits are rejected or moderation is unavailable for an edit  |
+| Option                 | Default                                  | Description                                                                                                    |
+| ---------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `apiUrl`               | `https://api.openai.com/v1/responses`    | Full OpenAI-compatible endpoint URL                                                                            |
+| `apiFormat`            | `responses`                              | Request/response format: `responses` or `chat-completions`                                                     |
+| `apiKey`               | none                                     | Private provider API key                                                                                       |
+| `model`                | `gpt-5.4-nano`                           | Model name sent to the provider                                                                                |
+| `branch`               | `allow`                                  | Branch mode: `allow` or `review`                                                                               |
+| `prompt`               | built-in prompt                          | Private inline system prompt text                                                                              |
+| `promptPath`           | none                                     | Private file path for a system prompt on the community node                                                    |
+| `promptUrl`            | none                                     | Private HTTPS URL for a remotely hosted system prompt                                                          |
+| `promptBearerToken`    | none                                     | Private bearer token sent only when fetching `promptUrl`                                                       |
+| `cachePath`            | `~/.bitsocial-ai-moderation-cache.json`  | Private JSON verdict cache path; set to an empty string to disable persistent caching                          |
+| `auditLogPath`         | `~/.bitsocial-ai-moderation-audit.jsonl` | Private JSONL verdict audit log path; set to an empty string to disable audit logging                          |
+| `rejectDuplicateMedia` | `false`                                  | Reject top-level posts that reuse an image, video, or audio URL from a non-archived post in the same community |
+| `error`                | `Rejected by Bitsocial AI moderation.`   | Error shown when content edits are rejected or moderation is unavailable for an edit                           |
 
 Prompt source precedence is `prompt` > `promptPath` > `promptUrl` > built-in fallback. If multiple private prompt sources are configured, the challenge uses the highest-precedence source and emits a warning about the ignored source.
 
@@ -3993,6 +3996,8 @@ For providers exposing the chat-completions API shape, set both `apiFormat` and 
 
 OpenAI-compatible APIs are a practical compatibility convention, not a formal open standard. Test custom providers before enabling the challenge on live communities.
 
+To enable 5chan-style exact-media rejection, set `rejectDuplicateMedia: "true"` on both the `allow` and `review` challenge entries. PKC challenge option values are strings; leaving this option unset preserves the default and does not perform the deterministic hard-rejection check.
+
 ## Behavior
 
 - New comments with verdict `allow` publish normally.
@@ -4001,6 +4006,7 @@ OpenAI-compatible APIs are a practical compatibility convention, not a formal op
 - Content edits with verdict `review` are rejected until PKC supports pending approval for edits.
 - Content edits are rejected if the model API is unavailable.
 - Delete-only edits and non-comment publication types bypass AI moderation.
+- When `rejectDuplicateMedia` is `"true"`, new top-level posts reuse neither an exact image, video, or audio URL from a non-archived top-level post nor an in-flight media URL in the same community. This option is disabled by default and is configured independently by each community operator. The deterministic check covers every non-archived thread, runs before any model request, and never enters pending approval; URL comparison upgrades HTTP to HTTPS, ignores fragments and default ports, and retains query parameters.
 - The challenge sends text, title, submission time, link URL/domain/path, URL-path date hints, flags, flairs, community address/title/description, `community.rules`, and a bounded activity-relative list of recent top-level posts for duplicate-thread checks when the local community database is available.
 - The model payload explicitly labels publication fields as untrusted user content, not instructions.
 - The challenge does not fetch linked publication media or user-submitted URLs. `promptUrl` is an operator-configured private prompt source, not publication content.
@@ -4079,6 +4085,8 @@ The hosted Bitsocial spam blocker server implementation now lives in a separate 
 
 The official hosted service at `https://spamblocker.bitsocial.net/api/v1` is the default and strongly recommended integration because its centralized history enables cross-community abuse and signer-cluster detection. `serverUrl` remains configurable for compatible independent services, but the official hosted server's proprietary implementation is not distributed by this repository.
 
+See [Hosted Spam Blocker Source Policy](https://github.com/bitsocialnet/spam-blocker/blob/HEAD/docs/architecture/hosted-service-source-policy.md) for the rationale, transparency commitments, and conditions for reconsidering this boundary.
+
 ## Development Workflow
 
 Repo-specific AI workflow guidance lives in:
@@ -4107,7 +4115,7 @@ Quick setup for a fresh machine:
 bitsocial-spam-blocker/
 ├── package.json                    # Root workspace config
 ├── tsconfig.base.json
-├── docs/                           # Agent playbooks and workflow notes
+├── docs/                           # Architecture decisions and agent playbooks
 ├── packages/
 │   ├── challenge/                  # package for community owners
 │   │   └── src/
@@ -5778,13 +5786,14 @@ Install a challenge package (npm package name, git URL, tarball URL, or local pa
 
 ```
 USAGE
-  $ bitsocial challenge add PACKAGE [--pkcOptions.dataPath <value>]
+  $ bitsocial challenge add PACKAGE --pkcRpcUrl <value> [--pkcOptions.dataPath <value>]
 
 ARGUMENTS
   PACKAGE  Package specifier — anything npm can install (name, name@version, git URL, tarball URL, local path)
 
 FLAGS
   --pkcOptions.dataPath=<value>  Data path to install the challenge into
+  --pkcRpcUrl=<value>            (required) [default: ws://localhost:9138/] URL to PKC RPC
 
 DESCRIPTION
   Install a challenge package (npm package name, git URL, tarball URL, or local path)
@@ -5811,13 +5820,14 @@ Install a challenge package (npm package name, git URL, tarball URL, or local pa
 
 ```
 USAGE
-  $ bitsocial challenge i PACKAGE [--pkcOptions.dataPath <value>]
+  $ bitsocial challenge i PACKAGE --pkcRpcUrl <value> [--pkcOptions.dataPath <value>]
 
 ARGUMENTS
   PACKAGE  Package specifier — anything npm can install (name, name@version, git URL, tarball URL, local path)
 
 FLAGS
   --pkcOptions.dataPath=<value>  Data path to install the challenge into
+  --pkcRpcUrl=<value>            (required) [default: ws://localhost:9138/] URL to PKC RPC
 
 DESCRIPTION
   Install a challenge package (npm package name, git URL, tarball URL, or local path)
@@ -5844,13 +5854,14 @@ Install a challenge package (npm package name, git URL, tarball URL, or local pa
 
 ```
 USAGE
-  $ bitsocial challenge install PACKAGE [--pkcOptions.dataPath <value>]
+  $ bitsocial challenge install PACKAGE --pkcRpcUrl <value> [--pkcOptions.dataPath <value>]
 
 ARGUMENTS
   PACKAGE  Package specifier — anything npm can install (name, name@version, git URL, tarball URL, local path)
 
 FLAGS
   --pkcOptions.dataPath=<value>  Data path to install the challenge into
+  --pkcRpcUrl=<value>            (required) [default: ws://localhost:9138/] URL to PKC RPC
 
 DESCRIPTION
   Install a challenge package (npm package name, git URL, tarball URL, or local path)
@@ -5871,7 +5882,7 @@ EXAMPLES
   $ bitsocial challenge install ./my-local-challenge
 ```
 
-_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/challenge/install.ts)_
+_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/challenge/install.ts)_
 
 ## `bitsocial challenge list`
 
@@ -5897,7 +5908,7 @@ EXAMPLES
   $ bitsocial challenge list -q
 ```
 
-_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/challenge/list.ts)_
+_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/challenge/list.ts)_
 
 ## `bitsocial challenge ls`
 
@@ -5929,13 +5940,14 @@ Remove an installed challenge package
 
 ```
 USAGE
-  $ bitsocial challenge remove NAME [--pkcOptions.dataPath <value>]
+  $ bitsocial challenge remove NAME --pkcRpcUrl <value> [--pkcOptions.dataPath <value>]
 
 ARGUMENTS
   NAME  The challenge package name (e.g., my-challenge or @scope/my-challenge)
 
 FLAGS
   --pkcOptions.dataPath=<value>  Data path where challenges are installed
+  --pkcRpcUrl=<value>            (required) [default: ws://localhost:9138/] URL to PKC RPC
 
 DESCRIPTION
   Remove an installed challenge package
@@ -5951,7 +5963,7 @@ EXAMPLES
   $ bitsocial challenge remove @scope/my-challenge
 ```
 
-_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/challenge/remove.ts)_
+_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/challenge/remove.ts)_
 
 ## `bitsocial challenge rm NAME`
 
@@ -5959,13 +5971,14 @@ Remove an installed challenge package
 
 ```
 USAGE
-  $ bitsocial challenge rm NAME [--pkcOptions.dataPath <value>]
+  $ bitsocial challenge rm NAME --pkcRpcUrl <value> [--pkcOptions.dataPath <value>]
 
 ARGUMENTS
   NAME  The challenge package name (e.g., my-challenge or @scope/my-challenge)
 
 FLAGS
   --pkcOptions.dataPath=<value>  Data path where challenges are installed
+  --pkcRpcUrl=<value>            (required) [default: ws://localhost:9138/] URL to PKC RPC
 
 DESCRIPTION
   Remove an installed challenge package
@@ -5987,13 +6000,14 @@ Remove an installed challenge package
 
 ```
 USAGE
-  $ bitsocial challenge un NAME [--pkcOptions.dataPath <value>]
+  $ bitsocial challenge un NAME --pkcRpcUrl <value> [--pkcOptions.dataPath <value>]
 
 ARGUMENTS
   NAME  The challenge package name (e.g., my-challenge or @scope/my-challenge)
 
 FLAGS
   --pkcOptions.dataPath=<value>  Data path where challenges are installed
+  --pkcRpcUrl=<value>            (required) [default: ws://localhost:9138/] URL to PKC RPC
 
 DESCRIPTION
   Remove an installed challenge package
@@ -6015,13 +6029,14 @@ Remove an installed challenge package
 
 ```
 USAGE
-  $ bitsocial challenge uninstall NAME [--pkcOptions.dataPath <value>]
+  $ bitsocial challenge uninstall NAME --pkcRpcUrl <value> [--pkcOptions.dataPath <value>]
 
 ARGUMENTS
   NAME  The challenge package name (e.g., my-challenge or @scope/my-challenge)
 
 FLAGS
   --pkcOptions.dataPath=<value>  Data path where challenges are installed
+  --pkcRpcUrl=<value>            (required) [default: ws://localhost:9138/] URL to PKC RPC
 
 DESCRIPTION
   Remove an installed challenge package
@@ -6065,7 +6080,7 @@ EXAMPLES
     $ bitsocial community create --jsonFile ./create-options.json
 ```
 
-_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/create.ts)_
+_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/create.ts)_
 
 ## `bitsocial community delete ADDRESSES`
 
@@ -6090,7 +6105,7 @@ EXAMPLES
   $ bitsocial community delete 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/delete.ts)_
+_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/delete.ts)_
 
 ## `bitsocial community edit ADDRESS`
 
@@ -6160,7 +6175,7 @@ EXAMPLES
     $ bitsocial community edit bitsocial.bso --jsonFile ./edit-options.json
 ```
 
-_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/edit.ts)_
+_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/edit.ts)_
 
 ## `bitsocial community export [ADDRESS]`
 
@@ -6201,7 +6216,7 @@ EXAMPLES
   $ bitsocial community export --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/export.ts)_
+_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/export.ts)_
 
 ## `bitsocial community get [ADDRESS]`
 
@@ -6232,7 +6247,7 @@ EXAMPLES
   $ bitsocial community get --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/get.ts)_
+_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/get.ts)_
 
 ## `bitsocial community list`
 
@@ -6255,7 +6270,7 @@ EXAMPLES
   $ bitsocial community list
 ```
 
-_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/list.ts)_
+_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/list.ts)_
 
 ## `bitsocial community start ADDRESSES`
 
@@ -6289,7 +6304,7 @@ EXAMPLES
     $ bitsocial community start $(bitsocial community list -q) --concurrency 1
 ```
 
-_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/start.ts)_
+_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/start.ts)_
 
 ## `bitsocial community stop ADDRESSES`
 
@@ -6314,7 +6329,7 @@ EXAMPLES
   $ bitsocial community stop Qmb99crTbSUfKXamXwZBe829Vf6w5w5TktPkb6WstC9RFW
 ```
 
-_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/community/stop.ts)_
+_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/stop.ts)_
 
 ## `bitsocial daemon`
 
@@ -6364,7 +6379,7 @@ EXAMPLES
   $ bitsocial daemon --no-allowPrivateKeyExport
 ```
 
-_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/daemon.ts)_
+_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/daemon.ts)_
 
 ## `bitsocial help [COMMAND]`
 
@@ -6428,7 +6443,7 @@ EXAMPLES
   $ bitsocial logs --stdout -f
 ```
 
-_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/logs.ts)_
+_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/logs.ts)_
 
 ## `bitsocial update check`
 
@@ -6445,7 +6460,7 @@ EXAMPLES
   $ bitsocial update check
 ```
 
-_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/update/check.ts)_
+_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/update/check.ts)_
 
 ## `bitsocial update install [VERSION]`
 
@@ -6477,7 +6492,7 @@ EXAMPLES
   $ bitsocial update install --no-restart-daemons
 ```
 
-_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/update/install.ts)_
+_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/update/install.ts)_
 
 ## `bitsocial update versions`
 
@@ -6499,7 +6514,7 @@ EXAMPLES
   $ bitsocial update versions --limit 5
 ```
 
-_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.88/src/cli/commands/update/versions.ts)_
+_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/update/versions.ts)_
 
 ## Contribution
 
