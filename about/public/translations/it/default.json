@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Funzionalità principali",
-    "title": "Cos'è Bitsocial?",
+    "title": "Un livello sociale che non è di nessuno.",
     "supporting": "Un universo in continua espansione di app di social media, che utilizzano tutti la stessa rete sociale decentralizzata sottostante — una che nessuna azienda possiede, e nessuna può portarti via.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un invito all'azione.",
+    "title": "Un appello ai costruttori.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Lo stato finale non è un'app. È un mercato di clienti, nodi, servizi e comunità che può sostituire la proprietà della piattaforma con la competizione sui protocolli.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protocollo solo testo",
     "title": "La libertà ha la sua moderazione.",
-    "supporting": "Non c'è un amministratore globale né un server da sequestrare, quindi nessuno può bandirti dall'intera rete. La moderazione si avvicina semplicemente a te.",
+    "supporting": "Il protocollo trasporta soltanto testo e non è una rete nascosta. Non esiste un amministratore globale né un server da sequestrare, quindi nessuno può bandirti dall'intera rete. La moderazione si avvicina semplicemente a te.",
     "carouselLabel": "Dubbi comuni, chiariti",
     "communities": {
       "myth": "Senza ban è il caos totale.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Tesi di adozione",
-    "title": "Perché mai qualcuno dovrebbe usarlo?",
+    "title": "Meglio possedere che affittare.",
     "supporting": "Non può essere censurato, non va mai giù e tieni tutto quello che guadagni. Ecco chi compare — e perché.",
     "diagramLabel": "Curva di adozione che mostra perché ogni coorte di utenti adotta Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Come funziona P2P nel browser",
     "liveCta": "Guardalo sul blog",
     "sectionLabel": "Browser P2P",
-    "supporting": "Apri un'app web Bitsocial in una normale scheda e si unisce al network da sola, recuperando post da altri peer e pubblicando i tuoi. Ogni altra rete sociale decentralizzata mantiene ancora un server nel mezzo.",
-    "title": "Il tuo browser è un peer"
+    "supporting": "Apri un'app web Bitsocial in una normale scheda e si unisce alla rete da sola: recupera i post dagli altri peer e pubblica i tuoi. È questa la parte difficile, ed è il motivo per cui ogni altro social network decentralizzato tiene ancora un server nel mezzo.",
+    "title": "La svolta è il browser."
   },
   "faq": {
     "sectionLabel": "FAQ",

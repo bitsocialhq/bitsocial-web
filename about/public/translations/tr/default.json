@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Temel Özellikler",
-    "title": "Bitsocial nedir?",
+    "title": "Kimsenin sahibi olmadığı bir sosyal katman.",
     "supporting": "Sosyal medya uygulamalarının sürekli genişleyen bir evreni, hepsi aynı temel merkezi olmayan sosyal ağı kullanıyor — hiçbir şirketin sahip olmadığı ve hiç kimse size alıp götüremeyeceği bir ağ.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Harekete çağrı.",
+    "title": "İnşa edenlere bir çağrı.",
     "logoAlt": "logo",
     "easterEggAlt": "Sünger Bob",
     "epilogue": "Son durum tek bir uygulama değil. Platform mülkiyetini protokol rekabetiyle değiştirebilecek müşteriler, düğümler, hizmetler ve topluluklardan oluşan bir pazardır.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Yalnızca Metin Protokolü",
     "title": "Özgürlüğün de bir denetimi var.",
-    "supporting": "Genel bir yönetici ya da ele geçirilecek bir sunucu yok, dolayısıyla kimse seni tüm ağdan yasaklayamaz. Denetim yalnızca sana yaklaşır.",
+    "supporting": "Protokol yalnızca metin taşır ve bu gizli bir ağ değildir. Ne genel bir yönetici ne de el konulabilecek bir sunucu var; bu yüzden kimse seni ağın tamamından yasaklayamaz. Moderasyon yalnızca sana daha yakın bir yere taşınır.",
     "carouselLabel": "Sık duyulan kaygılar, yanıtlarıyla",
     "communities": {
       "myth": "Yasak yoksa her şey serbesttir.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Benimsenme Tezi",
-    "title": "Bunu neden biri kullansın?",
+    "title": "Kiralamak yerine sahip olmak.",
     "supporting": "Sansürlenemez, asla çökmez ve kazandığınız her şey sizde kalır. İşte kimlerin ortaya çıktığı — ve neden.",
     "diagramLabel": "Her kullanıcı kohortunun Bitsocial'ı neden benimsediğini gösteren benimseme eğrisi.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Tarayıcıda P2P nasıl çalışır",
     "liveCta": "Blogda görün",
     "sectionLabel": "Tarayıcı P2P",
-    "supporting": "Bitsocial web uygulamasını normal bir sekmede açın ve kendisini ağa katılır, diğer eşlerden gönderiler alır ve kendi gönderilerinizi yayınlar. Diğer tüm merkezi olmayan sosyal ağlar hala ortada bir sunucu tutar.",
-    "title": "Tarayıcın bir peer'dir"
+    "supporting": "Bitsocial web uygulamasını sıradan bir sekmede açın; sekme ağa kendi başına katılır, diğer eşlerden gönderileri çeker ve sizinkileri yayımlar. İşin zor kısmı tam olarak budur; diğer bütün merkeziyetsiz sosyal ağların hâlâ ortada bir sunucu tutmasının nedeni de budur.",
+    "title": "Asıl atılım tarayıcının kendisi."
   },
   "faq": {
     "sectionLabel": "SSS",

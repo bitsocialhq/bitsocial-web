@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Kernefunktioner",
-    "title": "Hvad er Bitsocial?",
+    "title": "Et socialt lag, ingen ejer.",
     "supporting": "Et stadigt voksende univers af sociale medieapps, der alle bruger det samme underliggende decentraliserede sociale netværk — et som ingen virksomhed ejer, og ingen kan tage fra dig.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "En opfordring til handling.",
+    "title": "Et opråb til byggerne.",
     "logoAlt": "Logo",
     "easterEggAlt": "SvampeBob",
     "epilogue": "Sluttilstanden er ikke én app. Det er et marked af kunder, noder, tjenester og fællesskaber, der kan erstatte platformsejerskab med protokolkonkurrence.",
@@ -674,7 +674,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Kun-tekst-protokol",
     "title": "Frihed har moderation.",
-    "supporting": "Der er ingen global admin og ingen server at beslaglægge, så ingen kan udelukke dig fra hele netværket. Moderation rykker bare tættere på dig.",
+    "supporting": "Protokollen sender kun tekst, og det er ikke et skjult netværk. Der er ingen global administrator og ingen server, der kan beslaglægges, så ingen kan udelukke dig fra hele netværket. Moderation rykker bare tættere på dig.",
     "carouselLabel": "Almindelige bekymringer, besvaret",
     "communities": {
       "myth": "Ingen udelukkelser betyder, at alt er tilladt.",
@@ -699,7 +699,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Adoptionstesen",
-    "title": "Hvorfor skulle nogen bruge det?",
+    "title": "Bedre at eje end at leje.",
     "supporting": "Det kan ikke censureres, det går aldrig ned, og du beholder alt, hvad du tjener. Her er, hvem der dukker op — og hvorfor.",
     "diagramLabel": "Adoptionskurve, der viser, hvorfor hvert brugersegment tager Bitsocial til sig.",
     "curve": {
@@ -757,8 +757,8 @@
     "docsCta": "Sådan fungerer P2P i browseren",
     "liveCta": "Se på bloggen",
     "sectionLabel": "Browser P2P",
-    "supporting": "Åbn en Bitsocial web-app i en normal fane og den tilslutter sig selv netværket, henter indlæg fra andre jævnaldrende og udgiver dine egne. Ethvert andet decentraliseret socialt netværk holder stadig en server i midten.",
-    "title": "Din browser er en peer"
+    "supporting": "Åbn en Bitsocial-webapp i en helt almindelig fane, og den kobler sig selv på netværket – henter opslag fra andre peers og udgiver dine egne. Det er den svære del, og grunden til at alle andre decentrale sociale netværk stadig har en server i midten.",
+    "title": "Browseren er gennembruddet."
   },
   "faq": {
     "sectionLabel": "FAQ",

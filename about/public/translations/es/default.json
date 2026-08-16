@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Funciones principales",
-    "title": "¿Qué es Bitsocial?",
+    "title": "Una capa social que no es de nadie.",
     "supporting": "Un universo en constante expansión de aplicaciones de redes sociales, todas utilizando la misma red social descentralizada subyacente — una que ninguna empresa posee, y ninguna puede quitarte.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un llamado a la acción.",
+    "title": "Un llamado a los creadores.",
     "logoAlt": "Logotipo",
     "easterEggAlt": "Bob Esponja",
     "epilogue": "El estado final no es una sola aplicación. Es un mercado de clientes, nodos, servicios y comunidades que pueden reemplazar la propiedad de la plataforma con competencia de protocolos.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protocolo solo de texto",
     "title": "La libertad tiene moderación.",
-    "supporting": "No hay un administrador global ni un servidor que confiscar, así que nadie puede expulsarte de toda la red. La moderación simplemente se acerca a ti.",
+    "supporting": "El protocolo solo transporta texto y no es una red oculta. No hay un administrador global ni un servidor que se pueda incautar, así que nadie puede expulsarte de toda la red. La moderación simplemente se acerca más a ti.",
     "carouselLabel": "Dudas habituales, resueltas",
     "communities": {
       "myth": "Sin baneos, esto es una jungla.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Tesis de adopción",
-    "title": "¿Por qué lo usaría alguien?",
+    "title": "Mejor poseer que alquilar.",
     "supporting": "No se puede censurar, nunca se cae y te quedas con todo lo que ganas. Aquí está quién aparece — y por qué.",
     "diagramLabel": "Curva de adopción que muestra por qué cada cohorte de usuarios adopta Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Cómo funciona P2P en el navegador",
     "liveCta": "Míralo en el blog",
     "sectionLabel": "Navegador P2P",
-    "supporting": "Abre una aplicación web de Bitsocial en una pestaña normal y se une a la red por sí sola, obteniendo publicaciones de otros pares y publicando las tuyas. Cualquier otra red social descentralizada todavía mantiene un servidor en el medio.",
-    "title": "Tu navegador es un par"
+    "supporting": "Abre una aplicación web de Bitsocial en una pestaña normal y se une a la red por sí sola: obtiene publicaciones de otros pares y publica las tuyas. Esa es la parte difícil, y el motivo por el que todas las demás redes sociales descentralizadas siguen manteniendo un servidor en medio.",
+    "title": "El navegador es el avance decisivo."
   },
   "faq": {
     "sectionLabel": "FAQ",

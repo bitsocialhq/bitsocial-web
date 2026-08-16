@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Funcționalități de bază",
-    "title": "Ce este Bitsocial?",
+    "title": "Un strat social care nu aparține nimănui.",
     "supporting": "Un univers în continuă expansiune de aplicații de rețele sociale, toate utilizând aceeași rețea socială descentralizată de bază — una pe care nicio companie nu o deține, și nicio nu ți-o poate lua.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un apel la acțiune.",
+    "title": "Un apel către constructori.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Starea finală nu este o singură aplicație. Este o piață de clienți, noduri, servicii și comunități care pot înlocui proprietatea platformei cu competiția de protocol.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protocol doar text",
     "title": "Libertatea are moderare.",
-    "supporting": "Nu există un administrator global și niciun server de confiscat, așa că nimeni nu te poate exclude din întreaga rețea. Moderarea pur și simplu se apropie de tine.",
+    "supporting": "Protocolul transportă doar text și nu este o rețea ascunsă. Nu există un administrator global și niciun server care să poată fi confiscat, așa că nimeni nu te poate exclude din întreaga rețea. Moderarea se apropie pur și simplu de tine.",
     "carouselLabel": "Întrebări frecvente, lămurite",
     "communities": {
       "myth": "Fără excluderi, e haos total.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Teza adoptării",
-    "title": "De ce ar folosi cineva asta?",
+    "title": "Mai bine să deții decât să închiriezi.",
     "supporting": "Nu poate fi cenzurat, nu cade niciodată și păstrezi tot ce câștigi. Iată cine apare — și de ce.",
     "diagramLabel": "Curba de adopție care arată de ce fiecare cohortă de utilizatori adoptă Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Cum funcționează P2P în browser",
     "liveCta": "Vezi pe blog",
     "sectionLabel": "Browser P2P",
-    "supporting": "Deschide o aplicație web Bitsocial într-o filă normală și se alătură rețelei singură, preluând postări de la alți pari și publicând-ți pe ale tale. Fiecare altă rețea socială descentralizată încă menține un server în mijloc.",
-    "title": "Browserul tău este un peer"
+    "supporting": "Deschide o aplicație web Bitsocial într-o filă obișnuită și se conectează singură la rețea: aduce postări de la ceilalți peers și le publică pe ale tale. Aceasta e partea grea — și motivul pentru care orice altă rețea socială descentralizată ține în continuare un server la mijloc.",
+    "title": "Browserul este saltul decisiv."
   },
   "faq": {
     "sectionLabel": "FAQ",

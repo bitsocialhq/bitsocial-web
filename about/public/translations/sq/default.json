@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Karakteristikat Kryesore",
-    "title": "Çfarë është Bitsocial?",
+    "title": "Një shtresë sociale që nuk i përket askujt.",
     "supporting": "Një univers gjithnjë i zgjeruar i aplikacioneve të mediave shoqerore, të gjitha duke përdorur të njëjtën rrjet shoqeror të decentralizuar themelor — një që nuk zotërohet nga asnjë kompani, dhe asnjë nuk mund ta të marrë atë.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Një thirrje për veprim.",
+    "title": "Një thirrje për ndërtuesit.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Gjendja përfundimtare nuk është një aplikacion. Është një treg i klientëve, nyjeve, shërbimeve dhe komuniteteve që mund të zëvendësojnë pronësinë e platformës me konkurrencën e protokolleve.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protokoll vetëm me tekst",
     "title": "Liria ka moderim.",
-    "supporting": "Nuk ka administrator global dhe asnjë server për t'u rrëmbyer, ndaj askush nuk mund të të ndalojë nga i gjithë rrjeti. Moderimi thjesht zhvendoset më pranë teje.",
+    "supporting": "Protokolli mbart vetëm tekst dhe nuk është një rrjet i fshehtë. Nuk ka administrator global dhe as server që mund të sekuestrohet, ndaj askush nuk mund të të dëbojë nga i gjithë rrjeti. Moderimi thjesht zhvendoset më pranë teje.",
     "carouselLabel": "Shqetësime të zakonshme, me përgjigje",
     "communities": {
       "myth": "Pa ndalime do të thotë rrëmujë e plotë.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Teza e adoptimit",
-    "title": "Pse do ta përdorte dikush këtë?",
+    "title": "Më mirë ta zotërosh sesa ta marrësh me qira.",
     "supporting": "Nuk mund të censurohet, nuk bie kurrë dhe i mban të gjitha ato që fiton. Ja kush shfaqet — dhe pse.",
     "diagramLabel": "Kurba e adoptimit që tregon pse çdo grup përdoruesish e adopton Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Si funksionon P2P në shfletuesin",
     "liveCta": "Shih në blog",
     "sectionLabel": "Shfletues P2P",
-    "supporting": "Hap një aplikacion web Bitsocial në një skedul normal dhe ajo bashkohet në rrjetin vetë, duke marrë postime nga homologët e tjerë dhe duke publikuar tuajat. Çdo rrjet social i decentralizuar tjetër prapë mban një server në mes.",
-    "title": "Shfletuesi yt është një peer"
+    "supporting": "Hap një aplikacion web të Bitsocial në një skedë të zakonshme dhe ai i bashkohet vetë rrjetit: merr postimet nga nyjet e tjera dhe publikon të tuat. Kjo është pjesa e vështirë — dhe arsyeja pse çdo rrjet tjetër social i decentralizuar ende mban një server në mes.",
+    "title": "Shfletuesi është kthesa vendimtare."
   },
   "faq": {
     "sectionLabel": "Pyetje të shpeshta",

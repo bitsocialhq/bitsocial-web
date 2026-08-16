@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Tính năng cốt lõi",
-    "title": "Bitsocial là gì?",
+    "title": "Một tầng xã hội không thuộc về ai.",
     "supporting": "Một vũ trụ không ngừng mở rộng của các ứng dụng phương tiện truyền thông xã hội, tất cả đều sử dụng cùng một mạng xã hội phi tập trung cơ bản — một mạng mà không công ty nào sở hữu, và không ai có thể lấy nó từ bạn.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Lời kêu gọi hành động.",
+    "title": "Lời hiệu triệu tới những người kiến tạo.",
     "logoAlt": "biểu tượng",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Trạng thái kết thúc không phải là một ứng dụng. Đó là thị trường của khách hàng, nút, dịch vụ và cộng đồng có thể thay thế quyền sở hữu nền tảng bằng sự cạnh tranh về giao thức.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Giao thức chỉ văn bản",
     "title": "Tự do vẫn có kiểm duyệt.",
-    "supporting": "Không có quản trị viên toàn cục và không có máy chủ nào để tịch thu, nên không ai có thể cấm bạn khỏi toàn bộ mạng lưới. Việc kiểm duyệt chỉ đến gần bạn hơn mà thôi.",
+    "supporting": "Giao thức chỉ truyền văn bản, và đây không phải là một mạng ngầm. Không có quản trị viên toàn cục và cũng không có máy chủ nào để tịch thu, nên không ai có thể cấm bạn khỏi toàn bộ mạng lưới. Việc kiểm duyệt chỉ đơn giản là đến gần bạn hơn.",
     "carouselLabel": "Giải đáp những lo ngại thường gặp",
     "communities": {
       "myth": "Không cấm đoán nghĩa là loạn lạc, ai muốn làm gì thì làm.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Luận điểm về tiếp nhận",
-    "title": "Tại sao ai đó lại dùng nó?",
+    "title": "Sở hữu tốt hơn đi thuê.",
     "supporting": "Nó không thể bị kiểm duyệt, không bao giờ sập, và bạn giữ lại tất cả những gì mình kiếm được. Đây là những ai xuất hiện — và vì sao.",
     "diagramLabel": "Đường cong chấp nhận cho thấy vì sao từng nhóm người dùng sử dụng Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "P2P hoạt động như thế nào trong trình duyệt",
     "liveCta": "Xem trên blog",
     "sectionLabel": "Trình duyệt P2P",
-    "supporting": "Mở ứng dụng web Bitsocial trong một tab bình thường và nó tự kết nối với mạng, lấy bài viết từ các peer khác và đăng bài của bạn. Mỗi mạng xã hội phi tập trung khác vẫn giữ một máy chủ ở giữa.",
-    "title": "Trình duyệt của bạn là một peer"
+    "supporting": "Mở ứng dụng web Bitsocial trong một thẻ trình duyệt bình thường và nó tự tham gia mạng lưới: lấy bài đăng từ các peer khác và phát bài của bạn đi. Đó mới là phần khó — và là lý do mọi mạng xã hội phi tập trung khác vẫn phải đặt một máy chủ ở giữa.",
+    "title": "Chính trình duyệt là bước đột phá."
   },
   "faq": {
     "sectionLabel": "Câu hỏi thường gặp",

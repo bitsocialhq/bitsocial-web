@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Característiques principals",
-    "title": "Què és Bitsocial?",
+    "title": "Una capa social que no és de ningú.",
     "supporting": "Un univers cada vegada més gran d'aplicacions de mitjans socials, que utilitzen la mateixa xarxa social descentralitzada subjacent — una que cap empresa és propietària, i cap pot arrebatar-te.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Una crida a l'acció.",
+    "title": "Una crida als creadors.",
     "logoAlt": "Logotip",
     "easterEggAlt": "Bob Esponja",
     "epilogue": "L'estat final no és una aplicació. És un mercat de clients, nodes, serveis i comunitats que poden substituir la propietat de la plataforma per la competència de protocols.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protocol només de text",
     "title": "La llibertat té moderació.",
-    "supporting": "No hi ha cap administrador global ni cap servidor per confiscar, així que ningú no pot expulsar-te de tota la xarxa. La moderació simplement s'acosta a tu.",
+    "supporting": "El protocol només transporta text i no és una xarxa oculta. No hi ha cap administrador global ni cap servidor que es pugui confiscar, així que ningú no et pot expulsar de tota la xarxa. La moderació simplement s'acosta més a tu.",
     "carouselLabel": "Dubtes habituals, resolts",
     "communities": {
       "myth": "Sense expulsions, això és una selva.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Tesi d'adopció",
-    "title": "Per què el faria servir algú?",
+    "title": "Millor ser propietari que llogater.",
     "supporting": "No es pot censurar, mai no cau i et quedes amb tot el que guanyes. Aquí ve qui hi apareix — i per què.",
     "diagramLabel": "Corba d'adopció que mostra per què cada cohort d'usuaris adopta Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Com funciona P2P al navegador",
     "liveCta": "Veu-ho al blog",
     "sectionLabel": "Navegador P2P",
-    "supporting": "Obriu una aplicació web de Bitsocial en una pestanya normal i s'uneix a la xarxa per si mateixa, obtenint missatges d'altres iguals i publicant els vostres. Cada altra xarxa social descentralitzada encara manté un servidor al mig.",
-    "title": "El teu navegador és un par"
+    "supporting": "Obre una aplicació web de Bitsocial en una pestanya normal i s'uneix a la xarxa pel seu compte: recupera publicacions d'altres parells i publica les teves. Aquesta és la part difícil, i el motiu pel qual qualsevol altra xarxa social descentralitzada encara manté un servidor pel mig.",
+    "title": "El navegador és la clau de tot."
   },
   "faq": {
     "sectionLabel": "FAQ",

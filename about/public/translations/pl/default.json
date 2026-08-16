@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Kluczowe funkcje",
-    "title": "Co to jest Bitsocial?",
+    "title": "Warstwa społecznościowa, która nie należy do nikogo.",
     "supporting": "Stale rozszerzający się wszechświat aplikacji mediów społecznościowych, które wszystkie wykorzystują tę samą podstawową zdecentralizowaną sieć społecznościową — taką, której nie posiada żadne przedsiębiorstwo i której żadne nie może ci odebrać.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Wezwanie do działania.",
+    "title": "Wezwanie do twórców.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Stan końcowy nie jest jedną aplikacją. Jest to rynek klientów, węzłów, usług i społeczności, który może zastąpić własność platformy konkurencją protokołów.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protokół tylko tekstowy",
     "title": "Wolność ma moderację.",
-    "supporting": "Nie ma globalnego administratora ani serwera, który można przejąć, więc nikt nie może zbanować cię w całej sieci. Moderacja po prostu przesuwa się bliżej ciebie.",
+    "supporting": "Protokół przesyła wyłącznie tekst i nie jest ukrytą siecią. Nie ma globalnego administratora ani serwera, który dałoby się przejąć, więc nikt nie zbanuje cię w całej sieci. Moderacja po prostu przenosi się bliżej ciebie.",
     "carouselLabel": "Odpowiedzi na częste obawy",
     "communities": {
       "myth": "Brak banów oznacza, że panuje pełna dowolność.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Teza adopcji",
-    "title": "Dlaczego ktoś miałby tego używać?",
+    "title": "Lepiej mieć niż wynajmować.",
     "supporting": "Nie da się tego ocenzurować, nigdy nie pada i zachowujesz wszystko, co zarobisz. Oto, kto się pojawia — i dlaczego.",
     "diagramLabel": "Krzywa adopcji pokazująca, dlaczego każda kohorta użytkowników przyjmuje Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Jak P2P działa w przeglądarce",
     "liveCta": "Obejrzyj na blogu",
     "sectionLabel": "Przeglądarka P2P",
-    "supporting": "Otwórz aplikację internetową Bitsocial w normalnej karcie, a ona sama dołączy do sieci, pobiera posty od innych peerów i publikuje własne. Każda inna zdecentralizowana sieć społeczna nadal utrzymuje serwer pośrodku.",
-    "title": "Twoja przeglądarka to peer"
+    "supporting": "Otwórz aplikację internetową Bitsocial w zwykłej karcie, a sama dołączy do sieci: pobierze posty od innych peerów i opublikuje twoje. To właśnie jest ta trudna część — i powód, dla którego każda inna zdecentralizowana sieć społecznościowa wciąż trzyma serwer pośrodku.",
+    "title": "Przełomem jest sama przeglądarka."
   },
   "faq": {
     "sectionLabel": "Najczęstsze pytania",
