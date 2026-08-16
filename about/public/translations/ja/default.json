@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "これからの計画は何ですか？どうすれば協力できますか？"
       },
+      "about": {
+        "question": "Bitsocialは誰が作っているのですか？資金はどう調達したのですか？"
+      },
       "mailing-list": {
         "question": "最新情報を受け取るにはどうすればいいですか？"
       }

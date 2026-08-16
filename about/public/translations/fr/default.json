@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "Quel est le plan pour la suite ? Comment puis-je aider ?"
       },
+      "about": {
+        "question": "Qui est derrière Bitsocial ? Comment a-t-il été financé ?"
+      },
       "mailing-list": {
         "question": "Comment rester informé ?"
       }

@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "Mi a terv innentől? Hogyan segíthetek?"
       },
+      "about": {
+        "question": "Kik állnak a Bitsocial mögött? Hogyan finanszírozták?"
+      },
       "mailing-list": {
         "question": "Hogyan maradok naprakész?"
       }

@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "앞으로의 계획은 무엇인가요? 제가 어떻게 도울 수 있나요?"
       },
+      "about": {
+        "question": "Bitsocial은 누가 만드나요? 자금은 어떻게 조달했나요?"
+      },
       "mailing-list": {
         "question": "최신 소식을 어떻게 받을 수 있나요?"
       }

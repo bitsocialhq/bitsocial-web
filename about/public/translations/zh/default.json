@@ -824,6 +824,9 @@
       "master-plan": {
         "question": "接下来的计划是什么？我能帮上什么忙？"
       },
+      "about": {
+        "question": "Bitsocial背后是谁？资金从哪里来？"
+      },
       "mailing-list": {
         "question": "我怎么持续关注进展？"
       }

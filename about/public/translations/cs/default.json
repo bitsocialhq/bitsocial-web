@@ -791,6 +791,9 @@
       "master-plan": {
         "question": "Jaké jsou další plány? Jak mohu pomoci?"
       },
+      "about": {
+        "question": "Kdo stojí za Bitsocial? Jak byl financován?"
+      },
       "mailing-list": {
         "question": "Jak mohu zůstat v obraze?"
       }

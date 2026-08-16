@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "Apa rencana selanjutnya? Bagaimana saya bisa membantu?"
       },
+      "about": {
+        "question": "Siapa di balik Bitsocial? Bagaimana pendanaannya?"
+      },
       "mailing-list": {
         "question": "Bagaimana saya bisa mengikuti perkembangannya?"
       }

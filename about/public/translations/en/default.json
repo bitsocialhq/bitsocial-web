@@ -574,6 +574,9 @@
       "master-plan": {
         "question": "What's the plan from here? How can I help?"
       },
+      "about": {
+        "question": "Who is behind Bitsocial? How was it funded?"
+      },
       "mailing-list": {
         "question": "How do I follow along?"
       }

@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "Bundan sonraki plan nedir? Nasıl yardımcı olabilirim?"
       },
+      "about": {
+        "question": "Bitsocial'ın arkasında kim var? Nasıl finanse edildi?"
+      },
       "mailing-list": {
         "question": "Nasıl haberdar olabilirim?"
       }

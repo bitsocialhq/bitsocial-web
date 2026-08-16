@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "Quin és el pla d'ara endavant? Com puc ajudar?"
       },
+      "about": {
+        "question": "Qui hi ha darrere de Bitsocial? Com s'ha finançat?"
+      },
       "mailing-list": {
         "question": "Com puc estar al dia?"
       }

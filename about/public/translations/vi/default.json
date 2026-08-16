@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "Kế hoạch sắp tới là gì? Tôi có thể giúp gì?"
       },
+      "about": {
+        "question": "Ai đứng sau Bitsocial? Dự án được tài trợ thế nào?"
+      },
       "mailing-list": {
         "question": "Làm sao để tôi luôn cập nhật?"
       }

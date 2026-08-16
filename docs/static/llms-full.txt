@@ -236,6 +236,7 @@ Every section of this site answers one. Click a question to jump to it.
 - What about illegal content?
 - Why would people switch to Bitsocial?
 - What's the plan from here? How can I help?
+- Who is behind Bitsocial? How was it funded?
 - How do I follow along?
 
 ## Landing page deep comparison tables

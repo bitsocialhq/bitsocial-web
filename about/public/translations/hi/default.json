@@ -825,6 +825,9 @@
       "master-plan": {
         "question": "आगे की योजना क्या है? मैं कैसे मदद करूँ?"
       },
+      "about": {
+        "question": "Bitsocial के पीछे कौन है? इसे पैसा कहाँ से मिला?"
+      },
       "mailing-list": {
         "question": "मैं अपडेट कैसे पाऊँ?"
       }
