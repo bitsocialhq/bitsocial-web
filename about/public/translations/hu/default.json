@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Alapfunkciók",
-    "title": "Mi az a Bitsocial?",
+    "title": "Egy közösségi réteg, amely senkié.",
     "supporting": "Egy folyamatosan bővülő szociális médiaapplikációk univerzuma, amely mind ugyanazt az alapul szolgáló decentralizált közösségi hálózatot használja — egy olyan hálózatot, amelyet nem birtokol semmilyen vállalat, és senki nem veheti el tőled.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Cselekvésre szólítás.",
+    "title": "Felhívás az építőkhöz.",
     "logoAlt": "Logó",
     "easterEggAlt": "Spongyabob",
     "epilogue": "A végállapot nem egy alkalmazás. Ez egy olyan ügyfelek, csomópontok, szolgáltatások és közösségek piaca, amelyek a platform tulajdonjogát protokollversenyre cserélhetik.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Csak szöveges protokoll",
     "title": "A szabadságnak van moderációja.",
-    "supporting": "Nincs globális adminisztrátor és nincs lefoglalható szerver, így senki sem tilthat ki az egész hálózatról. A moderáció csak közelebb kerül hozzád.",
+    "supporting": "A protokoll csak szöveget továbbít, és nem rejtett hálózat. Nincs globális adminisztrátor, és nincs lefoglalható szerver sem, így senki sem tilthat ki a teljes hálózatból. A moderálás egyszerűen közelebb kerül hozzád.",
     "carouselLabel": "Válaszok a gyakori aggályokra",
     "communities": {
       "myth": "Ha nincs tiltás, akkor itt bármit szabad.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Elfogadási tézis",
-    "title": "Miért használná ezt bárki?",
+    "title": "Birtokolni jobb, mint bérelni.",
     "supporting": "Nem lehet cenzúrázni, soha nem áll le, és megtarthatod, amit megkeresel. Íme, kik jelennek meg — és miért.",
     "diagramLabel": "Elterjedési görbe, amely megmutatja, miért használja a Bitsocialt minden felhasználói csoport.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Hogyan működik a P2P a böngészőben",
     "liveCta": "Lásd a blogon",
     "sectionLabel": "Böngésző P2P",
-    "supporting": "Nyiss meg egy Bitsocial webalkalmazást egy normál lapon, és önmagában csatlakozik a hálózathoz, lekéri a bejegyzéseket más társaktól, és közzéteszi a sajátaidat. Minden más decentralizált közösségi hálózat továbbra is tart egy szervert a közepén.",
-    "title": "A böngésződ egy peer"
+    "supporting": "Nyiss meg egy Bitsocial webalkalmazást egy hétköznapi lapon, és magától csatlakozik a hálózathoz: bejegyzéseket tölt le a többi peertől, a tieidet pedig közzéteszi. Pontosan ez a nehéz rész – és ezért tart még mindig szervert középen az összes többi decentralizált közösségi hálózat.",
+    "title": "Maga a böngésző az áttörés."
   },
   "faq": {
     "sectionLabel": "GYIK",

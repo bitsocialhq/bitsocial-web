@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Fonctionnalités principales",
-    "title": "Qu'est-ce que Bitsocial?",
+    "title": "Une couche sociale qui n'appartient à personne.",
     "supporting": "Un univers en constante expansion d'applications de réseaux sociaux, utilisant toutes le même réseau social décentralisé sous-jacent — un qu'aucune entreprise ne possède, et qu'aucune ne peut vous retirer.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Un appel à l'action.",
+    "title": "Un appel aux bâtisseurs.",
     "logoAlt": "Logo",
     "easterEggAlt": "Bob l'éponge",
     "epilogue": "L’état final n’est pas une seule application. Il s’agit d’un marché de clients, de nœuds, de services et de communautés qui peuvent remplacer la propriété des plateformes par la concurrence des protocoles.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protocole texte uniquement",
     "title": "La liberté a sa modération.",
-    "supporting": "Il n'y a aucun administrateur global ni serveur à saisir, donc personne ne peut vous bannir de tout le réseau. La modération se rapproche simplement de vous.",
+    "supporting": "Le protocole ne transporte que du texte, et ce n'est pas un réseau caché. Il n'y a ni administrateur global ni serveur à saisir : personne ne peut donc vous bannir du réseau tout entier. La modération se rapproche simplement de vous.",
     "carouselLabel": "Inquiétudes fréquentes, clarifiées",
     "communities": {
       "myth": "Sans bannissements, c'est l'anarchie.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Thèse d'adoption",
-    "title": "Pourquoi quelqu'un l'utiliserait-il ?",
+    "title": "Mieux vaut posséder que louer.",
     "supporting": "On ne peut pas le censurer, il ne tombe jamais en panne, et vous gardez tout ce que vous gagnez. Voici qui se présente — et pourquoi.",
     "diagramLabel": "Courbe d’adoption montrant pourquoi chaque cohorte d’utilisateurs adopte Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Comment fonctionne P2P dans le navigateur",
     "liveCta": "Regarder sur le blog",
     "sectionLabel": "Navigateur P2P",
-    "supporting": "Ouvrez une application web Bitsocial dans un onglet normal et elle rejoint le réseau d'elle-même, récupérant les publications des autres pairs et publiant les vôtres. Chaque autre réseau social décentralisé maintient toujours un serveur au milieu.",
-    "title": "Votre navigateur est un pair"
+    "supporting": "Ouvrez une application web Bitsocial dans un onglet ordinaire et elle rejoint le réseau d'elle-même : elle récupère les publications des autres pairs et diffuse les vôtres. C'est là toute la difficulté — et la raison pour laquelle tous les autres réseaux sociaux décentralisés gardent encore un serveur au milieu.",
+    "title": "La percée, c'est le navigateur."
   },
   "faq": {
     "sectionLabel": "FAQ",

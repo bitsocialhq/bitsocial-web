@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Klíčové funkce",
-    "title": "Co je Bitsocial?",
+    "title": "Sociální vrstva, kterou nikdo nevlastní.",
     "supporting": "Stále se rozšiřující vesmír aplikací sociálních médií, které všechny používají stejnou základní decentralizovanou sociální síť — jednu, kterou nevlastní žádná společnost, a žádná vám ji nemůže odebrat.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Výzva k akci.",
+    "title": "Výzva pro tvůrce.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Koncový stav není jedna aplikace. Je to trh klientů, uzlů, služeb a komunit, které mohou nahradit vlastnictví platformy konkurencí protokolů.",
@@ -674,7 +674,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Pouze textový protokol",
     "title": "Svoboda má moderaci.",
-    "supporting": "Neexistuje žádný globální administrátor ani server, který by šlo zabavit, takže nikdo vás nemůže vykázat z celé sítě. Moderace se jen přesouvá blíž k vám.",
+    "supporting": "Protokol přenáší pouze text a nejde o skrytou síť. Neexistuje žádný globální správce ani server, který by šlo zabavit, takže vás nikdo nemůže vykázat z celé sítě. Moderování se jen posouvá blíž k vám.",
     "carouselLabel": "Odpovědi na časté obavy",
     "communities": {
       "myth": "Žádné bany znamenají, že tu vládne naprostá libovůle.",
@@ -699,7 +699,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Teze adopce",
-    "title": "Proč by to vůbec někdo používal?",
+    "title": "Vlastnit je lepší než si pronajímat.",
     "supporting": "Nejde cenzurovat, nikdy nevypadne a všechno, co vyděláte, zůstane vám. Tady je, kdo se objeví — a proč.",
     "diagramLabel": "Křivka přijetí ukazující, proč každá uživatelská kohorta přijímá Bitsocial.",
     "curve": {
@@ -757,8 +757,8 @@
     "docsCta": "Jak funguje P2P v prohlížeči",
     "liveCta": "Sledujte na blogu",
     "sectionLabel": "Prohlížeč P2P",
-    "supporting": "Otevřete webovou aplikaci Bitsocial v normální kartě a připojí se k síti sama, načítá příspěvky od dalších partnerů a publikuje vaše. Každá jiná decentralizovaná sociální síť stále udržuje server uprostřed.",
-    "title": "Tvůj prohlížeč je peer"
+    "supporting": "Otevřete webovou aplikaci Bitsocial v běžné záložce a sama se připojí k síti – načítá příspěvky od ostatních peerů a publikuje ty vaše. Právě tohle je ta těžká část a důvod, proč každá jiná decentralizovaná sociální síť pořád drží uprostřed server.",
+    "title": "Průlom je samotný prohlížeč."
   },
   "faq": {
     "sectionLabel": "Časté dotazy",

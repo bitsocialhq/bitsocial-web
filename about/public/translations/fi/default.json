@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Ydintoiminnot",
-    "title": "Mikä on Bitsocial?",
+    "title": "Sosiaalinen kerros, jota kukaan ei omista.",
     "supporting": "Jatkuvasti laajeneva universumi sosiaalisen median sovelluksia, jotka kaikki käyttävät samaa taustalla olevaa hajautettua sosiaalista verkostoa — sellaista, jota mikään yritys ei omista, eikä kukaan voi ottaa sinulta.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Kutsu toimintaan.",
+    "title": "Kutsu rakentajille.",
     "logoAlt": "Logo",
     "easterEggAlt": "Paavo Pesusieni",
     "epilogue": "Lopputila ei ole yksi sovellus. Se on asiakkaiden, solmujen, palveluiden ja yhteisöjen markkinat, jotka voivat korvata alustan omistamisen protokollakilpailulla.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Pelkkä teksti -protokolla",
     "title": "Vapaudella on moderointi.",
-    "supporting": "Globaalia ylläpitäjää ei ole eikä takavarikoitavaa palvelinta, joten kukaan ei voi estää sinua koko verkosta. Moderointi vain siirtyy lähemmäs sinua.",
+    "supporting": "Protokolla välittää vain tekstiä, eikä kyseessä ole piilotettu verkko. Yleistä ylläpitäjää ei ole eikä palvelinta, jonka voisi takavarikoida, joten kukaan ei voi porttikieltää sinua koko verkosta. Moderointi vain siirtyy lähemmäs sinua.",
     "carouselLabel": "Yleisiä huolia, vastattuina",
     "communities": {
       "myth": "Eston puute tarkoittaa, että kaikki on sallittua.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Adoptioteesi",
-    "title": "Miksi kukaan käyttäisi sitä?",
+    "title": "Omistaminen voittaa vuokraamisen.",
     "supporting": "Sitä ei voi sensuroida, se ei koskaan kaadu, ja saat pitää kaiken mitä tienaat. Tässä on, ketkä ilmestyvät — ja miksi.",
     "diagramLabel": "Käyttöönoton käyrä, joka näyttää, miksi kukin käyttäjäjoukko ottaa Bitsocialin käyttöön.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Kuinka P2P toimii selaimessa",
     "liveCta": "Näe blogissa",
     "sectionLabel": "Selain P2P",
-    "supporting": "Avaa Bitsocial-verkkosovellus tavallisella välilehdellä ja se liittyy verkkoon itsestään, noutaa viestejä muilta vertaisilta ja julkaisee omat viestisi. Jokainen muu hajautettu sosiaalinen verkko säilyttää edelleen palvelimen keskellä.",
-    "title": "Selaimesi on peer"
+    "supporting": "Avaa Bitsocialin verkkosovellus tavallisessa välilehdessä, niin se liittyy verkkoon itse: hakee julkaisuja muilta vertaisilta ja julkaisee sinun omasi. Juuri tämä on se vaikea osuus – ja syy siihen, miksi jokainen muu hajautettu sosiaalinen verkosto pitää edelleen palvelimen välissä.",
+    "title": "Selain on läpimurto."
   },
   "faq": {
     "sectionLabel": "UKK",

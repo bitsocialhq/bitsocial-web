@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Kärnfunktioner",
-    "title": "Vad är Bitsocial?",
+    "title": "Ett socialt lager som ingen äger.",
     "supporting": "Ett ständigt växande universum av sociala medieappar, som alla använder samma underliggande decentraliserade sociala nätverk — ett som ingen företag äger, och ingen kan ta ifrån dig.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "En uppmaning till handling.",
+    "title": "En uppmaning till byggarna.",
     "logoAlt": "Logotyp",
     "easterEggAlt": "Svampbob",
     "epilogue": "Sluttillståndet är inte en app. Det är en marknad av kunder, noder, tjänster och gemenskaper som kan ersätta plattformsägande med protokollkonkurrens.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Endast-text-protokoll",
     "title": "Frihet har moderering.",
-    "supporting": "Det finns ingen global admin och ingen server att beslagta, så ingen kan stänga av dig från hela nätverket. Moderering flyttar bara närmare dig.",
+    "supporting": "Protokollet överför bara text, och det här är inget dolt nätverk. Det finns ingen global administratör och ingen server att beslagta, så ingen kan stänga av dig från hela nätverket. Moderering flyttar helt enkelt närmare dig.",
     "carouselLabel": "Vanliga farhågor, besvarade",
     "communities": {
       "myth": "Inga avstängningar betyder att allt är tillåtet.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Adoptionstes",
-    "title": "Varför skulle någon använda det?",
+    "title": "Bättre att äga än att hyra.",
     "supporting": "Det kan inte censureras, det går aldrig ner och du behåller allt du tjänar. Här är vilka som dyker upp — och varför.",
     "diagramLabel": "Adoptionskurva som visar varför varje användargrupp väljer Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Hur P2P fungerar i webbläsaren",
     "liveCta": "Se på bloggen",
     "sectionLabel": "Webbläsare P2P",
-    "supporting": "Öppna en Bitsocial-webbapp i en vanlig flik och den ansluter sig själv till nätverket, hämtar inlägg från andra peer och publicerar dina egna. Varje annat decentraliserat socialt nätverk har fortfarande en server i mitten.",
-    "title": "Din webbläsare är en peer"
+    "supporting": "Öppna en Bitsocial-webbapp i en helt vanlig flik, så ansluter den sig själv till nätverket – hämtar inlägg från andra peers och publicerar dina egna. Det är den svåra biten, och skälet till att alla andra decentraliserade sociala nätverk fortfarande har en server i mitten.",
+    "title": "Webbläsaren är genombrottet."
   },
   "faq": {
     "sectionLabel": "FAQ",

@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Fitur Inti",
-    "title": "Apa itu Bitsocial?",
+    "title": "Lapisan sosial yang tak dimiliki siapa pun.",
     "supporting": "Sebuah alam semesta aplikasi media sosial yang terus berkembang, semua menggunakan jaringan sosial terdesentralisasi yang sama — satu yang tidak dimiliki oleh perusahaan mana pun, dan tidak ada yang bisa mengambilnya dari Anda.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Sebuah ajakan bertindak.",
+    "title": "Panggilan untuk para pembangun.",
     "logoAlt": "logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Status akhir bukanlah satu aplikasi. Ini adalah pasar klien, node, layanan, dan komunitas yang dapat menggantikan kepemilikan platform dengan kompetisi protokol.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protokol Teks Saja",
     "title": "Kebebasan tetap ada moderasinya.",
-    "supporting": "Tidak ada admin global dan tidak ada server yang bisa disita, jadi tak seorang pun bisa memblokir Anda dari seluruh jaringan. Moderasi hanya bergeser lebih dekat kepada Anda.",
+    "supporting": "Protokol ini hanya membawa teks, dan bukan jaringan tersembunyi. Tidak ada admin global dan tidak ada server yang bisa disita, jadi tidak ada yang bisa memblokir Anda dari seluruh jaringan. Moderasi hanya bergeser lebih dekat kepada Anda.",
     "carouselLabel": "Kekhawatiran umum, terjawab",
     "communities": {
       "myth": "Tanpa pemblokiran, semua jadi bebas tanpa aturan.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Tesis adopsi",
-    "title": "Kenapa ada orang yang mau memakainya?",
+    "title": "Memiliki lebih baik daripada menyewa.",
     "supporting": "Ini tidak bisa disensor, tidak pernah down, dan kamu menyimpan semua yang kamu hasilkan. Inilah yang muncul — dan alasannya.",
     "diagramLabel": "Kurva adopsi yang menunjukkan mengapa setiap kelompok pengguna mengadopsi Bitsocial.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Cara kerja P2P di browser",
     "liveCta": "Lihat di blog",
     "sectionLabel": "Peramban P2P",
-    "supporting": "Buka aplikasi web Bitsocial di tab normal dan bergabung dengan jaringan sendiri, mengambil postingan dari peer lain dan memublikasikan milik Anda. Setiap jaringan sosial terdesentralisasi lainnya masih menyimpan server di tengah.",
-    "title": "Peramban Anda adalah peer"
+    "supporting": "Buka aplikasi web Bitsocial di tab biasa dan aplikasinya langsung bergabung ke jaringan: mengambil kiriman dari peer lain dan menerbitkan kiriman Anda. Itulah bagian yang sulit — dan alasan semua jejaring sosial terdesentralisasi lainnya masih menaruh server di tengah.",
+    "title": "Terobosannya ada di peramban."
   },
   "faq": {
     "sectionLabel": "FAQ",

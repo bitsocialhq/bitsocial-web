@@ -88,7 +88,7 @@
   },
   "features": {
     "sectionLabel": "Mga Pangunahing Tampok",
-    "title": "Ano ang Bitsocial?",
+    "title": "Isang social layer na walang nagmamay-ari.",
     "supporting": "Isang patuloy na lumalaking uniberso ng mga social media app, lahat ay gumagamit ng parehong pinagbabatayan na desentralisadong social network — isang hindi pag-aari ng anumang kumpanya, at walang sinuman ang maaaring kunin mula sa iyo.",
     "items": {
       "open-source": {
@@ -383,7 +383,7 @@
     }
   },
   "masterPlan": {
-    "title": "Isang tawag sa aksyon.",
+    "title": "Isang panawagan sa mga tagabuo.",
     "logoAlt": "Logo",
     "easterEggAlt": "SpongeBob",
     "epilogue": "Ang end state ay hindi isang app. Ito ay isang merkado ng mga kliyente, node, serbisyo, at komunidad na maaaring palitan ang pagmamay-ari ng platform ng kumpetisyon sa protocol.",
@@ -708,7 +708,7 @@
   "textOnlyProtocol": {
     "sectionLabel": "Protocol na Teksto Lamang",
     "title": "May moderation pa rin ang kalayaan.",
-    "supporting": "Walang global admin at walang server na puwedeng samsamin, kaya walang makakapag-ban sa iyo sa buong network. Lumalapit lang sa iyo ang moderation.",
+    "supporting": "Teksto lang ang dinadala ng protocol, at hindi ito isang nakatagong network. Walang pandaigdigang admin at walang server na puwedeng kumpiskahin, kaya walang makakapag-ban sa iyo sa buong network. Mas lumalapit lang sa iyo ang moderation.",
     "carouselLabel": "Mga karaniwang alalahanin, sinagot",
     "communities": {
       "myth": "Kapag walang ban, wala nang patakaran ang lahat.",
@@ -733,7 +733,7 @@
   },
   "adoptionThesis": {
     "sectionLabel": "Tesis ng Pagtanggap",
-    "title": "Bakit nga ba gagamitin iyon ng sinuman?",
+    "title": "Mas mabuting magmay-ari kaysa umupa.",
     "supporting": "Hindi ito puwedeng i-censor, hindi ito bumabagsak, at sa'yo ang lahat ng kinikita mo. Narito kung sino ang lumalabas — at kung bakit.",
     "diagramLabel": "Kurba ng pag-adopt na nagpapakita kung bakit gumagamit ng Bitsocial ang bawat pangkat ng user.",
     "curve": {
@@ -791,8 +791,8 @@
     "docsCta": "Paano gumagana ang P2P sa browser",
     "liveCta": "Panoorin sa blog",
     "sectionLabel": "Browser P2P",
-    "supporting": "Magbukas ng Bitsocial web app sa isang normal na tab at ito ay sumali sa network nang sarili nito, kumukuha ng mga post mula sa ibang peers at naglalathala ng iyong sarili. Bawat ibang decentralized social network ay nagpapanatili pa rin ng server sa gitna.",
-    "title": "Ang iyong browser ay isang peer"
+    "supporting": "Buksan ang isang Bitsocial web app sa ordinaryong tab at kusa na itong sasali sa network: kinukuha nito ang mga post mula sa ibang peer at inilalathala ang sa iyo. Iyan ang mahirap na bahagi — at iyan din ang dahilan kung bakit bawat ibang desentralisadong social network ay may server pa rin sa gitna.",
+    "title": "Ang browser mismo ang breakthrough."
   },
   "faq": {
     "sectionLabel": "FAQ",
