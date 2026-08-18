@@ -208,3 +208,13 @@ If uncertain, ask the developer before adding an entry.
 - **Impact:** A whole verification pass reads as a product bug in the control being tested. `navigator.webdriver` is `false` in playwright-cli sessions, so the app cannot detect automation on its own.
 - **Mitigation:** `scripts/pw-session.sh open` now registers `window.__NO_DEV_TOOLBAR__ = true` via `page.addInitScript` and reloads, so sessions opened through the wrapper never mount the toolbar. Only the toolbar is suppressed — `react-scan` itself stays enabled, so `__getReactScanReport` and `__ELEMENT_SOURCE__` keep working for the profiler and element-inspection skills. When driving `playwright-cli` directly, set the same flag before load, or expect corner clicks to be intercepted.
 - **Status:** confirmed
+
+### `skills add` installs Codex and Cursor copies into the gitignored `.agents/` directory
+
+- **Date:** 2026-08-18
+- **Observed by:** Tommaso + Claude
+- **Context:** Installing the `improve-threejs` skill from `millionco/react-doctor` with the `skills` CLI (`vercel-labs/skills`).
+- **What was surprising:** `npx skills add <repo> --skill <name> --agent codex` and `--agent cursor` both write to `.agents/skills/<name>/`, not to `.codex/skills/` or `.cursor/skills/`. `AGENTS.md` forbids a repo-level `.agents/` directory and `.gitignore:29` ignores it, so both copies are silently untracked. Only `--agent claude-code` writes to the expected `.claude/skills/`. Separately, the documented comma-separated form (`--agent claude-code,codex,cursor`) fails with "Invalid agents" and installs nothing, even though each name is valid on its own.
+- **Impact:** The install reports success while two of the three toolchain copies land somewhere that will never be committed, so Codex and Cursor silently lack the skill after a fresh clone. The comma form can also produce a no-op install that reads as a success.
+- **Mitigation:** Run `skills add` once per agent with a single `--agent` value. Use `--agent claude-code` for the `.claude/skills/` copy, then `cp -R .claude/skills/<name> .codex/skills/<name>` and `cp -R .claude/skills/<name> .cursor/skills/<name>`, and `rm -rf .agents`. Confirm with `git status` that all three copies show as untracked additions before committing.
+- **Status:** confirmed
