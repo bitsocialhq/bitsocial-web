@@ -407,8 +407,8 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
 
     const updateConnections = () => {
       let lineIndex = 0;
-      const positions = linesGeometry.attributes.position.array as Float32Array;
-      const alphas = linesGeometry.attributes.alpha.array as Float32Array;
+      const positions = linePositionAttribute.array as Float32Array;
+      const alphas = lineAlphaAttribute.array as Float32Array;
 
       for (let pairIndex = 0; pairIndex < candidatePairs.length; pairIndex += 2) {
         const nodeA = nodes[candidatePairs[pairIndex]];
@@ -438,8 +438,18 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
       }
 
       linesGeometry.setDrawRange(0, lineIndex * 2);
-      linesGeometry.attributes.position.needsUpdate = true;
-      linesGeometry.attributes.alpha.needsUpdate = true;
+
+      // The line buffers are sized for every possible pair, but only the first `lineIndex`
+      // segments hold live data. Without an update range three re-uploads the whole
+      // allocation each frame, which is ~97% padding at desktop node counts.
+      linePositionAttribute.clearUpdateRanges();
+      lineAlphaAttribute.clearUpdateRanges();
+      if (lineIndex > 0) {
+        linePositionAttribute.addUpdateRange(0, lineIndex * 6);
+        lineAlphaAttribute.addUpdateRange(0, lineIndex * 2);
+        linePositionAttribute.needsUpdate = true;
+        lineAlphaAttribute.needsUpdate = true;
+      }
     };
 
     const stopRenderLoop = () => {

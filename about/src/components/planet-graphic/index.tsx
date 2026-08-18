@@ -454,7 +454,8 @@ export default function PlanetGraphic({
           vec3 baseColor = mix(bottomColor, topColor, gradientFactor);
           
           vec3 viewDirection = normalize(cameraPosition - vPosition);
-          float fresnel = pow(1.0 - abs(dot(vNormal, viewDirection)), 2.0);
+          float rim = 1.0 - abs(dot(vNormal, viewDirection));
+          float fresnel = rim * rim;
           
           vec3 finalColor = mix(baseColor, glowColor, fresnel * fresnelIntensity);
           
