@@ -294,7 +294,6 @@ export default function PlanetGraphic({
   const { resolvedTheme } = useTheme();
   const latestResolvedThemeRef = useRef(resolvedTheme);
   const themeRefs = usePlanetThemeRefs();
-  latestResolvedThemeRef.current = resolvedTheme;
   const getCurrentIsDark = () => resolveIsDark(latestResolvedThemeRef.current);
   const containerHeight = isMobile
     ? "clamp(22rem, 42vh, 28rem)"
@@ -303,8 +302,12 @@ export default function PlanetGraphic({
     ? "translateY(clamp(-4.5rem, calc(-1rem - 5vh), -3rem))"
     : "translateY(clamp(-4rem, calc(-5rem + 2vw), -2.5rem))";
 
-  // Update Three.js materials in-place when theme changes (no scene rebuild)
+  // Update Three.js materials in-place when theme changes (no scene rebuild).
+  // The ref keeps the newest theme readable from the async init effect below without
+  // making that effect re-subscribe on every theme change.
   useEffect(() => {
+    latestResolvedThemeRef.current = resolvedTheme;
+
     const refs = themeRefs.current;
     if (!refs) return;
     applyPlanetTheme(refs, resolveIsDark(resolvedTheme));
