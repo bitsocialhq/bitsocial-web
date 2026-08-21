@@ -5,6 +5,7 @@ import {
   getHeroGraphicMaxPixelRatio,
   getIsMobileHeroGraphicLayout,
 } from "@/lib/hero-graphic-performance";
+import { useWebGLContextRecovery } from "@/lib/webgl-context-recovery";
 
 interface Node {
   position: THREE.Vector3;
@@ -178,6 +179,8 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
     return getMeshNodeCount(width, getIsMobileLayout(width));
   });
   const { resolvedTheme } = useTheme();
+  const { contextGeneration, handleContextLost, registerContext, requestContextRecovery } =
+    useWebGLContextRecovery(onInitError);
   const themeRefs = useRef<MeshThemeRefs | null>(null);
   const containerHeight = isMobile ? "clamp(24rem, 44vh, 30rem)" : "clamp(30rem, 58vh, 42rem)";
   const topOffset = isMobile
@@ -201,12 +204,6 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
 
     const canvas = canvasRef.current;
     const container = containerRef.current;
-    let initErrorReported = false;
-    const reportInitError = () => {
-      if (initErrorReported) return;
-      initErrorReported = true;
-      onInitError?.();
-    };
     const sceneIsMobile = getIsMobileLayout(container.clientWidth || window.innerWidth);
     const sceneNodeCount = getMeshNodeCount(
       container.clientWidth || window.innerWidth,
@@ -247,14 +244,13 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
         powerPreference: isMobile ? "low-power" : "default",
       });
     } catch {
-      reportInitError();
+      // The GPU process can still be coming back when a long-backgrounded tab
+      // resumes, so let the recovery hook retry before giving up on the scene.
+      requestContextRecovery();
       return;
     }
-    const handleContextLost = (event: Event) => {
-      event.preventDefault();
-      reportInitError();
-    };
     canvas.addEventListener("webglcontextlost", handleContextLost);
+    registerContext(renderer.getContext());
     renderer.setSize(container.clientWidth, container.clientHeight, false);
     renderer.setPixelRatio(
       Math.min(window.devicePixelRatio, getHeroGraphicMaxPixelRatio(isMobile)),
@@ -601,6 +597,7 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
         clearTimeout(resizeTimeoutId);
       }
       canvas.removeEventListener("webglcontextlost", handleContextLost);
+      registerContext(null);
       resizeObserver.disconnect();
       window.removeEventListener("resize", scheduleResize);
       window.visualViewport?.removeEventListener("resize", scheduleResizeIfViewportChanged);
@@ -612,8 +609,8 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
       linesMaterial.dispose();
       renderer.dispose();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- theme changes handled by separate effect
-  }, [isMobile, meshNodeCount, onInitError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- theme changes handled by separate effect; recovery callbacks are stable for the component's lifetime
+  }, [contextGeneration, isMobile, meshNodeCount]);
 
   return (
     <div
@@ -621,7 +618,7 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
       className="absolute inset-x-0 pointer-events-none overflow-hidden overscroll-none"
       style={{ height: containerHeight, top: topOffset }}
     >
-      <canvas ref={canvasRef} className="block w-full h-full" />
+      <canvas key={contextGeneration} ref={canvasRef} className="block w-full h-full" />
       {/* Bottom fade gradient overlay - tall and strong to dissolve into next section */}
       <div
         className="absolute bottom-0 left-0 right-0 h-48 md:h-[clamp(11rem,calc(16rem-4vw),15rem)] pointer-events-none z-10"
