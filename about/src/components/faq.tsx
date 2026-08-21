@@ -150,12 +150,15 @@ export default function Faq() {
 
   return (
     // Reduced top pad: the mailing list above already carries `py-20 md:py-28`.
-    <section className="px-6 pt-8 pb-16 md:pt-10 md:pb-20" aria-labelledby="faq-title">
+    <section
+      className="px-[var(--space-page-inline)] pb-[var(--space-page-bottom)] pt-8 md:pt-10"
+      aria-labelledby="faq-title"
+    >
       <div className="mx-auto max-w-6xl">
         <div id="faq" data-home-section-label className="scroll-mt-[99px] md:scroll-mt-[103px]">
           <m.div
             {...reveal(14, 0, 0.5)}
-            className="mb-6 block text-center text-xs font-display uppercase tracking-[0.2em] text-muted-foreground/75 dark:text-muted-foreground/70 md:text-sm"
+            className="home-section-eyebrow mb-6 block text-center font-display uppercase tracking-[0.2em] text-muted-foreground/75 dark:text-muted-foreground/70"
           >
             <a
               href="#faq"
@@ -169,14 +172,14 @@ export default function Faq() {
         <m.h2
           id="faq-title"
           {...reveal(20, 0.1)}
-          className="mb-6 text-center text-4xl font-display font-semibold leading-[1.1] text-balance text-muted-foreground md:text-6xl lg:text-7xl"
+          className="home-section-title mb-6 text-center font-display font-semibold text-balance text-muted-foreground"
         >
           {t("faq.title")}
         </m.h2>
 
         <m.p
           {...reveal(20, 0.2)}
-          className="mx-auto mb-12 max-w-xl text-center text-base leading-relaxed text-balance text-muted-foreground md:text-lg"
+          className="home-section-lede mx-auto mb-12 text-center text-balance text-muted-foreground"
         >
           {t("faq.supporting")}
         </m.p>
@@ -215,7 +218,7 @@ export default function Faq() {
 
                     {/* `whitespace-nowrap` and no fixed width: a wrapped label would strand the
                         vertically centred arrow at the far left of the box. */}
-                    <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap font-display text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground/65 transition-colors duration-300 group-hover:text-blue-glow group-focus-visible:text-blue-glow motion-reduce:transition-none">
+                    <span className="text-micro-fluid flex shrink-0 items-center gap-1.5 whitespace-nowrap font-display uppercase tracking-[0.18em] text-muted-foreground/65 transition-colors duration-300 group-hover:text-blue-glow group-focus-visible:text-blue-glow motion-reduce:transition-none">
                       <ArrowIcon
                         className={`h-3.5 w-3.5 shrink-0 transition-transform duration-300 ${arrowHoverClassName} motion-reduce:transform-none motion-reduce:transition-none`}
                         aria-hidden="true"

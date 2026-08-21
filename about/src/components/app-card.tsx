@@ -107,7 +107,7 @@ export default function AppCard({
             <h3 className="font-display text-2xl leading-none">
               <Link
                 to={resolvedDetailHref}
-                className="text-foreground transition-colors hover:text-blue-core"
+                className="touch-target inline-flex items-center text-foreground transition-colors hover:text-blue-core"
               >
                 {app.name}
               </Link>
@@ -251,7 +251,7 @@ export default function AppCard({
 
         {mirrors.length > 0 ? (
           <div className="rounded-[1.25rem] border border-border/60 p-3">
-            <div className="mb-2 text-[11px] font-display uppercase tracking-[0.18em] text-foreground/45">
+            <div className="text-micro-fluid mb-2 font-display uppercase tracking-[0.18em] text-foreground/45">
               {t("apps.mirrors")}
             </div>
             <div className="flex flex-wrap gap-2">
@@ -271,7 +271,7 @@ export default function AppCard({
           href={sourceUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+          className="touch-target inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
           <Github className="h-3.5 w-3.5" />
           <span>{t("apps.sourceCode")}</span>
@@ -297,7 +297,7 @@ const descriptionRichTextComponents = {
 
 function getStatusClassName(status: NonNullable<AppData["status"]>) {
   return cn(
-    "rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em]",
+    "text-micro-fluid rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.18em]",
     status === "ready"
       ? "border-blue-core/20 text-blue-core dark:border-blue-core/55"
       : "border-amber-500/25 text-amber-700 dark:border-amber-400/35 dark:text-amber-200",

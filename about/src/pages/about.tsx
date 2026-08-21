@@ -135,7 +135,7 @@ function ExternalLinkPill({ href, label, labelKey, icon }: TeamLink) {
       rel="noopener noreferrer"
       aria-label={resolvedLabel}
       title={resolvedLabel}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/70 text-muted-foreground transition-colors hover:text-foreground"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/70 text-muted-foreground transition-colors hover:text-foreground"
     >
       {icon}
     </a>
@@ -148,26 +148,26 @@ export default function About() {
   return (
     <div className="min-h-screen">
       <Topbar />
-      <main className="px-6 pb-12 pt-28">
+      <main className="page-main">
         <div className="mx-auto max-w-4xl space-y-8">
           <section aria-labelledby="about-heading" className="space-y-6">
             <div className="max-w-2xl">
-              <p className="text-xs font-display uppercase tracking-[0.2em] text-foreground/45">
+              <p className="route-eyebrow font-display uppercase tracking-[0.2em] text-foreground/45">
                 {t("about.sectionLabel")}
               </p>
               <h1
                 id="about-heading"
-                className="optical-display-start mt-4 text-4xl font-display font-semibold leading-[1.1] text-balance text-muted-foreground md:text-6xl lg:text-7xl"
+                className="route-title optical-display-start mt-4 font-display font-semibold text-balance text-muted-foreground"
               >
                 {t("about.title")}
               </h1>
-              <p className="mt-3 max-w-2xl text-base md:text-lg text-balance leading-relaxed text-muted-foreground">
+              <p className="route-lede mt-3 text-balance text-muted-foreground">
                 {t("about.subtitle")}
               </p>
             </div>
             <div className="space-y-4">
               {TEAM_MEMBERS.map((member) => (
-                <article key={member.name} className="glass-card p-6 md:p-7">
+                <article key={member.name} className="glass-card surface-pad">
                   <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                     <div className="flex min-w-0 items-start gap-4">
                       <img
@@ -179,7 +179,7 @@ export default function About() {
                         className="h-16 w-16 shrink-0 rounded-full border border-border/60 bg-background/70 object-cover md:h-20 md:w-20"
                       />
                       <div className="min-w-0 space-y-2">
-                        <h3 className="text-2xl font-display font-semibold text-foreground">
+                        <h3 className="card-title-fluid font-display font-semibold text-foreground">
                           {member.name}
                         </h3>
                         <p className="max-w-2xl leading-relaxed text-muted-foreground">

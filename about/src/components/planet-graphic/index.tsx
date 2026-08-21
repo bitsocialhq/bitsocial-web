@@ -295,9 +295,7 @@ export default function PlanetGraphic({
   const latestResolvedThemeRef = useRef(resolvedTheme);
   const themeRefs = usePlanetThemeRefs();
   const getCurrentIsDark = () => resolveIsDark(latestResolvedThemeRef.current);
-  const containerHeight = isMobile
-    ? "clamp(22rem, 42vh, 28rem)"
-    : "clamp(34rem, calc(46rem - 6vw), 40rem)";
+  const containerHeight = isMobile ? "clamp(22rem, 42vh, 28rem)" : "clamp(28rem, 54vh, 38rem)";
   const translateY = isMobile
     ? "translateY(clamp(-4.5rem, calc(-1rem - 5vh), -3rem))"
     : "translateY(clamp(-4rem, calc(-5rem + 2vw), -2.5rem))";

@@ -45,9 +45,9 @@ export default function AppDetail() {
     return (
       <div className="min-h-screen">
         <Topbar />
-        <main className="px-6 pb-12 pt-28">
+        <main className="page-main">
           <div className="mx-auto max-w-4xl">
-            <div className="glass-card p-8 text-center md:p-10">
+            <div className="glass-card surface-pad text-center">
               <h1 className="text-3xl font-display font-normal text-muted-foreground">
                 {t("apps.notFound")}
               </h1>
@@ -80,19 +80,19 @@ export default function AppDetail() {
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Topbar />
-      <main className="px-6 pb-14 pt-28">
+      <main className="page-main">
         <div className="mx-auto max-w-5xl">
           <Link
             to="/projects"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="touch-target mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
             {t("apps.allProjects")}
           </Link>
 
-          <section className="glass-card overflow-hidden p-6 md:p-8">
+          <section className="glass-card surface-pad overflow-hidden">
             <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-              <div className="flex min-w-0 gap-5">
+              <div className="flex min-w-0 flex-col gap-5 sm:flex-row">
                 <AppLogo
                   name={app.name}
                   icon={app.icon}
@@ -124,11 +124,11 @@ export default function AppDetail() {
                     ) : null}
                   </div>
 
-                  <h1 className="optical-display-start mt-4 text-4xl font-display font-normal text-foreground md:text-5xl">
+                  <h1 className="route-title optical-display-start mt-4 font-display font-normal text-foreground">
                     {app.name}
                   </h1>
                   <p className="mt-3 text-lg font-medium leading-7 text-foreground/70">{tagline}</p>
-                  <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground">
+                  <p className="mt-4 max-w-[70ch] text-base leading-relaxed text-muted-foreground">
                     {descriptionKey ? (
                       <Trans
                         i18nKey={descriptionKey}
@@ -197,7 +197,7 @@ export default function AppDetail() {
 
             {mirrors.length > 0 ? (
               <div className="mt-6 rounded-[1.4rem] border border-border/60 p-4">
-                <div className="mb-3 text-[11px] font-display uppercase tracking-[0.18em] text-foreground/45">
+                <div className="text-micro-fluid mb-3 font-display uppercase tracking-[0.18em] text-foreground/45">
                   {t("apps.mirrors")}
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -244,7 +244,7 @@ const descriptionRichTextComponents = {
 
 function getStatusClassName(status: "ready" | "experimental") {
   return cn(
-    "rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em]",
+    "text-micro-fluid rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.18em]",
     status === "ready"
       ? "border-blue-core/20 text-blue-core dark:border-blue-core/55"
       : "border-amber-500/25 text-amber-700 dark:border-amber-400/35 dark:text-amber-200",

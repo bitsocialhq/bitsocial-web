@@ -179,9 +179,7 @@ export default function MeshGraphic({ onInitError }: { onInitError?: () => void 
   });
   const { resolvedTheme } = useTheme();
   const themeRefs = useRef<MeshThemeRefs | null>(null);
-  const containerHeight = isMobile
-    ? "clamp(24rem, 44vh, 30rem)"
-    : "clamp(36rem, calc(51rem - 7vw), 44rem)";
+  const containerHeight = isMobile ? "clamp(24rem, 44vh, 30rem)" : "clamp(30rem, 58vh, 42rem)";
   const topOffset = isMobile
     ? "clamp(-4.5rem, calc(-1rem - 5vh), -2.75rem)"
     : "clamp(-4rem, calc(-5rem + 2vw), -2.5rem)";

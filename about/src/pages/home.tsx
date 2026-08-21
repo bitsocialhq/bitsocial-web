@@ -159,7 +159,7 @@ export default function Home() {
       <main>
         <div className="bg-background">
           {unavailablePath ? (
-            <div className="px-6 pt-28 md:pt-32">
+            <div className="px-[var(--space-page-inline)] pt-[var(--space-page-top)]">
               <div className="mx-auto flex max-w-4xl items-start justify-between gap-4 rounded-3xl border border-border/60 bg-background/85 px-5 py-4 text-sm text-muted-foreground shadow-lg backdrop-blur">
                 <p className="leading-relaxed">
                   {t("home.devOnlyRouteNotice", { path: unavailablePath })}

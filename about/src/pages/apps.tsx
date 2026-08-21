@@ -224,17 +224,17 @@ export default function Apps() {
         </style>
       </noscript>
       <Topbar />
-      <main className="px-4 pb-16 pt-28 sm:px-6">
+      <main className="page-main">
         <div className="mx-auto max-w-7xl">
           <section className="mb-6">
-            <p className="text-xs font-display uppercase tracking-[0.2em] text-foreground/45">
+            <p className="route-eyebrow font-display uppercase tracking-[0.2em] text-foreground/45">
               {t("apps.sectionLabel")}
             </p>
             <div className="mt-4 max-w-2xl">
-              <h1 className="optical-display-start text-4xl font-display font-semibold leading-[1.1] text-balance text-muted-foreground md:text-6xl lg:text-7xl">
+              <h1 className="route-title optical-display-start font-display font-semibold text-balance text-muted-foreground">
                 {t("apps.title")}
               </h1>
-              <p className="mt-3 max-w-2xl text-base md:text-lg text-balance leading-relaxed text-muted-foreground">
+              <p className="route-lede mt-3 text-balance text-muted-foreground">
                 {t("apps.subtitle")}
               </p>
             </div>
@@ -293,7 +293,7 @@ export default function Apps() {
                     type="button"
                     onClick={clearFilters}
                     aria-label={t("apps.clearFilters")}
-                    className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border/70 px-3 py-1 text-xs font-semibold text-foreground/80 transition-all duration-300 hover:border-blue-glow hover:text-foreground"
+                    className="touch-target inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border/70 px-3 py-1 text-xs font-semibold text-foreground/80 transition-all duration-300 hover:border-blue-glow hover:text-foreground"
                   >
                     <X className="h-3.5 w-3.5" />
                     <span className="hidden sm:inline">{t("apps.clearFilters")}</span>
@@ -307,7 +307,7 @@ export default function Apps() {
                   const active = activePlatform === platform.slug;
                   const disabled = isAtFilterCap && !active && !activePlatform;
                   const baseClass = cn(
-                    "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-300 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
+                    "touch-target inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-300 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
                     active
                       ? "border-blue-core/30 text-foreground ring-glow shadow-[0_0_24px_rgba(37,99,235,0.12)] dark:border-blue-core/55"
                       : "border-border/70 text-foreground/80 hover:border-blue-glow hover:text-foreground",
@@ -320,7 +320,7 @@ export default function Apps() {
                       <span>{getPlatformShortLabel(platform.slug, t)}</span>
                       <span
                         className={cn(
-                          "hidden rounded-full border px-2 py-0.5 text-[11px] sm:inline",
+                          "text-micro-fluid hidden rounded-full border px-2 py-0.5 sm:inline",
                           active
                             ? "border-blue-core/20 text-foreground"
                             : "border-border/60 text-foreground/65",
@@ -453,7 +453,7 @@ export default function Apps() {
                           platform: active ? null : platform.slug,
                         })}
                         className={cn(
-                          "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-300 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
+                          "touch-target inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-300 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
                           active
                             ? "border-blue-core/30 text-foreground ring-glow shadow-[0_0_24px_rgba(37,99,235,0.12)] dark:border-blue-core/55"
                             : "border-border/70 text-foreground/80 hover:border-blue-glow hover:text-foreground",
@@ -463,7 +463,7 @@ export default function Apps() {
                         <span>{getPlatformShortLabel(platform.slug, t)}</span>
                         <span
                           className={cn(
-                            "hidden rounded-full border px-2 py-0.5 text-[11px] sm:inline",
+                            "text-micro-fluid hidden rounded-full border px-2 py-0.5 sm:inline",
                             active
                               ? "border-blue-core/20 text-foreground"
                               : "border-border/60 text-foreground/65",
@@ -500,7 +500,7 @@ export default function Apps() {
             <div className="apps-js-sidebar">
               {/* Mobile: collapsed under a disclosure to save vertical space. */}
               <details className="apps-mobile-categories group glass-card overflow-hidden lg:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-xs font-display font-semibold uppercase tracking-[0.2em] text-foreground/55 [&::-webkit-details-marker]:hidden">
+                <summary className="touch-target flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-xs font-display font-semibold uppercase tracking-[0.2em] text-foreground/55 [&::-webkit-details-marker]:hidden">
                   <span className="flex items-center gap-2">
                     <LayoutGrid className="h-3.5 w-3.5" aria-hidden="true" />
                     <span>{t("apps.directoryLabel")}</span>
@@ -541,7 +541,7 @@ export default function Apps() {
 
             <noscript>
               <details className="apps-mobile-categories group glass-card overflow-hidden lg:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-xs font-display font-semibold uppercase tracking-[0.2em] text-foreground/55 [&::-webkit-details-marker]:hidden">
+                <summary className="touch-target flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-xs font-display font-semibold uppercase tracking-[0.2em] text-foreground/55 [&::-webkit-details-marker]:hidden">
                   <span className="flex items-center gap-2">
                     <LayoutGrid className="h-3.5 w-3.5" aria-hidden="true" />
                     <span>{t("apps.directoryLabel")}</span>

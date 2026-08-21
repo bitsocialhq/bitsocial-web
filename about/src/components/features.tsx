@@ -415,7 +415,7 @@ export default function Features() {
   };
 
   return (
-    <section className="px-6 py-24" aria-labelledby="core-features-title">
+    <section className="home-section" aria-labelledby="core-features-title">
       <div className="max-w-7xl mx-auto">
         <div
           id="core-features"
@@ -424,7 +424,7 @@ export default function Features() {
         >
           <m.div
             {...sectionReveal(14, 0, 0.5)}
-            className="mb-6 block text-center text-xs font-display uppercase tracking-[0.2em] text-muted-foreground/75 dark:text-muted-foreground/70 md:text-sm"
+            className="home-section-eyebrow mb-6 block text-center font-display uppercase tracking-[0.2em] text-muted-foreground/75 dark:text-muted-foreground/70"
           >
             <a
               href="#core-features"
@@ -438,14 +438,14 @@ export default function Features() {
         <m.h2
           id="core-features-title"
           {...sectionReveal(20, 0.1)}
-          className="mb-6 text-center text-4xl font-display font-semibold leading-[1.1] text-balance text-muted-foreground md:text-6xl lg:text-7xl"
+          className="home-section-title mb-6 text-center font-display font-semibold text-balance text-muted-foreground"
         >
           {t("features.title")}
         </m.h2>
 
         <m.p
           {...sectionReveal(20, 0.2)}
-          className="mx-auto mb-16 max-w-2xl text-center text-base leading-relaxed text-balance text-muted-foreground md:text-lg"
+          className="home-section-lede mx-auto mb-16 text-center text-balance text-muted-foreground"
         >
           {t("features.supporting")}
         </m.p>
@@ -476,20 +476,20 @@ export default function Features() {
                   <div className="flex-1 w-full md:w-1/2">
                     <div
                       ref={setFeatureCardRef(feature.id)}
-                      className="glass-card flex h-full flex-col p-6 md:p-8"
+                      className="glass-card surface-pad flex h-full flex-col"
                     >
                       <h3 className="mb-4">
                         <button
                           type="button"
                           onClick={() => handleTitleClick(feature.id)}
-                          className="js-only interactive-feature-link w-full text-start text-xl md:text-2xl font-display font-normal italic text-foreground/85 focus-visible:outline-none"
+                          className="touch-target js-only interactive-feature-link card-title-fluid w-full text-start font-display font-normal italic text-foreground/85 focus-visible:outline-none"
                         >
                           {featureTitleFromTaglineSegments(t, feature.id)}
                         </button>
                         <noscript>
                           <a
                             href="#hero-tagline"
-                            className="nojs-inline interactive-feature-link w-full text-start text-xl md:text-2xl font-display font-normal italic text-foreground/85 focus-visible:outline-none"
+                            className="touch-target nojs-inline interactive-feature-link card-title-fluid w-full text-start font-display font-normal italic text-foreground/85 focus-visible:outline-none"
                           >
                             {featureTitleFromTaglineSegments(t, feature.id)}
                           </a>

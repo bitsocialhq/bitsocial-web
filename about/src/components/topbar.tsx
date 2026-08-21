@@ -172,7 +172,7 @@ function NoJsMobileMenu({
 }) {
   return (
     <details className="nojs-mobile-menu">
-      <summary className="nojs-mobile-summary flex h-9 w-9 list-none cursor-pointer items-center justify-center rounded-full text-muted-foreground hover:text-foreground [&::-webkit-details-marker]:hidden">
+      <summary className="nojs-mobile-summary flex h-11 w-11 list-none cursor-pointer items-center justify-center rounded-full text-muted-foreground hover:text-foreground [&::-webkit-details-marker]:hidden">
         <span className="sr-only">Menu</span>
         <span className="relative h-5 w-5">
           <span className="absolute left-0 top-0.5 h-0.5 w-5 rounded-full bg-current" />
@@ -371,7 +371,7 @@ export default function Topbar() {
         // Fixed elements resolve against the viewport, which widens when a dialog's scroll
         // lock hides the scrollbar. Pulling the right anchor in by the removed scrollbar
         // width keeps the bar aligned with the page instead of drifting with the viewport.
-        className="fixed top-3 left-4 right-[calc(1rem+var(--removed-body-scroll-bar-size,0px))] z-50 mx-auto max-w-7xl"
+        className="topbar-position fixed z-50 mx-auto max-w-7xl"
       >
         <div
           className={cn(
@@ -400,7 +400,7 @@ export default function Topbar() {
                 ref={logoRef}
                 to="/"
                 onClick={handleLogoClick}
-                className="inline-flex items-center gap-1 group transition-colors"
+                className="group inline-flex min-h-11 items-center gap-1 transition-colors"
               >
                 <img
                   src="/logo-small.png"

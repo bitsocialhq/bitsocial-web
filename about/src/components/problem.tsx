@@ -58,14 +58,14 @@ function ProblemCard({ onAnswerClick, problem }: ProblemCardProps) {
   const keys = PROBLEM_I18N[problem.id];
 
   return (
-    <article className="glass-card flex h-full flex-col p-6 md:p-7">
+    <article className="glass-card surface-pad flex h-full flex-col">
       <span
         aria-hidden="true"
         className="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/40 text-muted-foreground"
       >
         <Icon className="h-5 w-5" />
       </span>
-      <h3 className="mb-3 font-display text-xl font-semibold text-balance text-foreground/85 md:text-2xl">
+      <h3 className="card-title-fluid mb-3 font-display font-semibold text-balance text-foreground/85">
         {t(keys.title)}
       </h3>
       <p className="mb-8 text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -73,7 +73,7 @@ function ProblemCard({ onAnswerClick, problem }: ProblemCardProps) {
       </p>
       {/* Gap lives on the paragraph so the tallest card keeps it; mt-auto only bottom-aligns. */}
       <div className="mt-auto flex flex-col gap-2 border-t border-border/50 pt-5">
-        <span className="pb-[10px] font-display text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground/70">
+        <span className="text-micro-fluid pb-[10px] font-display uppercase tracking-[0.18em] text-muted-foreground/70">
           {t("problem.answerLabel")}
         </span>
         <CardInlineCta
@@ -170,12 +170,17 @@ function MobileProblemCarousel({
             aria-label={t(PROBLEM_I18N[problem.id].title)}
             aria-current={activeIndex === index}
             onClick={() => scrollToIndex(index)}
-            className={`h-1.5 w-6 origin-center transform-gpu rounded-full transition-[transform,background-color] duration-200 motion-reduce:transition-none ${
-              activeIndex === index
-                ? "scale-x-100 bg-blue-glow"
-                : "scale-x-[0.25] bg-muted-foreground/20 hover:bg-muted-foreground/40"
-            }`}
-          />
+            className="group touch-target flex items-center justify-center"
+          >
+            <span
+              aria-hidden="true"
+              className={`h-1.5 w-6 origin-center transform-gpu rounded-full transition-[transform,background-color] duration-200 motion-reduce:transition-none ${
+                activeIndex === index
+                  ? "scale-x-100 bg-blue-glow"
+                  : "scale-x-[0.25] bg-muted-foreground/20 group-hover:bg-muted-foreground/40"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>
@@ -220,14 +225,14 @@ export default function ProblemSection() {
 
   return (
     <section
-      className="px-6 py-24 -mt-[clamp(2.5rem,5vh,4rem)] pt-[clamp(2.5rem,5vh,4rem)] md:-mt-[clamp(3rem,5vh,4.5rem)] md:pt-[clamp(6rem,9vh,7.5rem)]"
+      className="home-section -mt-[clamp(2.5rem,5vh,4rem)] pt-[clamp(2.5rem,5vh,4rem)] md:-mt-[clamp(3rem,5vh,4.5rem)] md:pt-[clamp(6rem,9vh,7.5rem)]"
       aria-labelledby="problem-title"
     >
       <div className="mx-auto max-w-6xl">
         <div id="problem" data-home-section-label className="scroll-mt-[99px] md:scroll-mt-[103px]">
           <m.div
             {...reveal(14, 0, 0.5)}
-            className="mb-6 block text-center text-xs font-display uppercase tracking-[0.2em] text-muted-foreground/75 dark:text-muted-foreground/70 md:text-sm"
+            className="home-section-eyebrow mb-6 block text-center font-display uppercase tracking-[0.2em] text-muted-foreground/75 dark:text-muted-foreground/70"
           >
             <a
               href="#problem"
@@ -241,14 +246,14 @@ export default function ProblemSection() {
         <m.h2
           id="problem-title"
           {...reveal(20, 0.1)}
-          className="mb-6 text-center text-4xl font-display font-semibold leading-[1.1] text-balance text-muted-foreground md:text-6xl lg:text-7xl"
+          className="home-section-title mb-6 text-center font-display font-semibold text-balance text-muted-foreground"
         >
           {t("problem.title")}
         </m.h2>
 
         <m.p
           {...reveal(20, 0.2)}
-          className="mx-auto mb-12 max-w-2xl text-center text-base leading-relaxed text-balance text-muted-foreground md:text-lg"
+          className="home-section-lede mx-auto mb-12 text-center text-balance text-muted-foreground"
         >
           {t("problem.supporting")}
         </m.p>

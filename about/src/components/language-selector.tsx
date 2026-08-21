@@ -278,7 +278,7 @@ export default function LanguageSelector({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-9 gap-2 px-3 text-sm text-muted-foreground hover:bg-border/70 hover:text-foreground focus-visible:bg-border/70 font-display"
+                className="h-11 gap-2 px-3 text-sm text-muted-foreground hover:bg-border/70 hover:text-foreground focus-visible:bg-border/70 font-display"
               >
                 <Globe className="h-4 w-4" />
                 <span className="hidden sm:inline">{currentLanguage.label}</span>
