@@ -10,6 +10,7 @@ import {
 import { getPlanetRingRotationDelaySeconds } from "@/lib/hero-intro-timing";
 import { getHeroGraphicViewportProgress } from "@/lib/hero-graphic-layout";
 import { loadGsap, type TweenLike } from "@/lib/motion-runtime";
+import { useWebGLContextRecovery } from "@/lib/webgl-context-recovery";
 
 const PLANET_MIN_FOV = 62;
 const PLANET_MAX_FOV = 45;
@@ -292,6 +293,8 @@ export default function PlanetGraphic({
     return getIsMobileLayout(window.innerWidth);
   });
   const { resolvedTheme } = useTheme();
+  const { contextGeneration, handleContextLost, registerContext, requestContextRecovery } =
+    useWebGLContextRecovery(onInitError);
   const latestResolvedThemeRef = useRef(resolvedTheme);
   const themeRefs = usePlanetThemeRefs();
   const getCurrentIsDark = () => resolveIsDark(latestResolvedThemeRef.current);
@@ -366,7 +369,9 @@ export default function PlanetGraphic({
           powerPreference: initialIsMobile ? "low-power" : "default",
         });
       } catch {
-        reportInitError();
+        // The GPU process can still be coming back when a long-backgrounded tab
+        // resumes, so let the recovery hook retry before giving up on the scene.
+        requestContextRecovery();
         return;
       }
       renderer.setSize(container.clientWidth, container.clientHeight, false);
@@ -374,11 +379,8 @@ export default function PlanetGraphic({
         Math.min(window.devicePixelRatio, getPlanetGraphicMaxPixelRatio(initialIsMobile)),
       );
       renderer.setClearColor(0x000000, 0);
-      const handleContextLost = (event: Event) => {
-        event.preventDefault();
-        reportInitError();
-      };
       canvas.addEventListener("webglcontextlost", handleContextLost);
+      registerContext(renderer.getContext());
 
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
       scene.add(ambientLight);
@@ -649,7 +651,9 @@ export default function PlanetGraphic({
 
         renderer.render(scene, camera);
         if (!hasVisibleWebGLPixels(renderer)) {
-          reportInitError();
+          // A blank read on a dead context is a purge, not an incapable device.
+          if (renderer.getContext().isContextLost()) requestContextRecovery();
+          else reportInitError();
           return;
         }
 
@@ -800,6 +804,7 @@ export default function PlanetGraphic({
         themeRefs.current = null;
         stopRenderLoop();
         canvas.removeEventListener("webglcontextlost", handleContextLost);
+        registerContext(null);
         if (renderWatchdogTimeoutId) {
           clearTimeout(renderWatchdogTimeoutId);
         }
@@ -840,8 +845,8 @@ export default function PlanetGraphic({
       cancelled = true;
       dispose?.();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- theme changes handled by separate effect
-  }, [onInitError, onReady, themeRefs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- theme changes handled by separate effect; recovery callbacks are stable for the component's lifetime
+  }, [contextGeneration, onInitError, onReady, themeRefs]);
 
   return (
     <div
@@ -852,7 +857,7 @@ export default function PlanetGraphic({
         transform: translateY,
       }}
     >
-      <canvas ref={canvasRef} className="block w-full h-full" />
+      <canvas key={contextGeneration} ref={canvasRef} className="block w-full h-full" />
       {/* Bottom fade gradient overlay - tall and strong to dissolve into next section */}
       <div
         className="absolute bottom-0 left-0 right-0 h-40 md:h-[clamp(10rem,calc(15rem-4vw),14rem)] pointer-events-none z-10"
