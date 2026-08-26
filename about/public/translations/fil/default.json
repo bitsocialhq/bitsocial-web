@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "Beripikasyon",
         "ai": "AI",
-        "antiRepost": "Anti-repost"
+        "antiRepost": "Anti-repost",
+        "wordfilters": "Mga wordfilter"
       },
       "linkLabels": {
         "androidApk": "APK ng Android",
@@ -599,6 +600,10 @@
         "r9k-challenge": {
           "tagline": "Robot9000-style na originality gate para sa mga komunidad na gusto ng anti-repost na karanasan sa pag-post.",
           "description": "Tumatakbo ang R9K Challenge sa isang Bitsocial community node at ikinukumpara ang normalized na post text sa lokal na comments database ng owner node. Binibigyan nito ang mga komunidad ng <robot9000>Robot9000</robot9000>-style na karanasan sa pag-post: bumabagsak ang eksaktong repost bago tanggapin, binabalewala ang backlinks, ang paulit-ulit na failure ay nagti-trigger ng papataas na temporary bans, at nananatili sa pribadong local state ang accepted-text hashes sa halip na i-store ang raw post text. Walang AI na ginagamit sa challenge na ito."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Ipinapatupad ang mga wordfilter ng komunidad bilang pinirmahang panuntunan sa halip na pandekorasyong filter sa display.",
+          "description": "Ginagawa ng Wordfilter Challenge na tunay na panuntunan ang mga wordfilter ng komunidad sa pamamagitan ng pagpapatupad ng kontratang <code>wordfilter/v1</code>. Inilalapat ng mga publishing client ang mga pamalit na salita ng komunidad bago pumirma, kaya ang na-filter na teksto ang napipirmahan at ipinapakita saanman, at tinatanggihan ng node ng komunidad ang anumang publikasyong naglalaman pa rin ng na-filter na salita."
         }
       }
     },

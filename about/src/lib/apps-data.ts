@@ -238,6 +238,7 @@ const APP_TAG_TRANSLATION_KEYS: Record<string, string> = {
   "Risk scores": "apps.catalog.tags.riskScores",
   Telegram: "apps.catalog.tags.telegram",
   Verification: "apps.catalog.tags.verification",
+  Wordfilters: "apps.catalog.tags.wordfilters",
 };
 
 const APP_LINK_LABEL_TRANSLATION_KEYS: Record<string, string> = {
@@ -273,6 +274,10 @@ const APP_COPY_TRANSLATION_KEYS: Record<string, { tagline: string; description: 
   "r9k-challenge": {
     tagline: "apps.catalog.items.r9k-challenge.tagline",
     description: "apps.catalog.items.r9k-challenge.description",
+  },
+  "wordfilter-challenge": {
+    tagline: "apps.catalog.items.wordfilter-challenge.tagline",
+    description: "apps.catalog.items.wordfilter-challenge.description",
   },
   "captcha-canvas-challenge": {
     tagline: "apps.catalog.items.captcha-canvas-challenge.tagline",
@@ -667,6 +672,7 @@ export const APPS: AppData[] = [
     relatedSlugs: [
       "spam-blocker",
       "r9k-challenge",
+      "wordfilter-challenge",
       "captcha-canvas-challenge",
       "voucher-challenge",
     ],
@@ -692,6 +698,7 @@ export const APPS: AppData[] = [
     relatedSlugs: [
       "ai-moderation-challenge",
       "r9k-challenge",
+      "wordfilter-challenge",
       "mintpass",
       "captcha-canvas-challenge",
     ],
@@ -717,6 +724,7 @@ export const APPS: AppData[] = [
     relatedSlugs: [
       "spam-blocker",
       "ai-moderation-challenge",
+      "wordfilter-challenge",
       "captcha-canvas-challenge",
       "flags-challenge",
     ],
@@ -727,6 +735,39 @@ export const APPS: AppData[] = [
       "anti-repost",
       "duplicates",
       "originality",
+      "5chan",
+    ],
+  },
+  {
+    slug: "wordfilter-challenge",
+    name: "Wordfilter Challenge",
+    tagline:
+      "Community wordfilters enforced as a signed rule instead of a cosmetic display filter.",
+    description:
+      "Wordfilter Challenge makes community wordfilters a real rule by implementing the <code>wordfilter/v1</code> contract. Publishing clients apply the community's word replacements before signing, so the filtered text is what gets signed and rendered everywhere, and the community node rejects any publication that still contains a filtered word.",
+    category: "anti-spam",
+    tags: ["Wordfilters", "Moderation"],
+    icon: "message-square",
+    githubRepo: "bitsocialnet/wordfilter-challenge",
+    links: [
+      {
+        label: "@bitsocial/wordfilter-challenge",
+        url: "https://www.npmjs.com/package/@bitsocial/wordfilter-challenge",
+        kind: "package",
+      },
+    ],
+    relatedSlugs: [
+      "r9k-challenge",
+      "ai-moderation-challenge",
+      "spam-blocker",
+      "captcha-canvas-challenge",
+    ],
+    searchTerms: [
+      "wordfilter",
+      "word filter",
+      "replacements",
+      "filtering",
+      "swear filter",
       "5chan",
     ],
   },

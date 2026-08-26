@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "Verificering",
         "ai": "AI",
-        "antiRepost": "Anti-genopslag"
+        "antiRepost": "Anti-genopslag",
+        "wordfilters": "Ordfiltre"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -565,6 +566,10 @@
         "r9k-challenge": {
           "tagline": "Robot9000-inspireret originalitetsgate til fællesskaber, der vil have en anti-repost-oplevelse ved opslag.",
           "description": "R9K Challenge kører på en Bitsocial-communitynode og sammenligner normaliseret opslagstekst med ejernodens lokale kommentardatabase. Den giver communities en <robot9000>Robot9000</robot9000>-lignende opslagserfaring: eksakte genopslag fejler før accept, backlinks ignoreres, gentagne fejl udløser eskalerende midlertidige bans, og hashes af accepteret tekst bliver i privat lokal tilstand i stedet for at gemme rå opslagstekst. Denne challenge bruger ikke AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Fællesskabets ordfiltre håndhæves som en signeret regel i stedet for et kosmetisk visningsfilter.",
+          "description": "Wordfilter Challenge gør fællesskabets ordfiltre til en reel regel ved at implementere <code>wordfilter/v1</code>-kontrakten. Udgivelsesklienter anvender fællesskabets ordudskiftninger før signering, så den filtrerede tekst er det, der signeres og vises overalt, og fællesskabsnoden afviser enhver udgivelse, der stadig indeholder et filtreret ord."
         }
       }
     },

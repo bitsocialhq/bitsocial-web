@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "Ověření",
         "ai": "AI",
-        "antiRepost": "Proti repostům"
+        "antiRepost": "Proti repostům",
+        "wordfilters": "Filtry slov"
       },
       "linkLabels": {
         "androidApk": "APK pro Android",
@@ -565,6 +566,10 @@
         "r9k-challenge": {
           "tagline": "Brána originality ve stylu Robot9000 pro komunity, které chtějí publikační UX proti repostům.",
           "description": "R9K Challenge běží na komunitním uzlu Bitsocial a porovnává normalizovaný text příspěvku s lokální databází komentářů uzlu vlastníka. Komunitám dává publikační zkušenost ve stylu <robot9000>Robot9000</robot9000>: přesné reposty selžou před přijetím, backlinks se ignorují, opakovaná selhání spouštějí stupňující se dočasné bany a hashe přijatého textu zůstávají v soukromém lokálním stavu místo ukládání surového textu příspěvku. Tato challenge nepoužívá AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Komunitní filtry slov vynucené jako podepsané pravidlo, ne jako kosmetický filtr zobrazení.",
+          "description": "Wordfilter Challenge dělá z komunitních filtrů slov skutečné pravidlo implementací kontraktu <code>wordfilter/v1</code>. Publikující klienti aplikují náhrady slov komunity před podpisem, takže filtrovaný text je to, co se podepisuje a zobrazuje všude, a uzel komunity odmítne každou publikaci, která stále obsahuje filtrované slovo."
         }
       }
     },

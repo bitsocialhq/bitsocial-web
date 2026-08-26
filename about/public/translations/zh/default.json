@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "验证",
         "ai": "AI",
-        "antiRepost": "反重复发布"
+        "antiRepost": "反重复发布",
+        "wordfilters": "词语过滤"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -598,6 +599,10 @@
         "r9k-challenge": {
           "tagline": "面向希望获得反重复发布体验的社区的 Robot9000 风格原创性门槛。",
           "description": "R9K Challenge 在 Bitsocial 社区节点上运行，并将规范化后的帖子文本与所有者节点的本地评论数据库进行比对。它为社区提供 <robot9000>Robot9000</robot9000> 风格的发帖体验：完全重复的 repost 会在被接受前失败，backlink 会被忽略，反复失败会触发逐步升级的临时 ban，已接受文本的哈希会保留在私有本地状态中，而不是保存原始帖子文本。 这个 challenge 不使用 AI。"
+        },
+        "wordfilter-challenge": {
+          "tagline": "社区词语过滤作为签名规则强制执行，而不是表面的显示过滤。",
+          "description": "Wordfilter Challenge 通过实现 <code>wordfilter/v1</code> 契约，让社区词语过滤成为真正的规则。发布客户端在签名前应用社区的词语替换，因此被签名并在各处显示的正是过滤后的文本，而社区节点会拒绝任何仍包含被过滤词语的发布内容。"
         }
       }
     },

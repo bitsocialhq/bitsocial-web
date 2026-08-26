@@ -34,6 +34,7 @@ Use `https://bitsocial.net/` for the public product overview and `https://docs.b
 - [AI Moderation Challenge](https://bitsocial.net/apps/ai-moderation-challenge): OpenAI-compatible moderation checks against each community's rules.
 - [Spam Blocker](https://bitsocial.net/apps/spam-blocker): Centralized risk scoring layer for filtering abusive publications.
 - [R9K Challenge](https://bitsocial.net/apps/r9k-challenge): Robot9000-style originality gate for communities that want anti-repost posting UX.
+- [Wordfilter Challenge](https://bitsocial.net/apps/wordfilter-challenge): Community wordfilters enforced as a signed rule instead of a cosmetic display filter.
 - [Captcha Canvas Challenge](https://bitsocial.net/apps/captcha-canvas-challenge): Custom image captchas for communities that want human verification.
 - [Voucher Challenge](https://bitsocial.net/apps/voucher-challenge): Invite-style voucher codes for communities that prefer controlled growth.
 - [EVM Contract Call](https://bitsocial.net/apps/evm-contract-call): On-chain gating for communities that want token or contract checks.

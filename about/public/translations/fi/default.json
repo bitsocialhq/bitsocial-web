@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "Vahvistus",
         "ai": "AI",
-        "antiRepost": "Uudelleenjulkaisun esto"
+        "antiRepost": "Uudelleenjulkaisun esto",
+        "wordfilters": "Sanasuodattimet"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -599,6 +600,10 @@
         "r9k-challenge": {
           "tagline": "Robot9000-tyylinen omaperäisyysportti yhteisöille, jotka haluavat repostauksia estävän julkaisu-UX:n.",
           "description": "R9K Challenge toimii Bitsocial-yhteisön nodessa ja vertaa normalisoitua julkaisun tekstiä omistajan noden paikalliseen kommenttitietokantaan. Se antaa yhteisöille <robot9000>Robot9000</robot9000>-tyylisen julkaisukokemuksen: täsmälliset repostaukset hylätään ennen hyväksyntää, backlinkit ohitetaan, toistuvat epäonnistumiset laukaisevat kasvavia väliaikaisia banneja ja hyväksytyn tekstin hashit pysyvät yksityisessä paikallisessa tilassa raakatekstin tallentamisen sijaan. Tässä challengessa ei käytetä tekoälyä."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Yhteisön sanasuodattimet pakotetaan allekirjoitettuna sääntönä, ei kosmeettisena näyttösuodattimena.",
+          "description": "Wordfilter Challenge tekee yhteisön sanasuodattimista todellisen säännön toteuttamalla <code>wordfilter/v1</code>-sopimuksen. Julkaisevat asiakasohjelmat soveltavat yhteisön sanakorvaukset ennen allekirjoitusta, joten suodatettu teksti on se, mikä allekirjoitetaan ja näytetään kaikkialla, ja yhteisön solmu hylkää jokaisen julkaisun, joka sisältää yhä suodatetun sanan."
         }
       }
     },

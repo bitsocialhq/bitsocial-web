@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "पडताळणी",
         "ai": "एआই",
-        "antiRepost": "रीपोस्ट-विरोधी"
+        "antiRepost": "रीपोस्ट-विरोधी",
+        "wordfilters": "शब्द फिल्टर"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -599,6 +600,10 @@
         "r9k-challenge": {
           "tagline": "Anti-repost posting UX हवे असलेल्या समुदायांसाठी Robot9000-शैलीचे मौलिकता gate.",
           "description": "R9K Challenge Bitsocial community node वर चालते आणि normalized post text ची owner node च्या local comments database शी तुलना करते. हे समुदायांना <robot9000>Robot9000</robot9000>-शैलीचा posting experience देते: exact reposts acceptance आधी fail होतात, backlinks दुर्लक्षित केले जातात, repeated failures escalating temporary bans trigger करतात, आणि raw post text साठवण्याऐवजी accepted-text hashes private local state मध्ये राहतात. या challenge मध्ये कोणताही AI वापरला जात नाही."
+        },
+        "wordfilter-challenge": {
+          "tagline": "समुदायाचे शब्द फिल्टर दिखाव्याच्या डिस्प्ले फिल्टरऐवजी स्वाक्षरी केलेला नियम म्हणून लागू होतात.",
+          "description": "Wordfilter Challenge <code>wordfilter/v1</code> करार अंमलात आणून समुदायाच्या शब्द फिल्टरना खरा नियम बनवते. प्रकाशन क्लायंट स्वाक्षरीपूर्वी समुदायाची शब्द बदली लागू करतात, त्यामुळे फिल्टर केलेला मजकूरच स्वाक्षरित होतो आणि सर्वत्र दिसतो, आणि समुदाय नोड अजूनही फिल्टर केलेला शब्द असलेले कोणतेही प्रकाशन नाकारतो."
         }
       }
     },

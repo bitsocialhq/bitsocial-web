@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "ధృవీకరణ",
         "ai": "ఎআई",
-        "antiRepost": "రీపోస్ట్ నిరోధం"
+        "antiRepost": "రీపోస్ట్ నిరోధం",
+        "wordfilters": "పద ఫిల్టర్లు"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -599,6 +600,10 @@
         "r9k-challenge": {
           "tagline": "రీపోస్ట్‌లను అడ్డుకునే పోస్ట్ అనుభవం కోరుకునే కమ్యూనిటీల కోసం Robot9000-శైలి అసలుదనం గేట్.",
           "description": "R9K Challenge ఒక Bitsocial కమ్యూనిటీ node పై నడుస్తుంది మరియు normalized post text ను owner node యొక్క local comments database తో పోలుస్తుంది. ఇది కమ్యూనిటీలకు <robot9000>Robot9000</robot9000>-శైలి posting experience ఇస్తుంది: exact reposts acceptance కు ముందు fail అవుతాయి, backlinks పట్టించుకోబడవు, repeated failures escalating temporary bans ను trigger చేస్తాయి, మరియు raw post text నిల్వ చేయకుండా accepted-text hashes private local state లోనే ఉంటాయి. ఈ challenge లో AI ఉపయోగించబడదు."
+        },
+        "wordfilter-challenge": {
+          "tagline": "కమ్యూనిటీ పద ఫిల్టర్లు అలంకారిక డిస్ప్లే ఫిల్టర్‌గా కాకుండా సంతకం చేసిన నియమంగా అమలవుతాయి.",
+          "description": "Wordfilter Challenge <code>wordfilter/v1</code> ఒప్పందాన్ని అమలు చేయడం ద్వారా కమ్యూనిటీ పద ఫిల్టర్లను నిజమైన నియమంగా మారుస్తుంది. ప్రచురణ క్లయింట్లు సంతకం చేసే ముందు కమ్యూనిటీ పద మార్పిడులను వర్తింపజేస్తాయి, కాబట్టి ఫిల్టర్ చేసిన వచనమే సంతకం చేయబడి ప్రతిచోటా ప్రదర్శించబడుతుంది, ఇంకా ఫిల్టర్ చేసిన పదం ఉన్న ఏ ప్రచురణనైనా కమ్యూనిటీ నోడ్ తిరస్కరిస్తుంది."
         }
       }
     },

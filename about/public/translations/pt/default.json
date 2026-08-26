@@ -529,7 +529,8 @@
         "telegram": "Telegram",
         "verification": "Verificação",
         "ai": "IA",
-        "antiRepost": "Anti-repost"
+        "antiRepost": "Anti-repost",
+        "wordfilters": "Filtros de palavras"
       },
       "linkLabels": {
         "androidApk": "APK do Android",
@@ -599,6 +600,10 @@
         "r9k-challenge": {
           "tagline": "Gate de originalidade no estilo Robot9000 para comunidades que querem uma experiência de publicação anti-repost.",
           "description": "R9K Challenge roda em um nó de comunidade Bitsocial e compara o texto normalizado do post com o banco local de comentários do nó proprietário. Ele dá às comunidades uma experiência de publicação no estilo <robot9000>Robot9000</robot9000>: reposts exatos falham antes da aceitação, backlinks são ignorados, falhas repetidas acionam bans temporários crescentes e hashes do texto aceito ficam em estado local privado em vez de armazenar o texto bruto do post. Este challenge não usa IA."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Filtros de palavras da comunidade aplicados como regra assinada, não como filtro cosmético de exibição.",
+          "description": "O Wordfilter Challenge torna os filtros de palavras da comunidade uma regra real ao implementar o contrato <code>wordfilter/v1</code>. Os clientes de publicação aplicam as substituições de palavras da comunidade antes de assinar, de modo que o texto filtrado é o que é assinado e exibido em todo lugar, e o nó da comunidade rejeita qualquer publicação que ainda contenha uma palavra filtrada."
         }
       }
     },
