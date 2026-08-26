@@ -161,6 +161,11 @@ stats/                # Monitoring, Grafana, Prometheus, and deployment assets
 ### Verification Rules
 
 - Never mark work complete without verification.
+- Treat the contributor machine as a shared, resource-constrained environment. Before a CPU- or memory-intensive command, inspect existing repo workloads and stop only stale processes that the current agent owns.
+- Run heavyweight work sequentially across the whole task, including delegated agents: dependency installs, workspace or full production builds, React Doctor, mobile simulator/device work, and browser/profiler verification must not overlap.
+- `./scripts/create-task-worktree.sh` runs `yarn install`; treat worktree creation itself as heavyweight and do not run it alongside another intensive command.
+- Prefer the narrowest reliable check first. When a full verification pass is required, finish each heavyweight command before starting the next; parallelize only lightweight read-only checks.
+- Reuse an already-running compatible development stack for the same worktree when safe. Otherwise keep at most one declared dev stack per active worktree, record every process/session it starts, and stop that stack on every exit path as soon as it is no longer needed. Never start duplicate app servers or stop a process whose owner or purpose is unclear.
 - Use the Node 22.12.0 toolchain from `.nvmrc`; after `corepack enable`, run plain `yarn` commands.
 - After code changes, run the smallest relevant build check plus `yarn lint` and `yarn typecheck`.
 - Use `yarn build:verify` as the default build check for local verification; it auto-selects the affected workspace build instead of rebuilding every docs locale.
@@ -209,7 +214,7 @@ stats/                # Monitoring, Grafana, Prometheus, and deployment assets
 ## Core SHOULD Rules
 
 - Keep context lean: delegate heavy or verbose tasks when possible.
-- For complex work, parallelize independent checks, except browser-driving checks, which must respect the machine-wide single-session resource budget.
+- For complex work, parallelize independent lightweight checks. Keep CPU- or memory-intensive commands sequential, and keep browser-driving checks within the machine-wide single-session resource budget.
 - When touching already-covered logic, prefer extending nearby tests or clearly call out the missing coverage if the repo area has no existing test harness.
 - Use `yarn knip` when adding/removing dependencies or introducing new direct imports; treat findings as advisory, but resolve real issues before finishing.
 - When proposing or implementing meaningful code changes, include both:
