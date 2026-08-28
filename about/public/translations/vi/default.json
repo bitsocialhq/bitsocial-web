@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Xác minh",
         "ai": "AI",
-        "antiRepost": "Chống đăng lại"
+        "antiRepost": "Chống đăng lại",
+        "referenceClient": "Client tham chiếu",
+        "search": "Tìm kiếm"
       },
       "linkLabels": {
         "androidApk": "APK Android",
@@ -541,7 +543,8 @@
         "openWebApp": "Mở ứng dụng web",
         "openWebsite": "Mở trang web",
         "windows": "Windows",
-        "windowsPortable": "Phiên bản di động cho Windows"
+        "windowsPortable": "Phiên bản di động cho Windows",
+        "openTelegramBot": "Mở bot Telegram"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Cổng kiểm tra tính nguyên bản kiểu Robot9000 cho cộng đồng muốn trải nghiệm đăng bài chống đăng lại.",
           "description": "R9K Challenge chạy trên một node cộng đồng Bitsocial và so sánh văn bản bài đăng đã chuẩn hóa với cơ sở dữ liệu bình luận cục bộ của node chủ sở hữu. Nó đem lại cho cộng đồng trải nghiệm đăng bài kiểu <robot9000>Robot9000</robot9000>: repost trùng khớp sẽ thất bại trước khi được chấp nhận, backlinks bị bỏ qua, các lần thất bại lặp lại kích hoạt lệnh cấm tạm thời tăng dần, và hash của văn bản đã được chấp nhận được giữ trong state cục bộ riêng tư thay vì lưu văn bản thô của bài đăng. Challenge này không dùng AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Bộ lọc từ của cộng đồng được áp dụng như một quy tắc đăng bài thay vì một bộ lọc hiển thị.",
+          "description": "Wordfilter Challenge biến các quy tắc thay thế từ của cộng đồng thành ràng buộc bắt buộc. Các client đăng bài áp dụng phần thay thế trước khi ký, nên bình luận đã ký và CID của nó vốn đã chứa văn bản thay thế, còn node của cộng đồng sẽ từ chối mọi bản đăng vẫn còn chứa từ bị lọc. Dự án hiện thực hợp đồng <code>wordfilter/v1</code>, nhờ vậy một client viết theo hợp đồng đó vẫn hoạt động được với các bản hiện thực khác."
+        },
+        "challenge-composer": {
+          "tagline": "Trình chỉnh sửa ưu tiên ngoại tuyến cho các thiết lập thử thách chống spam của một cộng đồng.",
+          "description": "Challenge Composer hiển thị và cho phép chỉnh sửa mảng <code>challenges</code> trong thiết lập của một cộng đồng Bitsocial, rồi xuất ra một tập lệnh CLI sẵn sàng chạy. Công cụ này gói gọn trong một tệp HTML độc lập duy nhất, không gửi bất kỳ yêu cầu nào ra ngoài khi chạy, nên có thể mở trực tiếp từ ổ đĩa hoặc từ một USB."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Máy chủ xem trước liên kết và chuyển hướng, tạo thẻ chia sẻ cho bài đăng trên Bitsocial.",
+          "description": "Bitsocial Previewer tạo thẻ OpenGraph và Twitter khi liên kết của một bài đăng được chia sẻ trên nền tảng khác, rồi chuyển hướng các trình duyệt thật vào ứng dụng. Một phiên bản chạy đa người thuê theo tên máy chủ, nên chỉ cần một lần triển khai và một lần cấu hình TLS là đủ cho mọi tên miền của ứng dụng khách và bản sao."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Trình thu thập dữ liệu, chỉ mục tìm kiếm và giao diện web tự lưu trữ được cho các cộng đồng Bitsocial.",
+          "description": "Bitsocial Indexer kết nối tới một daemon Bitsocial CLI qua RPC, lập chỉ mục các cộng đồng do người vận hành cấu hình vào một cơ sở dữ liệu SQLite cục bộ, rồi cung cấp chúng qua API REST và tìm kiếm toàn văn, kèm theo giao diện web kết xuất phía máy chủ tùy chọn. Công cụ này khởi đầu rỗng: người vận hành quyết định những gì được lập chỉ mục."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Bot Telegram đăng tóm tắt gọn hoạt động GitHub của các kho mã Bitsocial.",
+          "description": "Bitsocial GitHub Alerts chuyển tiếp các lượt push, bản phát hành, issue và pull request từ GitHub tới bất kỳ cuộc trò chuyện, nhóm hay chủ đề diễn đàn nào trên Telegram. Nhóm Bitsocial dùng nó cho kho mã của mình, và image container được công khai nên ai cũng có thể tự vận hành cho kho mã riêng."
+        },
+        "bitbones": {
+          "tagline": "Client tham chiếu tối giản, trong đó mỗi màn hình chỉ là một lớp bọc mỏng quanh đúng một hook.",
+          "description": "bitbones là lớp hữu ích nhỏ nhất đặt trên các React hook của Bitsocial: gần như không có phần tạo kiểu, không có quyết định sản phẩm, và mỗi màn hình chỉ đứng sau đúng một hook. Đây là nơi nhanh nhất để tái hiện một lỗi hoặc thử một thay đổi trong hooks trên các cộng đồng thật, và bảng tin mặc định của nó có thể chuyển giữa danh sách cộng đồng của Seedit và 5chan."
         }
       }
     },

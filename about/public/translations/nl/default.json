@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Verificatie",
         "ai": "AI",
-        "antiRepost": "Anti-repost"
+        "antiRepost": "Anti-repost",
+        "referenceClient": "Referentieclient",
+        "search": "Zoeken"
       },
       "linkLabels": {
         "androidApk": "Android-APK",
@@ -541,7 +543,8 @@
         "openWebApp": "Webapp openen",
         "openWebsite": "Website openen",
         "windows": "Windows",
-        "windowsPortable": "Draagbare versie voor Windows"
+        "windowsPortable": "Draagbare versie voor Windows",
+        "openTelegramBot": "Telegram-bot openen"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Robot9000-achtige originaliteitsgate voor communities die een anti-repost plaatsingservaring willen.",
           "description": "R9K Challenge draait op een Bitsocial-communitynode en vergelijkt genormaliseerde posttekst met de lokale commentdatabank van de owner node. Het geeft communities een <robot9000>Robot9000</robot9000>-achtige plaatsingservaring: exacte reposts falen vóór acceptatie, backlinks worden genegeerd, herhaalde mislukkingen veroorzaken oplopende tijdelijke bans en hashes van geaccepteerde tekst blijven in private lokale state in plaats van ruwe posttekst op te slaan. Deze challenge gebruikt geen AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Woordfilters van de community worden afgedwongen als plaatsingsregel in plaats van als weergavefilter.",
+          "description": "Wordfilter Challenge maakt de woordvervangingen van een community bindend. Publicerende clients passen de vervangingen toe vóór het ondertekenen, zodat de ondertekende reactie en de bijbehorende CID de vervangende tekst al bevatten, en de node van de community weigert elke publicatie waarin nog een gefilterd woord staat. Het implementeert het <code>wordfilter/v1</code>-contract, waardoor een client die op dat contract is geschreven blijft werken met andere implementaties."
+        },
+        "challenge-composer": {
+          "tagline": "Offline-first editor voor de antispam-challenge-instellingen van een community.",
+          "description": "Challenge Composer toont de array <code>challenges</code> in de instellingen van een Bitsocial-community, laat je die bewerken en exporteert er vervolgens een direct uitvoerbaar CLI-script uit. Het bestaat uit één op zichzelf staand HTML-bestand dat tijdens het uitvoeren geen enkel verzoek naar buiten stuurt, waardoor het rechtstreeks vanaf schijf of een USB-stick geopend kan worden."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Server voor linkvoorbeelden en doorverwijzingen die deelkaarten voor Bitsocial-berichten genereert.",
+          "description": "Bitsocial Previewer genereert OpenGraph- en Twitter-kaarten wanneer een berichtlink op andere platforms wordt gedeeld en stuurt echte browsers daarna door naar de app. Eén instantie is multitenant op basis van hostnaam, zodat één deployment en één TLS-configuratie alle client- en mirrordomeinen dekken."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Zelf te hosten crawler, zoekindex en webinterface voor Bitsocial-community's.",
+          "description": "Bitsocial Indexer maakt via RPC verbinding met een daemon van Bitsocial CLI, indexeert de community's die de beheerder instelt in een lokale SQLite-database en ontsluit ze via een REST- en fulltextzoek-API, met optioneel een op de server gerenderde webinterface. Hij wordt leeg geleverd: de beheerder bepaalt wat er geïndexeerd wordt."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Telegram-bot die GitHub-activiteit uit Bitsocial-repository's beknopt plaatst.",
+          "description": "Bitsocial GitHub Alerts stuurt pushes, releases, issues en pull requests van GitHub door naar elke chat, groep of forumtopic op Telegram. Het Bitsocial-team draait de bot voor de eigen repository's, en de container-image is openbaar, zodat iedereen hem zelf kan hosten voor de zijne."
+        },
+        "bitbones": {
+          "tagline": "Uitgeklede referentieclient waarin elke weergave slechts een dunne wikkel om één hook is.",
+          "description": "bitbones is het kleinste bruikbare oppervlak boven op de React-hooks van Bitsocial: nauwelijks styling, geen productkeuzes en één enkele hook achter elke weergave. Het is de snelste plek om een bug te reproduceren of een hookwijziging tegen echte communities uit te proberen, en de standaardfeed kan worden gewisseld tussen de communitylijsten van Seedit en 5chan."
         }
       }
     },

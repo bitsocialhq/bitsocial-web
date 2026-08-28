@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "验证",
         "ai": "AI",
-        "antiRepost": "反重复发布"
+        "antiRepost": "反重复发布",
+        "referenceClient": "参考客户端",
+        "search": "搜索"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -541,7 +543,8 @@
         "openWebApp": "打开网页应用",
         "openWebsite": "打开网站",
         "windows": "Windows",
-        "windowsPortable": "Windows 便携版"
+        "windowsPortable": "Windows 便携版",
+        "openTelegramBot": "打开 Telegram 机器人"
       },
       "items": {
         "5chan": {
@@ -598,6 +601,30 @@
         "r9k-challenge": {
           "tagline": "面向希望获得反重复发布体验的社区的 Robot9000 风格原创性门槛。",
           "description": "R9K Challenge 在 Bitsocial 社区节点上运行，并将规范化后的帖子文本与所有者节点的本地评论数据库进行比对。它为社区提供 <robot9000>Robot9000</robot9000> 风格的发帖体验：完全重复的 repost 会在被接受前失败，backlink 会被忽略，反复失败会触发逐步升级的临时 ban，已接受文本的哈希会保留在私有本地状态中，而不是保存原始帖子文本。 这个 challenge 不使用 AI。"
+        },
+        "wordfilter-challenge": {
+          "tagline": "社区的词语过滤作为发布规则强制执行，而不是仅在显示时过滤。",
+          "description": "Wordfilter Challenge 让社区设定的词语替换具有强制力。发布端客户端会在签名前完成替换，因此签名后的评论及其 CID 中本身就是替换后的文本；社区节点会拒绝任何仍包含被过滤词的发布。它实现了 <code>wordfilter/v1</code> 契约，因此按该契约编写的客户端也能继续与其他实现协同工作。"
+        },
+        "challenge-composer": {
+          "tagline": "面向社区反垃圾内容挑战设置的离线优先编辑器。",
+          "description": "Challenge Composer 可视化并编辑 Bitsocial 社区设置中的 <code>challenges</code> 数组，然后导出可直接运行的 CLI 脚本。它以单个自包含的 HTML 文件形式发布，运行时不发起任何对外请求，因此可以直接从磁盘或 USB 存储中打开。"
+        },
+        "bitsocial-previewer": {
+          "tagline": "链接预览与跳转服务器，为 Bitsocial 帖子生成分享卡片。",
+          "description": "当帖子链接被分享到其他平台时，Bitsocial Previewer 会生成 OpenGraph 和 Twitter 卡片，并把真实浏览器重定向回应用。单个实例按主机名实现多租户，因此一次部署和一次 TLS 配置即可覆盖所有客户端与镜像域名。"
+        },
+        "bitsocial-indexer": {
+          "tagline": "面向 Bitsocial 社区的可自托管爬虫、搜索索引和 Web 界面。",
+          "description": "Bitsocial Indexer 通过 RPC 连接到 Bitsocial CLI 守护进程，将运营者配置的社区索引到本地 SQLite 数据库，并通过 REST 和全文搜索 API 对外提供，同时可选配服务端渲染的 Web 界面。它初始为空：索引哪些内容由运营者决定。"
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "在 Telegram 上简洁推送 Bitsocial 仓库 GitHub 动态的机器人。",
+          "description": "Bitsocial GitHub Alerts 会把 GitHub 上的推送、发布、issue 和 pull request 转发到任意 Telegram 聊天、群组或论坛话题中。Bitsocial 团队用它来跟踪自己的仓库，容器镜像也已公开，任何人都可以为自己的仓库自行部署。"
+        },
+        "bitbones": {
+          "tagline": "极简参考客户端，每个视图都只是单个 hook 之上的一层薄封装。",
+          "description": "bitbones 是 Bitsocial React hooks 之上最小的可用外壳：几乎没有样式，不带任何产品取舍，每个视图背后只有一个 hook。要在真实社区上复现 bug 或试验 hooks 的改动，这里是最快的落脚点；它的默认信息流可以在 Seedit 与 5chan 的社区列表之间切换。"
         }
       }
     },

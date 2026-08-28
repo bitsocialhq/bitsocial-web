@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Verificació",
         "ai": "IA",
-        "antiRepost": "Antirepublicació"
+        "antiRepost": "Antirepublicació",
+        "referenceClient": "Client de referència",
+        "search": "Cerca"
       },
       "linkLabels": {
         "androidApk": "APK d'Android",
@@ -541,7 +543,8 @@
         "openWebApp": "Obre l'aplicació web",
         "openWebsite": "Obre el lloc web",
         "windows": "Windows",
-        "windowsPortable": "Windows portable"
+        "windowsPortable": "Windows portable",
+        "openTelegramBot": "Obre el bot de Telegram"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Porta d'originalitat a l'estil Robot9000 per a comunitats que volen una experiència de publicació anti-repost.",
           "description": "R9K Challenge s'executa en un node de comunitat de Bitsocial i compara el text normalitzat de la publicació amb la base de dades local de comentaris del node propietari. Dona a les comunitats una experiència de publicació a l'estil <robot9000>Robot9000</robot9000>: els reposts exactes fallen abans de ser acceptats, els backlinks s'ignoren, els errors repetits activen bans temporals creixents i els hashes del text acceptat es mantenen en estat local privat en lloc de desar el text cru de la publicació. Aquest challenge no utilitza IA."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Els filtres de paraules de la comunitat s'apliquen com a norma de publicació, no com a filtre de visualització.",
+          "description": "Wordfilter Challenge fa que les substitucions de paraules d'una comunitat siguin vinculants. Els clients de publicació apliquen les substitucions abans de signar, de manera que el comentari signat i el seu CID ja contenen el text substituït, i el node de la comunitat rebutja qualsevol publicació que encara contingui una paraula filtrada. Implementa el contracte <code>wordfilter/v1</code>, de manera que un client escrit segons aquest contracte continua funcionant amb altres implementacions."
+        },
+        "challenge-composer": {
+          "tagline": "Editor amb prioritat fora de línia per a la configuració dels reptes antispam d'una comunitat.",
+          "description": "Challenge Composer mostra i permet editar la matriu <code>challenges</code> de la configuració d'una comunitat de Bitsocial i n'exporta un script de CLI llest per executar. Es distribueix com un únic fitxer HTML autocontingut que no fa cap petició externa en temps d'execució, de manera que es pot obrir directament des del disc o des d'una memòria USB."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Servidor de previsualització d'enllaços i de redirecció que genera targetes per compartir publicacions de Bitsocial.",
+          "description": "Bitsocial Previewer genera targetes d'OpenGraph i de Twitter quan l'enllaç d'una publicació es comparteix en altres plataformes i, tot seguit, redirigeix els navegadors reals cap a l'aplicació. Una sola instància és multitenant per nom d'amfitrió, de manera que un únic desplegament i una única configuració de TLS cobreixen tots els dominis de clients i de rèpliques."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Rastrejador, índex de cerca i interfície web autoallotjables per a comunitats de Bitsocial.",
+          "description": "Bitsocial Indexer es connecta mitjançant RPC a un dimoni de Bitsocial CLI, indexa en una base de dades SQLite local les comunitats que hi configura l'operador i les serveix a través d'una API REST i de cerca de text complet, amb una interfície web renderitzada al servidor opcional. Es distribueix buit: és l'operador qui decideix què s'indexa."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Bot de Telegram que publica de manera compacta l'activitat de GitHub dels repositoris de Bitsocial.",
+          "description": "Bitsocial GitHub Alerts reenvia pushes, llançaments, incidències i pull requests de GitHub a qualsevol xat, grup o tema de fòrum de Telegram. L'equip de Bitsocial el fa servir per als seus propis repositoris i la imatge del contenidor és pública, de manera que qualsevol pot allotjar-lo pel seu compte per als seus."
+        },
+        "bitbones": {
+          "tagline": "Client de referència mínim en què cada vista és un embolcall prim sobre un únic hook.",
+          "description": "bitbones és la superfície útil més petita sobre els hooks de React de Bitsocial: gairebé sense estils, sense decisions de producte i amb un únic hook darrere de cada vista. És el lloc més ràpid per reproduir un error o provar un canvi als hooks contra comunitats reals, i el seu canal per defecte es pot canviar entre les llistes de comunitats de Seedit i de 5chan."
         }
       }
     },

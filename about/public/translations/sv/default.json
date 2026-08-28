@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Verifiering",
         "ai": "AI",
-        "antiRepost": "Anti-repost"
+        "antiRepost": "Anti-repost",
+        "referenceClient": "Referensklient",
+        "search": "Sökning"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -541,7 +543,8 @@
         "openWebApp": "Öppna webbappen",
         "openWebsite": "Öppna webbplatsen",
         "windows": "Windows",
-        "windowsPortable": "Bärbar version för Windows"
+        "windowsPortable": "Bärbar version för Windows",
+        "openTelegramBot": "Öppna Telegram-bot"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Originalitetsgrind i Robot9000-stil för communities som vill ha en anti-repost-upplevelse vid publicering.",
           "description": "R9K Challenge körs på en Bitsocial-communitynod och jämför normaliserad inläggstext mot ägarnodens lokala kommentarsdatabas. Den ger communities en publiceringsupplevelse i <robot9000>Robot9000</robot9000>-stil: exakta reposts fallerar före acceptans, backlinks ignoreras, upprepade misslyckanden utlöser eskalerande tillfälliga bans och hashar av accepterad text stannar i privat lokal state i stället för att lagra rå inläggstext. Den här challengen använder inte AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Gemenskapens ordfilter tillämpas som en publiceringsregel i stället för som ett visningsfilter.",
+          "description": "Wordfilter Challenge gör en gemenskaps ordersättningar bindande. Publicerande klienter tillämpar ersättningarna före signeringen, så den signerade kommentaren och dess CID innehåller redan ersättningstexten, och gemenskapens nod avvisar varje publicering som fortfarande innehåller ett filtrerat ord. Det implementerar kontraktet <code>wordfilter/v1</code>, vilket gör att en klient som skrivits mot det kontraktet fortsätter att fungera med andra implementationer."
+        },
+        "challenge-composer": {
+          "tagline": "Offline-först-redigerare för en communitys inställningar för antispam-utmaningar.",
+          "description": "Challenge Composer visar och redigerar arrayen <code>challenges</code> i inställningarna för en Bitsocial-community och exporterar sedan ett körklart CLI-skript. Det levereras som en enda fristående HTML-fil som inte gör några anrop utåt när den körs, så den kan öppnas direkt från disk eller ett USB-minne."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Server för länkförhandsvisning och omdirigering som genererar delningskort för Bitsocial-inlägg.",
+          "description": "Bitsocial Previewer genererar OpenGraph- och Twitter-kort när en länk till ett inlägg delas på andra plattformar och skickar sedan vidare riktiga webbläsare till appen. En instans är flerklientsanpassad per värdnamn, så en enda driftsättning och TLS-konfiguration räcker för alla klient- och spegeldomäner."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Crawler, sökindex och webbgränssnitt för Bitsocial-communityer, som du kan hosta själv.",
+          "description": "Bitsocial Indexer ansluter via RPC till en daemon för Bitsocial CLI, indexerar de communityer som operatören konfigurerar i en lokal SQLite-databas och exponerar dem via ett REST- och fritextsök-API, med ett valfritt serverrenderat webbgränssnitt. Den levereras tom: operatören avgör vad som indexeras."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Telegram-bot som publicerar kortfattad GitHub-aktivitet för Bitsocial-repositorier.",
+          "description": "Bitsocial GitHub Alerts vidarebefordrar pushar, releaser, issues och pull requests från GitHub till valfri chatt, grupp eller forumtråd på Telegram. Bitsocial-teamet kör den för sina egna repositorier, och container-avbilden är öppen så att vem som helst kan köra den själv för sina."
+        },
+        "bitbones": {
+          "tagline": "Avskalad referensklient där varje vy bara är ett tunt hölje kring en enda hook.",
+          "description": "bitbones är den minsta användbara ytan ovanpå Bitsocials React-hooks: nästan ingen styling, inga produktbeslut och en enda hook bakom varje vy. Det är det snabbaste stället att återskapa en bugg eller pröva en hook-ändring mot riktiga gemenskaper, och standardflödet kan växlas mellan Seedits och 5chans gemenskapslistor."
         }
       }
     },

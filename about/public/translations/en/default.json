@@ -735,7 +735,9 @@
         "riskScores": "Risk scores",
         "telegram": "Telegram",
         "verification": "Verification",
-        "antiRepost": "Anti-repost"
+        "antiRepost": "Anti-repost",
+        "referenceClient": "Reference client",
+        "search": "Search"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -747,7 +749,8 @@
         "openWebApp": "Open web app",
         "openWebsite": "Open website",
         "windows": "Windows",
-        "windowsPortable": "Windows Portable"
+        "windowsPortable": "Windows Portable",
+        "openTelegramBot": "Open Telegram bot"
       },
       "items": {
         "5chan": {
@@ -809,6 +812,30 @@
         "r9k-challenge": {
           "tagline": "Robot9000-style originality gate for communities that want anti-repost posting UX.",
           "description": "R9K Challenge runs on a Bitsocial community node and compares normalized post text against the owner node's local comments database. It gives communities a <robot9000>Robot9000</robot9000>-style posting experience without using AI: exact reposts fail before acceptance, backlinks are ignored, repeated failures trigger escalating temporary bans, and accepted-text hashes stay in private local state instead of storing raw post text."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Community wordfilters enforced as a posting rule instead of a display filter.",
+          "description": "Wordfilter Challenge makes a community's word replacements binding. Publishing clients apply the replacements before signing, so the signed comment and its CID already contain the replacement text, and the community node rejects any publication that still contains a filtered word. It implements the <code>wordfilter/v1</code> contract, so a client written against that contract keeps working with other implementations."
+        },
+        "challenge-composer": {
+          "tagline": "Offline-first editor for a community's anti-spam challenge settings.",
+          "description": "Challenge Composer visualizes and edits the <code>challenges</code> array of a Bitsocial community's settings, then exports a ready-to-run CLI script. It ships as a single self-contained HTML file that makes no outward requests at runtime, so it can be opened straight from disk or a USB stick."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Link-preview and redirect server that renders share cards for Bitsocial posts.",
+          "description": "Bitsocial Previewer renders OpenGraph and Twitter cards when a post link is shared on other platforms, then redirects real browsers into the app. One instance is multi-tenant by hostname, so a single deployment and TLS setup covers every client and mirror domain."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Self-hostable crawler, search index, and web UI for Bitsocial communities.",
+          "description": "Bitsocial Indexer connects to a Bitsocial CLI daemon over RPC, indexes the communities an operator configures into a local SQLite database, and serves them through a REST and full-text search API with an optional server-rendered web UI. It ships empty: the operator decides what gets indexed."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Telegram bot that posts compact GitHub activity for Bitsocial repositories.",
+          "description": "Bitsocial GitHub Alerts forwards pushes, releases, issues, and pull requests from GitHub into any Telegram chat, group, or forum topic. The Bitsocial team runs it for its own repositories, and the container image is public so anyone can self-host it for theirs."
+        },
+        "bitbones": {
+          "tagline": "Bare-bones reference client where every view is a thin wrapper over one hook.",
+          "description": "bitbones is the smallest useful surface over the Bitsocial React hooks: almost no styling, no product opinions, and a single hook behind every view. It is the fastest place to reproduce a bug or try a hooks change against real communities, and its default feed can be switched between the Seedit and 5chan community lists."
         }
       }
     },

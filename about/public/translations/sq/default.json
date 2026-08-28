@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Verifikim",
         "ai": "AI",
-        "antiRepost": "Kundër ripostimeve"
+        "antiRepost": "Kundër ripostimeve",
+        "referenceClient": "Klient referues",
+        "search": "Kërkim"
       },
       "linkLabels": {
         "androidApk": "APK për Android",
@@ -541,7 +543,8 @@
         "openWebApp": "Hap aplikacionin web",
         "openWebsite": "Hap faqen e internetit",
         "windows": "Windows",
-        "windowsPortable": "Version i lëvizshëm për Windows"
+        "windowsPortable": "Version i lëvizshëm për Windows",
+        "openTelegramBot": "Hap botin e Telegram"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Portë origjinaliteti në stilin Robot9000 për komunitete që duan përvojë postimi kundër ripostimeve.",
           "description": "R9K Challenge ekzekutohet në një nyje komuniteti Bitsocial dhe krahason tekstin e normalizuar të postimit me databazën lokale të komenteve të nyjes pronare. U jep komuniteteve një përvojë postimi në stilin <robot9000>Robot9000</robot9000>: ripostimet ekzakte dështojnë para pranimit, backlinks injorohen, dështimet e përsëritura shkaktojnë ndalime të përkohshme në rritje dhe hash-et e tekstit të pranuar mbeten në gjendje lokale private në vend që të ruhet teksti bruto i postimit. Ky challenge nuk përdor AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Filtrat e fjalëve të komunitetit zbatohen si rregull publikimi, jo si filtër shfaqjeje.",
+          "description": "Wordfilter Challenge i bën të detyrueshme zëvendësimet e fjalëve të një komuniteti. Klientët që publikojnë i zbatojnë zëvendësimet para nënshkrimit, kështu që komenti i nënshkruar dhe CID-ja e tij përmbajnë tashmë tekstin zëvendësues, ndërsa nyja e komunitetit refuzon çdo publikim që ende përmban një fjalë të filtruar. Ai zbaton kontratën <code>wordfilter/v1</code>, prandaj një klient i shkruar sipas asaj kontrate vazhdon të funksionojë edhe me implementime të tjera."
+        },
+        "challenge-composer": {
+          "tagline": "Redaktues që punon kryesisht jashtë linje për cilësimet e sfidave kundër spamit të një komuniteti.",
+          "description": "Challenge Composer shfaq dhe lejon të redaktohet vargu <code>challenges</code> te cilësimet e një komuniteti në Bitsocial, dhe më pas eksporton një skript CLI gati për t'u ekzekutuar. Vjen si një skedar i vetëm HTML i vetëpërmbajtur, që gjatë ekzekutimit nuk bën asnjë kërkesë drejt jashtë, prandaj mund të hapet drejtpërdrejt nga disku ose nga një stik USB."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Server për parapamje lidhjesh dhe ridrejtim, që gjeneron kartat e shpërndarjes për postimet në Bitsocial.",
+          "description": "Bitsocial Previewer gjeneron karta OpenGraph dhe Twitter kur lidhja e një postimi ndahet në platforma të tjera, dhe më pas i ridrejton shfletuesit e vërtetë te aplikacioni. Një instancë e vetme është shumëqiramarrëse sipas emrit të hostit, prandaj një vendosje e vetme dhe një konfigurim i vetëm TLS mbulojnë të gjitha domenet e klientëve dhe të pasqyrave."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Zvarritës, indeks kërkimi dhe ndërfaqe web për komunitetet në Bitsocial, që mund t'i strehoni vetë.",
+          "description": "Bitsocial Indexer lidhet përmes RPC me një daemon të Bitsocial CLI, indekson në një bazë të dhënash lokale SQLite komunitetet që konfiguron operatori dhe i ofron ato përmes një API REST dhe kërkimi në tekst të plotë, me një ndërfaqe web opsionale të renderuar në server. Vjen bosh: operatori vendos se çfarë indeksohet."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Bot Telegram që publikon në mënyrë të përmbledhur aktivitetin në GitHub për depot e Bitsocial.",
+          "description": "Bitsocial GitHub Alerts përcjell push-et, publikimet, çështjet dhe pull request-et nga GitHub në çdo bisedë, grup ose temë forumi në Telegram. Ekipi i Bitsocial e përdor për depot e veta, ndërsa imazhi i kontejnerit është publik, kështu që kushdo mund ta strehojë vetë për depot e tij."
+        },
+        "bitbones": {
+          "tagline": "Klient referues krejt i thjeshtë, ku çdo pamje është vetëm një mbështjellës i hollë mbi një hook të vetëm.",
+          "description": "bitbones është sipërfaqja më e vogël e dobishme mbi hook-et React të Bitsocial: pothuajse pa stilizim, pa vendime produkti dhe me një hook të vetëm pas çdo pamjeje. Është vendi më i shpejtë për të riprodhuar një defekt ose për të provuar një ndryshim te hook-et kundrejt komuniteteve reale, ndërsa feed-i i tij i parazgjedhur mund të ndërrohet midis listave të komuniteteve të Seedit dhe 5chan."
         }
       }
     },

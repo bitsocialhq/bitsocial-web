@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Doğrulama",
         "ai": "AI",
-        "antiRepost": "Yeniden paylaşım karşıtı"
+        "antiRepost": "Yeniden paylaşım karşıtı",
+        "referenceClient": "Referans istemci",
+        "search": "Arama"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -541,7 +543,8 @@
         "openWebApp": "Web uygulamasını aç",
         "openWebsite": "Web sitesini aç",
         "windows": "Windows",
-        "windowsPortable": "Windows taşınabilir sürüm"
+        "windowsPortable": "Windows taşınabilir sürüm",
+        "openTelegramBot": "Telegram botunu aç"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Anti-repost gönderi deneyimi isteyen topluluklar için Robot9000 tarzı özgünlük kapısı.",
           "description": "R9K Challenge bir Bitsocial topluluk node'unda çalışır ve normalize edilmiş gönderi metnini sahip node'un yerel yorum veritabanıyla karşılaştırır. Topluluklara <robot9000>Robot9000</robot9000> tarzı bir gönderi deneyimi verir: birebir repostlar kabul edilmeden önce başarısız olur, backlinks yok sayılır, tekrarlanan başarısızlıklar artan geçici banları tetikler ve kabul edilen metin hash'leri ham gönderi metnini saklamak yerine private local state içinde kalır. Bu challenge AI kullanmaz."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Topluluğun kelime filtreleri, görüntüleme filtresi olarak değil gönderi kuralı olarak uygulanır.",
+          "description": "Wordfilter Challenge, bir topluluğun kelime değiştirmelerini bağlayıcı hale getirir. Yayımlayan istemciler değiştirmeleri imzalamadan önce uygular; böylece imzalanmış yorum ve onun CID'si baştan değiştirilmiş metni içerir ve topluluk düğümü, hâlâ filtrelenen bir kelime içeren her yayımı reddeder. <code>wordfilter/v1</code> sözleşmesini uyguladığı için bu sözleşmeye göre yazılmış bir istemci diğer uygulamalarla da çalışmayı sürdürür."
+        },
+        "challenge-composer": {
+          "tagline": "Bir topluluğun spam önleme sınaması ayarları için çevrimdışı öncelikli düzenleyici.",
+          "description": "Challenge Composer, bir Bitsocial topluluğunun ayarlarındaki <code>challenges</code> dizisini görselleştirip düzenlemenizi sağlar ve ardından doğrudan çalıştırılabilir bir CLI betiği dışa aktarır. Kendi kendine yeten tek bir HTML dosyası olarak dağıtılır ve çalışırken dışarıya hiçbir istek göndermez; bu sayede diskten ya da bir USB bellekten doğrudan açılabilir."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Bitsocial gönderileri için paylaşım kartları oluşturan bağlantı önizleme ve yönlendirme sunucusu.",
+          "description": "Bitsocial Previewer, bir gönderi bağlantısı başka platformlarda paylaşıldığında OpenGraph ve Twitter kartlarını oluşturur, ardından gerçek tarayıcıları uygulamaya yönlendirir. Tek bir örnek ana bilgisayar adına göre çok kiracılı çalışır; böylece tek bir dağıtım ve TLS yapılandırması tüm istemci ve ayna alan adlarını kapsar."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Bitsocial toplulukları için kendi sunucunuzda barındırabileceğiniz crawler, arama dizini ve web arayüzü.",
+          "description": "Bitsocial Indexer, RPC üzerinden bir Bitsocial CLI arka plan sürecine bağlanır, işletmecinin tanımladığı toplulukları yerel bir SQLite veritabanına indeksler ve bunları REST ile tam metin arama API'si üzerinden sunar; isteğe bağlı olarak sunucuda oluşturulan bir web arayüzü de gelir. Boş olarak dağıtılır: neyin indeksleneceğine işletmeci karar verir."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Bitsocial depolarındaki GitHub etkinliklerini derli toplu biçimde paylaşan Telegram botu.",
+          "description": "Bitsocial GitHub Alerts; GitHub üzerindeki push'ları, sürümleri, issue'ları ve pull request'leri Telegram'daki herhangi bir sohbete, gruba veya forum konusuna iletir. Bitsocial ekibi botu kendi depoları için çalıştırır; konteyner imajı herkese açık olduğundan isteyen kendi depoları için kendi sunucusunda barındırabilir."
+        },
+        "bitbones": {
+          "tagline": "Her görünümün tek bir hook üzerindeki ince bir sarmalayıcıdan ibaret olduğu, en yalın referans istemci.",
+          "description": "bitbones, Bitsocial'ın React hook'ları üzerindeki en küçük kullanışlı katmandır: neredeyse hiç biçimlendirme yok, ürün kararları yok ve her görünümün arkasında tek bir hook var. Bir hatayı yeniden üretmek ya da hook'lardaki bir değişikliği gerçek topluluklar üzerinde denemek için en hızlı yer burasıdır; varsayılan akışı da Seedit ile 5chan topluluk listeleri arasında değiştirilebilir."
         }
       }
     },

@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Ověření",
         "ai": "AI",
-        "antiRepost": "Proti repostům"
+        "antiRepost": "Proti repostům",
+        "referenceClient": "Referenční klient",
+        "search": "Vyhledávání"
       },
       "linkLabels": {
         "androidApk": "APK pro Android",
@@ -541,7 +543,8 @@
         "openWebApp": "Otevřít webovou aplikaci",
         "openWebsite": "Otevřít web",
         "windows": "Windows",
-        "windowsPortable": "Přenosná verze pro Windows"
+        "windowsPortable": "Přenosná verze pro Windows",
+        "openTelegramBot": "Otevřít bota Telegram"
       },
       "items": {
         "5chan-board-manager": {
@@ -565,6 +568,30 @@
         "r9k-challenge": {
           "tagline": "Brána originality ve stylu Robot9000 pro komunity, které chtějí publikační UX proti repostům.",
           "description": "R9K Challenge běží na komunitním uzlu Bitsocial a porovnává normalizovaný text příspěvku s lokální databází komentářů uzlu vlastníka. Komunitám dává publikační zkušenost ve stylu <robot9000>Robot9000</robot9000>: přesné reposty selžou před přijetím, backlinks se ignorují, opakovaná selhání spouštějí stupňující se dočasné bany a hashe přijatého textu zůstávají v soukromém lokálním stavu místo ukládání surového textu příspěvku. Tato challenge nepoužívá AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Slovní filtry komunity se vynucují jako pravidlo pro publikování, ne jako filtr zobrazení.",
+          "description": "Wordfilter Challenge činí náhrady slov v komunitě závaznými. Publikující klienti provedou náhrady ještě před podpisem, takže podepsaný komentář i jeho CID už obsahují nahrazený text, a uzel komunity odmítne každou publikaci, která stále obsahuje filtrované slovo. Implementuje kontrakt <code>wordfilter/v1</code>, takže klient napsaný podle tohoto kontraktu funguje i s jinými implementacemi."
+        },
+        "challenge-composer": {
+          "tagline": "Editor pracující primárně offline pro nastavení antispamových výzev komunity.",
+          "description": "Challenge Composer zobrazuje a upravuje pole <code>challenges</code> v nastavení komunity na Bitsocial a následně exportuje CLI skript připravený ke spuštění. Dodává se jako jediný soběstačný HTML soubor, který za běhu neodesílá žádné požadavky ven, takže jej lze otevřít přímo z disku nebo z USB flash disku."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Server pro náhledy odkazů a přesměrování, který vykresluje karty pro sdílení příspěvků z Bitsocial.",
+          "description": "Bitsocial Previewer vykreslí karty OpenGraph a Twitter, když někdo sdílí odkaz na příspěvek na jiné platformě, a skutečné prohlížeče poté přesměruje do aplikace. Jedna instance je víceklientská podle názvu hostitele, takže jediné nasazení a jediné nastavení TLS pokryje všechny klientské i zrcadlové domény."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Crawler, vyhledávací index a webové rozhraní pro komunity na Bitsocial, které si můžete hostovat sami.",
+          "description": "Bitsocial Indexer se přes RPC připojí k démonovi Bitsocial CLI, zaindexuje komunity nastavené provozovatelem do lokální databáze SQLite a zpřístupní je přes REST API a API pro fulltextové vyhledávání, volitelně i přes webové rozhraní vykreslované na serveru. Dodává se prázdný: co se bude indexovat, určuje provozovatel."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Telegram bot, který stručně oznamuje aktivitu na GitHub v repozitářích Bitsocial.",
+          "description": "Bitsocial GitHub Alerts přeposílá pushe, releasy, issues a pull requesty z GitHub do libovolného chatu, skupiny nebo tématu fóra na Telegram. Tým Bitsocial jej provozuje pro vlastní repozitáře a image kontejneru je veřejný, takže si jej kdokoli může nasadit pro ty své."
+        },
+        "bitbones": {
+          "tagline": "Zcela minimalistický referenční klient, v němž je každé zobrazení jen tenkou obálkou nad jedním hookem.",
+          "description": "bitbones je nejmenší užitečná vrstva nad React hooky Bitsocialu: téměř žádné styly, žádná produktová rozhodnutí a za každým zobrazením jediný hook. Je to nejrychlejší místo, kde reprodukovat chybu nebo vyzkoušet změnu hooků proti skutečným komunitám, a jeho výchozí feed lze přepínat mezi seznamy komunit Seedit a 5chan."
         }
       }
     },

@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "सत्यापन",
         "ai": "एआई",
-        "antiRepost": "रीपोस्ट-रोधी"
+        "antiRepost": "रीपोस्ट-रोधी",
+        "referenceClient": "संदर्भ क्लाइंट",
+        "search": "खोज"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -541,7 +543,8 @@
         "openWebApp": "वेब ऐप खोलें",
         "openWebsite": "वेबसाइट खोलें",
         "windows": "Windows",
-        "windowsPortable": "Windows पोर्टेबल"
+        "windowsPortable": "Windows पोर्टेबल",
+        "openTelegramBot": "Telegram बॉट खोलें"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Anti-repost पोस्टिंग UX चाहने वाली communities के लिए Robot9000-style originality gate.",
           "description": "R9K Challenge Bitsocial community node पर चलता है और normalized post text को owner node के local comments database से मिलाता है। यह communities को <robot9000>Robot9000</robot9000>-style posting experience देता है: exact reposts acceptance से पहले fail होते हैं, backlinks ignore किए जाते हैं, repeated failures escalating temporary bans trigger करते हैं, और accepted-text hashes raw post text store करने के बजाय private local state में रहते हैं. इस challenge में कोई AI इस्तेमाल नहीं होता।"
+        },
+        "wordfilter-challenge": {
+          "tagline": "समुदाय के शब्द-फ़िल्टर प्रदर्शन फ़िल्टर के बजाय पोस्ट करने के नियम के रूप में लागू किए जाते हैं।",
+          "description": "Wordfilter Challenge किसी समुदाय के शब्द-प्रतिस्थापनों को बाध्यकारी बना देता है। प्रकाशित करने वाले क्लाइंट हस्ताक्षर करने से पहले ही प्रतिस्थापन लागू कर देते हैं, इसलिए हस्ताक्षरित टिप्पणी और उसके CID में पहले से ही प्रतिस्थापित पाठ होता है, और समुदाय का नोड ऐसी हर प्रकाशित सामग्री को अस्वीकार कर देता है जिसमें अब भी कोई फ़िल्टर किया गया शब्द मौजूद हो। यह <code>wordfilter/v1</code> कॉन्ट्रैक्ट को लागू करता है, इसलिए उस कॉन्ट्रैक्ट के अनुसार लिखा गया क्लाइंट दूसरे कार्यान्वयनों के साथ भी काम करता रहता है।"
+        },
+        "challenge-composer": {
+          "tagline": "किसी समुदाय की एंटी-स्पैम चैलेंज सेटिंग्स के लिए ऑफ़लाइन-फ़र्स्ट एडिटर।",
+          "description": "Challenge Composer किसी Bitsocial समुदाय की सेटिंग्स में मौजूद <code>challenges</code> ऐरे को दिखाता है और उसे संपादित करने देता है, फिर उससे चलाने के लिए तैयार CLI स्क्रिप्ट एक्सपोर्ट करता है। यह एक ही स्वयं-निहित HTML फ़ाइल के रूप में आता है, जो चलते समय बाहर कोई अनुरोध नहीं भेजती, इसलिए इसे सीधे डिस्क या USB स्टिक से खोला जा सकता है।"
+        },
+        "bitsocial-previewer": {
+          "tagline": "लिंक-प्रीव्यू और रीडायरेक्ट सर्वर, जो Bitsocial की पोस्ट के लिए शेयर कार्ड बनाता है।",
+          "description": "जब किसी पोस्ट का लिंक दूसरे प्लैटफ़ॉर्म पर साझा किया जाता है, तो Bitsocial Previewer OpenGraph और Twitter कार्ड तैयार करता है और असली ब्राउज़रों को ऐप पर भेज देता है। एक ही इंस्टेंस होस्टनेम के आधार पर मल्टी-टेनेंट है, इसलिए एक ही डिप्लॉयमेंट और TLS सेटअप हर क्लाइंट और मिरर डोमेन के लिए काफ़ी है।"
+        },
+        "bitsocial-indexer": {
+          "tagline": "Bitsocial समुदायों के लिए स्वयं होस्ट किया जा सकने वाला क्रॉलर, सर्च इंडेक्स और वेब इंटरफ़ेस।",
+          "description": "Bitsocial Indexer, RPC के ज़रिए किसी Bitsocial CLI डीमन से जुड़ता है, ऑपरेटर द्वारा तय किए गए समुदायों को एक स्थानीय SQLite डेटाबेस में इंडेक्स करता है, और उन्हें REST तथा फ़ुल-टेक्स्ट सर्च API के माध्यम से उपलब्ध कराता है, साथ में वैकल्पिक रूप से सर्वर पर रेंडर होने वाला वेब इंटरफ़ेस भी देता है। यह खाली आता है: क्या इंडेक्स होगा, यह ऑपरेटर तय करता है।"
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Telegram बॉट, जो Bitsocial रिपॉज़िटरी की GitHub गतिविधि संक्षेप में पोस्ट करता है।",
+          "description": "Bitsocial GitHub Alerts, GitHub से पुश, रिलीज़, इशू और पुल रिक्वेस्ट को किसी भी Telegram चैट, ग्रुप या फ़ोरम टॉपिक में भेजता है। Bitsocial टीम इसे अपनी रिपॉज़िटरी के लिए चलाती है, और कंटेनर इमेज सार्वजनिक है, इसलिए कोई भी इसे अपनी रिपॉज़िटरी के लिए ख़ुद होस्ट कर सकता है।"
+        },
+        "bitbones": {
+          "tagline": "बेहद सादा रेफ़रेंस क्लाइंट, जिसमें हर व्यू सिर्फ़ एक hook के ऊपर एक पतली परत है।",
+          "description": "bitbones, Bitsocial के React hooks के ऊपर सबसे छोटी उपयोगी परत है: लगभग कोई स्टाइलिंग नहीं, कोई प्रोडक्ट-राय नहीं, और हर व्यू के पीछे सिर्फ़ एक hook। असली समुदायों पर किसी बग को दोहराने या hooks में किए गए बदलाव को आज़माने के लिए यह सबसे तेज़ जगह है, और इसकी डिफ़ॉल्ट फ़ीड को Seedit और 5chan की समुदाय-सूचियों के बीच बदला जा सकता है।"
         }
       }
     },

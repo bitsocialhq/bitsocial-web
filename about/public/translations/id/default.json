@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Verifikasi",
         "ai": "AI",
-        "antiRepost": "Anti-repost"
+        "antiRepost": "Anti-repost",
+        "referenceClient": "Klien referensi",
+        "search": "Pencarian"
       },
       "linkLabels": {
         "androidApk": "APK Android",
@@ -541,7 +543,8 @@
         "openWebApp": "Buka aplikasi web",
         "openWebsite": "Buka situs web",
         "windows": "Windows",
-        "windowsPortable": "Windows portabel"
+        "windowsPortable": "Windows portabel",
+        "openTelegramBot": "Buka bot Telegram"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Gerbang orisinalitas bergaya Robot9000 untuk komunitas yang menginginkan pengalaman posting anti-repost.",
           "description": "R9K Challenge berjalan di node komunitas Bitsocial dan membandingkan teks posting yang sudah dinormalisasi dengan database komentar lokal milik node pemilik. Ini memberi komunitas pengalaman posting bergaya <robot9000>Robot9000</robot9000>: repost persis gagal sebelum diterima, backlink diabaikan, kegagalan berulang memicu ban sementara yang meningkat, dan hash teks yang diterima tetap berada di state lokal privat alih-alih menyimpan teks posting mentah. Challenge ini tidak menggunakan AI."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Filter kata komunitas diberlakukan sebagai aturan pengiriman, bukan sebagai filter tampilan.",
+          "description": "Wordfilter Challenge membuat penggantian kata milik sebuah komunitas bersifat mengikat. Klien penerbit menerapkan penggantian tersebut sebelum penandatanganan, sehingga komentar yang ditandatangani beserta CID-nya sudah berisi teks pengganti, dan node komunitas menolak setiap publikasi yang masih memuat kata terfilter. Proyek ini mengimplementasikan kontrak <code>wordfilter/v1</code>, sehingga klien yang ditulis mengikuti kontrak itu tetap dapat bekerja dengan implementasi lain."
+        },
+        "challenge-composer": {
+          "tagline": "Editor yang mengutamakan mode luring untuk pengaturan tantangan anti-spam sebuah komunitas.",
+          "description": "Challenge Composer menampilkan dan menyunting larik <code>challenges</code> pada pengaturan sebuah komunitas Bitsocial, lalu mengekspornya menjadi skrip CLI yang siap dijalankan. Alat ini berupa satu berkas HTML mandiri yang tidak mengirim permintaan keluar saat dijalankan, sehingga bisa dibuka langsung dari disk atau dari flash disk USB."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Server pratinjau tautan dan pengalihan yang membuat kartu berbagi untuk kiriman Bitsocial.",
+          "description": "Bitsocial Previewer membuat kartu OpenGraph dan Twitter saat tautan sebuah kiriman dibagikan di platform lain, lalu mengalihkan peramban sungguhan ke aplikasi. Satu instans bersifat multi-tenant berdasarkan hostname, sehingga satu penerapan dan satu pengaturan TLS sudah mencakup seluruh domain klien dan mirror."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Perayap, indeks pencarian, dan antarmuka web yang bisa di-hosting sendiri untuk komunitas Bitsocial.",
+          "description": "Bitsocial Indexer terhubung ke daemon Bitsocial CLI melalui RPC, mengindeks komunitas yang dikonfigurasi operator ke dalam basis data SQLite lokal, lalu menyajikannya lewat API REST dan pencarian teks lengkap, dengan antarmuka web hasil render di server sebagai opsi tambahan. Perangkat ini datang dalam keadaan kosong: operatorlah yang menentukan apa yang diindeks."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Bot Telegram yang mengirimkan ringkasan aktivitas GitHub untuk repositori Bitsocial.",
+          "description": "Bitsocial GitHub Alerts meneruskan push, rilis, isu, dan pull request dari GitHub ke obrolan, grup, atau topik forum mana pun di Telegram. Tim Bitsocial menjalankannya untuk repositorinya sendiri, dan image kontainernya publik sehingga siapa pun bisa meng-hosting sendiri untuk repositori miliknya."
+        },
+        "bitbones": {
+          "tagline": "Klien referensi paling sederhana, dengan setiap tampilan hanya berupa pembungkus tipis di atas satu hook.",
+          "description": "bitbones adalah lapisan berguna paling kecil di atas React hooks milik Bitsocial: nyaris tanpa styling, tanpa keputusan produk, dan hanya satu hook di balik setiap tampilan. Ini tempat tercepat untuk mereproduksi bug atau mencoba perubahan hooks terhadap komunitas sungguhan, dan feed bawaannya dapat diganti antara daftar komunitas Seedit dan 5chan."
         }
       }
     },

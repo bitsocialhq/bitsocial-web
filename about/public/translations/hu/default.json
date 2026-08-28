@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Ellenőrzés",
         "ai": "MI",
-        "antiRepost": "Újraküldés elleni"
+        "antiRepost": "Újraküldés elleni",
+        "referenceClient": "Referenciakliens",
+        "search": "Keresés"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -541,7 +543,8 @@
         "openWebApp": "Webalkalmazás megnyitása",
         "openWebsite": "Webhely megnyitása",
         "windows": "Windows",
-        "windowsPortable": "Hordozható Windows-verzió"
+        "windowsPortable": "Hordozható Windows-verzió",
+        "openTelegramBot": "Telegram bot megnyitása"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Robot9000-stílusú eredetiségkapu olyan közösségeknek, amelyek anti-repost posztolási élményt szeretnének.",
           "description": "Az R9K Challenge egy Bitsocial közösségi node-on fut, és a normalizált posztszöveget összeveti a tulajdonos node helyi kommentadatbázisával. <robot9000>Robot9000</robot9000>-stílusú posztolási élményt ad a közösségeknek: a pontos repostok elfogadás előtt elbuknak, a backlinkek figyelmen kívül maradnak, az ismételt hibák fokozódó ideiglenes banokat indítanak, az elfogadott szöveg hash-ei pedig nyers posztszöveg tárolása helyett privát helyi állapotban maradnak. Ez a challenge nem használ AI-t."
+        },
+        "wordfilter-challenge": {
+          "tagline": "A közösség szószűrői közzétételi szabályként érvényesülnek, nem megjelenítési szűrőként.",
+          "description": "A Wordfilter Challenge kötelező érvényűvé teszi a közösség szócseréit. A publikáló kliensek már aláírás előtt elvégzik a cseréket, így az aláírt hozzászólás és annak CID-je eleve a helyettesítő szöveget tartalmazza, a közösség csomópontja pedig elutasít minden olyan közzétételt, amely még mindig tartalmaz szűrt szót. Megvalósítja a <code>wordfilter/v1</code> szerződést, így az e szerződés alapján írt kliens más megvalósításokkal is tovább működik."
+        },
+        "challenge-composer": {
+          "tagline": "Offline-first szerkesztő egy közösség spamvédelmi kihívásainak beállításaihoz.",
+          "description": "A Challenge Composer megjeleníti és szerkeszthetővé teszi egy Bitsocial-közösség beállításaiban szereplő <code>challenges</code> tömböt, majd futtatásra kész CLI-szkriptet exportál belőle. Egyetlen önálló HTML-fájlként érkezik, amely futás közben semmilyen kifelé irányuló kérést nem indít, így közvetlenül lemezről vagy USB-kulcsról is megnyitható."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Hivatkozás-előnézeti és átirányító kiszolgáló, amely megosztási kártyákat állít elő a Bitsocial-bejegyzésekhez.",
+          "description": "A Bitsocial Previewer OpenGraph- és Twitter-kártyákat állít elő, amikor egy bejegyzés hivatkozását más platformon osztják meg, a valódi böngészőket pedig továbbirányítja az alkalmazásba. Egyetlen példány gazdagépnév szerint több bérlőt szolgál ki, így egyetlen telepítés és TLS-beállítás minden kliens- és tükördomaint lefed."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Saját üzemeltetésű bejáró, keresési index és webes felület Bitsocial-közösségekhez.",
+          "description": "A Bitsocial Indexer RPC-n keresztül csatlakozik egy Bitsocial CLI démonhoz, az üzemeltető által beállított közösségeket helyi SQLite-adatbázisba indexeli, majd REST és teljes szöveges keresésre szolgáló API-n át szolgálja ki őket, opcionálisan kiszolgálóoldalon renderelt webes felülettel. Üresen érkezik: az üzemeltető dönti el, mi kerül az indexbe."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Telegram-bot, amely tömören közzéteszi a Bitsocial-tárolók GitHub-eseményeit.",
+          "description": "A Bitsocial GitHub Alerts a GitHub push-, kiadás-, issue- és pull request-eseményeit továbbítja bármelyik Telegram-csevegésbe, -csoportba vagy fórumtémába. A Bitsocial csapata a saját tárolóihoz üzemelteti, a konténerkép pedig nyilvános, így bárki futtathatja a sajátjaihoz."
+        },
+        "bitbones": {
+          "tagline": "Minimalista referenciakliens, amelyben minden nézet csupán vékony burok egyetlen hook körül.",
+          "description": "A bitbones a legkisebb használható felület a Bitsocial React hookjai fölött: alig van benne stílus, nincsenek termékdöntések, és minden nézet mögött egyetlen hook áll. Itt lehet a leggyorsabban reprodukálni egy hibát vagy kipróbálni egy hookmódosítást valódi közösségeken, az alapértelmezett hírfolyama pedig átkapcsolható a Seedit és az 5chan közösséglistája között."
         }
       }
     },

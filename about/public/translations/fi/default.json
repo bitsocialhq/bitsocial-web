@@ -529,7 +529,9 @@
         "telegram": "Telegram",
         "verification": "Vahvistus",
         "ai": "AI",
-        "antiRepost": "Uudelleenjulkaisun esto"
+        "antiRepost": "Uudelleenjulkaisun esto",
+        "referenceClient": "Viiteasiakas",
+        "search": "Haku"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -541,7 +543,8 @@
         "openWebApp": "Avaa verkkosovellus",
         "openWebsite": "Avaa verkkosivusto",
         "windows": "Windows",
-        "windowsPortable": "Windowsin kannettava versio"
+        "windowsPortable": "Windowsin kannettava versio",
+        "openTelegramBot": "Avaa Telegram-botti"
       },
       "items": {
         "5chan": {
@@ -599,6 +602,30 @@
         "r9k-challenge": {
           "tagline": "Robot9000-tyylinen omaperäisyysportti yhteisöille, jotka haluavat repostauksia estävän julkaisu-UX:n.",
           "description": "R9K Challenge toimii Bitsocial-yhteisön nodessa ja vertaa normalisoitua julkaisun tekstiä omistajan noden paikalliseen kommenttitietokantaan. Se antaa yhteisöille <robot9000>Robot9000</robot9000>-tyylisen julkaisukokemuksen: täsmälliset repostaukset hylätään ennen hyväksyntää, backlinkit ohitetaan, toistuvat epäonnistumiset laukaisevat kasvavia väliaikaisia banneja ja hyväksytyn tekstin hashit pysyvät yksityisessä paikallisessa tilassa raakatekstin tallentamisen sijaan. Tässä challengessa ei käytetä tekoälyä."
+        },
+        "wordfilter-challenge": {
+          "tagline": "Yhteisön sanasuodattimet pannaan täytäntöön julkaisusääntönä eikä näyttösuodattimena.",
+          "description": "Wordfilter Challenge tekee yhteisön sanankorvauksista sitovia. Julkaisevat asiakasohjelmat tekevät korvaukset ennen allekirjoitusta, joten allekirjoitettu kommentti ja sen CID sisältävät jo korvaavan tekstin, ja yhteisön solmu hylkää jokaisen julkaisun, jossa on yhä suodatettu sana. Se toteuttaa <code>wordfilter/v1</code>-sopimuksen, joten kyseisen sopimuksen mukaan kirjoitettu asiakasohjelma toimii edelleen muiden toteutusten kanssa."
+        },
+        "challenge-composer": {
+          "tagline": "Ensisijaisesti offline-tilassa toimiva editori yhteisön roskapostisuojauksen haasteasetuksille.",
+          "description": "Challenge Composer näyttää Bitsocial-yhteisön asetusten <code>challenges</code>-taulukon ja antaa muokata sitä, minkä jälkeen se vie sisällön suoraan ajettavaksi CLI-skriptiksi. Se toimitetaan yhtenä omavaraisena HTML-tiedostona, joka ei tee ajon aikana yhtään ulospäin suuntautuvaa pyyntöä, joten sen voi avata suoraan levyltä tai USB-tikulta."
+        },
+        "bitsocial-previewer": {
+          "tagline": "Linkkien esikatselu- ja uudelleenohjauspalvelin, joka luo jakokortit Bitsocial-julkaisuille.",
+          "description": "Bitsocial Previewer luo OpenGraph- ja Twitter-kortit, kun julkaisun linkki jaetaan muilla alustoilla, ja ohjaa oikeat selaimet sen jälkeen sovellukseen. Yksi instanssi palvelee useita vuokralaisia isäntänimen perusteella, joten yksi käyttöönotto ja yksi TLS-määritys riittävät kaikille asiakas- ja peilidomaineille."
+        },
+        "bitsocial-indexer": {
+          "tagline": "Itse ylläpidettävä indeksointirobotti, hakuhakemisto ja verkkokäyttöliittymä Bitsocial-yhteisöille.",
+          "description": "Bitsocial Indexer yhdistää RPC:n välityksellä Bitsocial CLI -taustaprosessiin, indeksoi ylläpitäjän määrittämät yhteisöt paikalliseen SQLite-tietokantaan ja tarjoaa ne REST- ja kokotekstihaku-API:n kautta sekä halutessa palvelimella renderöidyn verkkokäyttöliittymän kautta. Se toimitetaan tyhjänä: ylläpitäjä päättää, mitä indeksoidaan."
+        },
+        "bitsocial-github-alerts": {
+          "tagline": "Telegram-botti, joka julkaisee tiiviisti Bitsocial-repositorioiden GitHub-tapahtumat.",
+          "description": "Bitsocial GitHub Alerts välittää pushit, julkaisut, issuet ja pull requestit GitHub-palvelusta mihin tahansa Telegram-keskusteluun, -ryhmään tai foorumin aiheeseen. Bitsocial-tiimi käyttää sitä omiin repositorioihinsa, ja konttikuva on julkinen, joten kuka tahansa voi ajaa sitä itse omilleen."
+        },
+        "bitbones": {
+          "tagline": "Riisuttu referenssiasiakas, jossa jokainen näkymä on ohut kuori yhden hookin ympärillä.",
+          "description": "bitbones on pienin hyödyllinen pinta Bitsocialin React-hookien päällä: tyylejä ei juuri ole, tuotepäätöksiä ei lainkaan, ja jokaisen näkymän takana on yksi hook. Se on nopein paikka toistaa bugi tai kokeilla hook-muutosta oikeita yhteisöjä vasten, ja sen oletussyötteen voi vaihtaa Seeditin ja 5chanin yhteisölistojen välillä."
         }
       }
     },

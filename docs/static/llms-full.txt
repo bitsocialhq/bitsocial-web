@@ -2629,6 +2629,16 @@ If uncertain, ask the developer before adding an entry.
 - **Mitigation:** `scripts/pw-session.sh open` now registers `window.__NO_DEV_TOOLBAR__ = true` via `page.addInitScript` and reloads, so sessions opened through the wrapper never mount the toolbar. Only the toolbar is suppressed — `react-scan` itself stays enabled, so `__getReactScanReport` and `__ELEMENT_SOURCE__` keep working for the profiler and element-inspection skills. When driving `playwright-cli` directly, set the same flag before load, or expect corner clicks to be intercepted.
 - **Status:** confirmed
 
+### `skills add` installs Codex and Cursor copies into the gitignored `.agents/` directory
+
+- **Date:** 2026-08-18
+- **Observed by:** Tommaso + Claude
+- **Context:** Installing the `improve-threejs` skill from `millionco/react-doctor` with the `skills` CLI (`vercel-labs/skills`).
+- **What was surprising:** `npx skills add <repo> --skill <name> --agent codex` and `--agent cursor` both write to `.agents/skills/<name>/`, not to `.codex/skills/` or `.cursor/skills/`. `AGENTS.md` forbids a repo-level `.agents/` directory and `.gitignore:29` ignores it, so both copies are silently untracked. Only `--agent claude-code` writes to the expected `.claude/skills/`. Separately, the documented comma-separated form (`--agent claude-code,codex,cursor`) fails with "Invalid agents" and installs nothing, even though each name is valid on its own.
+- **Impact:** The install reports success while two of the three toolchain copies land somewhere that will never be committed, so Codex and Cursor silently lack the skill after a fresh clone. The comma form can also produce a no-op install that reads as a success.
+- **Mitigation:** Run `skills add` once per agent with a single `--agent` value. Use `--agent claude-code` for the `.claude/skills/` copy, then `cp -R .claude/skills/<name> .codex/skills/<name>` and `cp -R .claude/skills/<name> .cursor/skills/<name>`, and `rm -rf .agents`. Confirm with `git status` that all three copies show as untracked additions before committing.
+- **Status:** confirmed
+
 ### Long-Running Agent Workflow
 
 Source: https://docs.bitsocial.net/agent-playbooks/long-running-agent-workflow/
@@ -3682,6 +3692,61 @@ The default web dev server runs at `https://seedit.localhost` via [Portless](htt
 
 The linux/windows/mac/android build scripts are in https://github.com/bitsocialnet/seedit/blob/master/.github/workflows/release.yml
 
+### bitbones
+
+Repository: bitsocialnet/bitbones
+Source: https://github.com/bitsocialnet/bitbones#readme
+Description: bitbones is a bare bones GUI client for the Bitsocial protocol — the smallest useful surface over @bitsocial/bitsocial react hooks. It exists to make the protocol legible: almost no styling, no product opinions, and every view a thin wrapper over one hook, so it is the fastest place to reproduce a bug or try a hooks change against real communities.
+
+# bitbones
+
+bitbones is a bare bones GUI client for the [Bitsocial protocol](https://bitsocial.net) — the smallest useful surface over [`@bitsocial/bitsocial-react-hooks`](https://github.com/bitsocialnet/bitsocial-react-hooks). It exists to make the protocol legible: almost no styling, no product opinions, and every view a thin wrapper over one hook, so it is the fastest place to reproduce a bug or try a hooks change against real communities.
+
+- Web version: https://bitbones.app
+- Desktop version (full p2p bitsocial node, seeds automatically): available for Mac/Windows/Linux, [download from the release page](https://github.com/bitsocialnet/bitbones/releases/latest)
+- Mobile version: available for Android, [download from the release page](https://github.com/bitsocialnet/bitbones/releases/latest)
+
+## Switching default community lists
+
+bitbones does not curate its own default communities. The feed reads whichever client's list you pick, straight from [bitsocialnet/lists](https://github.com/bitsocialnet/lists):
+
+- **seedit** — [`seedit-default-subscriptions.json`](https://github.com/bitsocialnet/lists/blob/master/seedit-default-subscriptions.json), the exact communities new Seedit accounts subscribe to.
+- **5chan** — [`5chan-directories/`](https://github.com/bitsocialnet/lists/tree/master/5chan-directories), resolved the way 5chan resolves it: one winning board per directory code, ranked by score, then by when it was added, then by address.
+
+The switch sits at the left of the menu bar on the `p/all` feed and shows both client marks, the active one lit. The selection persists in `localStorage` under `bitbonesDefaultList`. Both lists are also vendored into `src/data/` at build time by `yarn sync:lists`, so bitbones still has a feed when GitHub is unreachable.
+
+seedit is the default because its list is 10 communities against 5chan's 64, and every extra community is another name resolution and page fetch on a cold peer-to-peer start.
+
+## Development
+
+```sh-session
+nvm install
+nvm use
+corepack enable
+yarn install
+yarn start
+```
+
+| command | what it does |
+| --- | --- |
+| `yarn start` | vite dev server on http://localhost:5173 |
+| `yarn build` | production build into `build/` |
+| `yarn sync:lists` | refresh the vendored default community lists from bitsocialnet/lists |
+| `yarn lint` | oxlint |
+| `yarn type-check` | `tsc --noEmit` over `src/` |
+| `yarn prettier` | oxfmt |
+| `yarn knip` | unused/undeclared dependency check |
+| `yarn electron:dev` | run the desktop app against the dev server |
+| `yarn electron:make` | package the desktop app |
+
+## Origins
+
+bitbones is a port of an existing GPL bare-bones client onto the Bitsocial stack: `@bitsocial/bitsocial-react-hooks` for all protocol access, communities throughout, and the dependency stack brought up to the same versions 5chan and Seedit run. The first commit in this repository is the unmodified upstream source, so the entire port is reviewable as a single diff.
+
+## License
+
+GPL-3.0-or-later — see [LICENSE](https://github.com/bitsocialnet/bitbones/blob/HEAD/LICENSE).
+
 ### MintPass - NFT Authentication Middleware for Bitsocial
 
 Repository: bitsocialnet/mintpass
@@ -3904,6 +3969,7 @@ Install this challenge twice: one `allow` branch and one `review` branch. The `r
         name: "@bitsocial/ai-moderation-challenge",
         options: {
             apiKey: "sk-...",
+            fallbackModel: "grok-4.5",
             branch: "allow",
             promptUrl: "https://prompt.example.com/v1/prompts/ai-moderation.md",
             promptBearerToken: "shared-secret-token"
@@ -3914,6 +3980,7 @@ Install this challenge twice: one `allow` branch and one `review` branch. The `r
         name: "@bitsocial/ai-moderation-challenge",
         options: {
             apiKey: "sk-...",
+            fallbackModel: "grok-4.5",
             branch: "review",
             promptUrl: "https://prompt.example.com/v1/prompts/ai-moderation.md",
             promptBearerToken: "shared-secret-token"
@@ -3924,7 +3991,7 @@ Install this challenge twice: one `allow` branch and one `review` branch. The `r
 ];
 ```
 
-Challenge options are private community-node settings in `pkc-js`, so `apiKey`, `prompt`, `promptPath`, `promptUrl`, `promptBearerToken`, `apiUrl`, `cachePath`, and `auditLogPath` are not copied into the public community challenge metadata. Keep local settings backups private because they can contain provider keys or prompt access tokens.
+Challenge options are private community-node settings in `pkc-js`: nothing in `options` is copied into the public community challenge metadata unless the owner names it in `publicOptions` (see [Settings validation and public options](#settings-validation-and-public-options)). Keep local settings backups private because they can contain provider keys or prompt access tokens.
 
 Production operators should keep the real moderation prompt in a private node-local file referenced by `promptPath`, or in a private HTTPS endpoint referenced by `promptUrl` plus `promptBearerToken`. Do not commit production prompts to public repositories; the built-in prompt is only a public fallback and the challenge emits a warning when it is used.
 
@@ -3934,11 +4001,12 @@ Production operators should keep the real moderation prompt in a private node-lo
 | ---------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `apiUrl`               | `https://api.openai.com/v1/responses`    | Full OpenAI-compatible endpoint URL                                                                            |
 | `apiFormat`            | `responses`                              | Request/response format: `responses` or `chat-completions`                                                     |
-| `apiKey`               | none                                     | Private provider API key                                                                                       |
+| `apiKey`               | none                                     | Private provider API key; leave empty for self-hosted endpoints that do not require one                        |
 | `model`                | `gpt-5.4-nano`                           | Model name sent to the provider                                                                                |
+| `fallbackModel`        | none                                     | Secondary model used once when the primary model returns HTTP 429                                              |
 | `branch`               | `allow`                                  | Branch mode: `allow` or `review`                                                                               |
 | `prompt`               | built-in prompt                          | Private inline system prompt text                                                                              |
-| `promptPath`           | none                                     | Private file path for a system prompt on the community node                                                    |
+| `promptPath`           | none                                     | Private file path for a system prompt on the community node; `~` expands to the home directory                 |
 | `promptUrl`            | none                                     | Private HTTPS URL for a remotely hosted system prompt                                                          |
 | `promptBearerToken`    | none                                     | Private bearer token sent only when fetching `promptUrl`                                                       |
 | `cachePath`            | `~/.bitsocial-ai-moderation-cache.json`  | Private JSON verdict cache path; set to an empty string to disable persistent caching                          |
@@ -3969,11 +4037,32 @@ OpenAI-compatible APIs are a practical compatibility convention, not a formal op
 
 To enable 5chan-style exact-media rejection, set `rejectDuplicateMedia: "true"` on both the `allow` and `review` challenge entries. PKC challenge option values are strings; leaving this option unset preserves the default and does not perform the deterministic hard-rejection check.
 
+## Settings validation and public options
+
+`pkc-js` 0.0.85+ validates `community.settings.challenges[i]` on every community edit, creation, and start. For this challenge that means:
+
+- Option keys that are not listed in the table above are rejected as typos by `pkc-js` itself.
+- The challenge's `validateChallengeSettings` hook rejects the same option errors that would otherwise fail every publication: an `apiUrl` that is not `http`/`https`, a `promptUrl` that is not `https`, an unknown `apiFormat` or `branch`, or a `rejectDuplicateMedia` value other than `true`/`false`. The hook is synchronous and never contacts the provider, so a missing or wrong `apiKey` is only discovered when a publication is moderated (fail closed).
+- If `promptPath` does not exist on the node, the hook logs it through `pkc-logger` but does not reject the settings, so a prompt file that is created later does not block the community.
+- Rejections fail the offending `community.edit()`; at start they surface as community `error` events with code `ERR_CHALLENGE_SETTINGS_VALIDATION_FAILED` and the community still starts. Existing settings that were silently broken start emitting these errors after upgrading.
+
+Every option is private by default. An owner can publish specific options by naming them in `publicOptions`, and `pkc-js` then copies their values into the public `community.challenges[i].publicOptions`. The hook refuses to publish `apiKey` and `promptBearerToken` because they are credentials. Everything else is the owner's call: publishing `prompt`, `promptUrl`, or `promptPath` is a transparency choice, but it lets users read the moderation prompt and try to game it, and publishing `apiUrl`, `cachePath`, or `auditLogPath` reveals private node details. Most communities should leave `publicOptions` unset.
+
+```js
+{
+    name: "@bitsocial/ai-moderation-challenge",
+    options: { apiKey: "sk-...", branch: "allow", rejectDuplicateMedia: "true" },
+    publicOptions: ["branch", "rejectDuplicateMedia"]
+}
+```
+
 ## Behavior
 
 - New comments with verdict `allow` publish normally.
 - New comments with verdict `review` are sent to pending approval with the redacted model reason attached for the author.
 - New comments are also sent to pending approval if the model API is unavailable.
+- When `fallbackModel` is configured, an HTTP 429 from the primary model is retried once with the fallback model before the publication is sent to pending approval.
+- Comments sent to pending approval because moderation is unavailable include a generic moderator-visible reason; provider details remain in the private audit log.
 - Content edits with verdict `review` are rejected until PKC supports pending approval for edits.
 - Content edits are rejected if the model API is unavailable.
 - Delete-only edits and non-comment publication types bypass AI moderation.
@@ -4766,6 +4855,401 @@ npm trust github @bitsocial/r9k-challenge --repo bitsocialnet/r9k-challenge --fi
 
 Future releases publish automatically when `package.json` version changes on `master`. The publish workflow skips versions that already exist on npm.
 
+### @bitsocial/wordfilter-challenge
+
+Repository: bitsocialnet/wordfilter-challenge
+Source: https://github.com/bitsocialnet/wordfilter-challenge#readme
+Description: A pkc js challenge that makes community wordfilters a real rule instead of a cosmetic display filter. It implements the wordfilter/v1 contract, which is what publishing clients actually code against.
+
+# @bitsocial/wordfilter-challenge
+
+A [pkc-js](https://github.com/pkcprotocol/pkc-js) challenge that makes community wordfilters a real rule instead of a cosmetic display filter. It implements the [`wordfilter/v1` contract](#the-wordfilterv1-contract), which is what publishing clients actually code against.
+
+> **Status: implemented.** This README is the spec, and `src/` follows it. Tracked in [pkc-js#281](https://github.com/pkcprotocol/pkc-js/issues/281).
+
+## What it does
+
+A community configures a list of replacements, for example `cloud` becomes `butt`. Publishing clients apply those replacements before signing, so the signed comment, its CID, and what every client renders all contain `butt`. The original text does not exist anywhere.
+
+The community node does not do the replacing. It only checks: if a publication still contains a filtered word, it is rejected.
+
+## Why clients have to do the replacing
+
+This is the part that surprises people coming from imageboard software, so it is worth being explicit.
+
+On a traditional imageboard the server owns the post text and rewrites it freely at submission time. [jschan](https://gitgud.io/fatchan/jschan/-/blob/master/lib/post/filteractions.js) mutates `req.body` before the insert; vichan calls `wordfilters($post['body'])` in `post.php` before `body_nomarkup` is even derived. Neither keeps the pre-filter original.
+
+pkc-js cannot work that way. The author signs the publication, and the signature covers `content`. If the community rewrote `content` afterwards, the signature would no longer verify and every client would reject the comment as forged.
+
+So the replacement has to happen on the side holding the signing key, which is the publishing client. The community's only available action is to accept or reject. In other words this package does not implement a wordfilter, it implements **a proof that a wordfilter was applied**.
+
+A client that does not implement the replacement cannot publish unfiltered text. It simply gets rejected, which is the intended failure mode.
+
+## The `wordfilter/v1` contract
+
+A publishing client has to recognise "this community wants word replacements applied before I sign" from the published community record alone. The record deliberately does not say which challenge produced it: `path`, `name` and `options` are all stripped when `community.settings.challenges[i]` becomes the public `community.challenges[i]`. Only `publicOptions`, the subset the owner opted into publishing, survives.
+
+So the signal a client keys off is an option key that names a **contract** rather than a package:
+
+| Public option | Required | Meaning |
+|---|---|---|
+| `wordfilter/v1/rules` | yes | JSON array of `{ src, dst }`. Its presence is what identifies the contract |
+| `wordfilter/v1/fieldNames` | no | JSON array of dot-notation paths, each starting with the publication type. Defaults to the list under [Default fields](#default-fields) |
+
+This package is one implementation. Anything that publishes `wordfilter/v1/rules` with the semantics below claims the contract, and a client written against it keeps working with implementations that did not exist when the client was written. Keying on a package name instead, whether through a hardcoded `@bitsocial/wordfilter-challenge` or a generic `wordfilters` option, would enshrine one implementation in every UI and lock out every fork, competitor and in-house variant that behaves identically. See [issue #1](https://github.com/bitsocialnet/wordfilter-challenge/issues/1).
+
+The namespace covers exactly what a publishing client must read, and nothing else. `error` is not in it, because no client reads `error`: the community returns it in the rejection. An implementation is free to name or shape that option however it likes.
+
+`wordfilter/v2/rules` would be a different key. A client that understands both reads both, and a community can publish both during a transition without either side guessing.
+
+### Default fields
+
+When a community does not publish `wordfilter/v1/fieldNames`, both sides check this list. Every path starts with the publication type, followed by the field's path inside that publication exactly as it is on the wire.
+
+| Publication type | Default paths |
+|---|---|
+| `comment` | `comment.content`, `comment.title`, `comment.author.displayName` |
+| `commentEdit` | `commentEdit.content`, `commentEdit.reason`, `commentEdit.author.displayName` |
+| `vote` | `vote.author.displayName` |
+
+The defaults cover what an ordinary author publishes. Moderator and owner text is not in them: a moderation's reason and a community edit's title and description can be filtered by naming their paths in `wordfilter/v1/fieldNames`, as `commentModeration.commentModeration.reason`, `communityEdit.communityEdit.title` and `communityEdit.communityEdit.description`. The doubled segment is the wire shape, not a typo: the publication type is `commentModeration`, and pkc-js puts the moderation's fields under a `commentModeration` property of it; likewise for `communityEdit`.
+
+Naming the publication type in every path is deliberate. `content` on a comment and `content` on a comment edit are the same field today, but nothing guarantees they stay that way, and a bare `content` could not tell them apart. A path whose first segment is not one of the five publication types is rejected by `validateChallengeSettings`, and by `getChallenge` for a config that predates that check, because it would match nothing on any request and the wordfilter would have quietly stopped filtering.
+
+## For UI client developers
+
+This is the section that matters if you are building a frontend that publishes to communities using this contract.
+
+### 1. Read the rules off the community
+
+Collect the rules from every challenge on the community that publishes `wordfilter/v1/rules`, in challenge order. A community may have more than one.
+
+```js
+const isRule = (rule) => typeof rule?.src === "string" && typeof rule?.dst === "string";
+const isFieldName = (name) => typeof name === "string";
+
+function getWordfilterConfigs(community) {
+    return (community.challenges ?? [])
+        .filter((challenge) => challenge.publicOptions?.["wordfilter/v1/rules"])
+        .map((challenge) => {
+            try {
+                const rules = JSON.parse(challenge.publicOptions["wordfilter/v1/rules"]);
+                const fieldNames = challenge.publicOptions["wordfilter/v1/fieldNames"]
+                    ? JSON.parse(challenge.publicOptions["wordfilter/v1/fieldNames"])
+                    : [
+                          "comment.content",
+                          "comment.title",
+                          "comment.author.displayName",
+                          "commentEdit.content",
+                          "commentEdit.reason",
+                          "commentEdit.author.displayName",
+                          "vote.author.displayName"
+                      ];
+                // JSON.parse is happy to hand back null, an object or an array of numbers, and
+                // applyWordfilters would throw on any of them. Treat the wrong shape like bad JSON.
+                if (!Array.isArray(rules) || !rules.every(isRule)) return undefined;
+                if (!Array.isArray(fieldNames) || !fieldNames.every(isFieldName)) return undefined;
+                return { rules, fieldNames };
+            } catch {
+                // A rule set you cannot parse is skipped, never fatal. Worst case the community
+                // rejects the publication with a readable error.
+                return undefined;
+            }
+        })
+        .filter(Boolean);
+}
+```
+
+Note what this function does not do: it never looks at which challenge implementation produced the options, because the record does not say and it does not need to.
+
+Skip anything you cannot parse, and anything that parses to the wrong shape. Never throw, and never refuse to load the community: a malformed rule set must cost the filter, not the whole board. This package's own `validateChallengeSettings` will not let a community publish a malformed rule set, but the contract is open to other implementations and your client cannot know which one it is talking to.
+
+### 2. Apply the rules, looping until the text stops changing
+
+**Do not apply the rules once.** A replacement can create a new match by joining with the text around it. With rules `[{src: "ab", dst: "c"}, {src: "x", dst: "b"}]`, the input `"ax"` becomes `"ab"` in a single pass, which still contains a filtered word, and the community will reject it.
+
+Loop until the output is stable:
+
+```js
+const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// The `() => dst` replacer, not a plain `dst`: `String.replace` reads `$&` and friends out of a string
+// replacement, and rules are literal on both sides.
+const applyOnce = (text, rules) =>
+    rules.reduce((acc, { src, dst }) => acc.replace(new RegExp(escapeRegExp(src), "gi"), () => dst), text);
+
+export function applyWordfilters(text, rules, maxPasses = 8) {
+    let out = text;
+    for (let pass = 0; pass < maxPasses; pass++) {
+        const next = applyOnce(out, rules);
+        if (next === out) return out;
+        out = next;
+    }
+    throw new Error("wordfilter rules did not stabilise");
+}
+```
+
+Stable output contains no filtered word by definition, which is exactly what the community checks for.
+
+Copying that function is the expected path: your client sees the challenge through `community.challenges` and has no reason to depend on the package that produced it. If you do already bundle npm packages, the same function is exported as `applyWordfilters` from `@bitsocial/wordfilter-challenge`, with nothing from pkc-js behind it.
+
+### 3. Apply it before creating the publication
+
+Filter the text before it reaches `pkc.createComment()`, so the transformation happens before any signature exists. Nothing needs to re-sign, and there is no window where an unfiltered draft is signed.
+
+```js
+const configs = getWordfilterConfigs(community);
+
+// One call per field, carrying the rules of every challenge that covers that field. Do not apply the
+// challenges one at a time: a later challenge's replacement can reintroduce an earlier challenge's
+// src, and the earlier challenge would then reject the publication. The loop inside applyWordfilters
+// only sees that interaction when both rule sets are in the same call.
+const rulesFor = (fieldName) =>
+    configs.filter(({ fieldNames }) => fieldNames.includes(fieldName)).flatMap(({ rules }) => rules);
+
+if (content) content = applyWordfilters(content, rulesFor("comment.content"));
+if (title) title = applyWordfilters(title, rulesFor("comment.title"));
+if (displayName) displayName = applyWordfilters(displayName, rulesFor("comment.author.displayName"));
+
+const comment = await pkc.createComment({ content, title, author: { displayName }, communityAddress, signer });
+await comment.publish();
+```
+
+The challenge runs on every publication type, not only new comments. The [default field list](#default-fields) also names the text of a comment edit and the display name on a vote, so the same `rulesFor` call applies before each of these, with the path prefixed by the publication type:
+
+```js
+// Comment edit: content and reason are top-level on the edit, displayName is under author.
+const edit = await pkc.createCommentEdit({
+    commentCid,
+    content: applyWordfilters(newContent, rulesFor("commentEdit.content")),
+    reason: applyWordfilters(reason, rulesFor("commentEdit.reason")),
+    author: { displayName: applyWordfilters(displayName, rulesFor("commentEdit.author.displayName")) },
+    communityAddress,
+    signer
+});
+
+// Vote: the only text on it is the display name.
+const vote = await pkc.createVote({
+    commentCid,
+    vote: 1,
+    author: { displayName: applyWordfilters(displayName, rulesFor("vote.author.displayName")) },
+    communityAddress,
+    signer
+});
+
+```
+
+Those paths are the defaults, so they are the minimum. If a community publishes other paths in `wordfilter/v1/fieldNames`, run the same call on whatever your client puts at those paths; the community checks exactly the configured paths and nothing else, so an unfiltered custom field is a rejection just like an unfiltered display name. The paths a community is most likely to add are moderator and owner text, which `rulesFor` returns empty for unless the community names them:
+
+```js
+// Comment moderation: the moderator's reason lives under the publication's commentModeration property,
+// hence the doubled segment.
+const moderation = await pkc.createCommentModeration({
+    commentCid,
+    commentModeration: {
+        removed: true,
+        reason: applyWordfilters(reason, rulesFor("commentModeration.commentModeration.reason"))
+    },
+    communityAddress,
+    signer
+});
+
+// Community edit: title and description live under the publication's communityEdit property.
+const communityEdit = await pkc.createCommunityEdit({
+    communityEdit: {
+        title: applyWordfilters(title, rulesFor("communityEdit.communityEdit.title")),
+        description: applyWordfilters(description, rulesFor("communityEdit.communityEdit.description"))
+    },
+    communityAddress,
+    signer
+});
+```
+
+The `wordfilter/v1/fieldNames` entries are dot-notation paths, the same convention `publication-match` uses for `propertyName`, resolved against the challenge request's publication map rather than the publication itself. So the first segment names the publication type, and a path is simply absent, and passes, on a request carrying a different type: `commentEdit.content` never sees a new comment, and `comment.content` never sees an edit.
+
+Two challenges on the same community whose rules undo each other, `foo → bar` in one and `bar → foo` in another, cannot be caught by either challenge's `validateChallengeSettings`, which sees only its own settings. The merged call then either throws `did not stabilise` or settles on text that one of the challenges still rejects, and the community returns that challenge's `error`. Both are the right outcome: no text containing either word can satisfy both challenges, so the board is misconfigured and the owner has to fix it. Handle it the same way as any other rejection, in step 5.
+
+### 4. Show the user what happened
+
+Nothing in the protocol requires it, but the author is signing text they did not type. Showing the filtered result before publishing, or a note afterwards, avoids the surprise. This is a UX decision, not a correctness one.
+
+### 5. Handle rejection
+
+Your copy of the community record can be older than the community's current settings. An owner who adds a rule starts enforcing it immediately, while your client keeps publishing against the rules it last saw.
+
+When that happens the publication is rejected with the challenge's `error` message. Refresh the community, re-apply, and let the author retry. **Do not re-sign automatically:** that would silently publish text the author never reviewed, which is the exact failure this design exists to prevent.
+
+## Requirements
+
+- pkc-js `>=0.0.85`, for `publicOptions` ([pkc-js#282](https://github.com/pkcprotocol/pkc-js/issues/282)) and `validateChallengeSettings` ([pkc-js#283](https://github.com/pkcprotocol/pkc-js/issues/283))
+- Node.js `>=22`
+- ESM-only environment
+
+## Install
+
+### With bitsocial-cli
+
+```bash
+bitsocial challenge install @bitsocial/wordfilter-challenge
+```
+
+```bash
+bitsocial community edit your-community.bso \
+  '--settings.challenges[0].name' @bitsocial/wordfilter-challenge \
+  '--settings.challenges[0].options.wordfilter/v1/rules' '[{"src":"cloud","dst":"butt"}]' \
+  '--settings.challenges[0].publicOptions[0]' wordfilter/v1/rules
+```
+
+### With pkc-js over RPC
+
+Install the challenge on the RPC server, then set it on your community by name. Nothing has to be installed on the client side:
+
+```bash
+bitsocial challenge install @bitsocial/wordfilter-challenge
+```
+
+### With pkc-js (TypeScript)
+
+Running your own node locally, without RPC:
+
+```bash
+npm install @bitsocial/wordfilter-challenge
+```
+
+```ts
+import PKC from "@pkcprotocol/pkc-js";
+import { wordfilterChallenge } from "@bitsocial/wordfilter-challenge";
+
+PKC.challenges["@bitsocial/wordfilter-challenge"] = wordfilterChallenge;
+```
+
+## Configuration
+
+For community owners, set in `settings.challenges`:
+
+```js
+await community.edit({
+    settings: {
+        challenges: [
+            {
+                name: "@bitsocial/wordfilter-challenge",
+                options: {
+                    "wordfilter/v1/rules": JSON.stringify([
+                        { src: "cloud", dst: "butt" },
+                        { src: "millennials", dst: "snake people" },
+                        { src: "spamword", dst: "" }
+                    ]),
+                    "wordfilter/v1/fieldNames": JSON.stringify([
+                        "comment.content",
+                        "comment.title",
+                        "comment.author.displayName",
+                        "commentEdit.content",
+                        "commentEdit.reason",
+                        "commentEdit.author.displayName",
+                        "vote.author.displayName"
+                    ]),
+                    error: "This board replaces certain words. Please repost with the replacements applied."
+                },
+                publicOptions: ["wordfilter/v1/rules", "wordfilter/v1/fieldNames", "error"]
+            }
+        ]
+    }
+});
+```
+
+`publicOptions` is **required**, not decorative. Options are private by default in pkc-js, and a client that cannot read the rules cannot satisfy them. The challenge's `validateChallengeSettings` hook rejects the edit if `wordfilter/v1/rules` is missing from `publicOptions`, so the failure surfaces when you save rather than when every author starts getting rejected.
+
+### Options
+
+| Option | Required | Must be in `publicOptions` | Description |
+|---|---|---|---|
+| `wordfilter/v1/rules` | yes | yes | JSON array of `{ src, dst }`, applied in array order, cascading |
+| `wordfilter/v1/fieldNames` | no | when set | JSON array of dot-notation paths, each starting with the publication type. Defaults to the list under [Default fields](#default-fields) |
+| `error` | no | owner's call | Message shown to the author when a publication is rejected |
+
+An option has to be public when a client cannot satisfy the challenge without reading it. That covers `wordfilter/v1/rules` always, and `wordfilter/v1/fieldNames` whenever the owner sets it: a client filtering the default fields cannot satisfy a community checking a different set, and nothing in the published record would explain the rejections. Those two are also exactly the options the contract namespaces, for the same reason. `error` is returned in the rejection itself, so publishing it is transparency rather than a requirement, and it keeps its plain name.
+
+### Validation
+
+`validateChallengeSettings` rejects at edit time:
+
+- `wordfilter/v1/rules` missing from `publicOptions`, or unparseable JSON, or not an array of `{ src, dst }` strings
+- an empty `src`
+- `src === dst`
+- the same `src` in more than one rule
+- any `dst` containing any `src`
+- more than 64 rules, or a `src` or `dst` longer than 128 characters
+- `wordfilter/v1/fieldNames`, when set, unparseable, not an array of non-empty strings, containing a path whose first segment is not a publication type (`comment`, `vote`, `commentEdit`, `commentModeration`, `communityEdit`), or missing from `publicOptions`
+
+The `src === dst`, duplicate `src` and `dst`-contains-`src` checks all compare case-insensitively, because matching is case-insensitive: `{src: "LOL", dst: "lol"}` replaces nothing just as surely as `{src: "lol", dst: "lol"}` does.
+
+The `dst` containing `src` rule is what guarantees the client's loop terminates. Without it a rule like `lol` becomes `lolol` produces output that always contains a filtered word, making every post permanently unpublishable.
+
+## Migrating from 0.1.x and 0.2.0
+
+0.2.0 already uses the `wordfilter/v1` option keys; only the paths inside `wordfilter/v1/fieldNames` change for it, see below. 0.1.x used bare `wordfilters` and `fieldNames` option names, which made the package rather than the contract the thing clients keyed off. Rename both, in `options` and in `publicOptions`:
+
+| 0.1.x | Now |
+|---|---|
+| `wordfilters` | `wordfilter/v1/rules` |
+| `fieldNames` | `wordfilter/v1/fieldNames` |
+| `error` | `error`, unchanged |
+
+The paths inside `fieldNames` change too, for 0.2.0 as much as 0.1.x. Both resolved them against the publication, so `content` meant "content on whatever was published". `wordfilter/v1/fieldNames` now resolves them against the challenge request's publication map, so every path starts with the publication type, and a bare `content` is rejected rather than silently matching nothing:
+
+| 0.1.x / 0.2.0 path | Now |
+|---|---|
+| `content` | `comment.content`, and `commentEdit.content` if edits should be filtered too |
+| `title` | `comment.title` |
+| `author.displayName` | one entry per publication type: `comment.author.displayName`, `commentEdit.author.displayName`, `vote.author.displayName` |
+
+If 0.1.x or 0.2.0 ran with the default field list, dropping `fieldNames` entirely and taking the new defaults is the closest equivalent. A 0.2.0 community that set `wordfilter/v1/fieldNames` with bare paths fails loudly at the next start, `validateChallengeSettings` naming the offending path, until the paths are prefixed.
+
+There is no fallback to the old names, on purpose. A wordfilter that quietly stops filtering is the exact failure this package exists to prevent, so an unmigrated community fails loudly instead: pkc-js rejects the now-undeclared option at community start with `ERR_CHALLENGE_OPTION_NOT_DECLARED_IN_OPTION_INPUTS`, naming the offending option, and `validateChallengeSettings` rejects the edit if you try to save it.
+
+Clients written against 0.1.x need the same rename in whatever they copied from this README.
+
+## Matching semantics
+
+- **Literal, never regex.** vichan supports arbitrary PCRE, but only because its config is a server-local file the operator wrote. Here the rules ship inside a signed record that every browser client downloads and executes, so patterns are literal strings.
+- **Case-insensitive**, following vichan's `str_ireplace`. `cloud`, `Cloud`, and `CLOUD` are all replaced. Casing is not preserved: all three become `butt`.
+- **Cascading in array order**, and rules from multiple wordfilter challenges compose in challenge order.
+- **Absent fields pass cleanly.** A vote has no `content`, and that is not a failure. (`publication-match` treats a missing property as a failure, which would reject every vote. Do not copy that.)
+
+## What this does not catch
+
+Deliberate evasion. `c l o u d`, `clοud` (with a Greek omicron), and zero-width-joined variants pass straight through.
+
+That is a hard limit, not an oversight. jschan has a `strictFiltering` mode that matches against NFD-stripped, zero-width-stripped and alphanumeric-only permutations of the post, and it is necessarily **detect-only**: normalisation is not invertible, so once you have matched a normalised form you no longer know where in the original text to splice a replacement. Evasion-resistant matching and replacement are mutually exclusive.
+
+For blocking evasive spam and slurs outright, use pkc-js's built-in `publication-match` challenge. Rejecting a publication does not require knowing where the match was. Note that `exclude` can skip a challenge for moderators or high-karma authors, which applies to this package too.
+
+## Prior art
+
+- jschan, which powers soyjak.party: [`checkfilters.js`](https://gitgud.io/fatchan/jschan/-/blob/master/lib/post/checkfilters.js), [`filteractions.js`](https://gitgud.io/fatchan/jschan/-/blob/master/lib/post/filteractions.js), [`getfilterstrings.js`](https://gitgud.io/fatchan/jschan/-/blob/master/lib/post/getfilterstrings.js)
+- vichan: [`wordfilters()`](https://github.com/vichan-devel/vichan/blob/master/inc/functions.php#L1798)
+
+Both rewrite server-side at post time and keep no copy of the original.
+
+## Development
+
+```bash
+npm install
+npm run typecheck
+npm test
+npm run build
+```
+
+| Path | What it is |
+|---|---|
+| `src/wordfilter-challenge.ts` | The `ChallengeFileFactory`: `optionInputs`, `getChallenge`, `validateChallengeSettings` |
+| `src/apply-wordfilters.ts` | The client-side replacement loop and the `wordfilter/v1` option keys. Imports nothing, so it bundles for a browser |
+| `src/types.ts` | Re-exports of the pkc-js challenge types |
+
+## License
+
+GPL-3.0-or-later, the same as pkc-js.
+
 ### @bitsocial/captcha-canvas-challenge
 
 Repository: bitsocialnet/captcha-canvas-challenge
@@ -5173,20 +5657,80 @@ Each example uses a read-only contract function that takes a single `address` ar
 | At least 10 MATIC on Polygon | `matic` | `0x0000000000000000000000000000000000001010` | [`balanceOf`](#balanceof-abi) | `>10000000000000000000` |
 | Any stETH balance (Lido staked ETH) | `eth` | `0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84` | [`balanceOf`](#balanceof-abi) | `>0` |
 
-> For chains other than Ethereum mainnet (e.g. Optimism, Polygon), you will also need to set `rpcUrls` to one or more JSON-RPC endpoints for that chain.
+> Setting `rpcUrls` is recommended on every chain, including Ethereum mainnet. See [Challenge Options](#challenge-options).
 
 ## Challenge Options
 
 All option values must be strings.
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `chainTicker` | `"eth"` | The chain ticker (e.g. `eth`, `matic`) |
-| `rpcUrls` | — | Comma-separated JSON-RPC URLs for the chain (uses viem defaults if omitted) |
-| `address` | *(required)* | The contract address to call |
-| `abi` | *(required)* | The ABI of the contract method as a JSON object (not an array) |
-| `condition` | *(required)* | Condition the return value must pass (`=`, `>`, or `<` followed by a value, e.g. `>1000`) |
-| `error` | `"Contract call response doesn't pass condition."` | Custom error message shown when the condition fails |
+| Option | Required | Default | Description |
+|--------|----------|---------|-------------|
+| `chainTicker` | yes | `"eth"` | The chain ticker (e.g. `eth`, `matic`) |
+| `rpcUrls` | see below | — | Comma-separated JSON-RPC URLs for the chain |
+| `address` | yes | — | The contract address to call |
+| `abi` | yes | — | The ABI of the contract method as a JSON object (not an array) |
+| `condition` | yes | — | Condition the return value must pass (`=`, `>`, or `<` followed by a value, e.g. `>1000`) |
+| `error` | no | `"Contract call response doesn't pass condition."` | Custom error message shown when the condition fails |
+
+### When `rpcUrls` is required
+
+`rpcUrls` is **required unless `chainTicker` is one of the tickers below**, which have a built-in RPC endpoint:
+
+`eth`, `matic` / `pol`, `op`, `arb`, `base`, `avax`, `bnb` / `bsc`, `gno` / `xdai`, `celo`, `ftm`, `linea`, `scroll`, `zksync`, `blast`
+
+Setting it is still **recommended even for those**: the built-in endpoints are shared public RPCs and will rate-limit a busy community, which shows up as authors being rejected at random rather than as an obvious failure.
+
+An unsupported ticker with no `rpcUrls` is rejected when you save the challenge settings, rather than failing later for every author who tries to publish.
+
+## Publishing Options
+
+`community.settings.challenges[i].options` is private. Nothing in it is published unless you name the option in `publicOptions`, which copies it into the public `community.challenges[i].publicOptions` record.
+
+**Recommended: publish everything except `rpcUrls`.**
+
+```ts
+await community.edit({
+  settings: {
+    challenges: [
+      {
+        name: "@bitsocial/evm-contract-challenge",
+        options: {
+          /* ... */
+        },
+        publicOptions: ["chainTicker", "address", "abi", "condition", "error"]
+      }
+    ]
+  }
+});
+```
+
+| Option | Publish? | Why |
+|--------|----------|-----|
+| `chainTicker` | recommended | Already public in effect — the challenge's `type` is `chain/<chainTicker>` |
+| `address` | recommended | A contract address is public on-chain data; hiding it buys no security |
+| `abi` | recommended | The signature of a public method on that contract |
+| `condition` | recommended | The threshold that makes the other three actionable |
+| `error` | recommended | Authors see this string anyway when they fail |
+| `rpcUrls` | **never — refused** | RPC URLs commonly embed a provider API key |
+
+Published together, `chainTicker` + `address` + `abi` + `condition` let a client tell an author exactly what they are missing *before* they publish and burn a challenge attempt. Published partially, none of that works, so treat the four as one unit.
+
+Keeping them private is a legitimate choice — you may not want the exact threshold known — and this package will not stop you. `rpcUrls` is the one exception: naming it in `publicOptions` is refused outright, because publishing a URL like `https://eth-mainnet.g.alchemy.com/v2/<KEY>` leaks a paid credential to everyone, permanently, and no client ever uses these endpoints. Only the community node does.
+
+## Settings Validation
+
+The challenge validates its own settings whenever you create a community, edit one, or start one, via pkc-js's `validateChallengeSettings` hook. A bad setting is rejected as a failed edit instead of silently rejecting every author at publish time.
+
+Rejected settings:
+
+- `publicOptions` naming `rpcUrls`
+- `rpcUrls` entries that are not valid URLs, or that do not use `http:` / `https:`
+- `rpcUrls` omitted for a `chainTicker` with no built-in RPC
+- `address` that is not a well-formed EVM address
+- `abi` that is not valid JSON, or not a single function entry taking one `address` and returning at least one value
+- `condition` with no supported operator (`=`, `>`, `<`), no value after the operator, or an ordering comparison against a non-numeric value (e.g. `>abc`, which would otherwise compare as text)
+
+pkc-js additionally rejects an option name that no option above declares, and any required option left unset, before this challenge's own validation runs.
 
 ## Multiple RPC URLs
 
@@ -5202,7 +5746,7 @@ When multiple URLs are provided, viem's [`fallback`](https://viem.sh/docs/client
 - If a request fails, it automatically falls back to the next endpoint
 - viem periodically pings all endpoints in the background and reorders them by latency and stability
 - A single URL works the same as before (no fallback overhead)
-- If `rpcUrls` is omitted, viem's built-in default RPCs are used
+- If `rpcUrls` is omitted, the chain's built-in RPC is used, which requires a supported `chainTicker` (see [When `rpcUrls` is required](#when-rpcurls-is-required))
 
 This improves reliability — if one RPC provider goes down, the challenge automatically uses the next available endpoint.
 
@@ -5853,7 +6397,7 @@ EXAMPLES
   $ bitsocial challenge install ./my-local-challenge
 ```
 
-_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/challenge/install.ts)_
+_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/challenge/install.ts)_
 
 ## `bitsocial challenge list`
 
@@ -5879,7 +6423,7 @@ EXAMPLES
   $ bitsocial challenge list -q
 ```
 
-_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/challenge/list.ts)_
+_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/challenge/list.ts)_
 
 ## `bitsocial challenge ls`
 
@@ -5934,7 +6478,7 @@ EXAMPLES
   $ bitsocial challenge remove @scope/my-challenge
 ```
 
-_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/challenge/remove.ts)_
+_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/challenge/remove.ts)_
 
 ## `bitsocial challenge rm NAME`
 
@@ -6051,7 +6595,7 @@ EXAMPLES
     $ bitsocial community create --jsonFile ./create-options.json
 ```
 
-_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/create.ts)_
+_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/create.ts)_
 
 ## `bitsocial community delete ADDRESSES`
 
@@ -6076,7 +6620,7 @@ EXAMPLES
   $ bitsocial community delete 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/delete.ts)_
+_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/delete.ts)_
 
 ## `bitsocial community edit ADDRESS`
 
@@ -6146,7 +6690,7 @@ EXAMPLES
     $ bitsocial community edit bitsocial.bso --jsonFile ./edit-options.json
 ```
 
-_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/edit.ts)_
+_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/edit.ts)_
 
 ## `bitsocial community export [ADDRESS]`
 
@@ -6187,7 +6731,7 @@ EXAMPLES
   $ bitsocial community export --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/export.ts)_
+_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/export.ts)_
 
 ## `bitsocial community get [ADDRESS]`
 
@@ -6218,7 +6762,7 @@ EXAMPLES
   $ bitsocial community get --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/get.ts)_
+_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/get.ts)_
 
 ## `bitsocial community list`
 
@@ -6241,7 +6785,7 @@ EXAMPLES
   $ bitsocial community list
 ```
 
-_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/list.ts)_
+_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/list.ts)_
 
 ## `bitsocial community start ADDRESSES`
 
@@ -6275,7 +6819,7 @@ EXAMPLES
     $ bitsocial community start $(bitsocial community list -q) --concurrency 1
 ```
 
-_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/start.ts)_
+_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/start.ts)_
 
 ## `bitsocial community stop ADDRESSES`
 
@@ -6300,7 +6844,7 @@ EXAMPLES
   $ bitsocial community stop Qmb99crTbSUfKXamXwZBe829Vf6w5w5TktPkb6WstC9RFW
 ```
 
-_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/community/stop.ts)_
+_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/stop.ts)_
 
 ## `bitsocial daemon`
 
@@ -6350,7 +6894,7 @@ EXAMPLES
   $ bitsocial daemon --no-allowPrivateKeyExport
 ```
 
-_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/daemon.ts)_
+_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/daemon.ts)_
 
 ## `bitsocial help [COMMAND]`
 
@@ -6414,7 +6958,7 @@ EXAMPLES
   $ bitsocial logs --stdout -f
 ```
 
-_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/logs.ts)_
+_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/logs.ts)_
 
 ## `bitsocial update check`
 
@@ -6431,7 +6975,7 @@ EXAMPLES
   $ bitsocial update check
 ```
 
-_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/update/check.ts)_
+_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/update/check.ts)_
 
 ## `bitsocial update install [VERSION]`
 
@@ -6463,7 +7007,7 @@ EXAMPLES
   $ bitsocial update install --no-restart-daemons
 ```
 
-_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/update/install.ts)_
+_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/update/install.ts)_
 
 ## `bitsocial update versions`
 
@@ -6485,7 +7029,7 @@ EXAMPLES
   $ bitsocial update versions --limit 5
 ```
 
-_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.89/src/cli/commands/update/versions.ts)_
+_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/update/versions.ts)_
 
 ## Contribution
 
@@ -6659,7 +7203,7 @@ VOTES_MANIFEST_SOURCES=none docker compose up -d
 
 With a manifest configured the seeder starts an embedded libp2p/Helia node for the votes mesh — the daemon's Kubo cannot fill this role over RPC (no topic validators, no peer scoring, no libp2p-fetch registration), so votes seeding is **Helia-only**: verified vote bundles and checkpoint chunks persist in the node's own on-disk blockstore (`VOTES_BLOCKSTORE_PATH`), and each contest's checkpoint snapshot persists under `VOTES_DATA_PATH` so a restart keeps the tally, with no Kubo involvement. The seeder then:
 
-- joins every derived contest read-only (no signer, no voting) and keeps the set reconciled against the manifests every `VOTES_RECONCILE_INTERVAL_MS`,
+- joins every derived contest read-only (it never publishes a ballot, so it carries no voting identity at all) and keeps the set reconciled against the manifests every `VOTES_RECONCILE_INTERVAL_MS`,
 - serves checkpoint root records over libp2p-fetch to cold-joining voters (this registration is automatic on join),
 - announces its votes peer as the provider of each contest's criteria CID, checkpoint root, and chunk CIDs on the Routing V1 HTTP routers (`VOTES_HTTP_ROUTER_URLS`), which is how voters' `findProviders()` discovers it — the library's built-in announcer re-announces hourly and debounces on joins and checkpoint changes.
 
@@ -6674,7 +7218,7 @@ Both are best-effort. With no Kubo reachable the seeder logs nothing about it an
 
 The votes peer identity persists in `VOTES_PEER_KEY_PATH` so announced provider records (and the AutoTLS domain, which embeds the peer id) stay valid across restarts — treat that key file and the `votes-keychain.pass` next to it as part of the seeder's state.
 
-Chain verification reads each contest's gate rule on-chain. Since pubsub-voting 0.1.x the criteria document names chains by ticker + chainId only — RPC endpoints are each client's own setting (so operators can swap endpoints without forking topics). Multiple URLs per chain are queried **in parallel** (every request races all endpoints, first success wins — a dead RPC costs nothing); ETH mainnet defaults to the same six public RPCs bitsocial-cli hardcodes for pkc-js, other chains default to their viem chain's public RPC, and a busy public seeder should point `VOTES_CHAIN_RPC_URLS` (JSON, per chain ticker, e.g. `'{"baseSepolia":["https://my-base-sepolia-rpc"]}'` for the published 5chan manifest) at its own. Votes carry community names whose claims are verified through `.bso` resolution (an ETH mainnet read) — `VOTES_ETH_RPC_URLS` sets the ETH mainnet RPCs used for both name resolution and eth-gated contest verification (an explicit `VOTES_CHAIN_RPC_URLS` `"eth"` entry still wins for verification), defaulting to the same resolver providers bitsocial-cli gives pkc-js; a seeder whose resolvers are down counts (and therefore serves) almost nothing.
+Chain verification reads each contest's gate on-chain. Since pubsub-voting 0.5.0 a contest names its chain once, as a numeric `bucketChainId` — there is no ticker in the document at all, and RPC endpoints are each client's own setting (so operators can swap endpoints without forking topics). Multiple URLs per chain are queried **in parallel** (every request races all endpoints, first success wins — a dead RPC costs nothing); ETH mainnet defaults to the same six public RPCs bitsocial-cli hardcodes for pkc-js, other chains default to their viem chain's public RPC, and a busy public seeder should point `VOTES_CHAIN_RPC_URLS` (JSON, keyed by chain id, e.g. `'{"84532":["https://my-base-sepolia-rpc"]}'` for the published 5chan manifest) at its own. Ticker keys from before 0.5.0 (`baseSepolia`, `base`, `eth`) still resolve, so an existing deployment's config keeps working across the bump; the chain id is the spelling to write new config in. Votes carry community names whose claims are verified through `.bso` resolution (an ETH mainnet read) — `VOTES_ETH_RPC_URLS` sets the ETH mainnet RPCs used for both name resolution and eth-gated contest verification (an explicit `VOTES_CHAIN_RPC_URLS` `"eth"` entry still wins for verification), defaulting to the same resolver providers bitsocial-cli gives pkc-js; a seeder whose resolvers are down counts (and therefore serves) almost nothing.
 
 The log answers the questions production debugging asks — did a voter ever connect (`votes conn open`), join a topic (`votes topic subscribe`), pull the checkpoint (`votes fetch serve`, with the decoded bundle count — a root record is constant-size whether the contest is empty or not, so only the decoded `count` distinguishes "no votes" from "checkpoint didn't load"), or publish a vote (`votes gossip ... live vote bundle`)?
 
@@ -6715,6 +7259,8 @@ The default config expects:
 
 On Linux hosts the compose file uses `network_mode: host`, so the container can reach the host daemon through `127.0.0.1`.
 If no host daemon is running, the container starts its bundled daemon on those same local RPC addresses.
+
+**A daemon that is down does not stop a combined seeder from seeding votes.** On a seeder running both halves, the daemon is a dependency of the community half only, so an unreachable or slow-to-start daemon no longer exits the process — the votes workers start immediately and the daemon is retried in the background (10s, doubling to 5 minutes), logging `community seeding is DOWN … votes seeding is unaffected` on each attempt. The community workers start as soon as it comes up. This matters under `restart: unless-stopped`: exiting used to crash-loop the container, and every restart re-ran the votes cold join and re-announced to the routers, degrading votes seeding for a reason unrelated to it. A **communities-only** seeder still exits on a daemon failure, because nothing would be left running.
 
 Useful environment overrides:
 
@@ -6760,8 +7306,8 @@ VOTES_LIBP2P_HOST=0.0.0.0
 VOTES_LIBP2P_TCP_PORT=6742
 VOTES_LIBP2P_WS_PORT=6743
 VOTES_RECONCILE_INTERVAL_MS=600000
-# Per-chain RPC override; the published 5chan manifest gates on Base Sepolia
-VOTES_CHAIN_RPC_URLS='{"baseSepolia":["https://sepolia.base.org"]}'
+# Per-chain RPC override, keyed by chain id; the published 5chan manifest counts in Base Sepolia
+VOTES_CHAIN_RPC_URLS='{"84532":["https://sepolia.base.org"]}'
 VOTES_ETH_RPC_URLS=https://eth.drpc.org,https://ethereum-rpc.publicnode.com
 VOTES_PEER_KEY_PATH=/data/votes-peer.key
 VOTES_BLOCKSTORE_PATH=/data/votes-blockstore
@@ -7004,6 +7550,385 @@ Pubsub subscriptions use long-lived HTTP connections. Cloudflare can time out th
 
 GPL-3.0-or-later. See [LICENSE](https://github.com/bitsocialnet/pubsub-provider/blob/HEAD/LICENSE).
 
+### bitsocial-indexer
+
+Repository: bitsocialnet/bitsocial-indexer
+Source: https://github.com/bitsocialnet/bitsocial-indexer#readme
+Description: A neutral, self hostable crawler + search/index API + web UI for the
+
+# bitsocial-indexer
+
+A neutral, self-hostable **crawler + search/index API + web UI** for the
+[Bitsocial](https://bitsocial.net) network.
+
+It connects to a [`bitsocial-cli`](https://github.com/bitsocialnet/bitsocial-cli)
+daemon over PKC RPC, indexes the communities **you** configure into a local
+SQLite database, and exposes them through a REST + full-text-search API and an
+optional server-rendered web UI.
+
+> **It ships empty.** Out of the box the indexer knows about **zero**
+> communities and shows nothing — the operator decides what to index. Point it
+> at a list of communities and it becomes a search engine / archive for exactly
+> those.
+
+This is the engine. A concrete deployment — choosing which communities to
+index, re-skinning the UI, adding ads or analytics — is layered on top as a
+separate project (see [Running your own instance](#running-your-own-instance)).
+
+---
+
+## Architecture
+
+```
+   Bitsocial network  (IPFS / IPNS / pubsub)
+            │
+   bitsocial-cli daemon  (PKC RPC, ws://localhost:9138)
+            │  @pkcprotocol/pkc-js
+ ┌──────────┴───────────────────────────────────┐
+ │  server/   — crawler + API (one Node service) │
+ │    crawler ──▶ SQLite + FTS5 ──▶ Fastify API  │
+ └──────────┬───────────────────────────────────┘
+            │  REST + search (the integration seam)
+   ┌────────┴────────┐
+   │                 │
+ webui/        any external client
+ (Next.js,     (e.g. a Bitsocial app's
+  bitsocial.net  in-app /search board just
+  skin)          calls the API)
+```
+
+The **API is the product surface.** The bundled `webui` is one consumer; a
+Bitsocial client adding in-app search is another — it just calls the same
+endpoints, no shared frontend code.
+
+| Part | Stack |
+|------|-------|
+| `server/` | Node 22, TypeScript (ESM), [Fastify](https://fastify.dev) 5, [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) + FTS5, [`@pkcprotocol/pkc-js`](https://github.com/pkcprotocol/pkc-js) |
+| `webui/`  | Next.js 15 (App Router, SSR for SEO), React 19, Bitsocial brand tokens |
+
+## Quickstart
+
+```bash
+# 1. API server  (http://localhost:4000)
+cd server
+npm install
+npm run seed     # optional: load demo communities + posts so the UI isn't empty
+npm run dev
+
+# 2. Web UI  (http://localhost:3000)  — in another terminal
+cd webui
+npm install
+npm run dev
+```
+
+Without `npm run seed`, the server starts with **no communities** and the UI
+shows its empty / onboarding state — which is the real default. Configure
+communities (below) to index live content.
+
+## Configuration
+
+All config is environment variables (see [`server/.env.example`](https://github.com/bitsocialnet/bitsocial-indexer/blob/HEAD/server/.env.example)).
+
+### `server/`
+
+| Var | Default | Meaning |
+|-----|---------|---------|
+| `COMMUNITIES` | _(empty)_ | Comma-separated community addresses to index, e.g. `art.bso,tech.bso` |
+| `COMMUNITIES_SOURCE` | _(empty)_ | URL/path to a JSON list of community addresses (e.g. a client's directory). Overrides/augments `COMMUNITIES`. |
+| `PKC_RPC_URL` | `ws://localhost:9138` | The `bitsocial-cli` daemon RPC endpoint |
+| `DB_PATH` | `./data/indexer.db` | SQLite file (`:memory:` for ephemeral) |
+| `CRAWL_INTERVAL_MS` | `60000` | Per-community delay before the next refresh |
+| `CRAWL_CONCURRENCY` | `4` | Maximum communities crawled at once |
+| `CRAWL_TIMEOUT_MS` | `300000` | Hard timeout for one community crawl; a timeout resets the RPC client |
+| `ALLOWED_ORIGINS` | `*` | CORS allow-list, comma-separated (`*` = any origin — fine for a public read-only API). `CORS_ORIGIN` is accepted as a legacy fallback. |
+| `BLOCKLIST_SOURCE` | _(empty)_ | Path to a JSON file of CIDs to take down (operator blocklist, see below). |
+
+If neither `COMMUNITIES` nor `COMMUNITIES_SOURCE` is set, the crawler stays
+idle and the indexer serves nothing. That is intentional.
+
+#### Takedowns (`BLOCKLIST_SOURCE`)
+
+An archive keeps serving content after it disappears from the source network,
+so upstream moderation can no longer reach it — takedown requests (DMCA,
+illegal content) need an operator-side mechanism. Point `BLOCKLIST_SOURCE` at
+a JSON file where each entry is a bare CID string or
+`{ "cid": "…", "scope": "comment" | "thread", "reason": "…" }` (`scope`
+defaults to `comment`; `thread` takes down a post **and all its replies** by
+the post's CID). Add a CID to the file and it is redacted within a minute —
+the file is re-read whenever it changes, no restart needed; remove the entry
+and the stored content is served again (the redaction never destroys the
+archived data). Blocklisted comments leave listings and search but stay in
+threads as redacted tombstones, marked `takedown: 1` (plus the optional
+`takedown_reason`) on the API so UIs can distinguish them from upstream
+moderation, and they stay redacted across re-crawls. The bundled web UI shows
+them as `[removed — takedown request]` and documents the policy on its
+`/legal` page (see `CONTACT_EMAIL` below).
+
+### `webui/`
+
+| Var | Default | Meaning |
+|-----|---------|---------|
+| `INDEXER_API` | `http://localhost:4000` | Where the UI reads the API from (server-side fetch) |
+| `SITE_NAME` | `Bitsocial` | Instance name in the header / page titles |
+| `SITE_BADGE` | `Indexer` | Small pill next to the name (empty to hide) |
+| `SITE_URL` | `http://localhost:3000` | Public origin of the web UI — canonical URLs, OpenGraph tags, `robots.txt`, sitemaps |
+| `THEME` | `default` | UI skin: `default` (Bitsocial dark) or `5chan` (classic imageboard look) |
+| `BRAND_TEXT` | _(empty)_ | Optional footer attribution line, e.g. `A Bitsocial Forge product`. Unset = nothing rendered |
+| `BRAND_URL` | _(empty)_ | Makes `BRAND_TEXT` a link |
+| `CONTACT_EMAIL` | _(empty)_ | Contact address for content-removal / takedown requests, shown on the `/legal` archive-policy page. Unset = the page says requests are handled by the instance operator |
+
+The web UI serves its own `robots.txt` and a `sitemap.xml` **sitemap index**
+(one child sitemap per community, capped at the 5,000 most recent posts each,
+enumerated through the paginated `/api/posts` listing and cached for an hour).
+
+## API
+
+CORS-enabled so browser clients can call it directly.
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/health` | Status + index counts |
+| `GET /api/communities` | Indexed communities + post counts |
+| `GET /api/posts` | Browse posts — `?community=&sort=new\|top\|replies\|old&time=hour..all&page=&limit=&replies=true` |
+| `GET /api/posts/:cid` | A thread: original post + threaded replies |
+| `GET /api/search` | Full-text search — `?q=&community=&sort=&time=&page=` |
+| `GET /sitemap.xml`, `/robots.txt` | SEO |
+
+## Running your own instance
+
+`bitsocial-indexer` is a **tool, not a hosted service** — there is no central
+instance. To run one:
+
+1. Deploy this engine (Docker, a VPS, etc.).
+2. Set `COMMUNITIES` / `COMMUNITIES_SOURCE` to the communities you want.
+3. Optionally re-skin `webui` (override the theme tokens in
+   [`webui/app/globals.css`](https://github.com/bitsocialnet/bitsocial-indexer/blob/HEAD/webui/app/globals.css)) and add your own branding,
+   ads, or analytics in your own deployment repo.
+
+Because this engine is **GPL-3.0-or-later** (copyleft on *distribution*, not on
+running a network service), you can run a modified, private, monetised instance
+without publishing your changes — the same way Etherscan is a closed service
+built on open Ethereum.
+
+## License
+
+[GPL-3.0-or-later](https://github.com/bitsocialnet/bitsocial-indexer/blob/HEAD/LICENSE). Brand assets belong to Bitsocial Forge.
+
+### bitsocial-previewer
+
+Repository: bitsocialnet/bitsocial-previewer
+Source: https://github.com/bitsocialnet/bitsocial-previewer#readme
+Description: Link preview + redirect server for Bitsocial clients. When someone shares a
+
+# bitsocial-previewer
+
+Link-preview + redirect server for Bitsocial clients. When someone shares a
+post link on Twitter/Telegram/Discord/etc., this server renders the
+OpenGraph/Twitter card for that post, then redirects real browsers into the app.
+
+It is **multi-tenant**: one running instance serves many clients and many mirror
+domains, picking the right profile from the request's `Host` header — so a single
+deployment (and a single TLS setup) covers every client and every mirror.
+
+```
+                      ┌──────────── s.5chan.app/biz/thread/<cid>
+ share link  ───────► │  bitsocial-previewer  ──► OG/Twitter card (for scrapers)
+ (no #/ hash)         └──────────── 302-ish JS redirect ──► 5chan.app/#/biz/thread/<cid>
+```
+
+## How it works
+
+1. 5chan copies **path-based** share links (no `#/` hash) so the path
+   reaches the server: `https://s.5chan.app/<board>/thread/<cid>`.
+2. The server matches the path to a client profile + route, fetches the post by
+   cid via `@pkcprotocol/pkc-js` (`getComment`), and builds the card.
+3. Browsers get redirected into the app's hash route; scrapers read the tags.
+
+`<board>` is usually a short **directory code** (e.g. `biz`). We pass it straight
+through to the app (which resolves it); the cid is authoritative for the preview,
+so the previewer never needs to resolve codes itself.
+
+### Recognised share-link formats (5chan)
+
+| Incoming on `s.5chan.app` | Preview | Redirects to |
+|---|---|---|
+| `/<board>/thread/<cid>` | rich (title/text/image) | `5chan.app/#/<board>/thread/<cid>` |
+| `/<board>/catalog` | generic board card | `5chan.app/#/<board>/catalog` |
+| `/<board>` | generic board card | `5chan.app/#/<board>` |
+| `/p/<address>/c/<cid>` (legacy) | rich | `5chan.app/#/<address>/thread/<cid>` |
+
+Unresolvable cid → still redirects to the app with a generic card (short cache),
+so a share link never dead-ends.
+
+## Layout
+
+| File | Purpose |
+|---|---|
+| [`lib/clients.js`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/lib/clients.js) | **The per-client design.** Profiles (hostnames, app URL, routes) + host→profile + route matching. |
+| [`lib/html.js`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/lib/html.js) | OG/Twitter tag rendering + redirect (HTML-escaped, XSS-safe). Pure. |
+| [`lib/pkc.js`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/lib/pkc.js) | `@pkcprotocol/pkc-js` init + cached `getComment`. |
+| [`lib/media.js`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/lib/media.js) | Comment media URL + external-link `og:image` scraping. |
+| [`start.js`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/start.js) | Express wiring. |
+| [`config.js`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/config.js) | Env-driven config (port, bind host, pkc options). |
+
+## Run locally
+
+```bash
+npm install
+npm start            # listens on 127.0.0.1:3924, public-gateway fallback
+# in another shell:
+curl -s 'http://localhost:3924/biz/thread/<cid>' | grep -i og:
+```
+
+```bash
+npm test             # routing + HTML unit tests (no network/install needed for the pure logic)
+```
+
+## Deploy (Caddy)
+
+Deployed under `/opt/bitsocial-previewer` like the box's other services. Config
+(gateways, port) is inline in [`docker-compose.yml`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/docker-compose.yml). The
+previewer resolves shared comments through the public IPFS gateways the 5chan app
+uses — a fetch is sub-second once a gateway has the content, and a hard timeout
+falls back to a generic card so a request never hangs. (A box's local IPFS node
+generally can't resolve arbitrary shared comment cids: thinly peered, and it
+doesn't pin individual comment blocks.)
+
+```bash
+# on the box, in /opt/bitsocial-previewer (source synced or git-cloned):
+docker compose up -d --build       # builds + runs on 127.0.0.1:3924
+docker compose logs -f --tail=50
+```
+
+CI also publishes `ghcr.io/bitsocialnet/bitsocial-previewer:latest`
+([workflow](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/.github/workflows/docker.yml)); once that package is made public you
+can `docker compose pull && docker compose up -d` instead of building on the box.
+
+Point the local Caddy at it with [`deploy/Caddyfile.snippet`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/deploy/Caddyfile.snippet),
+then do the Cloudflare DNS change in [`deploy/cloudflare.md`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/deploy/cloudflare.md).
+
+## Add a client or a mirror
+
+- **New mirror domain for 5chan:** add it to the `5chan` profile's `hostnames`
+  in [`lib/clients.js`](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/lib/clients.js), add a Caddy block + a DNS A record.
+- **New client (e.g. Seedit):** fill in the `seedit` profile template
+  (hostnames, `appBaseUrl`, route formats) and enable it.
+
+## License
+
+[GPL-3.0-or-later](https://github.com/bitsocialnet/bitsocial-previewer/blob/HEAD/LICENSE) — matching the Bitsocial core stack it builds on
+(`@pkcprotocol/pkc-js`, `bitsocial-react-hooks`, 5chan, Seedit).
+
+### challenge-composer
+
+Repository: bitsocialnet/challenge-composer
+Source: https://github.com/bitsocialnet/challenge-composer#readme
+Description: Live app: <https://bitsocialnet.github.io/challenge composer/
+
+# challenge-composer
+
+**Live app: <https://bitsocialnet.github.io/challenge-composer/>**
+
+A standalone, offline-first web app for **visualizing and editing** the `challenges` array of a PKC community's `settings` (pkc-js format). Inspired by the challenges section of seedit's community-settings view.
+
+- Ships as **one self-contained `dist/index.html`** with every JS/CSS chunk inlined by `vite-plugin-singlefile`. Drop it anywhere — USB stick, email attachment, static host — and open from `file://`.
+- Zero outward HTTP at runtime. Everything works from the bundled app and user-supplied data.
+- Fully typed, ESM, Node ≥22, Vitest for tests.
+
+## Requirements
+
+- Node **22+**
+- npm 10+
+
+## Getting started
+
+```sh
+npm ci             # install pinned exact versions
+npm run build      # type-check + emit dist/index.html (everything inlined)
+xdg-open dist/index.html   # or just double-click it
+```
+
+Supporting scripts: `npm test` (Vitest + happy-dom), `npm run typecheck`, `npm run preview` (serves `dist/` locally for a smoke test).
+
+The current `package.json` version is injected into the bundle via Vite's `define` as `__APP_VERSION__` and rendered next to the header title, so whoever opens `dist/index.html` can see which release it came from.
+
+## Release flow
+
+Versioning is automated. Conventional commits (`feat:`, `fix:`, `perf:`, `build:`, `revert:`) on `master` trigger a release:
+
+1. The **CI** workflow (`.github/workflows/ci.yml`) runs typecheck, tests, and build on every push/PR.
+2. The **Release and deploy** workflow (`.github/workflows/deploy.yml`) runs on successful CI completion on `master`: it invokes `release-it` (config in `config/.release-it.json`) which bumps the version, updates `CHANGELOG.md`, commits `chore(release): X.Y.Z [skip ci]`, tags `vX.Y.Z`, and cuts a GitHub release. It then rebuilds `dist/index.html` with the new version embedded and publishes it to GitHub Pages.
+
+The repo ships a commit-msg hook (`.githooks/commit-msg`, installed by `scripts/install-git-hooks.mjs`) that runs `commitlint` on the message so non-conventional commits are caught before they reach master. `git cz` via `commitizen` is wired up as an interactive alternative.
+
+State (drafts, share links) lives in `localStorage` of whichever origin you open it from.
+
+## What it edits
+
+A JSON array of `CommunityChallengeSetting`, the same shape pkc-js accepts in `community.settings.challenges`. Each entry:
+
+```jsonc
+{
+  "name": "text-math",                // pkc-js built-in challenge identifier, OR
+  "path": "./my-challenge.js",        // path to a custom challenge module (one of the two)
+  "description": "Solve to post.",
+  "pendingApproval": true,            // mods must approve after the user solves
+  "options": {                        // all values must be strings
+    "difficulty": "2"
+  },
+  "exclude": [                        // any matching group lets the author bypass
+    { "role": ["moderator", "admin", "owner"] },
+    { "postCount": 10, "firstCommentTimestamp": 604800, "rateLimit": 3, "rateLimitChallengeSuccess": true },
+    { "publicationType": { "reply": true } }
+  ]
+}
+```
+
+### Challenges shipped with pkc-js
+
+A challenge name is "built-in" iff it is a key of `PKC.challenges` (= `pkcJsChallenges`) in `@pkcprotocol/pkc-js` — these resolve by `name` without any install step on the community node. The list is extracted at build time by the `pkcBuiltinNamesPlugin` Vite plugin (see `vite.config.ts`) and exposed to the app as `PKC_BUILTIN_CHALLENGE_NAMES` in `src/lib/knownChallenges.ts`, so adding or removing a built-in in pkc-js propagates on next rebuild without any manual edits here.
+
+Anything not in that list — `captcha-canvas-v3`, `evm-contract-call`, `mintpass`, … — is an **external** challenge that the community operator must install on their node separately, e.g. `bitsocial challenge install @bitsocial/captcha-canvas-challenge`. The **Export CLI** button uses the same `PKC.challenges` list (via `isBuiltinChallenge`) to decide which names need a `challenge install` line prepended.
+
+### Validation
+
+`CommunityChallengeSettingSchema` is imported directly from `@pkcprotocol/pkc-js` at runtime (via a Vite alias around its internal subpath) — no local mirror, so the schema cannot drift from upstream. See `src/pkc-schema.ts` and the `@pkc/*` aliases in `vite.config.ts`.
+
+## Features
+
+- **Seedit-style editor**: add/remove/reorder challenges, edit name/path/options/description/pendingApproval, manage exclude rules (roles, post/reply counts, account age, rate limit, publication type, author addresses).
+- **Presets dropdown**: ships with `5chan board defaults`, `captcha only`, and `empty`.
+- **Paste JSONC** dialog, **file upload** (`.json` / `.jsonc`), and **download** as `challenges.jsonc`.
+- **Export CLI**: emits a `bitsocial challenge install …` + `bitsocial community edit …` shell script tailored to the current settings, flagging unknown challenge names with a TODO for the operator.
+- **Live JSON preview** with inline zod validation errors.
+- **LocalStorage draft** auto-saves every change.
+- **Share URL**: compresses the current settings into a URL fragment (`#s=…`). Browsers never send fragments to servers, so the blob stays client-side — but anyone holding the URL can decode it verbatim. A warning dialog makes this explicit before you copy.
+
+## Security notes
+
+- The Share URL contains your full settings in lz-string-compressed but not encrypted form. Treat it like pasting the raw JSONC into a public place.
+- The `?raw` preset imports are bundled at build time. The runtime bundle performs no `fetch()` calls to third-party hosts.
+
+## Architecture
+
+```
+src/
+├── pkc-schema.ts                     # re-exports CommunityChallengeSettingSchema via vite alias
+├── types/challenges.ts               # type-only re-exports from @pkcprotocol/pkc-js
+├── state/                            # useReducer store + localStorage/hash hydration
+├── lib/                              # jsonc, share (lz-string), cliExport, known-challenges catalog
+├── presets/                          # bundled .jsonc presets + registry
+└── components/                       # Header, ChallengesEditor, ChallengeCard, ChallengeRow,
+                                      # OptionsEditor, ExcludeRulesEditor, JsonPreview,
+                                      # ImportDialog, ShareDialog, ExportCliDialog
+```
+
+## TODO
+
+- **Scenario simulator.** For each challenge in the current settings, simulate which publications and author profiles would be challenged vs. excluded, across a library of mock authors (brand-new account, moderator, high-karma user, rate-limited user, wallet holder, banned author address, …). Should exercise every branch of `ChallengeExcludeSchema` — role / postCount / replyCount / postScore / replyScore / firstCommentTimestamp / rateLimit / rateLimitChallengeSuccess / publicationType / address / community / challenges.
+- Inline zod validation errors attached to the specific offending field (currently shown in the JSON preview panel only).
+- Drag-and-drop reordering for challenges (the reducer has `MOVE_CHALLENGE` and Move up/down buttons; drag handles are not yet wired up).
+
 ### Bitsocial Telegram Bots
 
 Repository: bitsocialnet/bitsocial-telegram-bots
@@ -7091,6 +8016,101 @@ To add a bot for a different Bitsocial client:
 
 GPL-3.0-or-later
 
+### bitsocial-github-alerts
+
+Repository: bitsocialnet/bitsocial-github-alerts
+Source: https://github.com/bitsocialnet/bitsocial-github-alerts#readme
+Description: A Telegram bot that posts compact GitHub notifications — pushes, releases, issues, pull requests, and more — to any chat, group, or forum topic. Run by the Bitsocial team for its repositories, but anyone can self host it.
+
+# bitsocial-github-alerts
+
+A Telegram bot that posts compact GitHub notifications — pushes, releases, issues, pull requests, and more — to any chat, group, or forum topic. Run by the [Bitsocial](https://github.com/bitsocialnet) team for its repositories, but anyone can self-host it.
+
+This is a fork of [mhkafadar/notifine](https://github.com/mhkafadar/notifine), stripped down to GitHub + Telegram only, with compact message formatting and added support for GitHub release notifications. All credit for the original architecture goes to the notifine authors. This repository carries no license of its own because upstream notifine has none; licensing follows upstream.
+
+## Features
+
+- **Compact messages** — pushes show at most 5 commits (first line of each commit message, truncated to 72 chars) plus an "… and N more" line
+- **Release notifications** — one-liner when a release is published, with tag link, release name, pre-release marker, and the first line of the release notes
+- **Supported events**: push (incl. branch create/delete and force-push), release, issues, pull requests, comments (issue/PR review/commit), check runs, workflow runs, wiki edits, ping
+- **Branch filtering** — `?branch=` / `?exclude_branch=` glob patterns on the webhook URL
+- **Forum topics** — run `/start` inside a Telegram topic to receive notifications there
+- Built with Rust (actix-web + teloxide + diesel/Postgres)
+
+## Usage
+
+1. Open a chat with the bot (or add it to a group) and send `/start`
+2. The bot replies with a webhook URL of the form `https://github.bitsocial.net/github/<token>`
+3. In your GitHub repo, open **Settings → Webhooks → Add webhook**, paste the URL, set content type to `application/json`, and pick the events you want
+
+### Branch filtering
+
+```
+# Only main
+https://github.bitsocial.net/github/<token>?branch=main
+
+# Multiple branches and wildcards
+https://github.bitsocial.net/github/<token>?branch=main,release/*
+
+# Exclude noisy branches (exclusions take precedence)
+https://github.bitsocial.net/github/<token>?exclude_branch=feature/*,dependabot/*
+```
+
+Applies to push, pull request, workflow run, and create/delete events.
+
+## Self-hosting
+
+### Environment variables
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `DATABASE_URL` | yes | Postgres connection string |
+| `WEBHOOK_BASE_URL` | yes | Public base URL GitHub uses to reach the server, e.g. `https://github.bitsocial.net` |
+| `GITHUB_TELOXIDE_TOKEN` | yes | Telegram bot token from [@BotFather](https://t.me/BotFather) |
+| `PORT` | no | HTTP listen port (default `8080`) |
+| `ADMIN_LOGS` | no | `ACTIVE` to send admin logs to Telegram (default `NOT_ACTIVE`) |
+| `TELEGRAM_ADMIN_CHAT_ID` | no | Chat id that receives admin logs |
+| `ADMIN_LOG_LEVEL` | no | 0–255 verbosity threshold for admin logs (default `50`) |
+
+Database migrations are embedded and run automatically at startup.
+
+### Docker Compose (production)
+
+A production compose file is provided in [`deploy/docker-compose.yml`](https://github.com/bitsocialnet/bitsocial-github-alerts/blob/HEAD/deploy/docker-compose.yml). It runs the prebuilt image `ghcr.io/bitsocialnet/bitsocial-github-alerts:latest` next to a Postgres 17 container and binds the app to `127.0.0.1:8090` (put a reverse proxy such as Caddy or nginx in front).
+
+```bash
+mkdir bitsocial-github-alerts && cd bitsocial-github-alerts
+curl -fsSLO https://raw.githubusercontent.com/bitsocialnet/bitsocial-github-alerts/main/deploy/docker-compose.yml
+cat > .env <<'ENV'
+GITHUB_TELOXIDE_TOKEN=<bot token>
+WEBHOOK_BASE_URL=https://github.example.com
+DATABASE_PASSWORD=<random password>
+ENV
+docker compose up -d
+```
+
+`DATABASE_URL` is derived from `DATABASE_PASSWORD` inside the compose file; the other variables come from `.env`.
+
+### Local development
+
+```bash
+cp .env.example .env   # fill in values
+docker compose up -d bitsocial-github-alerts-db
+cargo run
+```
+
+## Docker image
+
+Images are published to GHCR on every push to `main` and on version tags:
+
+```
+ghcr.io/bitsocialnet/bitsocial-github-alerts:latest
+```
+
+## Credits
+
+Forked from [mhkafadar/notifine](https://github.com/mhkafadar/notifine). Report bugs for this fork by [creating an issue](https://github.com/bitsocialnet/bitsocial-github-alerts/issues/new).
+
 ### 5chan Board Manager
 
 Repository: bitsocialnet/5chan-board-manager
@@ -7117,6 +8137,7 @@ A CLI tool that implements 4chan-style thread auto-archiving and purging for 5ch
 
 - Track when threads were archived
 - After `archive_purge_seconds` has elapsed since archiving → purge via `createCommentModeration({ commentModeration: { purged: true } })`
+- Purging is time-based rather than activity-based, so it also runs on a periodic sweep (`PURGE_SWEEP_INTERVAL_SECONDS`, default 60s) instead of only when a `community.update` event arrives. Without the sweep, a board that went quiet after archiving would keep expired threads in the archive until unrelated activity woke the manager.
 
 ### Feature 4: Author-deleted comment purging
 
@@ -7197,6 +8218,9 @@ docker compose up -d
 # or always use --skip-apply-defaults):
 docker compose exec bitsocial bitsocial challenge install @bitsocial/spam-blocker-challenge
 
+# Optional: install this before enabling the wordfilter preset example
+docker compose exec bitsocial bitsocial challenge install @bitsocial/wordfilter-challenge@0.3.0
+
 # Now add boards via 5chan board add (see Config Directory Layout above)
 ```
 
@@ -7219,6 +8243,9 @@ docker compose up -d
 
 # Install the spam-blocker challenge referenced by the default preset
 docker compose exec bitsocial bitsocial challenge install @bitsocial/spam-blocker-challenge
+
+# Optional: install this before enabling the wordfilter preset example
+docker compose exec bitsocial bitsocial challenge install @bitsocial/wordfilter-challenge@0.3.0
 
 # Create a community (copy the created address from output)
 docker compose exec bitsocial bitsocial community create \
@@ -7257,6 +8284,13 @@ bitsocial challenge install @bitsocial/spam-blocker-challenge
 ```
 
 If you do not want this dependency, remove both `@bitsocial/spam-blocker-challenge` entries from your preset (they are marked optional in the file) or use `--skip-apply-defaults`.
+
+The bundled preset also contains a disabled wordfilter example. If you enable
+it, install the challenge on the same bitsocial-cli instance first:
+
+```bash
+bitsocial challenge install @bitsocial/wordfilter-challenge@0.3.0
+```
 
 See [`docker-compose.standalone.example.yml`](https://github.com/bitsocialnet/5chan-board-manager/blob/HEAD/docker-compose.standalone.example.yml) for the configuration.
 
@@ -7331,6 +8365,67 @@ Bundled preset JSONC defaults:
 `boardSettings` is merged into `community.edit()` with "missing only" semantics (only absent values are applied). `boardManagerSettings` is used as default values for `board add` config fields, and explicit CLI flags override these defaults.
 
 The bundled preset file is `src/presets/community-defaults.jsonc`.
+
+### Optional wordfilters
+
+Wordfilters replace configured text in a publishing client before the
+publication is signed. The community node then rejects any publication that
+still contains a filtered source word. Consequently, enable wordfilters only
+after the clients used by the board support the `wordfilter/v1` contract. An
+older client cannot publish the unfiltered text; it receives the configured
+challenge error instead.
+
+The bundled preset contains a commented example with 4chan's classic filters,
+`soy` -> `onions`, `tbh` -> `desu` and `smh` -> `baka`, applied to post and
+reply content, comment-edit content, and post titles. To enable it for a new
+board:
+
+1. Install `@bitsocial/wordfilter-challenge@0.3.0` on the bitsocial-cli instance
+   that hosts the community.
+2. Run `5chan board add ADDRESS --interactive-apply-defaults`.
+3. Choose **Modify**, uncomment the wordfilter challenge object, review the
+   rule, then save the preset.
+
+The active challenge object has this shape when configuring a custom preset or
+editing an existing community's `settings.challenges` array:
+
+```json
+{
+  "name": "@bitsocial/wordfilter-challenge",
+  "description": "Replaces configured words before publications are signed.",
+  "options": {
+    "wordfilter/v1/rules": "[{\"src\":\"soy\",\"dst\":\"onions\"},{\"src\":\"tbh\",\"dst\":\"desu\"},{\"src\":\"smh\",\"dst\":\"baka\"}]",
+    "wordfilter/v1/fieldNames": "[\"comment.content\",\"comment.title\",\"commentEdit.content\"]",
+    "error": "This board replaces certain words. Please retry after refreshing the board."
+  },
+  "publicOptions": [
+    "wordfilter/v1/rules",
+    "wordfilter/v1/fieldNames",
+    "error"
+  ]
+}
+```
+
+The two contract options must remain in `publicOptions`: publishing clients
+need them to produce text the community will accept. Field paths start with
+the publication type (`comment.content`, `commentEdit.content`,
+`vote.author.displayName`, ...), as required by wordfilter-challenge 0.3.0;
+bare paths such as `content` are rejected when the configuration is saved, and
+clients written against the 0.2.0 bare-path format do not apply prefixed paths,
+so their posts are rejected until they are updated. Rules are literal and
+case-insensitive substring matches, not regular expressions and not
+whole-word matches. This example matches `soy`, `Soy`, and `SOY`, and also
+the `soy` inside `soybean` (which becomes `onionsbean`, exactly as on 4chan),
+but not `s o y` or Unicode lookalikes.
+
+Invalid rules within one wordfilter challenge are rejected when the community
+configuration is saved. Each challenge allows at most 64 rules; source and
+destination strings are limited to 128 characters; and replacements that could
+loop or reintroduce another source in that challenge are rejected. Conflicts
+between separate wordfilter challenges cannot be validated in isolation; they
+surface during client application or as a publication rejection. See the
+[`@bitsocial/wordfilter-challenge` contract](https://github.com/bitsocialnet/wordfilter-challenge#the-wordfilterv1-contract)
+for the complete validation and client behavior.
 
 ## Commands
 
@@ -7412,7 +8507,7 @@ EXAMPLES
   $ 5chan board add my-board.bso --apply-defaults --defaults-preset ./my-preset.json
 ```
 
-_See code: [src/commands/board/add.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.23/src/commands/board/add.ts)_
+_See code: [src/commands/board/add.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.27/src/commands/board/add.ts)_
 
 ## `5chan board edit ADDRESS`
 
@@ -7459,7 +8554,7 @@ EXAMPLES
   $ 5chan board edit random.bso -i
 ```
 
-_See code: [src/commands/board/edit.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.23/src/commands/board/edit.ts)_
+_See code: [src/commands/board/edit.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.27/src/commands/board/edit.ts)_
 
 ## `5chan board list`
 
@@ -7476,7 +8571,7 @@ EXAMPLES
   $ 5chan board list
 ```
 
-_See code: [src/commands/board/list.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.23/src/commands/board/list.ts)_
+_See code: [src/commands/board/list.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.27/src/commands/board/list.ts)_
 
 ## `5chan board remove ADDRESS`
 
@@ -7496,7 +8591,7 @@ EXAMPLES
   $ 5chan board remove random.bso
 ```
 
-_See code: [src/commands/board/remove.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.23/src/commands/board/remove.ts)_
+_See code: [src/commands/board/remove.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.27/src/commands/board/remove.ts)_
 
 ## `5chan defaults set`
 
@@ -7536,7 +8631,7 @@ EXAMPLES
   $ 5chan defaults set -i
 ```
 
-_See code: [src/commands/defaults/set.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.23/src/commands/defaults/set.ts)_
+_See code: [src/commands/defaults/set.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.27/src/commands/defaults/set.ts)_
 
 ## `5chan help [COMMAND]`
 
@@ -7600,7 +8695,7 @@ EXAMPLES
   $ 5chan logs --stdout -f
 ```
 
-_See code: [src/commands/logs.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.23/src/commands/logs.ts)_
+_See code: [src/commands/logs.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.27/src/commands/logs.ts)_
 
 ## `5chan start`
 
@@ -7638,7 +8733,7 @@ EXAMPLES
   $ 5chan start --log-path /var/log/5chan
 ```
 
-_See code: [src/commands/start.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.23/src/commands/start.ts)_
+_See code: [src/commands/start.ts](https://github.com/bitsocialnet/5chan-board-manager/blob/v0.2.27/src/commands/start.ts)_
 
 ## Config Hot-Reload
 
@@ -7663,6 +8758,18 @@ Each board manager acquires a PID-based lock file (`{statePath}.lock`) to preven
 4. If stale — removes the old lock and retries
 
 The lock is released when the board manager stops.
+
+## Purge Sweep
+
+Archiving is driven by `community.update` events, because it depends on board activity (new threads pushing old ones past capacity, replies hitting the bump limit). Purging is different: once a thread is archived, only the clock decides when its retention expires.
+
+So the board manager also runs a periodic sweep that purges archived threads whose `archivePurgeSeconds` has elapsed, independent of update events. A board that goes quiet right after archiving would otherwise keep expired threads in the archive indefinitely, since nothing would trigger the update handler.
+
+| Env var | Default | Purpose |
+|---|---|---|
+| `PURGE_SWEEP_INTERVAL_SECONDS` | `60` | How often to check for archived threads past their retention window. Set to `0` to disable the sweep and fall back to purging on update events only. |
+
+The sweep does no network fetching — it reads the archived-thread timestamps already held in the state file, and only publishes when something is genuinely due. It is serialized against the update handler, so a thread is never purged twice concurrently.
 
 ## Author-Deleted Comment Purging
 
@@ -7929,6 +9036,9 @@ Reference: `pkc-js/src/community/community-client-manager.ts`, `pkc-js/src/runti
       - Remove from state file
    g. For each author-deleted comment/reply:
       - createCommentModeration({ purged: true }) and publish
+
+8. Every PURGE_SWEEP_INTERVAL_SECONDS, independent of update events (skipped when set to 0):
+   - Run step (f) again, so time-based purging still happens on a quiet board
 ```
 
 ### Key pkc-js APIs used

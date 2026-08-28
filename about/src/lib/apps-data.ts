@@ -26,9 +26,12 @@ export interface AppReleaseIntegrityProbe {
 }
 
 export type AppIconKey =
+  | "bell"
   | "bot"
+  | "filter"
   | "image"
   | "message-square"
+  | "search"
   | "send"
   | "shield"
   | "ticket"
@@ -235,7 +238,9 @@ const APP_TAG_TRANSLATION_KEYS: Record<string, string> = {
   "On-chain": "apps.catalog.tags.onChain",
   Operator: "apps.catalog.tags.operator",
   "Pubsub relay": "apps.catalog.tags.pubsubRelay",
+  "Reference client": "apps.catalog.tags.referenceClient",
   "Risk scores": "apps.catalog.tags.riskScores",
+  Search: "apps.catalog.tags.search",
   Telegram: "apps.catalog.tags.telegram",
   Verification: "apps.catalog.tags.verification",
 };
@@ -245,6 +250,7 @@ const APP_LINK_LABEL_TRANSLATION_KEYS: Record<string, string> = {
   Linux: "apps.catalog.linkLabels.linux",
   "Linux ARM": "apps.catalog.linkLabels.linuxArm",
   "Linux x64": "apps.catalog.linkLabels.linuxX64",
+  "Open Telegram bot": "apps.catalog.linkLabels.openTelegramBot",
   "Open web app": "apps.catalog.linkLabels.openWebApp",
   "Open website": "apps.catalog.linkLabels.openWebsite",
   Windows: "apps.catalog.linkLabels.windows",
@@ -313,6 +319,30 @@ const APP_COPY_TRANSLATION_KEYS: Record<string, { tagline: string; description: 
   "ai-moderation-challenge": {
     tagline: "apps.catalog.items.ai-moderation-challenge.tagline",
     description: "apps.catalog.items.ai-moderation-challenge.description",
+  },
+  "wordfilter-challenge": {
+    tagline: "apps.catalog.items.wordfilter-challenge.tagline",
+    description: "apps.catalog.items.wordfilter-challenge.description",
+  },
+  bitbones: {
+    tagline: "apps.catalog.items.bitbones.tagline",
+    description: "apps.catalog.items.bitbones.description",
+  },
+  "challenge-composer": {
+    tagline: "apps.catalog.items.challenge-composer.tagline",
+    description: "apps.catalog.items.challenge-composer.description",
+  },
+  "bitsocial-indexer": {
+    tagline: "apps.catalog.items.bitsocial-indexer.tagline",
+    description: "apps.catalog.items.bitsocial-indexer.description",
+  },
+  "bitsocial-previewer": {
+    tagline: "apps.catalog.items.bitsocial-previewer.tagline",
+    description: "apps.catalog.items.bitsocial-previewer.description",
+  },
+  "bitsocial-github-alerts": {
+    tagline: "apps.catalog.items.bitsocial-github-alerts.tagline",
+    description: "apps.catalog.items.bitsocial-github-alerts.description",
   },
 };
 
@@ -519,7 +549,7 @@ export const APPS: AppData[] = [
         releaseIntegrity: FIVECHAN_SIGNED_RELEASE_INTEGRITY,
       },
     ],
-    relatedSlugs: ["5chan-board-manager", "seedit"],
+    relatedSlugs: ["5chan-board-manager", "seedit", "bitbones"],
     featured: true,
     status: "ready",
     searchTerms: ["apk", "android", "desktop", "windows", "mac", "linux", "mirror"],
@@ -615,10 +645,29 @@ export const APPS: AppData[] = [
         releaseIntegrity: SEEDIT_SIGNED_RELEASE_INTEGRITY,
       },
     ],
-    relatedSlugs: ["5chan"],
+    relatedSlugs: ["5chan", "bitbones"],
     featured: true,
     status: "experimental",
     searchTerms: ["apk", "android", "desktop", "windows", "mac", "linux", "reddit"],
+  },
+  {
+    slug: "bitbones",
+    name: "bitbones",
+    tagline: "Bare-bones reference client where every view is a thin wrapper over one hook.",
+    description:
+      "bitbones is the smallest useful surface over the Bitsocial React hooks: almost no styling, no product opinions, and a single hook behind every view. It is the fastest place to reproduce a bug or try a hooks change against real communities, and its default feed can be switched between the Seedit and 5chan community lists.",
+    category: "apps",
+    tags: ["Reference client", "Forums"],
+    icon: "message-square",
+    logoSrc: "https://bitbones.app/favicon.ico",
+    logoPixelated: true,
+    githubRepo: "bitsocialnet/bitbones",
+    links: [
+      { label: "Open web app", url: "https://bitbones.app", kind: "launch", platform: "web" },
+    ],
+    relatedSlugs: ["seedit", "5chan", "bitsocial-cli"],
+    status: "experimental",
+    searchTerms: ["bare bones", "reference", "hooks", "minimal", "debug", "developers"],
   },
   {
     slug: "mintpass",
@@ -717,6 +766,7 @@ export const APPS: AppData[] = [
     relatedSlugs: [
       "spam-blocker",
       "ai-moderation-challenge",
+      "wordfilter-challenge",
       "captcha-canvas-challenge",
       "flags-challenge",
     ],
@@ -729,6 +779,26 @@ export const APPS: AppData[] = [
       "originality",
       "5chan",
     ],
+  },
+  {
+    slug: "wordfilter-challenge",
+    name: "Wordfilter Challenge",
+    tagline: "Community wordfilters enforced as a posting rule instead of a display filter.",
+    description:
+      "Wordfilter Challenge makes a community's word replacements binding. Publishing clients apply the replacements before signing, so the signed comment and its CID already contain the replacement text, and the community node rejects any publication that still contains a filtered word. It implements the <code>wordfilter/v1</code> contract, so a client written against that contract keeps working with other implementations.",
+    category: "anti-spam",
+    tags: ["Moderation", "Imageboard"],
+    icon: "filter",
+    githubRepo: "bitsocialnet/wordfilter-challenge",
+    links: [
+      {
+        label: "@bitsocial/wordfilter-challenge",
+        url: "https://www.npmjs.com/package/@bitsocial/wordfilter-challenge",
+        kind: "package",
+      },
+    ],
+    relatedSlugs: ["r9k-challenge", "ai-moderation-challenge", "spam-blocker", "5chan"],
+    searchTerms: ["wordfilter", "word filter", "replacements", "imageboard", "5chan", "censor"],
   },
   {
     slug: "captcha-canvas-challenge",
@@ -837,8 +907,13 @@ export const APPS: AppData[] = [
         url: "https://www.npmjs.com/package/@bitsocial/bitsocial-cli",
         kind: "package",
       },
+      {
+        label: "ghcr.io/bitsocialnet/bitsocial-cli",
+        url: "https://github.com/bitsocialnet/bitsocial-cli/pkgs/container/bitsocial-cli",
+        kind: "package",
+      },
     ],
-    relatedSlugs: ["bitsocial-seeder", "5chan-board-manager"],
+    relatedSlugs: ["bitsocial-seeder", "5chan-board-manager", "bitsocial-indexer"],
     searchTerms: ["terminal", "command line", "automation"],
   },
   {
@@ -887,6 +962,63 @@ export const APPS: AppData[] = [
     searchTerms: ["provider", "pubsub", "relay", "docker", "kubo", "ipfs", "vps", "routing"],
   },
   {
+    slug: "bitsocial-indexer",
+    name: "Bitsocial Indexer",
+    tagline: "Self-hostable crawler, search index, and web UI for Bitsocial communities.",
+    description:
+      "Bitsocial Indexer connects to a Bitsocial CLI daemon over RPC, indexes the communities an operator configures into a local SQLite database, and serves them through a REST and full-text search API with an optional server-rendered web UI. It ships empty: the operator decides what gets indexed.",
+    category: "tools",
+    tags: ["Search", "Operator"],
+    icon: "search",
+    githubRepo: "bitsocialnet/bitsocial-indexer",
+    links: [
+      { label: "Open web app", url: "https://5archive.org", kind: "launch", platform: "web" },
+    ],
+    relatedSlugs: ["bitsocial-cli", "bitsocial-seeder", "5chan", "seedit"],
+    searchTerms: ["indexer", "search", "crawler", "archive", "sqlite", "5archive", "self-hosted"],
+  },
+  {
+    slug: "bitsocial-previewer",
+    name: "Bitsocial Previewer",
+    tagline: "Link-preview and redirect server that renders share cards for Bitsocial posts.",
+    description:
+      "Bitsocial Previewer renders OpenGraph and Twitter cards when a post link is shared on other platforms, then redirects real browsers into the app. One instance is multi-tenant by hostname, so a single deployment and TLS setup covers every client and mirror domain.",
+    category: "tools",
+    tags: ["Operator", "Mirrors"],
+    icon: "link-2",
+    githubRepo: "bitsocialnet/bitsocial-previewer",
+    links: [
+      {
+        label: "ghcr.io/bitsocialnet/bitsocial-previewer",
+        url: "https://github.com/bitsocialnet/bitsocial-previewer/pkgs/container/bitsocial-previewer",
+        kind: "package",
+      },
+    ],
+    relatedSlugs: ["5chan", "seedit", "bitsocial-seeder"],
+    searchTerms: ["preview", "opengraph", "share", "redirect", "docker", "embed", "twitter"],
+  },
+  {
+    slug: "challenge-composer",
+    name: "Challenge Composer",
+    tagline: "Offline-first editor for a community's anti-spam challenge settings.",
+    description:
+      "Challenge Composer visualizes and edits the <code>challenges</code> array of a Bitsocial community's settings, then exports a ready-to-run CLI script. It ships as a single self-contained HTML file that makes no outward requests at runtime, so it can be opened straight from disk or a USB stick.",
+    category: "tools",
+    tags: ["Operator", "Moderation"],
+    icon: "blocks",
+    githubRepo: "bitsocialnet/challenge-composer",
+    links: [
+      {
+        label: "Open web app",
+        url: "https://bitsocialnet.github.io/challenge-composer/",
+        kind: "launch",
+        platform: "web",
+      },
+    ],
+    relatedSlugs: ["bitsocial-cli", "mintpass", "captcha-canvas-challenge", "voucher-challenge"],
+    searchTerms: ["challenges", "settings", "editor", "composer", "offline", "anti-spam"],
+  },
+  {
     slug: "telegram-bots",
     name: "Bitsocial Telegram Bots",
     tagline: "Feed bots that relay new Bitsocial posts into Telegram channels or groups.",
@@ -897,8 +1029,34 @@ export const APPS: AppData[] = [
     icon: "send",
     githubRepo: "bitsocialnet/bitsocial-telegram-bots",
     links: [],
-    relatedSlugs: ["5chan", "seedit", "bitsocial-cli"],
+    relatedSlugs: ["5chan", "seedit", "bitsocial-github-alerts", "bitsocial-cli"],
     searchTerms: ["telegram", "bots", "feeds", "5chan", "automation"],
+  },
+  {
+    slug: "bitsocial-github-alerts",
+    name: "Bitsocial GitHub Alerts",
+    tagline: "Telegram bot that posts compact GitHub activity for Bitsocial repositories.",
+    description:
+      "Bitsocial GitHub Alerts forwards pushes, releases, issues, and pull requests from GitHub into any Telegram chat, group, or forum topic. The Bitsocial team runs it for its own repositories, and the container image is public so anyone can self-host it for theirs.",
+    category: "tools",
+    tags: ["Telegram", "Bots", "Automation"],
+    icon: "bell",
+    githubRepo: "bitsocialnet/bitsocial-github-alerts",
+    links: [
+      {
+        label: "Open Telegram bot",
+        url: "https://t.me/bitsocial_github_alerts_bot",
+        kind: "launch",
+        platform: "web",
+      },
+      {
+        label: "ghcr.io/bitsocialnet/bitsocial-github-alerts",
+        url: "https://github.com/bitsocialnet/bitsocial-github-alerts/pkgs/container/bitsocial-github-alerts",
+        kind: "package",
+      },
+    ],
+    relatedSlugs: ["telegram-bots", "bitsocial-cli"],
+    searchTerms: ["github", "alerts", "telegram", "notifications", "releases", "webhook"],
   },
   {
     slug: "5chan-board-manager",
@@ -910,8 +1068,14 @@ export const APPS: AppData[] = [
     tags: ["Board admin", "CLI"],
     icon: "clipboard",
     githubRepo: "bitsocialnet/5chan-board-manager",
-    links: [],
-    relatedSlugs: ["5chan", "bitsocial-cli"],
+    links: [
+      {
+        label: "ghcr.io/bitsocialnet/5chan-board-manager",
+        url: "https://github.com/bitsocialnet/5chan-board-manager/pkgs/container/5chan-board-manager",
+        kind: "package",
+      },
+    ],
+    relatedSlugs: ["5chan", "bitsocial-cli", "challenge-composer"],
     searchTerms: ["boards", "moderation", "admin"],
   },
 ];
