@@ -112,7 +112,7 @@ function ExternalLinkPill({ href, label, labelKey, icon }: TeamLink) {
       rel="noopener noreferrer"
       aria-label={resolvedLabel}
       title={resolvedLabel}
-      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/70 text-muted-foreground transition-colors hover:text-foreground"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/70 text-muted-foreground transition-colors hover:border-blue-glow hover:text-foreground"
     >
       {icon}
     </a>
