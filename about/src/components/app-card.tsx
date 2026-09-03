@@ -68,7 +68,7 @@ export default function AppCard({
 }: AppCardProps) {
   const { t } = useTranslation();
   const hasCryptoWalletProvider = useHasCryptoWalletProvider();
-  const category = getCategoryBySlug(app.category);
+  const categories = app.categories.flatMap((slug) => getCategoryBySlug(slug) ?? []);
   const mirrors = filterCryptoWalletGatedLinks(getMirrorLinks(app), hasCryptoWalletProvider);
   const platformTags = getAppPlatforms(app);
   const primaryLinks = getPrimaryLinks(app, preferredPlatform ?? undefined);
@@ -138,8 +138,9 @@ export default function AppCard({
       ) : null}
 
       <div className="flex flex-wrap gap-2">
-        {category ? (
+        {categories.map((category) => (
           <AppTagPill
+            key={category.slug}
             active={activeCategory === category.slug}
             disabled={isAtFilterCap && !activeCategory}
             href={
@@ -152,7 +153,7 @@ export default function AppCard({
             label={getCategoryLabel(category, t)}
             onClick={onCategorySelect ? () => onCategorySelect(category.slug) : undefined}
           />
-        ) : null}
+        ))}
         {app.tags.map((tag) => {
           const tagIsActive = tagsMatchFilter(activeTags, tag);
           return (

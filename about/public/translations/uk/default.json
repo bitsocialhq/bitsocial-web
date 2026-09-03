@@ -531,8 +531,7 @@
         "ai": "ШІ",
         "antiRepost": "Антирепост",
         "referenceClient": "Еталонний клієнт",
-        "search": "Пошук",
-        "identity": "Ідентичність"
+        "search": "Пошук"
       },
       "linkLabels": {
         "androidApk": "APK для Android",

@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Klien referensi",
-        "search": "Pencarian",
-        "identity": "Identitas"
+        "search": "Pencarian"
       },
       "linkLabels": {
         "androidApk": "APK Android",

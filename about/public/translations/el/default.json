@@ -531,8 +531,7 @@
         "ai": "ΤΝ",
         "antiRepost": "Κατά των αναδημοσιεύσεων",
         "referenceClient": "Πελάτης αναφοράς",
-        "search": "Αναζήτηση",
-        "identity": "Ταυτότητα"
+        "search": "Αναζήτηση"
       },
       "linkLabels": {
         "androidApk": "APK για Android",

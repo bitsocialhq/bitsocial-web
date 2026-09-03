@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "재게시 방지",
         "referenceClient": "레퍼런스 클라이언트",
-        "search": "검색",
-        "identity": "신원"
+        "search": "검색"
       },
       "linkLabels": {
         "androidApk": "Android APK",

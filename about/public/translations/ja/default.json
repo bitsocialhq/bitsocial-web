@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "再投稿防止",
         "referenceClient": "リファレンスクライアント",
-        "search": "検索",
-        "identity": "身分"
+        "search": "検索"
       },
       "linkLabels": {
         "androidApk": "Android APK",

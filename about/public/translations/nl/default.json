@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Referentieclient",
-        "search": "Zoeken",
-        "identity": "Identiteit"
+        "search": "Zoeken"
       },
       "linkLabels": {
         "androidApk": "Android-APK",

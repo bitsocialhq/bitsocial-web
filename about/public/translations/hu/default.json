@@ -531,8 +531,7 @@
         "ai": "MI",
         "antiRepost": "Újraküldés elleni",
         "referenceClient": "Referenciakliens",
-        "search": "Keresés",
-        "identity": "Identitás"
+        "search": "Keresés"
       },
       "linkLabels": {
         "androidApk": "Android APK",

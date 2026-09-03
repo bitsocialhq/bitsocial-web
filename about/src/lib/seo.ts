@@ -2,6 +2,7 @@ import {
   APPS,
   getAppBySlug,
   getAppPlatforms,
+  getPrimaryCategorySlug,
   type AppCategorySlug,
   type AppData,
 } from "./apps-data";
@@ -470,7 +471,7 @@ function buildSoftwareApplicationSchema(app: AppData): StructuredDataValue {
     description: app.description,
     url: canonicalUrl,
     image: toAbsoluteUrl(app.logoSrc ?? "/logo.png"),
-    applicationCategory: getApplicationCategory(app.category),
+    applicationCategory: getApplicationCategory(getPrimaryCategorySlug(app)),
     operatingSystem: getOperatingSystem(app),
     keywords: app.tags.join(", "),
     author: {
@@ -781,7 +782,7 @@ function renderAppDetailStaticBody(app: AppData) {
     <main class="pt-14">
       <a href="/projects" class="text-sm text-muted-foreground transition-colors hover:text-foreground">All projects</a>
       <section class="mt-6 max-w-4xl rounded-[2rem] border border-border/60 bg-background/80 p-6 md:p-8">
-        <p class="text-xs font-display uppercase tracking-[0.24em] text-foreground/45">${escapeHtml(getApplicationCategory(app.category))}</p>
+        <p class="text-xs font-display uppercase tracking-[0.24em] text-foreground/45">${escapeHtml(getApplicationCategory(getPrimaryCategorySlug(app)))}</p>
         <h1 class="mt-4 text-4xl font-display font-semibold leading-[1.05] text-balance text-foreground md:text-5xl">${escapeHtml(app.name)}</h1>
         <p class="mt-3 text-lg font-medium leading-7 text-foreground/70">${escapeHtml(app.tagline)}</p>
         <p class="mt-5 max-w-3xl leading-8 text-muted-foreground">${escapeHtml(app.description)}</p>

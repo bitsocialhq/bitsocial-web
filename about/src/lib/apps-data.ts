@@ -83,7 +83,8 @@ export interface AppData {
   name: string;
   tagline: string;
   description: string;
-  category: AppCategorySlug;
+  /** Non-empty; the first entry is the primary category used for SEO and breadcrumbs. */
+  categories: AppCategorySlug[];
   tags: string[];
   icon: AppIconKey;
   logoSrc?: string;
@@ -231,7 +232,6 @@ const APP_TAG_TRANSLATION_KEYS: Record<string, string> = {
   Feeds: "apps.catalog.tags.feeds",
   Forums: "apps.catalog.tags.forums",
   "Human checks": "apps.catalog.tags.humanChecks",
-  Identity: "apps.catalog.tags.identity",
   Imageboard: "apps.catalog.tags.imageboard",
   Invites: "apps.catalog.tags.invites",
   Mirrors: "apps.catalog.tags.mirrors",
@@ -476,7 +476,7 @@ export const APPS: AppData[] = [
     tagline: "Decentralized imageboards with direct web, APK, and desktop downloads.",
     description:
       "5chan is the first public Bitsocial client. It recreates the anonymous imageboard flow on a peer-to-peer network: boards, threads, image posting, community moderation, and multiple public mirrors without relying on a central server.",
-    category: "apps",
+    categories: ["apps"],
     tags: ["Imageboard", "Mirrors", "Downloadable"],
     icon: "image",
     logoSrc: "https://5chan.app/favicon.ico?variant=nsfw",
@@ -565,7 +565,7 @@ export const APPS: AppData[] = [
     tagline: "Forum-style Bitsocial client with web, APK, and desktop builds.",
     description:
       "Seedit brings Reddit-style discussion to Bitsocial with threads, identities, community management, and multiple distribution paths. It is the fastest way to try the forum side of the network from a browser, Android phone, or desktop app.",
-    category: "apps",
+    categories: ["apps"],
     tags: ["Forums", "Downloadable"],
     icon: "message-square",
     logoSrc: "https://www.seedit.app/favicon.ico",
@@ -661,7 +661,7 @@ export const APPS: AppData[] = [
     tagline: "Bare-bones reference client where every view is a thin wrapper over one hook.",
     description:
       "bitbones is the smallest useful surface over the Bitsocial React hooks: almost no styling, no product opinions, and a single hook behind every view. It is the fastest place to reproduce a bug or try a hooks change against real communities, and its default feed can be switched between the Seedit and 5chan community lists.",
-    category: "apps",
+    categories: ["apps"],
     tags: ["Reference client", "Forums"],
     icon: "message-square",
     logoSrc: "https://bitbones.app/favicon.ico",
@@ -680,7 +680,7 @@ export const APPS: AppData[] = [
     tagline: "Peer-to-peer hub for finding, discussing, and downloading open AI models.",
     description:
       "HuggingSocial is a model hub that no company owns. Hubs are Bitsocial communities controlled by cryptographic keys, each model listing is a signed post with a model card, checksums, and download sources, and the weights move over BitTorrent or plain HTTP mirrors and are verified on your machine. The client is in design and early development; the website takes waitlist sign-ups.",
-    category: "apps",
+    categories: ["apps"],
     tags: ["AI", "Forums"],
     icon: "message-square",
     logoSrc: "/app-logos/huggingsocial.svg",
@@ -707,7 +707,7 @@ export const APPS: AppData[] = [
     tagline: "NFT-backed access control for communities that need stronger anti-spam gates.",
     description:
       "Mintpass is a flexible authentication layer for Bitsocial communities. It lets moderators mix NFT ownership, verification flows, and custom challenge modules without pushing everyone onto a central login system.",
-    category: "identity",
+    categories: ["identity"],
     tags: ["Verification", "Access control"],
     icon: "ticket",
     logoSrc: "https://mintpass.org/favicon.ico",
@@ -734,7 +734,7 @@ export const APPS: AppData[] = [
     tagline: "OpenAI-compatible moderation checks against each community's rules.",
     description:
       "AI Moderation Challenge evaluates Bitsocial comment content against <code>community.rules</code> with an OpenAI-compatible model endpoint. Communities can route risky posts to review while keeping provider keys and prompts in private node settings.",
-    category: "anti-spam",
+    categories: ["anti-spam"],
     tags: ["AI", "Moderation", "Risk scores"],
     icon: "sparkles",
     githubRepo: "bitsocialnet/ai-moderation-challenge",
@@ -759,8 +759,8 @@ export const APPS: AppData[] = [
     tagline: "Centralized risk scoring layer for filtering abusive publications.",
     description:
       "Spam Blocker evaluates publications and returns a risk score that communities can combine with their own moderation logic. Its hosted service also links signer keys first seen from the same IP, so a user who keeps generating new accounts to dodge a community ban or manufacture a conversation sees their risk score rise, while a few signers stay allowed for legitimate multi-device use.",
-    category: "anti-spam",
-    tags: ["Risk scores", "Moderation", "Identity"],
+    categories: ["anti-spam", "identity"],
+    tags: ["Risk scores", "Moderation"],
     icon: "shield",
     githubRepo: "bitsocialnet/spam-blocker",
     links: [
@@ -784,7 +784,7 @@ export const APPS: AppData[] = [
     tagline: "Robot9000-style originality gate for communities that want anti-repost posting UX.",
     description:
       "R9K Challenge runs on a Bitsocial community node and compares normalized post text against the owner node's local comments database. It gives communities a <robot9000>Robot9000</robot9000>-style posting experience without using AI: exact reposts fail before acceptance, backlinks are ignored, repeated failures trigger escalating temporary bans, and accepted-text hashes stay in private local state instead of storing raw post text.",
-    category: "anti-spam",
+    categories: ["anti-spam"],
     tags: ["Anti-repost", "Moderation"],
     icon: "bot",
     githubRepo: "bitsocialnet/r9k-challenge",
@@ -818,7 +818,7 @@ export const APPS: AppData[] = [
     tagline: "Community wordfilters enforced as a posting rule instead of a display filter.",
     description:
       "Wordfilter Challenge makes a community's word replacements binding. Publishing clients apply the replacements before signing, so the signed comment and its CID already contain the replacement text, and the community node rejects any publication that still contains a filtered word. It implements the <code>wordfilter/v1</code> contract, so a client written against that contract keeps working with other implementations.",
-    category: "anti-spam",
+    categories: ["anti-spam"],
     tags: ["Moderation", "Imageboard"],
     icon: "filter",
     githubRepo: "bitsocialnet/wordfilter-challenge",
@@ -838,7 +838,7 @@ export const APPS: AppData[] = [
     tagline: "Custom image captchas for communities that want human verification.",
     description:
       "Captcha Canvas Challenge generates visual captchas that communities can plug into their own publishing flow. It is a lightweight option for communities that want direct human checks without giving up self-hosted moderation.",
-    category: "anti-spam",
+    categories: ["anti-spam"],
     tags: ["Captcha", "Human checks"],
     icon: "image",
     githubRepo: "bitsocialnet/captcha-canvas-challenge",
@@ -864,7 +864,7 @@ export const APPS: AppData[] = [
     tagline: "Invite-style voucher codes for communities that prefer controlled growth.",
     description:
       "Voucher Challenge lets moderators distribute trusted voucher codes that unlock publishing without a global identity provider. It is a good fit for invite-driven communities, niche boards, and gradual rollouts.",
-    category: "identity",
+    categories: ["identity"],
     tags: ["Invites", "Access control"],
     icon: "ticket",
     githubRepo: "bitsocialnet/voucher-challenge",
@@ -889,7 +889,7 @@ export const APPS: AppData[] = [
     tagline: "On-chain gating for communities that want token or contract checks.",
     description:
       "EVM Contract Call verifies publications by calling an EVM contract before a post is accepted. It lets communities build token gates, staking rules, or other on-chain checks into their moderation flow.",
-    category: "identity",
+    categories: ["identity"],
     tags: ["On-chain", "Contracts"],
     icon: "link-2",
     githubRepo: "bitsocialnet/evm-contract-challenge",
@@ -909,7 +909,7 @@ export const APPS: AppData[] = [
     tagline: "Verified flag issuer challenge for country and board-specific flair.",
     description:
       "Flags Challenge runs on a Bitsocial community node and verifies signed flag assertions from a configurable issuer service. The first bundled profile targets 5chan, covering country flags, /pol/ memeflags, and /mlp/ pony flags, while keeping the same pattern reusable for any client that runs its own issuer and namespace.",
-    category: "identity",
+    categories: ["identity"],
     tags: ["Verification", "Imageboard"],
     icon: "flag",
     githubRepo: "bitsocialnet/flags-challenge",
@@ -929,7 +929,7 @@ export const APPS: AppData[] = [
     tagline: "Command-line control for nodes, communities, and automation workflows.",
     description:
       "Bitsocial CLI is the official terminal interface for the protocol. Use it to manage nodes, publish content, start a WebSocket JSON-RPC server for programmatic control and code automation, automate admin flows, and work directly against Bitsocial primitives without a GUI client.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["CLI", "Automation"],
     icon: "terminal",
     githubRepo: "bitsocialnet/bitsocial-cli",
@@ -954,7 +954,7 @@ export const APPS: AppData[] = [
     tagline: "Public seeder for Bitsocial communities, packaged for Docker and npm.",
     description:
       "Bitsocial Seeder pins community first pages, post-update CIDs, and pubsub topic routing through a Bitsocial daemon. It reuses an already-running local daemon when one is reachable or starts the bundled bitsocial-cli daemon automatically, and ships as both a Docker image for unattended VPS deployments and an npm package for Node-first operators.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Automation"],
     icon: "share-2",
     githubRepo: "bitsocialnet/bitsocial-seeder",
@@ -979,7 +979,7 @@ export const APPS: AppData[] = [
     tagline: "Fallback pubsub relay and routing provider for Bitsocial operators.",
     description:
       "Pubsub Provider runs a bundled Kubo node with Bitsocial-compatible pubsub, gateway, name-provider, and delegated HTTP routing endpoints. It is useful as a fallback path for clients that disable pure browser P2P, and it defaults to swarm port 4002 so it can run beside bitsocial-seeder on the same host.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Pubsub relay", "Operator"],
     icon: "share-2",
     githubRepo: "bitsocialnet/pubsub-provider",
@@ -999,7 +999,7 @@ export const APPS: AppData[] = [
     tagline: "Self-hostable crawler, search index, and web UI for Bitsocial communities.",
     description:
       "Bitsocial Indexer connects to a Bitsocial CLI daemon over RPC, indexes the communities an operator configures into a local SQLite database, and serves them through a REST and full-text search API with an optional server-rendered web UI. It ships empty: the operator decides what gets indexed.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Search", "Operator"],
     icon: "search",
     githubRepo: "bitsocialnet/bitsocial-indexer",
@@ -1015,7 +1015,7 @@ export const APPS: AppData[] = [
     tagline: "Link-preview and redirect server that renders share cards for Bitsocial posts.",
     description:
       "Bitsocial Previewer renders OpenGraph and Twitter cards when a post link is shared on other platforms, then redirects real browsers into the app. One instance is multi-tenant by hostname, so a single deployment and TLS setup covers every client and mirror domain.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Operator", "Mirrors"],
     icon: "link-2",
     githubRepo: "bitsocialnet/bitsocial-previewer",
@@ -1035,7 +1035,7 @@ export const APPS: AppData[] = [
     tagline: "Offline-first editor for a community's anti-spam challenge settings.",
     description:
       "Challenge Composer visualizes and edits the <code>challenges</code> array of a Bitsocial community's settings, then exports a ready-to-run CLI script. It ships as a single self-contained HTML file that makes no outward requests at runtime, so it can be opened straight from disk or a USB stick.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Operator", "Moderation"],
     icon: "blocks",
     githubRepo: "bitsocialnet/challenge-composer",
@@ -1056,7 +1056,7 @@ export const APPS: AppData[] = [
     tagline: "Feed bots that relay new Bitsocial posts into Telegram channels or groups.",
     description:
       "Bitsocial Telegram Bots monitor client community lists and forward new posts into Telegram destinations with inline links back to Bitsocial clients. The active bot covers 5chan feeds today, with the repo structured to add more client-specific bots over time.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Telegram", "Bots", "Feeds"],
     icon: "send",
     githubRepo: "bitsocialnet/bitsocial-telegram-bots",
@@ -1070,7 +1070,7 @@ export const APPS: AppData[] = [
     tagline: "Telegram bot that posts compact GitHub activity for Bitsocial repositories.",
     description:
       "Bitsocial GitHub Alerts forwards pushes, releases, issues, and pull requests from GitHub into any Telegram chat, group, or forum topic. The Bitsocial team runs it for its own repositories, and the container image is public so anyone can self-host it for theirs.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Telegram", "Bots", "Automation"],
     icon: "bell",
     githubRepo: "bitsocialnet/bitsocial-github-alerts",
@@ -1096,7 +1096,7 @@ export const APPS: AppData[] = [
     tagline: "Board administration tooling for custom 5chan communities.",
     description:
       "5chan Board Manager connects to Bitsocial CLI to help administrators create, configure, and moderate custom imageboard boards. It is the utility layer for board owners who want operational control.",
-    category: "tools",
+    categories: ["tools"],
     tags: ["Board admin", "CLI"],
     icon: "clipboard",
     githubRepo: "bitsocialnet/5chan-board-manager",
@@ -1116,8 +1116,16 @@ export function getAppBySlug(slug: string): AppData | undefined {
   return APPS.find((app) => app.slug === slug);
 }
 
+export function getPrimaryCategorySlug(app: AppData): AppCategorySlug {
+  return app.categories[0];
+}
+
+export function appHasCategory(app: AppData, category: AppCategorySlug): boolean {
+  return app.categories.includes(category);
+}
+
 export function getAppsByCategory(category: AppCategorySlug): AppData[] {
-  return APPS.filter((app) => app.category === category);
+  return APPS.filter((app) => appHasCategory(app, category));
 }
 
 export function getCategoryBySlug(slug: AppCategorySlug): CategoryData | undefined {
@@ -1173,12 +1181,14 @@ export function appMatchesSearch(app: AppData, query: string, t?: TFunction): bo
 
   if (!normalizedQuery) return true;
 
-  const category = getCategoryBySlug(app.category);
+  const categories = app.categories.flatMap((slug) => getCategoryBySlug(slug) ?? []);
   const localizedTagline = t ? getAppTagline(app, t) : app.tagline;
   const localizedDescription = t ? getAppDescription(app, t) : app.description;
-  const localizedCategoryLabel = t && category ? getCategoryLabel(category, t) : category?.label;
-  const localizedCategoryDescription =
-    t && category ? getCategoryDescription(category, t) : category?.description;
+  const localizedCategoryTerms = categories.flatMap((category) =>
+    t
+      ? [getCategoryLabel(category, t), getCategoryDescription(category, t)]
+      : [category.label, category.description],
+  );
   const localizedTags = t ? app.tags.map((tag) => getAppTagLabel(tag, t)) : app.tags;
   const localizedLinkLabels = t ? app.links.map((link) => getAppLinkLabel(link, t)) : [];
   const localizedPlatformTerms = t
@@ -1195,9 +1205,8 @@ export function appMatchesSearch(app: AppData, query: string, t?: TFunction): bo
     localizedTagline,
     app.description,
     localizedDescription,
-    app.category,
-    localizedCategoryLabel,
-    localizedCategoryDescription,
+    ...app.categories,
+    ...localizedCategoryTerms,
     ...app.tags,
     ...localizedTags,
     ...app.links.map((link) => link.label),

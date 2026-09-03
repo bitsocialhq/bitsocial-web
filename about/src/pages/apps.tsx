@@ -10,22 +10,23 @@ import CategoryFilter from "@/components/category-filter";
 import Footer from "@/components/footer";
 import Topbar from "@/components/topbar";
 import {
-  APPS,
-  CATEGORIES,
-  PLATFORM_ORDER,
+  type AppCategorySlug,
+  appHasCategory,
   appMatchesPlatform,
   appMatchesSearch,
   appMatchesTag,
+  type AppPlatformSlug,
+  APPS,
+  CATEGORIES,
   getAppTagLabel,
   getCategoryDescription,
   getCategoryLabel,
   getPlatformShortLabel,
   parseTagFilter,
+  PLATFORM_ORDER,
   serializeTagFilter,
   tagsMatchFilter,
   toggleTagInList,
-  type AppCategorySlug,
-  type AppPlatformSlug,
 } from "@/lib/apps-data";
 import { SUBMIT_APP_URL } from "@/lib/apps-urls";
 import { useGraphicsMode } from "@/lib/graphics-mode";
@@ -117,14 +118,14 @@ export default function Apps() {
     ? searchFilteredApps.filter((app) => appMatchesPlatform(app, activePlatform))
     : searchFilteredApps;
   const appsForPlatformCounts = activeCategory
-    ? searchFilteredApps.filter((app) => app.category === activeCategory)
+    ? searchFilteredApps.filter((app) => appHasCategory(app, activeCategory))
     : searchFilteredApps;
 
   const categorySummaries = CATEGORIES.map((category) => ({
     ...category,
     label: getCategoryLabel(category, t),
     description: getCategoryDescription(category, t),
-    count: appsForCategoryCounts.filter((app) => app.category === category.slug).length,
+    count: appsForCategoryCounts.filter((app) => appHasCategory(app, category.slug)).length,
   })).filter((category) => category.count > 0 || category.slug === activeCategory);
 
   const platformSummaries = PLATFORM_ORDER.map((platform) => ({
@@ -133,7 +134,7 @@ export default function Apps() {
   })).filter((platform) => platform.count > 0 || platform.slug === activePlatform);
 
   const filteredApps = searchFilteredApps
-    .filter((app) => (activeCategory ? app.category === activeCategory : true))
+    .filter((app) => (activeCategory ? appHasCategory(app, activeCategory) : true))
     .filter((app) => (activePlatform ? appMatchesPlatform(app, activePlatform) : true))
     .sort((left, right) => {
       if (left.featured !== right.featured) {

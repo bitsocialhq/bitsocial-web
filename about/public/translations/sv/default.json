@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Referensklient",
-        "search": "Sökning",
-        "identity": "Identitet"
+        "search": "Sökning"
       },
       "linkLabels": {
         "androidApk": "Android APK",

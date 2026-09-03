@@ -531,8 +531,7 @@
         "ai": "IA",
         "antiRepost": "Antirepublicació",
         "referenceClient": "Client de referència",
-        "search": "Cerca",
-        "identity": "Identitat"
+        "search": "Cerca"
       },
       "linkLabels": {
         "androidApk": "APK d'Android",

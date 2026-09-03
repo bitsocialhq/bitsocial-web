@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "Uudelleenjulkaisun esto",
         "referenceClient": "Viiteasiakas",
-        "search": "Haku",
-        "identity": "Identiteetti"
+        "search": "Haku"
       },
       "linkLabels": {
         "androidApk": "Android APK",

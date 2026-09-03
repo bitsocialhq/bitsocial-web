@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "Kundër ripostimeve",
         "referenceClient": "Klient referues",
-        "search": "Kërkim",
-        "identity": "Identitet"
+        "search": "Kërkim"
       },
       "linkLabels": {
         "androidApk": "APK për Android",

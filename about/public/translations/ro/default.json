@@ -531,8 +531,7 @@
         "ai": "IA",
         "antiRepost": "Anti-repost",
         "referenceClient": "Client de referință",
-        "search": "Căutare",
-        "identity": "Identitate"
+        "search": "Căutare"
       },
       "linkLabels": {
         "androidApk": "APK Android",

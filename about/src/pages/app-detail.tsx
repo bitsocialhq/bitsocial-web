@@ -68,7 +68,7 @@ export default function AppDetail() {
     );
   }
 
-  const category = getCategoryBySlug(app.category);
+  const categories = app.categories.flatMap((slug) => getCategoryBySlug(slug) ?? []);
   const platformTags = getAppPlatforms(app);
   const primaryLinks = getPrimaryLinks(app);
   const mirrors = filterCryptoWalletGatedLinks(getMirrorLinks(app), hasCryptoWalletProvider);
@@ -104,11 +104,14 @@ export default function AppDetail() {
 
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    {category ? (
-                      <span className="rounded-full border border-border/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/60">
+                    {categories.map((category) => (
+                      <span
+                        key={category.slug}
+                        className="rounded-full border border-border/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/60"
+                      >
                         {getCategoryLabel(category, t)}
                       </span>
-                    ) : null}
+                    ))}
                     {platformTags.map((platform) => (
                       <span
                         key={platform}

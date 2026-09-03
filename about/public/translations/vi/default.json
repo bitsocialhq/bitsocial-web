@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "Chống đăng lại",
         "referenceClient": "Client tham chiếu",
-        "search": "Tìm kiếm",
-        "identity": "Danh tính"
+        "search": "Tìm kiếm"
       },
       "linkLabels": {
         "androidApk": "APK Android",

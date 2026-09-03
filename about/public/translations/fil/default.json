@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Reference client",
-        "search": "Paghahanap",
-        "identity": "Pagkakakilanlan"
+        "search": "Paghahanap"
       },
       "linkLabels": {
         "androidApk": "APK ng Android",

@@ -737,8 +737,7 @@
         "verification": "Verification",
         "antiRepost": "Anti-repost",
         "referenceClient": "Reference client",
-        "search": "Search",
-        "identity": "Identity"
+        "search": "Search"
       },
       "linkLabels": {
         "androidApk": "Android APK",

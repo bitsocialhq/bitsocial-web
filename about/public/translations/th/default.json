@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "ป้องกันการรีโพสต์",
         "referenceClient": "ไคลเอ็นต์อ้างอิง",
-        "search": "ค้นหา",
-        "identity": "ตัวตน"
+        "search": "ค้นหา"
       },
       "linkLabels": {
         "androidApk": "APK สำหรับ Android",

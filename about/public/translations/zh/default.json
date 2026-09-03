@@ -531,8 +531,7 @@
         "ai": "AI",
         "antiRepost": "反重复发布",
         "referenceClient": "参考客户端",
-        "search": "搜索",
-        "identity": "身份"
+        "search": "搜索"
       },
       "linkLabels": {
         "androidApk": "Android APK",

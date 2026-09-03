@@ -531,8 +531,7 @@
         "ai": "IA",
         "antiRepost": "Anti-repost",
         "referenceClient": "Cliente de referencia",
-        "search": "Búsqueda",
-        "identity": "Identidad"
+        "search": "Búsqueda"
       },
       "linkLabels": {
         "androidApk": "APK de Android",
