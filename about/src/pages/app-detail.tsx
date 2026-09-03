@@ -246,7 +246,7 @@ function getStatusClassName(status: "ready" | "experimental") {
   return cn(
     "text-micro-fluid rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.18em]",
     status === "ready"
-      ? "border-blue-core/20 text-blue-core dark:border-blue-core/55"
+      ? "border-emerald-500/30 text-emerald-700 dark:border-emerald-400/35 dark:text-emerald-200"
       : "border-amber-500/25 text-amber-700 dark:border-amber-400/35 dark:text-amber-200",
   );
 }

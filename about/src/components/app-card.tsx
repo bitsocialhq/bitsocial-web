@@ -297,9 +297,9 @@ const descriptionRichTextComponents = {
 
 function getStatusClassName(status: NonNullable<AppData["status"]>) {
   return cn(
-    "text-micro-fluid rounded-full border px-2.5 py-1 font-semibold uppercase tracking-[0.18em]",
+    "rounded-full border px-2 py-0.5 text-[0.625rem] font-medium uppercase leading-4 tracking-[0.14em]",
     status === "ready"
-      ? "border-blue-core/20 text-blue-core dark:border-blue-core/55"
+      ? "border-emerald-500/30 text-emerald-700 dark:border-emerald-400/35 dark:text-emerald-200"
       : "border-amber-500/25 text-amber-700 dark:border-amber-400/35 dark:text-amber-200",
   );
 }
