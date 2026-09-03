@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Referentieclient",
-        "search": "Zoeken"
+        "search": "Zoeken",
+        "identity": "Identiteit"
       },
       "linkLabels": {
         "androidApk": "Android-APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Gecentraliseerde risicoscorelaag voor het filteren van misbruikte publicaties.",
-          "description": "Spam Blocker beoordeelt publicaties en geeft een risicoscore terug die communities kunnen combineren met hun eigen moderatielogica. Het is handig wanneer je een pragmatische extra laag wilt voordat je meer aangepaste anti-spamregels bouwt."
+          "description": "Spam Blocker beoordeelt publicaties en retourneert een risicoscore die gemeenschappen kunnen combineren met hun eigen moderatielogica. De gehoste service koppelt ook ondertekeningssleutels die voor het eerst van hetzelfde IP-adres zijn gezien, zodat een gebruiker die voortdurend nieuwe accounts aanmaakt om een communityverbod te omzeilen of een gesprek te fabriceren, zijn risicoscore ziet stijgen, terwijl enkele ondertekenaars voor legitiem multi-device-gebruik toegestaan blijven."
         },
         "captcha-canvas-challenge": {
           "tagline": "Aangepaste afbeeldings-captcha's voor communities die menselijke verificatie willen.",

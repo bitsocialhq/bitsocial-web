@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Reference client",
-        "search": "Paghahanap"
+        "search": "Paghahanap",
+        "identity": "Pagkakakilanlan"
       },
       "linkLabels": {
         "androidApk": "APK ng Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Centralized na risk scoring layer para salain ang mapang-abusong publikasyon.",
-          "description": "Sinusuri ng Spam Blocker ang mga publikasyon at nagbabalik ng risk score na puwedeng iugnay ng mga komunidad sa sarili nilang moderation logic. Kapaki-pakinabang ito kapag gusto mo ng praktikal na dagdag na layer bago bumuo ng mas custom na anti-spam rules."
+          "description": "Sinusuri ng Spam Blocker ang mga publikasyon at nagbabalik ng risk score na maaaring gamitin ng mga komunidad na may kanilang sariling moderasyon logic. Ang naka-host na serbisyo nito ay nag-uugnay din ng mga signer keys na unang nakita mula sa parehong IP, kaya ang isang gumagamit na patuloy na lumilikha ng mga bagong account upang maiwasan ang ban ng komunidad o lumikha ng pag-uusap ay nakikita ang pagtaas ng kanilang risk score, habang ilang mga tagapirmang nananatiling pinapayagan para sa lehitimong multi-device na paggamit."
         },
         "captcha-canvas-challenge": {
           "tagline": "Custom na image captcha para sa mga komunidad na gusto ng human verification.",

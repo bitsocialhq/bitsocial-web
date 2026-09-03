@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Chống đăng lại",
         "referenceClient": "Client tham chiếu",
-        "search": "Tìm kiếm"
+        "search": "Tìm kiếm",
+        "identity": "Danh tính"
       },
       "linkLabels": {
         "androidApk": "APK Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Lớp chấm điểm rủi ro tập trung để lọc các publication gây hại.",
-          "description": "Spam Blocker đánh giá các publication và trả về risk score mà cộng đồng có thể kết hợp với logic moderation của riêng mình. Nó hữu ích khi bạn muốn thêm một lớp thực dụng trước khi xây dựng các quy tắc anti-spam custom hơn."
+          "description": "Spam Blocker đánh giá các bài đăng và trả về điểm rủi ro mà các cộng đồng có thể kết hợp với logic kiểm duyệt của riêng họ. Dịch vụ được lưu trữ của nó cũng liên kết các khóa ký được nhìn thấy lần đầu tiên từ cùng một IP, do đó người dùng tiếp tục tạo các tài khoản mới để tránh lệnh cấm cộng đồng hoặc tạo ra một cuộc trò chuyện sẽ thấy điểm rủi ro của họ tăng lên, trong khi một số ký hiệu vẫn được phép sử dụng hợp pháp trên nhiều thiết bị."
         },
         "captcha-canvas-challenge": {
           "tagline": "image captcha tùy chỉnh cho các cộng đồng muốn verification từ con người.",

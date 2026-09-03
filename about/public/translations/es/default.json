@@ -531,7 +531,8 @@
         "ai": "IA",
         "antiRepost": "Anti-repost",
         "referenceClient": "Cliente de referencia",
-        "search": "Búsqueda"
+        "search": "Búsqueda",
+        "identity": "Identidad"
       },
       "linkLabels": {
         "androidApk": "APK de Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Capa centralizada de puntuación de riesgo para filtrar publicaciones abusivas.",
-          "description": "Spam Blocker evalúa publicaciones y devuelve una puntuación de riesgo que las comunidades pueden combinar con su propia lógica de moderación. Es útil cuando quieres una capa extra práctica antes de crear reglas anti-spam más personalizadas."
+          "description": "Spam Blocker evalúa publicaciones y devuelve una puntuación de riesgo que las comunidades pueden combinar con su propia lógica de moderación. Su servicio alojado también vincula claves de firmantes detectadas por primera vez desde la misma IP, de modo que un usuario que sigue creando nuevas cuentas para evadir una prohibición comunitaria o fabricar una conversación ve aumentar su puntuación de riesgo, mientras que algunos pocos firmantes permanecen permitidos para uso legítimo multidispositivo."
         },
         "captcha-canvas-challenge": {
           "tagline": "CAPTCHA de imagen personalizadas para comunidades que quieren verificación humana.",

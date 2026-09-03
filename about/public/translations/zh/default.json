@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "反重复发布",
         "referenceClient": "参考客户端",
-        "search": "搜索"
+        "search": "搜索",
+        "identity": "身份"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "用于过滤 abusive publications 的集中式风险评分层。",
-          "description": "Spam Blocker 会评估 publications 并返回一个 risk score，社区可以把它和自己的 moderation logic 结合起来使用。当你想在构建更自定义的 anti-spam rules 之前先加一层实用的额外保护时，它很有用。"
+          "description": "Spam Blocker评估发布内容并返回风险评分，社区可以将其与自己的内容审核逻辑相结合。其托管服务还关联首次从相同IP地址看到的签名者密钥，因此一个不断创建新账户以躲避社区禁令或制造对话的用户会看到其风险评分上升，而少数签名者仍然被允许合法的多设备使用。"
         },
         "captcha-canvas-challenge": {
           "tagline": "面向希望进行人工 verification 的社区的自定义图片验证码。",

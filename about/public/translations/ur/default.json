@@ -531,7 +531,8 @@
         "ai": "ای آئی",
         "antiRepost": "دوبارہ پوسٹ روکنے والا",
         "referenceClient": "ریفرنس کلائنٹ",
-        "search": "تلاش"
+        "search": "تلاش",
+        "identity": "شناخت"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "abusive publications کو filter کرنے کے لیے centralized risk scoring layer۔",
-          "description": "Spam Blocker publications کا جائزہ لیتا ہے اور ایک risk score واپس کرتا ہے جسے communities اپنی moderation logic کے ساتھ ملا سکتی ہیں۔ جب آپ مزید custom anti-spam rules بنانے سے پہلے ایک practical اضافی layer چاہتے ہوں، یہ مفید ہے۔"
+          "description": "Spam Blocker اشاعتوں کا جائزہ لیتا ہے اور خطرے کا اسکور واپس کرتا ہے جو کمیونٹیز اپنی اپنی نگرانی کی منطق کے ساتھ یکجا کر سکتے ہیں۔ اس کی میزبانی والی سروس ایک ہی IP سے پہلے دیکھی گئی دستخط کی چابیوں کو بھی منسلک کرتی ہے، لہذا ایک صارف جو کمیونٹی پابندی سے بچنے یا بات چیت کی تیاری کے لیے نئے اکاؤنٹس بنانا جاری رکھتا ہے اپنے خطرے کا اسکور بڑھتے ہوئے دیکھتا ہے، جبکہ کچھ دستخط کنندگان قانونی متعدد آلات کے استعمال کے لیے اجازت باقی رہتے ہیں۔"
         },
         "captcha-canvas-challenge": {
           "tagline": "human verification چاہنے والی communities کے لیے custom image captchas۔",

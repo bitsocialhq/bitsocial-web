@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Anty-repost",
         "referenceClient": "Klient referencyjny",
-        "search": "Wyszukiwanie"
+        "search": "Wyszukiwanie",
+        "identity": "Tożsamość"
       },
       "linkLabels": {
         "androidApk": "APK na Androida",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Scentralizowana warstwa scoringu ryzyka do filtrowania nadużywanych publikacji.",
-          "description": "Spam Blocker ocenia publikacje i zwraca risk score, który społeczności mogą łączyć z własną logiką moderacji. Przydaje się, gdy chcesz pragmatycznej dodatkowej warstwy zanim zbudujesz bardziej niestandardowe reguły anti-spam."
+          "description": "Spam Blocker ocenia publikacje i zwraca wynik ryzyka, który społeczności mogą połączyć z własną logiką moderacji. Usługa hostowana również łączy klucze podpisu po raz pierwszy widoczne z tego samego adresu IP, więc użytkownik, który wciąż tworzy nowe konta, aby uniknąć zakazu społeczności lub wytworzenia rozmowy, widzi, że wynik ryzyka wzrasta, podczas gdy kilku podpisujących pozostaje dozwolonych dla legalnego użytku wielu urządzeń."
         },
         "captcha-canvas-challenge": {
           "tagline": "Niestandardowe image captcha dla społeczności, które chcą weryfikacji człowieka.",

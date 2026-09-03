@@ -531,7 +531,8 @@
         "ai": "MI",
         "antiRepost": "Újraküldés elleni",
         "referenceClient": "Referenciakliens",
-        "search": "Keresés"
+        "search": "Keresés",
+        "identity": "Identitás"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Központosított kockázati pontozási réteg a visszaélésszerű publikációk szűrésére.",
-          "description": "A Spam Blocker értékeli a publikációkat, és kockázati pontszámot ad vissza, amelyet a közösségek a saját moderálási logikájukkal kombinálhatnak. Hasznos, ha egy pragmatikus extra rétegre van szükséged, mielőtt még több egyedi anti-spam szabályt építenél."
+          "description": "A Spam Blocker kiértékeli a publikációkat és egy kockázati pontszámot ad vissza, amelyet a közösségek saját moderációs logikájukkal kombinálhatnak. Az üzemeltetett szolgáltatása az ugyanarról az IP-címről először látott aláíró kulcsokat is összekapcsolja, így az a felhasználó, aki folyamatosan új fiókokat hoz létre, hogy elkerülje a közösségi tilalmat vagy beszélgetést fabrikáljon, a kockázati pontszáma emelkedését látja, míg néhány aláíró marad megengedett az össze-, legális többeszköz-használatra."
         },
         "captcha-canvas-challenge": {
           "tagline": "Egyedi képes captcha-k azoknak a közösségeknek, amelyek emberi ellenőrzést akarnak.",

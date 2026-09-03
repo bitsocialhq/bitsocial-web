@@ -531,7 +531,8 @@
         "ai": "IA",
         "antiRepost": "Antirepublicació",
         "referenceClient": "Client de referència",
-        "search": "Cerca"
+        "search": "Cerca",
+        "identity": "Identitat"
       },
       "linkLabels": {
         "androidApk": "APK d'Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Capa centralitzada de puntuació de risc per filtrar publicacions abusives.",
-          "description": "Spam Blocker avalua publicacions i retorna una puntuació de risc que les comunitats poden combinar amb la seva pròpia lògica de moderació. És útil quan vols una capa extra pràctica abans de crear regles anti-spam més personalitzades."
+          "description": "Spam Blocker avalua les publicacions i retorna una puntuació de risc que les comunitats poden combinar amb la seva pròpia lògica de moderació. El seu servei allotjat també enllaça les claus de signant detectades per primera vegada des de la mateixa IP, de manera que un usuari que segueix creant nous comptes per esquivar una prohibició comunitària o fabricar una conversa veu augmentar la seva puntuació de risc, mentre que alguns signants es mantenen autoritzats per a ús legítim multi-dispositiu."
         },
         "captcha-canvas-challenge": {
           "tagline": "CAPTCHA d’imatge personalitzats per a comunitats que volen verificació humana.",

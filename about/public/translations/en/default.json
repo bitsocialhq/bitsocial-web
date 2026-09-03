@@ -737,7 +737,8 @@
         "verification": "Verification",
         "antiRepost": "Anti-repost",
         "referenceClient": "Reference client",
-        "search": "Search"
+        "search": "Search",
+        "identity": "Identity"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -767,7 +768,7 @@
         },
         "spam-blocker": {
           "tagline": "Centralized risk scoring layer for filtering abusive publications.",
-          "description": "Spam Blocker evaluates publications and returns a risk score that communities can combine with their own moderation logic. It is useful when you want a pragmatic extra layer before building more custom anti-spam rules."
+          "description": "Spam Blocker evaluates publications and returns a risk score that communities can combine with their own moderation logic. Its hosted service also links signer keys first seen from the same IP, so a user who keeps generating new accounts to dodge a community ban or manufacture a conversation sees their risk score rise, while a few signers stay allowed for legitimate multi-device use."
         },
         "captcha-canvas-challenge": {
           "tagline": "Custom image captchas for communities that want human verification.",

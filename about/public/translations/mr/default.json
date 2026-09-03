@@ -531,7 +531,8 @@
         "ai": "एआই",
         "antiRepost": "रीपोस्ट-विरोधी",
         "referenceClient": "संदर्भ क्लायंट",
-        "search": "शोध"
+        "search": "शोध",
+        "identity": "ओळख"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "abusive publications filter करण्यासाठी centralized risk scoring layer.",
-          "description": "Spam Blocker publications चे मूल्यांकन करतो आणि risk score परत करतो, जो communities त्यांच्या moderation logic बरोबर जोडू शकतात. अधिक custom anti-spam rules बनवण्याआधी एक practical अतिरिक्त layer हवी असेल तेव्हा तो उपयोगी ठरतो."
+          "description": "Spam Blocker प्रकाशने मूल्यमापन करते आणि एक जोखीम स्कोर परत करते आहे ज्या समुदाय त्यांच्या स्वतःच्या संचालन तर्काशी एकत्रित करू शकतात. त्याची होस्ट केलेली सेवा एकाच IP वरून प्रथम दिसलेल्या स्वाक्षरकर्ता की देखील जोडते, त्यामुळे एक वापरकर्ता जो समुदाय प्रतिबंध मोडण्यासाठी किंवा संभाषण तयार करण्यासाठी नवीन खाती तयार करत राहतो त्याचा जोखीम स्कोर वाढताना दिसतो, तर काही स्वाक्षरकर्ते वैध बहु-उपकरण वापराला अनुमती देतात."
         },
         "captcha-canvas-challenge": {
           "tagline": "मानवी verification हवी असलेल्या communities साठी custom image captchas.",

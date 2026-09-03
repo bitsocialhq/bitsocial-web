@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Klien referensi",
-        "search": "Pencarian"
+        "search": "Pencarian",
+        "identity": "Identitas"
       },
       "linkLabels": {
         "androidApk": "APK Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Lapisan penilaian risiko terpusat untuk menyaring publikasi abusif.",
-          "description": "Spam Blocker mengevaluasi publikasi dan mengembalikan risk score yang bisa dipadukan komunitas dengan logika moderasi mereka sendiri. Ini berguna saat Anda ingin lapisan tambahan yang praktis sebelum membangun aturan anti-spam yang lebih kustom."
+          "description": "Spam Blocker mengevaluasi publikasi dan mengembalikan skor risiko yang dapat dipadukan komunitas dengan logika moderasi mereka sendiri. Layanan tertempat menetapkan juga menghubungkan kunci penanda tangan yang pertama kali terlihat dari IP yang sama, sehingga pengguna yang terus membuat akun baru untuk menghindari larangan komunitas atau menciptakan percakapan melihat skor risiko mereka meningkat, sementara beberapa penanda tangan tetap diizinkan untuk penggunaan multi-perangkat yang sah."
         },
         "captcha-canvas-challenge": {
           "tagline": "Captcha gambar kustom untuk komunitas yang ingin verifikasi manusia.",

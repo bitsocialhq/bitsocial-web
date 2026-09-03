@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Referensklient",
-        "search": "Sökning"
+        "search": "Sökning",
+        "identity": "Identitet"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Centraliserat riskpoängslager för filtrering av missbrukande publikationer.",
-          "description": "Spam Blocker utvärderar publikationer och returnerar ett riskpoäng som communities kan kombinera med sin egen modereringslogik. Det är användbart när du vill ha ett pragmatiskt extra lager innan du bygger mer anpassade anti-spam-regler."
+          "description": "Spam Blocker utvärderar publikationer och returnerar ett riskvärde som samhällen kan kombinera med sin egen modereringslogik. Den värdtjänsten länkar också undertecknarnycklar som först sågs från samma IP-adress, så en användare som fortsätter att skapa nya konton för att undvika ett samhällsförbud eller tillverka en konversation ser sitt riskvärde öka, medan några få undertecknare förblir tillåtna för legitim användning med flera enheter."
         },
         "captcha-canvas-challenge": {
           "tagline": "Anpassade bild-captcha för communities som vill ha mänsklig verifiering.",

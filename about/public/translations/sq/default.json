@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Kundër ripostimeve",
         "referenceClient": "Klient referues",
-        "search": "Kërkim"
+        "search": "Kërkim",
+        "identity": "Identitet"
       },
       "linkLabels": {
         "androidApk": "APK për Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Shtresë qendrore vlerësimi rreziku për filtrimin e publikimeve abuzive.",
-          "description": "Spam Blocker vlerëson publikimet dhe kthen një risk score që komunitetet mund ta kombinojnë me logjikën e tyre të moderimit. Është i dobishëm kur dëshironi një shtresë shtesë praktike përpara se të ndërtoni rregulla më të personalizuara anti-spam."
+          "description": "Spam Blocker vlerëson publikime dhe kthen një rezultat rreziku që komunitetet mund të kombinojnë me logjikën e tyre të moderimit. Shërbimi i përbyra i tij gjithashtu lidh çelësat e nënshkruesit të parë të parë nga i njëjti IP, kështu që një përdorues i cili vazhdon të prodhojë llogari të reja për të shmangur ndalimin e komunitetit ose për të prodhuar një bisedë sheh rezultatin e tij të rrezikut të rritet, ndërsa disa nënshkrues mbeten të lejuar për përdorim legjitime multi-pajisje."
         },
         "captcha-canvas-challenge": {
           "tagline": "Captcha me imazh të personalizuara për komunitete që duan verifikim njerëzor.",

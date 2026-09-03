@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Anti-repost",
         "referenceClient": "Referanseklient",
-        "search": "Søk"
+        "search": "Søk",
+        "identity": "Identitet"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Sentralisert risikoscoringslag for filtrering av misbrukende publikasjoner.",
-          "description": "Spam Blocker vurderer publikasjoner og returnerer en risikoscore som fellesskap kan kombinere med sin egen modereringslogikk. Det er nyttig når du vil ha et praktisk ekstra lag før du bygger mer egendefinerte anti-spam-regler."
+          "description": "Spam Blocker evaluerer publikasjoner og returnerer en risikoscore som fellesskap kan kombinere med sin egen moderasjonslogikk. Tjenesten der den er vert kobler også signeringsnøkler sett første gang fra samme IP-adresse, slik at en bruker som fortsetter å opprette nye kontoer for å unngå et fellesskapsforbud eller produsere en samtale, ser risikoscoren sin øke, mens noen få signatarer forblir tillatt for legitim bruk av flere enheter."
         },
         "captcha-canvas-challenge": {
           "tagline": "Egendefinerte bilde-captchaer for fellesskap som vil ha menneskelig verifisering.",

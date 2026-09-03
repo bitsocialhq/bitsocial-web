@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Proti repostům",
         "referenceClient": "Referenční klient",
-        "search": "Vyhledávání"
+        "search": "Vyhledávání",
+        "identity": "Identita"
       },
       "linkLabels": {
         "androidApk": "APK pro Android",
@@ -596,6 +597,9 @@
         "huggingsocial": {
           "tagline": "Peer-to-peer centrum pro vyhledávání, diskusi a stahování otevřených modelů AI.",
           "description": "HuggingSocial je centrum modelů, které nevlastní žádná společnost. Rozbočovače jsou komunity Bitsocial řízené kryptografickými klíči, každý výpis modelu je podepsaný příspěvek s kartou modelu, kontrolními součty a zdroji stahování, a váhy se přesouvají přes BitTorrent nebo jednoduché zrcadla HTTP a jsou ověřovány na vašem počítači. Klient je v designu a raném vývoji; web přijímá registrace na čekací listinu."
+        },
+        "spam-blocker": {
+          "description": "Spam Blocker vyhodnocuje příspěvky a vrací skóre rizika, které mohou komunity kombinovat se svou vlastní logikou moderace. Její hostovaná služba také propojuje podpisové klíče poprvé viditelné ze stejné IP adresy, takže uživatel, který stále vytváří nové účty, aby se vyhnul zákazu komunity nebo vytvořil konverzaci, vidí nárůst svého skóre rizika, zatímco několik podepisovatelů zůstane povoleno pro legitimní použití více zařízení."
         }
       }
     },

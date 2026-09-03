@@ -531,7 +531,8 @@
         "ai": "IA",
         "antiRepost": "Anti-repost",
         "referenceClient": "Client de référence",
-        "search": "Recherche"
+        "search": "Recherche",
+        "identity": "Identité"
       },
       "linkLabels": {
         "androidApk": "APK Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Couche centralisée de score de risque pour filtrer les publications abusives.",
-          "description": "Spam Blocker évalue les publications et renvoie un score de risque que les communautés peuvent combiner avec leur propre logique de modération. C’est utile quand vous voulez une couche supplémentaire pragmatique avant de construire des règles anti-spam plus personnalisées."
+          "description": "Spam Blocker évalue les publications et retourne un score de risque que les communautés peuvent combiner avec leur propre logique de modération. Son service hébergé relie également les clés de signature vues pour la première fois depuis la même adresse IP, de sorte qu'un utilisateur qui continue de créer de nouveaux comptes pour éviter un bannissement communautaire ou fabriquer une conversation voit son score de risque augmenter, tandis que quelques signataires restent autorisés pour un usage légitime multi-appareils."
         },
         "captcha-canvas-challenge": {
           "tagline": "CAPTCHA image personnalisés pour les communautés qui veulent une vérification humaine.",

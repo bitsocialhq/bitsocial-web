@@ -231,6 +231,7 @@ const APP_TAG_TRANSLATION_KEYS: Record<string, string> = {
   Feeds: "apps.catalog.tags.feeds",
   Forums: "apps.catalog.tags.forums",
   "Human checks": "apps.catalog.tags.humanChecks",
+  Identity: "apps.catalog.tags.identity",
   Imageboard: "apps.catalog.tags.imageboard",
   Invites: "apps.catalog.tags.invites",
   Mirrors: "apps.catalog.tags.mirrors",
@@ -757,9 +758,9 @@ export const APPS: AppData[] = [
     name: "Spam Blocker",
     tagline: "Centralized risk scoring layer for filtering abusive publications.",
     description:
-      "Spam Blocker evaluates publications and returns a risk score that communities can combine with their own moderation logic. It is useful when you want a pragmatic extra layer before building more custom anti-spam rules.",
+      "Spam Blocker evaluates publications and returns a risk score that communities can combine with their own moderation logic. Its hosted service also links signer keys first seen from the same IP, so a user who keeps generating new accounts to dodge a community ban or manufacture a conversation sees their risk score rise, while a few signers stay allowed for legitimate multi-device use.",
     category: "anti-spam",
-    tags: ["Risk scores", "Moderation"],
+    tags: ["Risk scores", "Moderation", "Identity"],
     icon: "shield",
     githubRepo: "bitsocialnet/spam-blocker",
     links: [
@@ -775,7 +776,7 @@ export const APPS: AppData[] = [
       "mintpass",
       "captcha-canvas-challenge",
     ],
-    searchTerms: ["filtering", "risk", "moderation"],
+    searchTerms: ["filtering", "risk", "moderation", "sybil", "ban evasion", "signers", "accounts"],
   },
   {
     slug: "r9k-challenge",

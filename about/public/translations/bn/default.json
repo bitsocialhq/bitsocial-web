@@ -531,7 +531,8 @@
         "ai": "এআই",
         "antiRepost": "পুনঃপোস্ট-বিরোধী",
         "referenceClient": "রেফারেন্স ক্লায়েন্ট",
-        "search": "সার্চ"
+        "search": "সার্চ",
+        "identity": "পরিচয়"
       },
       "linkLabels": {
         "androidApk": "অ্যান্ড্রয়েড APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "অবমাননাকর publication filter করার জন্য centralized risk scoring layer।",
-          "description": "Spam Blocker publication মূল্যায়ন করে একটি risk score ফেরত দেয়, যা community-গুলো তাদের moderation logic-এর সঙ্গে মিলিয়ে নিতে পারে। আরও custom anti-spam rule বানানোর আগে practical extra layer চাইলে এটি কাজে লাগে।"
+          "description": "Spam Blocker প্রকাশনা মূল্যায়ন করে এবং একটি ঝুঁকি স্কোর প্রদান করে যা সম্প্রদায়গুলি তাদের নিজস্ব মডারেশন লজিকের সাথে একত্রিত করতে পারে। এর হোস্ট করা সেবা একই IP থেকে প্রথমবার দেখা স্বাক্ষরকারী কী গুলিকেও সংযুক্ত করে, তাই একজন ব্যবহারকারী যে ক্রমাগত সম্প্রদায়ের নিষেধাজ্ঞা এড়াতে বা কথোপকথন তৈরি করতে নতুন অ্যাকাউন্ট তৈরি করে তার ঝুঁকি স্কোর বৃদ্ধি পায়, যখন কয়েকজন স্বাক্ষরকারী বৈধ মাল্টি-ডিভাইস ব্যবহারের জন্য অনুমোদিত থাকে।"
         },
         "captcha-canvas-challenge": {
           "tagline": "human verification চাই এমন community-গুলোর জন্য custom image CAPTCHA।",

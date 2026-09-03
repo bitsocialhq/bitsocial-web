@@ -531,7 +531,8 @@
         "ai": "ఎআई",
         "antiRepost": "రీపోస్ట్ నిరోధం",
         "referenceClient": "రిఫరెన్స్ క్లయింట్",
-        "search": "శోధన"
+        "search": "శోధన",
+        "identity": "గుర్తింపు"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "abusive publications ను filter చేయడానికి centralized risk scoring layer.",
-          "description": "Spam Blocker publications ను evaluate చేసి ఒక risk score ఇస్తుంది, దాన్ని communities తమ moderation logic తో కలపవచ్చు. మరింత custom anti-spam rules నిర్మించేముందు ఒక practical extra layer కావాలనుకుంటే ఇది ఉపయోగపడుతుంది."
+          "description": "Spam Blocker ప్రచురణలను మూల్యాంకనం చేస్తుంది మరియు సమాజాలు తమ స్వంత నియంత్రణ తర్కంతో కలపగల ప్రమాద స్కోర్‌ను అందిస్తుంది. దాని హోస్ట్ చేసిన సేవ సమాన IP నుండి మొదటిసారి చూసిన సంతకం కీలను కూడా లింక్ చేస్తుంది, కాబట్టి సామాజిక నిషేధం నుండి తప్పించుకోవటానికి లేదా సంభాషణను తయారు చేయటానికి కొత్త ఖాతాలను రూపొందించుకుంటున్న ఉపయోగకర్త తమ ప్రమాద స్కోర్ పెరుగుదలను చూస్తారు, అయితే కొందరు సంతకం చేసేవారు చట్టబద్ధమైన బహు-పరికర వినియోగం కోసం ఆమోదయోగ్యముగా ఉంటారు."
         },
         "captcha-canvas-challenge": {
           "tagline": "human verification కోరే communities కోసం custom image captchas.",

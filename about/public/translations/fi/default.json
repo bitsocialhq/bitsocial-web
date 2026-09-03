@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Uudelleenjulkaisun esto",
         "referenceClient": "Viiteasiakas",
-        "search": "Haku"
+        "search": "Haku",
+        "identity": "Identiteetti"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Keskitetty riskipisteytyskerros haitallisten julkaisujen suodattamiseen.",
-          "description": "Spam Blocker arvioi julkaisuja ja palauttaa riskipisteen, jonka yhteisöt voivat yhdistää omaan moderointilogiikkaansa. Se on hyödyllinen, kun haluat käytännöllisen lisäkerroksen ennen kuin rakennat tarkempia anti-spam-sääntöjä."
+          "description": "Spam Blocker arvioi julkaisuja ja palauttaa riskipistemäärän, jonka yhteisöt voivat yhdistää omaan moderointilogiikkaansa. Sen palvelun mukainen palvelu myös linkittää allekirjoitusavaimia, jotka näkyvät ensimmäisen kerran samasta IP-osoitteesta, joten käyttäjä, joka jatkaa uusien tilien luomista yhteisön kiellon välttämiseksi tai keskustelun valmistamiseksi, näkee riskipistemääränsä kasvavan, kun taas muutamat allekirjoittajat pysyvät sallittuina lailliseen usean laitteen käyttöön."
         },
         "captcha-canvas-challenge": {
           "tagline": "Mukautetut kuvacaptcha:t yhteisöille, jotka haluavat ihmisen tekemän varmistuksen.",

@@ -531,7 +531,8 @@
         "ai": "AI",
         "antiRepost": "Yeniden paylaşım karşıtı",
         "referenceClient": "Referans istemci",
-        "search": "Arama"
+        "search": "Arama",
+        "identity": "Kimlik"
       },
       "linkLabels": {
         "androidApk": "Android APK",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Kötüye kullanılan yayınları filtrelemek için merkezi risk puanlama katmanı.",
-          "description": "Spam Blocker yayınları değerlendirir ve toplulukların kendi moderasyon logic'leri ile birleştirebileceği bir risk score döndürür. Daha özel anti-spam kuralları oluşturmadan önce pratik bir ek katman istediğinizde kullanışlıdır."
+          "description": "Spam Blocker yayınları değerlendirir ve toplulukların kendi ılımlılık mantığıyla birleştirebileceği bir risk puanı döndürür. Barındırılan hizmeti, aynı IP'den ilk kez görülen imzalayan anahtarları da bağlantılandırır, bu nedenle topluluk yasakından kaçınmak veya konuşma üretmek için yeni hesaplar oluşturmaya devam eden bir kullanıcı, risk puanının arttığını görürken, birkaç imzalayan, yasal çok cihazlı kullanım için izin verilmiş kalır."
         },
         "captcha-canvas-challenge": {
           "tagline": "İnsan doğrulaması isteyen topluluklar için özel görsel captcha'lar.",

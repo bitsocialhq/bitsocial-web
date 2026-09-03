@@ -531,7 +531,8 @@
         "ai": "IA",
         "antiRepost": "Anti-repost",
         "referenceClient": "Client de referință",
-        "search": "Căutare"
+        "search": "Căutare",
+        "identity": "Identitate"
       },
       "linkLabels": {
         "androidApk": "APK Android",
@@ -561,7 +562,7 @@
         },
         "spam-blocker": {
           "tagline": "Strat centralizat de scorare a riscului pentru filtrarea publicațiilor abuzive.",
-          "description": "Spam Blocker evaluează publicațiile și returnează un risk score pe care comunitățile îl pot combina cu propria logică de moderare. Este util când vrei un strat suplimentar pragmatic înainte de a construi reguli anti-spam mai personalizate."
+          "description": "Spam Blocker evaluează publicațiile și returnează un scor de risc pe care comunităţile îl pot combina cu propria logică de moderare. Serviciul găzduit al acestuia leagă de asemenea cheile semnaturii văzute pentru prima dată din aceeași adresă IP, astfel încât un utilizator care continuă să creeze conturi noi pentru a evita o interzicere din comunitate sau pentru a fabrica o conversație vede scorul de risc al acestuia crescând, în timp ce câțiva semnatori rămân autorizați pentru utilizare legitimă multi-dispozitiv."
         },
         "captcha-canvas-challenge": {
           "tagline": "Captcha-uri cu imagine personalizată pentru comunități care vor verificare umană.",
