@@ -2,7 +2,6 @@ import type { ComponentType } from "react";
 import {
   Bell,
   Bot,
-  Brain,
   Blocks,
   Clipboard,
   Filter,
@@ -24,7 +23,6 @@ import type { AppIconKey } from "@/lib/apps-data";
 const iconMap = {
   bell: Bell,
   bot: Bot,
-  brain: Brain,
   blocks: Blocks,
   clipboard: Clipboard,
   filter: Filter,

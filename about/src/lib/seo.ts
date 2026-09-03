@@ -469,7 +469,7 @@ function buildSoftwareApplicationSchema(app: AppData): StructuredDataValue {
     name: app.name,
     description: app.description,
     url: canonicalUrl,
-    image: app.logoSrc ?? toAbsoluteUrl("/logo.png"),
+    image: toAbsoluteUrl(app.logoSrc ?? "/logo.png"),
     applicationCategory: getApplicationCategory(app.category),
     operatingSystem: getOperatingSystem(app),
     keywords: app.tags.join(", "),

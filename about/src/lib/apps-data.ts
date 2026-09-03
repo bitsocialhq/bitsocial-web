@@ -28,7 +28,6 @@ export interface AppReleaseIntegrityProbe {
 export type AppIconKey =
   | "bell"
   | "bot"
-  | "brain"
   | "filter"
   | "image"
   | "message-square"
@@ -682,7 +681,8 @@ export const APPS: AppData[] = [
       "HuggingSocial is a model hub that no company owns. Hubs are Bitsocial communities controlled by cryptographic keys, each model listing is a signed post with a model card, checksums, and download sources, and the weights move over BitTorrent or plain HTTP mirrors and are verified on your machine. The client is in design and early development; the website takes waitlist sign-ups.",
     category: "apps",
     tags: ["AI", "Forums"],
-    icon: "brain",
+    icon: "message-square",
+    logoSrc: "/app-logos/huggingsocial.svg",
     githubRepo: "Rinse12/huggingsocial",
     links: [
       { label: "Open website", url: "https://huggingsocial.co", kind: "launch", platform: "web" },
