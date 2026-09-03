@@ -31,6 +31,7 @@ Use `https://bitsocial.net/` for the public product overview and `https://docs.b
 - [5chan](https://bitsocial.net/apps/5chan): Decentralized imageboards with direct web, APK, and desktop downloads.
 - [Seedit](https://bitsocial.net/apps/seedit): Forum-style Bitsocial client with web, APK, and desktop builds.
 - [bitbones](https://bitsocial.net/apps/bitbones): Bare-bones reference client where every view is a thin wrapper over one hook.
+- [HuggingSocial](https://bitsocial.net/apps/huggingsocial): Peer-to-peer hub for finding, discussing, and downloading open AI models.
 - [Mintpass](https://bitsocial.net/apps/mintpass): NFT-backed access control for communities that need stronger anti-spam gates.
 - [AI Moderation Challenge](https://bitsocial.net/apps/ai-moderation-challenge): OpenAI-compatible moderation checks against each community's rules.
 - [Spam Blocker](https://bitsocial.net/apps/spam-blocker): Centralized risk scoring layer for filtering abusive publications.

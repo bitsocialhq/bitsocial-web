@@ -46,6 +46,7 @@ Two interpretation notes matter:
 - [5chan](https://bitsocial.net/apps/5chan): Decentralized imageboards with direct web, APK, and desktop downloads.
 - [Seedit](https://bitsocial.net/apps/seedit): Forum-style Bitsocial client with web, APK, and desktop builds.
 - [bitbones](https://bitsocial.net/apps/bitbones): Bare-bones reference client where every view is a thin wrapper over one hook.
+- [HuggingSocial](https://bitsocial.net/apps/huggingsocial): Peer-to-peer hub for finding, discussing, and downloading open AI models.
 - [Mintpass](https://bitsocial.net/apps/mintpass): NFT-backed access control for communities that need stronger anti-spam gates.
 - [AI Moderation Challenge](https://bitsocial.net/apps/ai-moderation-challenge): OpenAI-compatible moderation checks against each community's rules.
 - [Spam Blocker](https://bitsocial.net/apps/spam-blocker): Centralized risk scoring layer for filtering abusive publications.
@@ -3783,6 +3784,66 @@ bitbones is a port of an existing GPL bare-bones client onto the Bitsocial stack
 
 GPL-3.0-or-later — see [LICENSE](https://github.com/bitsocialnet/bitbones/blob/HEAD/LICENSE).
 
+### HuggingSocial
+
+Repository: Rinse12/huggingsocial
+Source: https://github.com/Rinse12/huggingsocial#readme
+Description: Website: huggingsocial.co
+
+# HuggingSocial
+
+**Website: [huggingsocial.co](https://huggingsocial.co/)**
+
+**BitTorrent moves the weights. BitSocial keeps the index and the conversation out of anyone's hands.**
+
+HuggingSocial is a peer-to-peer place to find, discuss and download open AI models and datasets. It is a
+model hub that no company owns: the list of models, the model cards, the comments and the votes all
+live on a peer-to-peer network, and the model files themselves are fetched over BitTorrent (or plain
+HTTP mirrors), verified on your machine with checksums.
+
+## Why is this needed?
+
+Almost all open AI models live on one website, Hugging Face. In August 2026 Nvidia agreed to buy it for
+roughly $13 billion. Whatever you think of Nvidia, the open-model ecosystem now has a single owner for
+its hosting, and the places where people *talk* about models (Reddit, Discord) are also companies
+that can change their rules, sell, or be pressured at any time.
+
+When one entity controls where models are stored, the next thing that gets controlled is which models
+are visible, which are removed, and which conversations are allowed. Hugging Face has already removed
+models it did not like ([GPT-4chan](https://thegradient.pub/gpt-4chan-lessons/)), and corporate takedowns
+have wiped community copies ([Meta's DMCA against 403 LLaMA repositories](https://github.com/github/dmca/blob/master/2023/03/2023-03-21-meta.md)).
+A torrent index would help with storage, but torrent indexes get taken down too,
+and a torrent tells you nothing about *who* published a file.
+
+HuggingSocial fixes the three parts together:
+
+- **Discovery.** The index of models is held by communities ("hubs") that are controlled by cryptographic
+  keys, not by accounts on a website. Nobody can delete a hub except its owner.
+- **Provenance.** Every model listing is signed by whoever published it, and every download is checked
+  against the checksums in that listing. A poisoned re-upload will simply fail verification.
+- **Discourse.** Model cards, benchmarks, "does this quant run on my GPU", fine-tune requests and
+  license debates happen in the same hubs, with moderation set by each hub, not by a platform.
+
+## How it works (short version)
+
+- **Hubs** are communities on [BitSocial](https://bitsocial.net), a peer-to-peer social protocol built on
+  IPFS/libp2p. Each hub sets its own rules and anti-spam challenge.
+- A **model listing** is a post in a hub: name, version, license, model card, file checksums, and a list of
+  download sources (Hugging Face URL, magnet link, IPFS, …).
+- The **client** (web app, or desktop app with a built-in torrent engine) downloads from any of those
+  sources, verifies the files, and can keep seeding them so others get them faster.
+- **HuggingSocial hosts nothing.** We build the client. Anyone can run a hub, an index, or a seedbox.
+
+## Status
+
+In design and early development. Sign up to the newsletter on the website to hear when there's
+something to run. Technical design is in [DESIGN.md](https://github.com/Rinse12/huggingsocial/blob/HEAD/DESIGN.md); open work is in [TODO.md](https://github.com/Rinse12/huggingsocial/blob/HEAD/TODO.md).
+
+## License
+
+Free software, [GPL-3.0-or-later](https://github.com/Rinse12/huggingsocial/blob/HEAD/LICENSE): the clients, the tooling, the website. Contributions
+welcome: pick something from [TODO.md](https://github.com/Rinse12/huggingsocial/blob/HEAD/TODO.md) or open an issue.
+
 ### MintPass - NFT Authentication Middleware for Bitsocial
 
 Repository: bitsocialnet/mintpass
@@ -4004,8 +4065,14 @@ Install this challenge twice: one `allow` branch and one `review` branch. The `r
     {
         name: "@bitsocial/ai-moderation-challenge",
         options: {
-            apiKey: "sk-...",
-            fallbackModel: "grok-4.5",
+            apiUrl: "https://api.x.ai/v1/chat/completions",
+            apiFormat: "chat-completions",
+            apiKey: "xai-...",
+            model: "grok-4.6",
+            reasoningEffort: "high",
+            triageApiKey: "sk-...",
+            triageModel: "gpt-5.6-luna",
+            triageReasoningEffort: "none",
             branch: "allow",
             promptUrl: "https://prompt.example.com/v1/prompts/ai-moderation.md",
             promptBearerToken: "shared-secret-token"
@@ -4015,8 +4082,14 @@ Install this challenge twice: one `allow` branch and one `review` branch. The `r
     {
         name: "@bitsocial/ai-moderation-challenge",
         options: {
-            apiKey: "sk-...",
-            fallbackModel: "grok-4.5",
+            apiUrl: "https://api.x.ai/v1/chat/completions",
+            apiFormat: "chat-completions",
+            apiKey: "xai-...",
+            model: "grok-4.6",
+            reasoningEffort: "high",
+            triageApiKey: "sk-...",
+            triageModel: "gpt-5.6-luna",
+            triageReasoningEffort: "none",
             branch: "review",
             promptUrl: "https://prompt.example.com/v1/prompts/ai-moderation.md",
             promptBearerToken: "shared-secret-token"
@@ -4033,22 +4106,28 @@ Production operators should keep the real moderation prompt in a private node-lo
 
 ## Options
 
-| Option                 | Default                                  | Description                                                                                                    |
-| ---------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `apiUrl`               | `https://api.openai.com/v1/responses`    | Full OpenAI-compatible endpoint URL                                                                            |
-| `apiFormat`            | `responses`                              | Request/response format: `responses` or `chat-completions`                                                     |
-| `apiKey`               | none                                     | Private provider API key; leave empty for self-hosted endpoints that do not require one                        |
-| `model`                | `gpt-5.4-nano`                           | Model name sent to the provider                                                                                |
-| `fallbackModel`        | none                                     | Secondary model used once when the primary model returns HTTP 429                                              |
-| `branch`               | `allow`                                  | Branch mode: `allow` or `review`                                                                               |
-| `prompt`               | built-in prompt                          | Private inline system prompt text                                                                              |
-| `promptPath`           | none                                     | Private file path for a system prompt on the community node; `~` expands to the home directory                 |
-| `promptUrl`            | none                                     | Private HTTPS URL for a remotely hosted system prompt                                                          |
-| `promptBearerToken`    | none                                     | Private bearer token sent only when fetching `promptUrl`                                                       |
-| `cachePath`            | `~/.bitsocial-ai-moderation-cache.json`  | Private JSON verdict cache path; set to an empty string to disable persistent caching                          |
-| `auditLogPath`         | `~/.bitsocial-ai-moderation-audit.jsonl` | Private JSONL verdict audit log path; set to an empty string to disable audit logging                          |
-| `rejectDuplicateMedia` | `false`                                  | Reject top-level posts that reuse an image, video, or audio URL from a non-archived post in the same community |
-| `error`                | `Rejected by Bitsocial AI moderation.`   | Error shown when content edits are rejected or moderation is unavailable for an edit                           |
+| Option                  | Default                                  | Description                                                                                                    |
+| ----------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `apiUrl`                | `https://api.openai.com/v1/responses`    | Full OpenAI-compatible endpoint URL                                                                            |
+| `apiFormat`             | `responses`                              | Request/response format: `responses` or `chat-completions`                                                     |
+| `apiKey`                | none                                     | Private provider API key; leave empty for self-hosted endpoints that do not require one                        |
+| `model`                 | `gpt-5.4-nano`                           | Model name sent to the provider                                                                                |
+| `fallbackModel`         | none                                     | Secondary model used once when the primary model returns HTTP 429                                              |
+| `reasoningEffort`       | none                                     | Optional primary-model reasoning effort: `none`, `low`, `medium`, `high`, `xhigh`, or `max`                    |
+| `triageApiUrl`          | `https://api.openai.com/v1/responses`    | Full endpoint URL for the optional first-pass triage model                                                     |
+| `triageApiFormat`       | `responses`                              | Triage request/response format: `responses` or `chat-completions`                                              |
+| `triageApiKey`          | none                                     | Private triage-provider API key                                                                                |
+| `triageModel`           | none                                     | Optional first-pass model; setting it enables the two-stage cascade                                            |
+| `triageReasoningEffort` | none                                     | Optional triage-model reasoning effort: `none`, `low`, `medium`, `high`, `xhigh`, or `max`                     |
+| `branch`                | `allow`                                  | Branch mode: `allow` or `review`                                                                               |
+| `prompt`                | built-in prompt                          | Private inline system prompt text                                                                              |
+| `promptPath`            | none                                     | Private file path for a system prompt on the community node; `~` expands to the home directory                 |
+| `promptUrl`             | none                                     | Private HTTPS URL for a remotely hosted system prompt                                                          |
+| `promptBearerToken`     | none                                     | Private bearer token sent only when fetching `promptUrl`                                                       |
+| `cachePath`             | `~/.bitsocial-ai-moderation-cache.json`  | Private JSON verdict cache path; set to an empty string to disable persistent caching                          |
+| `auditLogPath`          | `~/.bitsocial-ai-moderation-audit.jsonl` | Private JSONL verdict audit log path; set to an empty string to disable audit logging                          |
+| `rejectDuplicateMedia`  | `false`                                  | Reject top-level posts that reuse an image, video, or audio URL from a non-archived post in the same community |
+| `error`                 | `Rejected by Bitsocial AI moderation.`   | Error shown when content edits are rejected or moderation is unavailable for an edit                           |
 
 Prompt source precedence is `prompt` > `promptPath` > `promptUrl` > built-in fallback. If multiple private prompt sources are configured, the challenge uses the highest-precedence source and emits a warning about the ignored source.
 
@@ -4064,12 +4143,14 @@ For providers exposing the chat-completions API shape, set both `apiFormat` and 
         apiFormat: "chat-completions",
         apiUrl: "https://provider.example/v1/chat/completions",
         apiKey: "provider-key",
-        model: "provider-model"
+        model: "provider-model",
+        reasoningEffort: "high"
     }
 }
 ```
 
 OpenAI-compatible APIs are a practical compatibility convention, not a formal open standard. Test custom providers before enabling the challenge on live communities.
+Provider API keys are only sent to HTTPS endpoints. Keyless HTTP endpoints remain available for trusted local or self-hosted deployments.
 
 To enable 5chan-style exact-media rejection, set `rejectDuplicateMedia: "true"` on both the `allow` and `review` challenge entries. PKC challenge option values are strings; leaving this option unset preserves the default and does not perform the deterministic hard-rejection check.
 
@@ -4078,11 +4159,11 @@ To enable 5chan-style exact-media rejection, set `rejectDuplicateMedia: "true"` 
 `pkc-js` 0.0.85+ validates `community.settings.challenges[i]` on every community edit, creation, and start. For this challenge that means:
 
 - Option keys that are not listed in the table above are rejected as typos by `pkc-js` itself.
-- The challenge's `validateChallengeSettings` hook rejects the same option errors that would otherwise fail every publication: an `apiUrl` that is not `http`/`https`, a `promptUrl` that is not `https`, an unknown `apiFormat` or `branch`, or a `rejectDuplicateMedia` value other than `true`/`false`. The hook is synchronous and never contacts the provider, so a missing or wrong `apiKey` is only discovered when a publication is moderated (fail closed).
+- The challenge's `validateChallengeSettings` hook rejects the same option errors that would otherwise fail every publication: an `apiUrl` or `triageApiUrl` that is not `http`/`https`, a keyed provider URL that is not HTTPS, a `promptUrl` that is not `https`, an unknown API format, reasoning effort, or `branch`, or a `rejectDuplicateMedia` value other than `true`/`false`. The hook is synchronous and never contacts a provider, so a missing or wrong API key is only discovered when a publication is moderated (fail closed).
 - If `promptPath` does not exist on the node, the hook logs it through `pkc-logger` but does not reject the settings, so a prompt file that is created later does not block the community.
 - Rejections fail the offending `community.edit()`; at start they surface as community `error` events with code `ERR_CHALLENGE_SETTINGS_VALIDATION_FAILED` and the community still starts. Existing settings that were silently broken start emitting these errors after upgrading.
 
-Every option is private by default. An owner can publish specific options by naming them in `publicOptions`, and `pkc-js` then copies their values into the public `community.challenges[i].publicOptions`. The hook refuses to publish `apiKey` and `promptBearerToken` because they are credentials. Everything else is the owner's call: publishing `prompt`, `promptUrl`, or `promptPath` is a transparency choice, but it lets users read the moderation prompt and try to game it, and publishing `apiUrl`, `cachePath`, or `auditLogPath` reveals private node details. Most communities should leave `publicOptions` unset.
+Every option is private by default. An owner can publish specific options by naming them in `publicOptions`, and `pkc-js` then copies their values into the public `community.challenges[i].publicOptions`. The hook refuses to publish `apiKey`, `triageApiKey`, and `promptBearerToken` because they are credentials. Everything else is the owner's call: publishing `prompt`, `promptUrl`, or `promptPath` is a transparency choice, but it lets users read the moderation prompt and try to game it, and publishing provider URLs, `cachePath`, or `auditLogPath` reveals private node details. Most communities should leave `publicOptions` unset.
 
 ```js
 {
@@ -4097,6 +4178,8 @@ Every option is private by default. An owner can publish specific options by nam
 - New comments with verdict `allow` publish normally.
 - New comments with verdict `review` are sent to pending approval with the redacted model reason attached for the author.
 - New comments are also sent to pending approval if the model API is unavailable.
+- When `triageModel` is configured, its `allow` verdict is final and avoids a primary-model call. A triage `review` verdict or triage-provider failure calls the primary reviewer, and only that reviewer's verdict can send content to pending approval.
+- Each provider request times out after 30 seconds. A triage timeout escalates to the primary reviewer; a primary-reviewer timeout follows the same fail-closed path as other provider failures.
 - When `fallbackModel` is configured, an HTTP 429 from the primary model is retried once with the fallback model before the publication is sent to pending approval.
 - Comments sent to pending approval because moderation is unavailable include a generic moderator-visible reason; provider details remain in the private audit log.
 - Content edits with verdict `review` are rejected until PKC supports pending approval for edits.
@@ -4108,8 +4191,8 @@ Every option is private by default. An owner can publish specific options by nam
 - The challenge does not fetch linked publication media or user-submitted URLs. `promptUrl` is an operator-configured private prompt source, not publication content.
 - Remote prompts are fetched without following redirects, with a 5 second timeout, capped at 64 KiB, cached in memory for 5 minutes, and reused from the last in-memory copy if a refresh fails. If the first remote prompt fetch fails, moderation fails closed for the allow branch.
 - Two branch invocations for the same publication reuse one in-process verdict promise.
-- Successful verdicts are cached in a private JSON file keyed by a SHA-256 hash over model/provider config, community context including duplicate-check context, target content, and the final prompt hash. The cache does not store the raw prompt or API key.
-- Verdicts are written to a private JSONL audit log with the model reason, raw publication fields, and hashes/metadata for correlation. The audit log does not store the raw prompt, API key, prompt URL, or prompt bearer token.
+- Successful verdicts are cached in a private JSON file keyed by a SHA-256 hash over primary and triage model/provider config, community context including duplicate-check context, target content, and the final prompt hash. The cache does not store the raw prompt or API keys.
+- Verdicts are written to a private JSONL audit log with the model stage, model reason, raw publication fields, and hashes/metadata for correlation. The audit log does not store the raw prompt, API keys, prompt URL, or prompt bearer token.
 
 ## Moderation Audit Community
 
@@ -4129,7 +4212,7 @@ The publisher creates a persistent local signer at `~/.bitsocial-ai-moderation-m
 
 The coverage badge reports line coverage generated with `yarn test:coverage`. On pushes to `master`, CI writes a Shields-compatible endpoint payload and publishes it to GitHub Pages.
 
-The test suite covers the moderation-critical flow: OpenAI-compatible Responses and chat-completions requests include `community.rules`, model `review` verdicts fail the `allow` branch and pass the `review` branch used with `pendingApproval`, provider outages and malformed responses route new comments to review, and content edits are rejected on review or outage.
+The test suite covers the moderation-critical flow: OpenAI-compatible Responses and chat-completions requests include `community.rules`, triage approvals avoid the primary reviewer, triage reviews and outages escalate, model `review` verdicts fail the `allow` branch and pass the `review` branch used with `pendingApproval`, provider outages and malformed responses route new comments to review, and content edits are rejected on review or outage.
 
 ## Publishing
 
@@ -6433,7 +6516,7 @@ EXAMPLES
   $ bitsocial challenge install ./my-local-challenge
 ```
 
-_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/challenge/install.ts)_
+_See code: [src/cli/commands/challenge/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/challenge/install.ts)_
 
 ## `bitsocial challenge list`
 
@@ -6459,7 +6542,7 @@ EXAMPLES
   $ bitsocial challenge list -q
 ```
 
-_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/challenge/list.ts)_
+_See code: [src/cli/commands/challenge/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/challenge/list.ts)_
 
 ## `bitsocial challenge ls`
 
@@ -6514,7 +6597,7 @@ EXAMPLES
   $ bitsocial challenge remove @scope/my-challenge
 ```
 
-_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/challenge/remove.ts)_
+_See code: [src/cli/commands/challenge/remove.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/challenge/remove.ts)_
 
 ## `bitsocial challenge rm NAME`
 
@@ -6631,7 +6714,7 @@ EXAMPLES
     $ bitsocial community create --jsonFile ./create-options.json
 ```
 
-_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/create.ts)_
+_See code: [src/cli/commands/community/create.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/create.ts)_
 
 ## `bitsocial community delete ADDRESSES`
 
@@ -6656,7 +6739,7 @@ EXAMPLES
   $ bitsocial community delete 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/delete.ts)_
+_See code: [src/cli/commands/community/delete.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/delete.ts)_
 
 ## `bitsocial community edit ADDRESS`
 
@@ -6726,7 +6809,7 @@ EXAMPLES
     $ bitsocial community edit bitsocial.bso --jsonFile ./edit-options.json
 ```
 
-_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/edit.ts)_
+_See code: [src/cli/commands/community/edit.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/edit.ts)_
 
 ## `bitsocial community export [ADDRESS]`
 
@@ -6767,7 +6850,7 @@ EXAMPLES
   $ bitsocial community export --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/export.ts)_
+_See code: [src/cli/commands/community/export.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/export.ts)_
 
 ## `bitsocial community get [ADDRESS]`
 
@@ -6798,7 +6881,7 @@ EXAMPLES
   $ bitsocial community get --publicKey 12D3KooWG3XbzoVyAE6Y9vHZKF64Yuuu4TjdgQKedk14iYmTEPWu
 ```
 
-_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/get.ts)_
+_See code: [src/cli/commands/community/get.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/get.ts)_
 
 ## `bitsocial community list`
 
@@ -6821,7 +6904,7 @@ EXAMPLES
   $ bitsocial community list
 ```
 
-_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/list.ts)_
+_See code: [src/cli/commands/community/list.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/list.ts)_
 
 ## `bitsocial community start ADDRESSES`
 
@@ -6855,7 +6938,7 @@ EXAMPLES
     $ bitsocial community start $(bitsocial community list -q) --concurrency 1
 ```
 
-_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/start.ts)_
+_See code: [src/cli/commands/community/start.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/start.ts)_
 
 ## `bitsocial community stop ADDRESSES`
 
@@ -6880,7 +6963,7 @@ EXAMPLES
   $ bitsocial community stop Qmb99crTbSUfKXamXwZBe829Vf6w5w5TktPkb6WstC9RFW
 ```
 
-_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/community/stop.ts)_
+_See code: [src/cli/commands/community/stop.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/community/stop.ts)_
 
 ## `bitsocial daemon`
 
@@ -6930,7 +7013,7 @@ EXAMPLES
   $ bitsocial daemon --no-allowPrivateKeyExport
 ```
 
-_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/daemon.ts)_
+_See code: [src/cli/commands/daemon.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/daemon.ts)_
 
 ## `bitsocial help [COMMAND]`
 
@@ -6994,7 +7077,7 @@ EXAMPLES
   $ bitsocial logs --stdout -f
 ```
 
-_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/logs.ts)_
+_See code: [src/cli/commands/logs.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/logs.ts)_
 
 ## `bitsocial update check`
 
@@ -7011,7 +7094,7 @@ EXAMPLES
   $ bitsocial update check
 ```
 
-_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/update/check.ts)_
+_See code: [src/cli/commands/update/check.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/update/check.ts)_
 
 ## `bitsocial update install [VERSION]`
 
@@ -7043,7 +7126,7 @@ EXAMPLES
   $ bitsocial update install --no-restart-daemons
 ```
 
-_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/update/install.ts)_
+_See code: [src/cli/commands/update/install.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/update/install.ts)_
 
 ## `bitsocial update versions`
 
@@ -7065,7 +7148,7 @@ EXAMPLES
   $ bitsocial update versions --limit 5
 ```
 
-_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.94/src/cli/commands/update/versions.ts)_
+_See code: [src/cli/commands/update/versions.ts](https://github.com/bitsocialnet/bitsocial-cli/blob/v0.19.96/src/cli/commands/update/versions.ts)_
 
 ## Contribution
 
@@ -7676,8 +7759,10 @@ All config is environment variables (see [`server/.env.example`](https://github.
 | `CRAWL_INTERVAL_MS` | `60000` | Per-community delay before the next refresh |
 | `CRAWL_CONCURRENCY` | `4` | Maximum communities crawled at once |
 | `CRAWL_TIMEOUT_MS` | `300000` | Hard timeout for one community crawl; a timeout resets the RPC client |
-| `ALLOWED_ORIGINS` | `*` | CORS allow-list, comma-separated (`*` = any origin — fine for a public read-only API). `CORS_ORIGIN` is accepted as a legacy fallback. |
+| `ALLOWED_ORIGINS` | `*` | CORS allow-list, comma-separated (`*` = any origin — fine for a public read-only API). An entry may contain `*` as a wildcard, e.g. `https://*.seedit.localhost` matches every branch-scoped dev origin. `CORS_ORIGIN` is accepted as a legacy fallback. |
 | `BLOCKLIST_SOURCE` | _(empty)_ | Path to a JSON file of CIDs to take down (operator blocklist, see below). |
+| `DIRECTORY_DEFAULTS_SOURCE` | _(empty)_ | URL/path to a client's `*-directories-defaults.json`, which states `features.safeForWork` per directory code (see below). |
+| `NSFW_OVERRIDES_SOURCE` | _(empty)_ | Path to a JSON file of operator NSFW verdicts per community (see below). |
 
 If neither `COMMUNITIES` nor `COMMUNITIES_SOURCE` is set, the crawler stays
 idle and the indexer serves nothing. That is intentional.
@@ -7700,6 +7785,57 @@ moderation, and they stay redacted across re-crawls. The bundled web UI shows
 them as `[removed — takedown request]` and documents the policy on its
 `/legal` page (see `CONTACT_EMAIL` below).
 
+#### NSFW communities
+
+A community declares its own status through the protocol:
+`community.features.safeForWork` is an **optional** boolean, so it has three
+states — `true`, `false`, and never set. `safeForWork === false` is the
+owner-declared way of saying "this community is NSFW".
+
+Each indexed community gets both the raw declaration (`safe_for_work`: `1`, `0`
+or `null`) and a resolved `nsfw` flag on `GET /api/communities` (and
+`/api/communities/:address`). The resolution takes four signals, **highest
+precedence first**:
+
+1. **Operator override** — `NSFW_OVERRIDES_SOURCE`, a JSON file where each entry
+   is a bare address or `{ "address": "…", "nsfw": false, "reason": "…" }`.
+   `nsfw` defaults to `true`, and an explicit `false` clears the flag, so a bad
+   verdict is correctable. Like the blocklist, the file is re-read whenever it
+   changes — no restart needed.
+2. **`community.features.safeForWork`** — the owner's own declaration, read off
+   the community on every crawl. `false` → NSFW, `true` → not, unset → the next
+   signal decides.
+3. **The directory the address is listed under** — `DIRECTORY_DEFAULTS_SOURCE`
+   (below), for the many communities whose owner never set the feature.
+4. **Inference from content** — any indexed comment in the community carrying
+   the protocol's `nsfw` flag means the community accepts NSFW content.
+
+An unset `safeForWork` is never read as either verdict: it falls through, and
+only the last signal (inference) is allowed to answer with a plain boolean.
+
+##### Directory verdicts (`DIRECTORY_DEFAULTS_SOURCE`)
+
+Bitsocial clients state a *directory's* SFW status once, by directory code, in
+their `<prefix>-directories-defaults.json` — this is how 5chan knows `/f/` and
+`/b/` are NSFW while `/3/` and `/a/` are not. The sibling
+`<prefix>-<code>-directory.json` files hold that directory's candidate
+addresses. Point `DIRECTORY_DEFAULTS_SOURCE` at the defaults file and the
+crawler reads both, giving every address listed under a directory that
+directory's `features.safeForWork`:
+
+```
+DIRECTORY_DEFAULTS_SOURCE=https://raw.githubusercontent.com/bitsocialnet/lists/master/5chan-directories/5chan-directories-defaults.json
+```
+
+Sibling file names follow the convention that repo documents, so one setting
+reaches every directory. A directory that states no `safeForWork`, or an address
+in no directory at all, contributes nothing and falls through to inference. Both
+files are read once, when the crawler schedules its communities.
+
+`GET /api/search?nsfw=` filters on the result: `false` (**the default**) drops
+anything NSFW — the comment is flagged, or its community is — and `true`
+includes it. Listings (`/api/posts`) and the sitemap are not filtered.
+
 ### `webui/`
 
 | Var | Default | Meaning |
@@ -7712,6 +7848,7 @@ them as `[removed — takedown request]` and documents the policy on its
 | `BRAND_TEXT` | _(empty)_ | Optional footer attribution line, e.g. `A Bitsocial Forge product`. Unset = nothing rendered |
 | `BRAND_URL` | _(empty)_ | Makes `BRAND_TEXT` a link |
 | `CONTACT_EMAIL` | _(empty)_ | Contact address for content-removal / takedown requests, shown on the `/legal` archive-policy page. Unset = the page says requests are handled by the instance operator |
+| `SHOW_NSFW` | `false` | Whether this instance's search returns NSFW results. The UI sends the value on every query, so an archive of boards that are NSFW by design opts in with `SHOW_NSFW=true` rather than silently inheriting the API's safe default |
 
 The web UI serves its own `robots.txt` and a `sitemap.xml` **sitemap index**
 (one child sitemap per community, capped at the 5,000 most recent posts each,
@@ -7724,11 +7861,49 @@ CORS-enabled so browser clients can call it directly.
 | Endpoint | Description |
 |----------|-------------|
 | `GET /api/health` | Status + index counts |
-| `GET /api/communities` | Indexed communities + post counts |
+| `GET /api/communities` | Indexed communities + post counts + resolved `nsfw` flag + declared `safe_for_work` |
 | `GET /api/posts` | Browse posts — `?community=&sort=new\|top\|replies\|old&time=hour..all&page=&limit=&replies=true` |
 | `GET /api/posts/:cid` | A thread: original post + threaded replies |
-| `GET /api/search` | Full-text search — `?q=&community=&sort=&time=&page=` |
+| `GET /api/search` | Full-text search — `?q=&community=&sort=&time=&page=&limit=&replies=&nsfw=`, plus the advanced filters below (NSFW excluded by default). A `q` that is a comment CID is looked up by CID instead (see below) |
 | `GET /sitemap.xml`, `/robots.txt` | SEO |
+
+### Advanced search filters
+
+`/api/search` also accepts the five old.reddit-style filters a client parses out
+of its search box, so they no longer have to be passed through as literal query
+text. Each is optional, and they AND together — with each other and with `q`,
+`community`, `time` and `nsfw` — so a query only ever narrows:
+
+| Param | Prefix | Matches |
+|-------|--------|---------|
+| `author` | `author:lena.bso` | Exactly (case-insensitively) the author's address **or** display name. Never a prefix or substring: an author is an identity, so `lena` must not stand in for `lena-imposter.bso` |
+| `site` | `site:example.com` | The link's parsed **host**, subdomains included (`www.example.com` counts). Never a substring of the URL, so `https://evil.com/?r=example.com` is not a match |
+| `url` | `url:ink-study` | A substring of the whole link — the path / slug / query search that `site` deliberately is not |
+| `selftext` | `selftext:tokenizer` | Words in the post body, through the same full-text index `q` uses |
+| `self` | `self:yes` / `self:no` | `yes` = text posts only, `no` = link posts only. Three-state: **absent means no opinion** and keeps both |
+
+`q` may be empty when at least one filter is set: `?author=lena.bso` is a
+complete query, answered newest-first since there is no relevance to rank.
+`?community=…` alone is not — narrowing parameters need something to narrow, and
+`/api/posts` is the listing endpoint. Only `/api/search` takes these; `/api/posts`
+and the sitemap are unchanged.
+
+### Searching by CID
+
+A comment CID pasted into a search box is one opaque token the full-text index
+can never match, so when `q` is exactly one CID — CIDv0 (`Qm…`) or CIDv1
+(`bafy…`), recognised by parsing it rather than by pattern — `/api/search` looks
+it up by `comments.cid` instead and returns the comment as an ordinary result
+(`total: 1`); a client that already renders search results needs no change.
+Only the exact `cid` matches: a CID that appears solely as a thread or parent
+reference names a comment that was never indexed. Every other parameter still
+narrows — `community=` must be the comment's own, `nsfw=false` still hides an
+NSFW comment (a pasted CID is not a way around an instance's safe default) —
+and, like `/api/posts/:cid`, a removed, deleted or taken-down comment comes back
+as its redacted tombstone, though only for the bare lookup: with `author`,
+`site`, `url`, `self` or `selftext` set, tombstones stay hidden as in text
+search, since a yes/no answer over redacted content would leak it. A CID mixed
+with other words is an ordinary text search.
 
 ## Running your own instance
 

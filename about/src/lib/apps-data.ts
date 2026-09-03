@@ -28,6 +28,7 @@ export interface AppReleaseIntegrityProbe {
 export type AppIconKey =
   | "bell"
   | "bot"
+  | "brain"
   | "filter"
   | "image"
   | "message-square"
@@ -327,6 +328,10 @@ const APP_COPY_TRANSLATION_KEYS: Record<string, { tagline: string; description: 
   bitbones: {
     tagline: "apps.catalog.items.bitbones.tagline",
     description: "apps.catalog.items.bitbones.description",
+  },
+  huggingsocial: {
+    tagline: "apps.catalog.items.huggingsocial.tagline",
+    description: "apps.catalog.items.huggingsocial.description",
   },
   "challenge-composer": {
     tagline: "apps.catalog.items.challenge-composer.tagline",
@@ -668,6 +673,32 @@ export const APPS: AppData[] = [
     relatedSlugs: ["seedit", "5chan", "bitsocial-cli"],
     status: "experimental",
     searchTerms: ["bare bones", "reference", "hooks", "minimal", "debug", "developers"],
+  },
+  {
+    slug: "huggingsocial",
+    name: "HuggingSocial",
+    tagline: "Peer-to-peer hub for finding, discussing, and downloading open AI models.",
+    description:
+      "HuggingSocial is a model hub that no company owns. Hubs are Bitsocial communities controlled by cryptographic keys, each model listing is a signed post with a model card, checksums, and download sources, and the weights move over BitTorrent or plain HTTP mirrors and are verified on your machine. The client is in design and early development; the website takes waitlist sign-ups.",
+    category: "apps",
+    tags: ["AI", "Forums"],
+    icon: "brain",
+    githubRepo: "Rinse12/huggingsocial",
+    links: [
+      { label: "Open website", url: "https://huggingsocial.co", kind: "launch", platform: "web" },
+    ],
+    relatedSlugs: ["seedit", "5chan", "bitbones"],
+    status: "experimental",
+    searchTerms: [
+      "ai models",
+      "hugging face",
+      "model hub",
+      "torrent",
+      "bittorrent",
+      "weights",
+      "datasets",
+      "llm",
+    ],
   },
   {
     slug: "mintpass",
